@@ -41,7 +41,7 @@ function list() {
 	for (let seriesId in seriesList) {
 		//テーブルを生成
 		tables.push(new Table(seriesList[seriesId].name));
-		tables.at(-1).setBorder(1);
+		//tables.at(-1).setBorder(1);
 		tables.at(-1).setSubtitle(seriesList[seriesId].description);
 		tables.at(-1).setAttributes({"class":"formation-table"});
 		//現時点で組成されている編成を取得
@@ -73,7 +73,7 @@ function list() {
 
 	//編成に組み込まれていない車両を処理
 	tables.push(new Table("編成に所属していない車両"));
-	tables.at(-1).setBorder(1);
+	//tables.at(-1).setBorder(1);
 	tables.at(-1).addRow();
 	for (let carId in cars.carsList) {
 		//編成に組み込まれている車両および未製造の車両は除外する
@@ -180,7 +180,6 @@ function createFormationFromTemplate(x) {
 function createFormationFromTemplateDialogUpdateTable(x,y) {
 	let formationTemplate = formationTemplates.getFormationTemplate(x);
 	let table = new Table();
-	table.setBorder(1);
 	table.setSubtitle("作成される編成のプレビュー");
 	table.addRow();
 	table.addCell(`編成番号:${formationTemplate.formationName(y)}`,{"colspan":formationTemplate.carNumbers.length});
@@ -211,7 +210,6 @@ function createFormationTemplate(x) {
 //車両の詳細ダイアログを表示
 function displayCarDeteal(x) {	
 	let table = new Table();
-	table.setBorder(1);
 	table.setSubtitle(`<p class="car-name"><b><span id="cardt-car-number">${cars.carsList[x].number}</span>号車</b><button class="lsf-icon" icon="pen" onclick="displayCarRenumberDialog()">改番</button><span class="car-status lsf-icon ${cars.carsList[x].isActive?"":"dropped"}">${cars.carsList[x].isActive?"現役":`${cars.carsList[x].droppedOn.toStringWithLink()}廃車`}</span></p>`);
 
 	//所属編成を探す
@@ -327,7 +325,6 @@ function dropCar(carId_) {
 function displayFormationDeteal(x) {
 	let table = new Table();
 	let formation = formations.formationsList[x];
-	table.setBorder(1);
 	table.setSubtitle(`<p class="car-name"><b><span id="fmdt-formation-number">${formation.name}</span></b> (${formation.formatedOn.toStringWithLink()}～${formation.isTerminated ? `${formation.terminatedOn.toStringWithLink()}` : ``})<button class="lsf-icon" icon="pen" onclick="displayFormationRenameDialog()">名称変更</button></p><div id="fmdt-opening">${x}</div>`);
 	table.addRow();
 	table.addCell(`編成ID:${x}`, {"colspan":formation.cars.length,"class":"formation-id"});

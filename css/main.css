@@ -18,6 +18,13 @@ a:hover{
 button{
 	cursor: pointer;
 }
+table{
+	border-collapse: collapse;
+	border-color: #000;
+}
+td{
+	padding:0.15em;
+}
 div.separator{
 	display: inline-block;
 	width:1px;
@@ -27,7 +34,8 @@ div.separator{
 	background-color: #bbb;
 }
 td.separator{
-	padding-left: 1.0em;
+    width: 0;
+    padding: 1px;
 }
 a.update-yearmonth-link{
 	text-decoration: none;
@@ -59,8 +67,8 @@ a.update-yearmonth-link::before{
 }
 
 div#header{
-    z-index: 999999;
-    position: relative;
+	z-index: 999999;
+	position: relative;
 	background-color: #fff;
 	margin:0;
 	padding:0.8em;
@@ -101,12 +109,12 @@ td.formation-name,#cardt-main table tr > td:first-child{
 
 /*車両詳細ダイアログのTD内のUL*/
 #cardt-main table tr > td ul{
-    margin: 0;
-    padding-left: 0;
+	margin: 0;
+	padding-left: 0;
 	list-style: none;
 }
 #cardt-main table tr > td ul li::before{
-    content:"・";
+	content:"・";
 	display:inline;
 }
 
@@ -135,36 +143,36 @@ p:has(#cardt-car-number),p:has(#fmdt-formation-number){
 
 /* 改番ボタン */
 p.car-name button{
-    border: none;
-    margin-left: 1em;
-    font-size: 0.7em;
-    transform: translateY(-2px);
+	border: none;
+	margin-left: 1em;
+	font-size: 0.7em;
+	transform: translateY(-2px);
 }
 
 /* 編成編集ボタン */
 td.formation-name button{
-    border: none;
-    margin-left: 0.5em;
-    font-size: 0.7em;
+	border: none;
+	margin-left: 0.5em;
+	font-size: 0.7em;
 }
 
 /* 車両及び編成の状態 */
 p.car-name span.car-status{
-    background-color: #00c900;
-    border-radius: 5px;
-    color: #fff;
-    padding: 0 0.2em;
-    float: right;
-    margin-top: 0.5em;
+	background-color: #00c900;
+	border-radius: 5px;
+	color: #fff;
+	padding: 0 0.2em;
+	float: right;
+	margin-top: 0.5em;
 }
 p.car-name span.car-status::before{
 	content: "check";
 }
 p.car-name span.car-status.dropped{
-    background-color: #f00;
+	background-color: #f00;
 }
 p.car-name span.car-status.dropped a.update-yearmonth-link{
-    color:#fff;
+	color:#fff;
 }
 p.car-name span.car-status.dropped::before{
 	content: "ban";
