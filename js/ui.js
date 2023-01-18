@@ -210,11 +210,12 @@ function displayCarDeteal(x) {
 	table.setSubtitle(`<p class="car-name"><b><span id="cardt-car-number">${cars.carsList[x].number}</span>号車</b><button class="lsf-icon" icon="pen" onclick="displayCarRenumberDialog()">改番</button><span class="car-status lsf-icon ${cars.carsList[x].isActive?"":"dropped"}">${cars.carsList[x].isActive?"現役":`${cars.carsList[x].droppedOn.toString()}廃車`}</span></p>`);
 
 	//所属編成を探す
-	let formation = formations.searchCarById(x,now);
+	let formation = formations.searchCarById(x, now);
+	//車歴
 	let oldNumbers = cars.carsList[x].oldNumbers;
 	let oldNumbersText = ``;
 	for (let i in oldNumbers) {
-		oldNumbersText = `<li>${oldNumbers[i].number} <small>(～${oldNumbers[i].renumberedOn.toStringWithLink()})</small></li>${oldNumbersText}`;
+		oldNumbersText = `<li>${oldNumbers[i].number} <small>(${i!=0?oldNumbers[i-1].renumberedOn.toStringWithLink():cars.carsList[x].manufacturedOn.toStringWithLink()}～${oldNumbers[i].renumberedOn.toStringWithLink()})</small></li>${oldNumbersText}`;
 	}
 	oldNumbersText = `<ul><li>${cars.carsList[x].number} <small>(${oldNumbers.length>0?`${oldNumbers.at(-1).renumberedOn.toStringWithLink()}`:`${cars.carsList[x].manufacturedOn.toStringWithLink()}`}～${cars.carsList[x].isDropped?cars.carsList[x].droppedOn.toStringWithLink():""})</small></li>${oldNumbersText}</ul>`;
 
