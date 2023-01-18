@@ -34,6 +34,10 @@ class YearMonth{
 	toString() {
 		return `${this.#y}年${`00${this.#m}`.slice(-2)}月`;
 	}
+
+	toStringWithLink() {
+		return `<a class="update-yearmonth-link" href="javascript:updateNowYearMonth(new YearMonth(${this.#y},${this.#m}))">${this.toString()}</a>`;
+	}
 }
 
 //フォーマッタクラス

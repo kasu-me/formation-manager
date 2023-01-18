@@ -74,7 +74,7 @@ class AllFormations{
 		let baseCarNums = formationTemplate.carNumbers;
 		let carIds = [];
 		for (let i in baseCarNums) {
-			carIds.push(allCars.addCar(new Car(baseCarNums[i] (number).toString(),ym)));
+			carIds.push(allCars.addCar(new Car(baseCarNums[i](number).toString(),ym)));
 		}
 		this.addFormation(new Formation(formationTemplate.seriesId, formationTemplate.formationName(number).toString(), carIds, belongsTo, ym));
 	}

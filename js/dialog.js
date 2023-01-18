@@ -132,5 +132,5 @@ window.addEventListener("load",function(){
 	formationDetealDialog = new Dialog("formationDetealDialog", "編成の詳細", `<div id="fmdt-main"></div>`, [{ "content": "編成解除", "event": `releaseFormation()`, "icon": "clear" },{"content":"編成内の車両をまとめて廃車","event":`releaseFormationAndDropAllCars()`,"icon":"delete"}, { "content": "閉じる", "event": `formationDetealDialog.off();`, "icon": "close" }]);
 	
 	//fmrn
-	formationRenameDialog = new Dialog("formationRenameDialog", "編成の改名", `<div id="fmrn-main"></div>`, [{ "content": "改番", "event": `renameFormation()`, "icon": "check" }, { "content": "キャンセル", "event": `formationRenameDialog.off();`, "icon": "close" }]);
+	formationRenameDialog = new Dialog("formationRenameDialog", "編成の改名", `<div id="fmrn-main"></div>`, [{ "content": "改名", "event": `renameFormation()`, "icon": "check" }, { "content": "キャンセル", "event": `formationRenameDialog.off();`, "icon": "close" }]);
 })

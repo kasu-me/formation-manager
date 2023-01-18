@@ -61,7 +61,7 @@ function list() {
 			//所属地セルを追加
 			//tables.at(-1).addCell(formationList[formationId].belongsTo==null?"運用離脱":formationList[formationId].belongsTo,{"class":"belongs"});
 			//組成年月セルを追加
-			tables.at(-1).addCell(formationList[formationId].formatedOn.toString());
+			tables.at(-1).addCell(formationList[formationId].formatedOn.toStringWithLink());
 			//コントロールセルを追加
 			//tables.at(-1).addCell(`<button onclick="displayFormationDeteal(${formationId})">編成詳細</button>`);
 		}
@@ -210,30 +210,30 @@ function createFormationTemplate(x) {
 function displayCarDeteal(x) {	
 	let table = new Table();
 	table.setBorder(1);
-	table.setSubtitle(`<p class="car-name"><b><span id="cardt-car-number">${cars.carsList[x].number}</span>号車</b><button class="lsf-icon" icon="pen" onclick="displayCarRenumberDialog()">改番</button><span class="car-status lsf-icon ${cars.carsList[x].isActive?"":"dropped"}">${cars.carsList[x].isActive?"現役":`${cars.carsList[x].droppedOn.toString()}廃車`}</span></p>`);
+	table.setSubtitle(`<p class="car-name"><b><span id="cardt-car-number">${cars.carsList[x].number}</span>号車</b><button class="lsf-icon" icon="pen" onclick="displayCarRenumberDialog()">改番</button><span class="car-status lsf-icon ${cars.carsList[x].isActive?"":"dropped"}">${cars.carsList[x].isActive?"現役":`${cars.carsList[x].droppedOn.toStringWithLink()}廃車`}</span></p>`);
 
 	//所属編成を探す
 	let formation = formations.searchCarById(x,now);
 	let oldNumbers = cars.carsList[x].oldNumbers;
 	let oldNumbersText = ``;
 	for (let i in oldNumbers) {
-		oldNumbersText = `<li>${oldNumbers[i].number} <small>(～${oldNumbers[i].renumberedOn.toString()})</small></li>${oldNumbersText}`;
+		oldNumbersText = `<li>${oldNumbers[i].number} <small>(～${oldNumbers[i].renumberedOn.toStringWithLink()})</small></li>${oldNumbersText}`;
 	}
-	oldNumbersText = `<ul><li>${cars.carsList[x].number} <small>(${oldNumbers.length>0?`${oldNumbers.at(-1).renumberedOn.toString()}`:`${cars.carsList[x].manufacturedOn.toString()}`}～${cars.carsList[x].isDropped?cars.carsList[x].droppedOn:""})</small></li>${oldNumbersText}</ul>`;
+	oldNumbersText = `<ul><li>${cars.carsList[x].number} <small>(${oldNumbers.length>0?`${oldNumbers.at(-1).renumberedOn.toStringWithLink()}`:`${cars.carsList[x].manufacturedOn.toStringWithLink()}`}～${cars.carsList[x].isDropped?cars.carsList[x].droppedOn:""})</small></li>${oldNumbersText}</ul>`;
 
 	table.addRow();
-	table.addCell("ID");
+	table.addCell("車両ID");
 	table.addCell(x,{"id":"cardt-car-id"});
 	table.addRow();
 	table.addCell("製造年月");
-	table.addCell(cars.carsList[x].manufacturedOn);
+	table.addCell(cars.carsList[x].manufacturedOn.toStringWithLink());
 	if (cars.carsList[x].isDropped) {
 		table.addRow();
 		table.addCell("廃車年月");
-		table.addCell(cars.carsList[x].droppedOn);
+		table.addCell(cars.carsList[x].droppedOn.toStringWithLink());
 	}
 	table.addRow();
-	table.addCell(`所属編成<small>(${now.toString()}時点)</small>`);
+	table.addCell(`所属編成<small>(${now.toStringWithLink()}時点)</small>`);
 	table.addCell(formation!=-1?formations.formationsList[formation].name:"編成に所属していません");
 	table.addRow();
 	table.addCell("車歴");
@@ -326,7 +326,9 @@ function displayFormationDeteal(x) {
 	let table = new Table();
 	let formation = formations.formationsList[x];
 	table.setBorder(1);
-	table.setSubtitle(`<p class="car-name"><b><span id="fmdt-formation-number">${formation.name}</span></b> (${formation.formatedOn.toString()}～${formation.isTerminated?`${formation.terminatedOn.toString()}`:``})<button class="lsf-icon" icon="pen" onclick="displayFormationRenameDialog()">名称変更</button></p><div id="fmdt-opening">${x}</div>`);
+	table.setSubtitle(`<p class="car-name"><b><span id="fmdt-formation-number">${formation.name}</span></b> (${formation.formatedOn.toStringWithLink()}～${formation.isTerminated ? `${formation.terminatedOn.toStringWithLink()}` : ``})<button class="lsf-icon" icon="pen" onclick="displayFormationRenameDialog()">名称変更</button></p><div id="fmdt-opening">${x}</div>`);
+	table.addRow();
+	table.addCell(`編成ID:${x}`, {"colspan":formation.cars.length,"class":"formation-id"});
 	table.addRow();
 	for (let i in formation.cars) {
 		table.addCell(Formatter.link(formation.cars[i],cars.carsList[formation.cars[i]].number));
@@ -391,14 +393,14 @@ function releaseFormationAndDropAllCars() {
 		}
 		if (window.confirm(`${formations.formationsList[formationId].name}内の車両${formations.formationsList[formationId].cars.length}両を${now.toString()}付で全て廃車します。`)) {
 			for (let i in formations.formationsList[formationId].cars) {
+				//車両が未来で廃車されている場合スキップ
 				if (cars.carsList[formations.formationsList[formationId].cars[i]].isDropped) {
 					continue;
 				}
 				cars.dropCar(formations.formationsList[formationId].cars[i], now);
 			}
-			if (!formations.formationsList[formationId].isTerminated) {
-				formations.releaseFormation(formationId);
-			}
+			//編成解除
+			formations.releaseFormation(formationId);
 			reflesh();
 			formationDetealDialog.off();
 		}

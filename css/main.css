@@ -131,6 +131,9 @@ p.car-name span.car-status::before{
 p.car-name span.car-status.dropped{
     background-color: #f00;
 }
+p.car-name span.car-status.dropped a.update-yearmonth-link{
+    color:#fff;
+}
 p.car-name span.car-status.dropped::before{
 	content: "ban";
 }
