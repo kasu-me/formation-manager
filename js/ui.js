@@ -41,7 +41,6 @@ function list() {
 	for (let seriesId in seriesList) {
 		//テーブルを生成
 		tables.push(new Table(seriesList[seriesId].name));
-		//tables.at(-1).setBorder(1);
 		tables.at(-1).setSubtitle(seriesList[seriesId].description);
 		tables.at(-1).setAttributes({"class":"formation-table"});
 		//現時点で組成されている編成を取得
@@ -52,7 +51,6 @@ function list() {
 			tables.at(-1).addRow();
 			//編成番号セルを追加
 			tables.at(-1).addCell(`${formationList[formationId].name}<button onclick="displayFormationDeteal(${formationId})" class="lsf-icon" icon="search">編成詳細</button>`,{"class":"formation-name"});
-			tables.at(-1).addCell("",{"class":"separator"});
 			//車両ごとに処理
 			let carsOnFormation = formationList[formationId].cars;
 			for (let i in carsOnFormation) {
@@ -62,7 +60,6 @@ function list() {
 			//所属地セルを追加
 			//tables.at(-1).addCell(formationList[formationId].belongsTo==null?"運用離脱":formationList[formationId].belongsTo,{"class":"belongs"});
 			//組成年月セルを追加
-			tables.at(-1).addCell("",{"class":"separator"});
 			tables.at(-1).addCell(formationList[formationId].formatedOn.toStringWithLink());
 			//コントロールセルを追加
 			//tables.at(-1).addCell(`<button onclick="displayFormationDeteal(${formationId})">編成詳細</button>`);
@@ -73,7 +70,7 @@ function list() {
 
 	//編成に組み込まれていない車両を処理
 	tables.push(new Table("編成に所属していない車両"));
-	//tables.at(-1).setBorder(1);
+	tables.at(-1).setAttributes({"class":"not-formated-car-table"});
 	tables.at(-1).addRow();
 	for (let carId in cars.carsList) {
 		//編成に組み込まれている車両および未製造の車両は除外する
@@ -90,11 +87,11 @@ function list() {
 		return self.indexOf(x) === i && i !== self.lastIndexOf(x);
 	});
 
-	document.querySelector("#table-container").innerHTML = `${(duplications.length > 0)?`<div class="warning message">車両番号の重複があります</div>`:""}${html}`;
+	document.querySelector("#formation-table-container").innerHTML = `${(duplications.length > 0)?`<div class="warning message">車両番号の重複があります</div>`:""}${html}`;
 
 	//重複ハイライト
 	if (duplications.length > 0) {
-		let tds = document.querySelectorAll("#table-container td.car");
+		let tds = document.querySelectorAll("#formation-table-container td.car");
 		for (let td of tds) {
 			for (let j in duplications) {
 				if (td.innerHTML.match(new RegExp(duplications[j],"g"))!=null) {
@@ -154,7 +151,7 @@ function displayTemplates() {
 		table.addCell(`${serieses.seriesesList[formationTemplateList[formationTemplateId].seriesId].name}`, { "class": "formation-name" });
 		for (let i in formationTemplateList[formationTemplateId].carNumbers) {
 			if (i >= maxCellCount) {
-				table.addCell("…");
+				table.addCell("&nbsp;…&nbsp;");
 				break;
 			}
 			table.addCell(formationTemplateList[formationTemplateId].carNumbers[i](1));
@@ -210,7 +207,7 @@ function createFormationTemplate(x) {
 //車両の詳細ダイアログを表示
 function displayCarDeteal(x) {	
 	let table = new Table();
-	table.setSubtitle(`<p class="car-name"><b><span id="cardt-car-number">${cars.carsList[x].number}</span>号車</b><button class="lsf-icon" icon="pen" onclick="displayCarRenumberDialog()">改番</button><span class="car-status lsf-icon ${cars.carsList[x].isActive?"":"dropped"}">${cars.carsList[x].isActive?"現役":`${cars.carsList[x].droppedOn.toStringWithLink()}廃車`}</span></p>`);
+	table.setSubtitle(`<p class="car-name"><b><span id="cardt-car-number">${cars.carsList[x].number}</span>号車</b><button class="lsf-icon" icon="pen" onclick="displayCarRenumberDialog()">改番</button><span class="car-status lsf-icon ${cars.carsList[x].isActive?"":"dropped"}">${cars.carsList[x].isActive?"現役":`${cars.carsList[x].droppedOn.toString()}廃車`}</span></p>`);
 
 	//所属編成を探す
 	let formation = formations.searchCarById(x,now);
@@ -251,7 +248,7 @@ function displayCarRenumberDialog() {
 			carDetealDialog.off();
 			return;
 		}
-		document.querySelector("#carrn-main").innerHTML = `<p><input id="carrn-car-number" placeholder="${cars.carsList[carId].number}">号車</p><div id="carrn-opening">${carId}</div>`
+		document.querySelector("#carrn-main").innerHTML = `<p><input id="carrn-car-number" placeholder="${cars.carsList[carId].number}" value="${cars.carsList[carId].number}">号車</p><div id="carrn-opening">${carId}</div>`
 		carRenumberDialog.on();
 	}
 }
@@ -341,7 +338,7 @@ function displayFormationRenameDialog() {
 	//親ダイアログが表示されている状態以外での実行を禁止
 	if (formationDetealDialog.isActive) {
 		let formationId = Number(document.querySelector('#fmdt-opening').innerHTML);
-		document.querySelector("#fmrn-main").innerHTML = `<p><input id="fmrn-formation-name" placeholder="${formations.formationsList[formationId].name}"></p><div id="fmrn-opening">${formationId}</div>`
+		document.querySelector("#fmrn-main").innerHTML = `<p><input id="fmrn-formation-name" placeholder="${formations.formationsList[formationId].name}" value="${formations.formationsList[formationId].name}"></p><div id="fmrn-opening">${formationId}</div>`
 		formationRenameDialog.on();
 	}
 }

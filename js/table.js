@@ -66,10 +66,10 @@ class Table{
 
 	//表HTMLを生成
 	generateTable() {
-		let html = `<div>`;
+		let html = `<div class="generated-table-container"><div class="generated-table-headers">`;
 		html += this.#title != null ? `<p class="table-title">${this.#title}</p>` : "";
 		html += this.#subtitle != null ? `<p class="table-subtitle">${this.#subtitle}</p>` : "";
-		html += `<table border="${this.#border}"${Attribute.generateHTML(this.#attrs)}>`;
+		html += `</div><table border="${this.#border}"${Attribute.generateHTML(this.#attrs)}>`;
 		for (let i in this.#rows) {
 			html += `<tr>`;
 			for (let j in this.#rows[i]) {

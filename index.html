@@ -29,7 +29,7 @@
 		<input type="range" oninput="updateNowYearMonth(new YearMonth(Number(this.value)))" id="now-range">
 		<input type="number" id="now-y" onchange="updateNowYearMonthByInputBoxes()" onkeyup="updateNowYearMonthByInputBoxes()">年<input type="number" min="1" max="12" id="now-m" onchange="updateNowYearMonthByInputBoxes()" onkeydown="if(event.code=='ArrowDown'&&this.value=='1'){this.value='13';document.querySelector('#now-y').value=Number(document.querySelector('#now-y').value)-1}else if(event.code=='ArrowUp'&&this.value=='12'){this.value='0';document.querySelector('#now-y').value=Number(document.querySelector('#now-y').value)+1}" onkeyup="updateNowYearMonthByInputBoxes()">月
 	</div>
-	<div id="table-container">
+	<div id="formation-table-container">
 
 	</div>
 </body>
