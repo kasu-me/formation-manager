@@ -214,7 +214,7 @@ p:has(#cardt-car-number),p:has(#fmdt-formation-number){
 p.car-name button{
 	margin-left: 1em;
 	font-size: 0.7em;
-	transform: translateY(-0.6em);
+	transform: translateY(-0.35em);
 }
 
 /* 編成編集ボタン */
