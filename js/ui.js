@@ -84,13 +84,6 @@ function list() {
 	html += tables.at(-1).generateTable();
 
 	//車両番号の重複をチェック
-	/*
-	let duplications = carListNow.filter(function (x, i, array) {
-		return !(array.findIndex(function (y) {
-		  return y.number === x.number;
-		}) === i)
-	});
-	*/
 	let duplications =  carListNow.filter(function (x, i, self) {
 		return self.indexOf(x) === i && i !== self.lastIndexOf(x);
 	});
