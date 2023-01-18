@@ -221,7 +221,7 @@ function displayCarDeteal(x) {
 	for (let i in oldNumbers) {
 		oldNumbersText = `<li>${oldNumbers[i].number} <small>(～${oldNumbers[i].renumberedOn.toStringWithLink()})</small></li>${oldNumbersText}`;
 	}
-	oldNumbersText = `<ul><li>${cars.carsList[x].number} <small>(${oldNumbers.length>0?`${oldNumbers.at(-1).renumberedOn.toStringWithLink()}`:`${cars.carsList[x].manufacturedOn.toStringWithLink()}`}～${cars.carsList[x].isDropped?cars.carsList[x].droppedOn:""})</small></li>${oldNumbersText}</ul>`;
+	oldNumbersText = `<ul><li>${cars.carsList[x].number} <small>(${oldNumbers.length>0?`${oldNumbers.at(-1).renumberedOn.toStringWithLink()}`:`${cars.carsList[x].manufacturedOn.toStringWithLink()}`}～${cars.carsList[x].isDropped?cars.carsList[x].droppedOn.toStringWithLink():""})</small></li>${oldNumbersText}</ul>`;
 
 	table.addRow();
 	table.addCell("車両ID");

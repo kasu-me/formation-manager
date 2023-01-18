@@ -8,6 +8,7 @@ body{
 	color:#000;
 }
 a:link,a:visited{
+	text-decoration: none;
 	color:#00f;
 }
 a:hover{
@@ -24,6 +25,37 @@ div.separator{
 	height: 1.5em;
 	vertical-align: middle;
 	background-color: #bbb;
+}
+td.separator{
+	padding-left: 1.0em;
+}
+a.update-yearmonth-link{
+	text-decoration: none;
+}
+a.update-yearmonth-link:hover{
+	color:#f00;
+}
+a.update-yearmonth-link::before{
+	content:"time";
+	margin:0 0.1em;
+	font-size:100%;
+	font-family: 'LigatureSymbols';
+	-webkit-text-rendering: optimizeLegibility;
+	-moz-text-rendering: optimizeLegibility;
+	-ms-text-rendering: optimizeLegibility;
+	-o-text-rendering: optimizeLegibility;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	-ms-font-smoothing: antialiased;
+	-o-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+	-webkit-font-feature-settings: "liga" 1, "dlig" 1;
+	-moz-font-feature-settings: "liga=1, dlig=1";
+	-ms-font-feature-settings: "liga" 1, "dlig" 1;
+	-o-font-feature-settings: "liga" 1, "dlig" 1;
+	font-feature-settings: "liga" 1, "dlig" 1;
+	font-weight: 100;
 }
 
 div#header{
