@@ -1,0 +1,136 @@
+/* 全般 */
+body{
+	margin: 0;
+}
+*{
+	font-family: sans-serif;
+	box-sizing: border-box;
+	color:#000;
+}
+a:link,a:visited{
+	color:#00f;
+}
+a:hover{
+	color:#f00;
+	text-decoration: none;
+}
+button{
+	cursor: pointer;
+}
+div.separator{
+	display: inline-block;
+	width:1px;
+	margin: 0 0.5em;
+	height: 1.5em;
+	vertical-align: middle;
+	background-color: #bbb;
+}
+
+div#header{
+    z-index: 999999;
+    position: relative;
+	background-color: #fff;
+	margin:0;
+	padding:0.8em;
+}
+div#table-container{
+	margin: 0.8em;
+}
+
+/* テーブル */
+p.table-title{
+	font-weight: bold;
+	margin-bottom: 0;
+}
+p.table-subtitle{
+	font-size: 0.8em;
+	margin: 0;
+}
+
+/* メッセージ */
+.message{
+	padding:1.0em;
+	margin: 1.0em auto;
+}
+.warning{
+	border: 1px solid #f00;
+}
+
+/* ダイアログの中のテーブル */
+.dialog-content .table-container{
+	max-height: 10em;
+	overflow: auto;
+}
+
+/* TD要素の見出し */
+td.formation-name,#cardt-main table tr > td:first-child{
+	font-weight: bold;
+}
+
+/*車両詳細ダイアログのTD内のUL*/
+#cardt-main table tr > td ul{
+    margin: 0;
+    padding-left: 0;
+	list-style: none;
+}
+#cardt-main table tr > td ul li::before{
+    content:"・";
+	display:inline;
+}
+
+/* 廃車 */
+td.dropped{
+	text-decoration: line-through;
+	background-color: #bbb;
+}
+/* 重複した車両番号 */
+td.duplicated{
+	background-color: #ff0;
+}
+
+/* ダイアログの情報保持用DIV */
+div[id$="-opening"]{
+	display:none;
+}
+
+/* 車両詳細および編成詳細ダイアログ内の車両番号･編成番号 */
+p:has(#cardt-car-number),p:has(#fmdt-formation-number){
+	margin-top: -0.8em;
+}
+#cardt-car-number, #fmdt-formation-number{
+	font-size:2.0em;
+}
+
+/* 改番ボタン */
+p.car-name button{
+    border: none;
+    margin-left: 1em;
+    font-size: 0.7em;
+    transform: translateY(-2px);
+}
+
+/* 編成編集ボタン */
+td.formation-name button{
+    border: none;
+    margin-left: 0.5em;
+    font-size: 0.7em;
+}
+
+/* 車両及び編成の状態 */
+p.car-name span.car-status{
+    background-color: #00c900;
+    border-radius: 5px;
+    color: #fff;
+    padding: 0 0.2em;
+    float: right;
+    margin-top: 0.5em;
+}
+p.car-name span.car-status::before{
+	content: "check";
+}
+p.car-name span.car-status.dropped{
+    background-color: #f00;
+}
+p.car-name span.car-status.dropped::before{
+	content: "ban";
+}
