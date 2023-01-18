@@ -1,5 +1,5 @@
 :root{
-	--formation-table-main-border:#5a2b8b;
+	--formation-table-main-border:#5c3d7e;
 }
 
 /* 全般 */
@@ -87,7 +87,9 @@ div#header{
 	position: relative;
 	background-color: #fff;
 	margin:0;
+	margin-bottom: 2.0em;
 	padding:0.8em;
+	border-bottom: 1px solid #bbb;
 }
 
 /* メイン編成表 */
