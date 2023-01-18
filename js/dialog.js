@@ -112,9 +112,9 @@ window.addEventListener("load",function(){
 		<div id="fromt-opening">
 		</div>
 		<div id="fromt-template-legend"></div>
-		<div>
+		<p>
 			<button onclick="displayTemplates()">他のテンプレートを使う</button>
-		</div>
+		</p>
 	`, [{ "content": "編成作成", "event": `fromtCreate()`, "icon": "check" }, { "content": "キャンセル", "event": `createFormationFromTemplateDialog.off();`, "icon": "close" }]);
 	
 	//cref

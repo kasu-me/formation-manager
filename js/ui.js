@@ -183,6 +183,8 @@ function createFormationFromTemplateDialogUpdateTable(x,y) {
 	table.setBorder(1);
 	table.setSubtitle("作成される編成のプレビュー");
 	table.addRow();
+	table.addCell(`編成番号:${formationTemplate.formationName(y)}`,{"colspan":formationTemplate.carNumbers.length});
+	table.addRow();
 	for (let i in formationTemplate.carNumbers) {
 		table.addCell(formationTemplate.carNumbers[i](y));
 	}
