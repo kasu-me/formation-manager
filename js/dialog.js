@@ -107,8 +107,8 @@ window.addEventListener("load",function(){
 	formationAddingDialog = new Dialog("formationAddingDialog", "編成を作成", ``, [{ "content": "編成テンプレートから作成", "event": `displayTemplates()`, "icon": "add" }, { "content": "手動で作成", "event": ``, "icon": "add" }, { "content": "キャンセル", "event": `formationAddingDialog.off();`, "icon": "close" }]);
 	//fromt
 	createFormationFromTemplateDialog = new Dialog("createFormationFromTemplateDialog", "編成テンプレートから編成作成", `
-		<p>番号:<input id="fromt-car-number" type="number" value="1" onchange="createFormationFromTemplateDialogUpdateTable(Number(document.querySelector('#fromt-opening').innerHTML),Number(this.value))" onkeyup="createFormationFromTemplateDialogUpdateTable(Number(document.querySelector('#fromt-opening').innerHTML),Number(this.value))"></p>
-		<p>所属:<input id="fromt-car-belongs-to"></p>
+		<p><label><span>番号:</span><input id="fromt-car-number" type="number" value="1" onchange="createFormationFromTemplateDialogUpdateTable(Number(document.querySelector('#fromt-opening').innerHTML),Number(this.value))" onkeyup="createFormationFromTemplateDialogUpdateTable(Number(document.querySelector('#fromt-opening').innerHTML),Number(this.value))"></label></p>
+		<p><label><span>所属:</span><input id="fromt-car-belongs-to"></label></p>
 		<div id="fromt-opening">
 		</div>
 		<div id="fromt-template-legend"></div>

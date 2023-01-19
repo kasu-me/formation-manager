@@ -145,16 +145,16 @@ function displaySerieses() {
 function displayTemplates() {
 	let formationTemplateList = formationTemplates.getFormationTemplateList();
 	let table = new Table();
-	let maxCellCount = 4;
+	let maxCellCount = 3;
 	for (let formationTemplateId in formationTemplateList) {
 		table.addRow();
 		table.addCell(`${serieses.seriesesList[formationTemplateList[formationTemplateId].seriesId].name}`, { "class": "formation-name" });
 		for (let i in formationTemplateList[formationTemplateId].carNumbers) {
 			if (i >= maxCellCount) {
-				table.addCell("&nbsp;…&nbsp;");
+				table.addCell("&nbsp;…&nbsp;", { "class": "separator" });
 				break;
 			}
-			table.addCell(formationTemplateList[formationTemplateId].carNumbers[i](1));
+			table.addCell(formationTemplateList[formationTemplateId].carNumbers[i](1),{"class":"car"});
 		}
 	}
 	table.addBlankCellToRowRightEnd();
@@ -178,6 +178,7 @@ function createFormationFromTemplateDialogUpdateTable(x,y) {
 	let formationTemplate = formationTemplates.getFormationTemplate(x);
 	let table = new Table();
 	table.setSubtitle("作成される編成のプレビュー");
+	table.setAttributes({ "class": "formation-view" });
 	table.addRow();
 	table.addCell(`編成番号:${formationTemplate.formationName(y)}`,{"colspan":formationTemplate.carNumbers.length});
 	table.addRow();
@@ -322,6 +323,7 @@ function dropCar(carId_) {
 //編成の詳細ダイアログを表示
 function displayFormationDeteal(x) {
 	let table = new Table();
+	table.setAttributes({ "class": "formation-view" });
 	let formation = formations.formationsList[x];
 	table.setSubtitle(`<p class="car-name"><b><span id="fmdt-formation-number">${formation.name}</span></b> (${formation.formatedOn.toStringWithLink()}～${formation.isTerminated ? `${formation.terminatedOn.toStringWithLink()}` : ``})<button class="lsf-icon" icon="pen" onclick="displayFormationRenameDialog()">名称変更</button></p><div id="fmdt-opening">${x}</div>`);
 	table.addRow();
