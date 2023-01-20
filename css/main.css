@@ -186,13 +186,15 @@ p.table-subtitle{
 }
 
 /* TD要素の見出し */
-td.formation-name,#cardt-main table tr > td:first-child{
+td.formation-name,#cardt-main table tr > td:first-child:not(.remark){
 	font-weight: bold;
 	color:var(--formation-table-main-border);
 	text-align: right;
 	padding: 0.15em 0.6em;
 }
-
+#cardt-main table tr > td:first-child.remark{
+	text-align: left;
+}
 /*車両詳細ダイアログのTD内のUL*/
 #cardt-main table tr > td ul{
 	margin: 0;

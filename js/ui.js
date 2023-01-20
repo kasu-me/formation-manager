@@ -279,6 +279,17 @@ function displayCarDeteal(x) {
 	table.addRow();
 	table.addCell("車歴");
 	table.addCell(oldNumbersText);
+	table.addRow();
+	table.addCell("備考", { "rowspan": cars.carsList[x].remarks.length });
+	for (let i in cars.carsList[x].remarks) {
+		if (i != 0) {
+			table.addRow();
+		}
+		table.addCell(cars.carsList[x].remarks[i],{"class":"remark"});
+	}
+	if (cars.carsList[x].remarks.length == 0) {
+		table.addCell("");
+	}
 	document.querySelector("#cardt-main").innerHTML=table.generateTable();
 	carDetealDialog.on();
 }
