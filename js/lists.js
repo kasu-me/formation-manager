@@ -9,6 +9,7 @@ class AllSerieses{
 	}
 	addSeries(series) {
 		this.#serieses.push(series);
+		return this.#serieses.length - 1;
 	}
 }
 
