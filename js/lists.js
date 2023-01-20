@@ -106,8 +106,7 @@ class AllFormations{
 		for (let i in baseCarNums) {
 			carIds.push(allCars.addCar(new Car(baseCarNums[i](number).toString(),ym)));
 		}
-		this.addFormation(new Formation(formationTemplate.seriesId, formationTemplate.formationName(number).toString(), carIds, belongsTo, ym));
-		return { "carIds": carIds};
+		return { "carIds": carIds,"formationId":this.addFormation(new Formation(formationTemplate.seriesId, formationTemplate.formationName(number).toString(), carIds, belongsTo, ym))};
 	}
 
 	//編成解除
