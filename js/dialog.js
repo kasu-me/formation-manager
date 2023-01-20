@@ -118,11 +118,10 @@ window.addEventListener("load",function(){
 	`, [{ "content": "編成作成", "event": `fromtCreate()`, "icon": "check" }, { "content": "キャンセル", "event": `createFormationFromTemplateDialog.off();`, "icon": "close" }]);
 	//forfc
 	createFormationFromFloatingCarsDialog = new Dialog("createFormationFromFloatingCarsDialog", "編成に所属していない車両から編成作成", `
-	<p><label><span>所属:</span><input id="forfc-car-belongs-to"></label></p>
 	<div id="forfc-cars-table"></div>
 	<div id="forfc-not-formated-cars-table"></div>
-	<div id="forfc-opening">
-	</div>
+	<p><label><span>所属:</span><input id="forfc-car-belongs-to"></label></p>
+	<div id="forfc-new-formation"></div>
 	<div id="forfc-template-legend"></div>
 `, [{ "content": "編成作成", "event": `forfcCreate()`, "icon": "check" }, { "content": "キャンセル", "event": `createFormationFromFloatingCarsDialog.off();`, "icon": "close" }]);
 	
