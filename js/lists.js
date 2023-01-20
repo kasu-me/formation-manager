@@ -50,6 +50,17 @@ class AllCars{
 		return carsList;
 	}
 
+	//車両番号で検索
+	searchCarNumber(number) {
+		let carsList = {};
+		for (let i in this.#cars) {
+			if (this.#cars[i].number==number) {
+				carsList[i]=this.#cars[i]
+			}
+		}
+		return carsList;
+	}
+
 	get carsList() {
 		return this.#cars;
 	}
