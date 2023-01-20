@@ -170,7 +170,7 @@ class AllFormations{
 	}
 
 	//車両IDから現時点での所属編成を探し編成IDで返す(見つからなかった場合-1を返す)
-	searchCarById(targetCarId,ym) {
+	searchByCarId(targetCarId,ym) {
 		for (let formationId in this.#formations) {
 			if (this.isStillEnrolled(formationId,ym)) {
 				for (let i in this.#formations[formationId].cars) {
@@ -200,6 +200,7 @@ class AllFormationTemplates{
 	addFormationTemplate(formationTemplate) {
 		if (formationTemplate instanceof FormationTemplate) {
 			this.#formationTemplates.push(formationTemplate);
+			return this.#formationTemplates.length - 1;
 		} else {
 			console.error("FormationTemplateクラスのオブジェクトを追加してください");
 		}

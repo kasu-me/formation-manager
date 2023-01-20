@@ -264,7 +264,7 @@ function displayCarDeteal(x) {
 	table.setSubtitle(`<p class="car-name"><b><span id="cardt-car-number">${cars.carsList[x].numberInTime(now)}</span>号車</b><button class="lsf-icon" icon="pen" onclick="displayCarRenumberDialog()">改番</button><span class="car-status lsf-icon ${cars.carsList[x].isActive?"":"dropped"}">${cars.carsList[x].isActive?"現役":`${cars.carsList[x].droppedOn.toString()}廃車`}</span></p>`);
 	table.setAttributes({ "class": "horizontal-stripes" });
 	//所属編成を探す
-	let formation = formations.searchCarById(x, now);
+	let formation = formations.searchByCarId(x, now);
 	//車歴
 	let oldNumbers = cars.carsList[x].oldNumbers;
 	let oldNumbersText = ``;
@@ -352,7 +352,7 @@ function dropCar(carId_) {
 	} else {
 		//廃車
 		cars.dropCar(carId_, now);
-		let formationId = formations.searchCarById(carId_, now);
+		let formationId = formations.searchByCarId(carId_, now);
 		//編成に所属していた場合、編成を解除
 		if (formationId != -1) {
 			let cars = formations.formationsList[formationId].cars;
@@ -484,7 +484,7 @@ function setInputMaxAndMin() {
 	document.querySelector("#now-range").setAttribute("max", maxYearMonth.serial);
 	document.querySelector("#now-y").setAttribute("min", minYearMonth.year);
 	document.querySelector("#now-y").setAttribute("max", maxYearMonth.year);
-	now = minYearMonth;
+	now = maxYearMonth;
 }
 
 //年月関連のグローバル変数の定義
