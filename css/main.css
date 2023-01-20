@@ -113,10 +113,16 @@ div#formation-table-container div.generated-table-headers{
 	margin-bottom: 0.5em;
 }
 /* 交互に色を付けるやつ */
-div#formation-table-container table.formation-table tr:nth-child(2n+1),div#formation-table-container table.not-formated-car-table tr td:nth-child(2n+1),div#cardt-main table tr:nth-child(2n+1),table.formation-view tr:nth-child(2) td:nth-child(2n+1),div#formationTemplatesDialog table tr:nth-child(2n+1),div#seriesDispDialog table tr:nth-child(2n+1){
+table.horizontal-stripes tr:nth-child(2n+1),
+table.vertical-stripes tr td:nth-child(2n+1),
+table.vertical-stripes.not-formated-car-table tr:nth-child(2n) td:nth-child(2n),
+table.formation-view tr:nth-child(2) td:nth-child(2n+1){
 	background-color:#f7f0ff;
 }
-div#formation-table-container table.formation-table tr:nth-child(2n),div#formation-table-container table.not-formated-car-table tr td:nth-child(2n),div#cardt-main table tr:nth-child(2n),table.formation-view tr:nth-child(2) td:nth-child(2n),div#formationTemplatesDialog table tr:nth-child(2n),div#seriesDispDialog table tr:nth-child(2n){
+table.horizontal-stripes tr:nth-child(2n),
+table.vertical-stripes tr td:nth-child(2n),
+table.vertical-stripes.not-formated-car-table tr:nth-child(2n) td:nth-child(2n+1),
+table.formation-view tr:nth-child(2) td:nth-child(2n){
 	background-color: #fdfbff;
 }
 div#formation-table-container table.formation-table tr td{
@@ -141,7 +147,11 @@ div#formation-table-container table.formation-table tr td:first-child, td.format
 div#formation-table-container table.formation-table tr td:last-child{
 	border-left: 1px solid var(--formation-table-main-border);
 }
-div#formation-table-container table.not-formated-car-table tr td{
+/* 未組成車両セル */
+table.not-formated-car-table tr{
+	border-bottom: 2px solid var(--formation-table-main-border);
+}
+table.not-formated-car-table tr td{
 	border-left: 2px solid var(--formation-table-main-border);
 }
 table.formation-view tr:nth-child(1) td{

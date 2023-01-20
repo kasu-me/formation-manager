@@ -104,7 +104,7 @@ window.addEventListener("load",function(){
 	//fort
 	formationTemplatesDialog = new Dialog("formationTemplatesDialog", "編成テンプレート一覧", `<div class="table-container"></div>`, [{ "content": "テンプレート追加", "event": ``, "icon": "add" }, { "content": "閉じる", "event": `formationTemplatesDialog.off();`, "icon": "close" }]);
 	//fora
-	formationAddingDialog = new Dialog("formationAddingDialog", "編成を作成", ``, [{ "content": "編成テンプレートから作成", "event": `displayTemplates()`, "icon": "add" }, { "content": "編成に所属していない車両から作成", "event": ``, "icon": "add" }, { "content": "キャンセル", "event": `formationAddingDialog.off();`, "icon": "close" }]);
+	formationAddingDialog = new Dialog("formationAddingDialog", "編成を作成", ``, [{ "content": "編成テンプレートから作成", "event": `displayTemplates()`, "icon": "add" }, { "content": "編成に所属していない車両から作成", "event": `displayNotFormatedCars()`, "icon": "add" }, { "content": "キャンセル", "event": `formationAddingDialog.off();`, "icon": "close" }]);
 	//fromt
 	createFormationFromTemplateDialog = new Dialog("createFormationFromTemplateDialog", "編成テンプレートから編成作成", `
 		<p><label><span>番号:</span><input id="fromt-car-number" type="number" value="1" onchange="createFormationFromTemplateDialogUpdateTable(Number(document.querySelector('#fromt-opening').innerHTML),Number(this.value))" onkeyup="createFormationFromTemplateDialogUpdateTable(Number(document.querySelector('#fromt-opening').innerHTML),Number(this.value))"></label></p>
@@ -116,6 +116,15 @@ window.addEventListener("load",function(){
 			<button onclick="displayTemplates()">他のテンプレートを使う</button>
 		</p>
 	`, [{ "content": "編成作成", "event": `fromtCreate()`, "icon": "check" }, { "content": "キャンセル", "event": `createFormationFromTemplateDialog.off();`, "icon": "close" }]);
+	//forfc
+	createFormationFromFloatingCarsDialog = new Dialog("createFormationFromFloatingCarsDialog", "編成に所属していない車両から編成作成", `
+	<p><label><span>所属:</span><input id="forfc-car-belongs-to"></label></p>
+	<div id="forfc-cars-table"></div>
+	<div id="forfc-not-formated-cars-table"></div>
+	<div id="forfc-opening">
+	</div>
+	<div id="forfc-template-legend"></div>
+`, [{ "content": "編成作成", "event": `forfcCreate()`, "icon": "check" }, { "content": "キャンセル", "event": `createFormationFromFloatingCarsDialog.off();`, "icon": "close" }]);
 	
 	//cref
 	createFormationTemplateDialog = new Dialog("createFormationTemplateDialog", "編成テンプレートを作成", `<select id="cref-formationTemplateId"></select>`, [{ "content": "編成作成", "event": `displayTemplates()`, "icon": "check" }, { "content": "キャンセル", "event": `createFormationTemplateDialog.off();`, "icon": "close" }]);

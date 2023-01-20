@@ -42,7 +42,7 @@ function list() {
 		//テーブルを生成
 		tables.push(new Table(seriesList[seriesId].name));
 		tables.at(-1).setSubtitle(seriesList[seriesId].description);
-		tables.at(-1).setAttributes({"class":"formation-table"});
+		tables.at(-1).setAttributes({"class":"formation-table horizontal-stripes"});
 		//現時点で組成されている編成を取得
 		let formationList = formations.getBySeriesIdAndYearMonth(seriesId, now);
 		//編成ごとに処理
@@ -70,16 +70,19 @@ function list() {
 
 	//編成に組み込まれていない車両を処理
 	tables.push(new Table("編成に所属していない車両"));
-	tables.at(-1).setAttributes({"class":"not-formated-car-table"});
-	tables.at(-1).addRow();
+	tables.at(-1).setAttributes({ "class": "not-formated-car-table vertical-stripes" });
 	for (let carId in cars.carsList) {
 		//編成に組み込まれている車両および未製造の車両は除外する
 		if (proccessedCarIds.includes(Number(carId)) || cars.carsList[carId].manufacturedOn.serial>now.serial) {
 			continue;
-		} else{
+		} else {
+			if (tables.at(-1).cellCountOfLastRow%10==0) {
+				tables.at(-1).addRow();
+			}
 			addCarCell(tables.at(-1),carId,carListNow,false);
 		}
 	}
+	tables.at(-1).addBlankCellToRowRightEnd();
 	html += tables.at(-1).generateTable();
 
 	//車両番号の重複をチェック
@@ -114,7 +117,7 @@ function addCarCell(table, carId, carListNow,isInFormation) {
 }
 
 //編成に所属していない車両のリストアップ
-function listUpNotFormatedCars() {
+function listUpNotFormatedCarIds() {
 	let carIdsList = [];
 	let enrolledFormations = formations.getFormationsByYearMonth(now);
 	for (let i in enrolledFormations) {
@@ -138,12 +141,14 @@ function reflesh() {
 	document.querySelector("#now-m").value = now.month;
 }
 
+
 //以下、ダイアログ関連
 
 //形式一覧ダイアログを表示
 function displaySerieses() {
 	let seriesList = serieses.seriesesList;
 	let table = new Table();
+	table.setAttributes({ "class": "horizontal-stripes" });
 	for (let seriesId in seriesList) {
 		table.addRow();
 		table.addCell(`${seriesList[seriesId].name}`,{"class":"formation-name"});
@@ -158,6 +163,7 @@ function displaySerieses() {
 function displayTemplates() {
 	let formationTemplateList = formationTemplates.getFormationTemplateList();
 	let table = new Table();
+	table.setAttributes({ "class": "horizontal-stripes" });
 	let maxCellCount = 3;
 	for (let formationTemplateId in formationTemplateList) {
 		table.addRow();
@@ -208,6 +214,24 @@ function fromtCreate(){
 		createFormationFromTemplateDialog.off();
 	}
 }
+//編成されていない車両一覧ダイアログを表示
+function displayNotFormatedCars() {
+	let formationTemplateList = formationTemplates.getFormationTemplateList();
+	let table = new Table();
+	table.setAttributes({ "class": "vertical-stripes not-formated-car-table" });
+	table.setSubtitle("編成に所属していない車両一覧");
+	let maxCellCount = 10;
+	let carIds = listUpNotFormatedCarIds();
+	for (let id of carIds) {
+		if (table.cellCountOfLastRow%maxCellCount == 0) {
+			table.addRow();
+		}
+		table.addCell(cars.carsList[id].number);
+	}
+	table.addBlankCellToRowRightEnd();
+	document.querySelector("#forfc-not-formated-cars-table").innerHTML = table.generateTable();
+	createFormationFromFloatingCarsDialog.on();
+}
 //編成テンプレートを作成ダイアログを表示
 function createFormationTemplate(x) {
 	let formationTemplateList = formationTemplates.getFormationTemplateList();
@@ -222,7 +246,7 @@ function createFormationTemplate(x) {
 function displayCarDeteal(x) {	
 	let table = new Table();
 	table.setSubtitle(`<p class="car-name"><b><span id="cardt-car-number">${cars.carsList[x].number}</span>号車</b><button class="lsf-icon" icon="pen" onclick="displayCarRenumberDialog()">改番</button><span class="car-status lsf-icon ${cars.carsList[x].isActive?"":"dropped"}">${cars.carsList[x].isActive?"現役":`${cars.carsList[x].droppedOn.toString()}廃車`}</span></p>`);
-
+	table.setAttributes({ "class": "horizontal-stripes" });
 	//所属編成を探す
 	let formation = formations.searchCarById(x, now);
 	//車歴

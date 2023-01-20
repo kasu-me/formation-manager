@@ -10,6 +10,11 @@ class Table{
 		this.setTitle(title);
 		this.setSubtitle(subtitle);
 	}
+	//最期の行のセル数
+	get cellCountOfLastRow() {
+		if (this.#rows.length==0){return 0}
+		return this.#rows.at(-1).length;
+	}
 	//最後の行にセルを追加
 	addCell(html, attrs) {
 		this.addCellTo(this.#rows.length - 1, html, attrs);
