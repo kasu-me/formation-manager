@@ -122,7 +122,7 @@ div#formation-table-container table.formation-table tr:nth-child(2n),div#formati
 div#formation-table-container table.formation-table tr td{
 	padding: 0.15em 0.3em;
 }
-div#formation-table-container table.formation-table tr td.car, table.formation-view tr:nth-child(2) td,div#cardt-main table td:nth-child(1),div#formationTemplatesDialog table tr td:not(.formation-name){
+div#formation-table-container table.formation-table tr td, table.formation-view tr:nth-child(2) td,div#cardt-main table td:nth-child(1),div#formationTemplatesDialog table tr td:not(.formation-name){
 	padding: 0.15em 0.5em;
 	border-right: 1px solid #ccc;
 	text-align: center;

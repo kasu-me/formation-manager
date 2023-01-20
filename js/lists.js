@@ -30,6 +30,25 @@ class AllCars{
 		}
 		this.#cars[carId].drop(droppedOn);
 	}
+	//now時点で現役な車両
+	activeCarsListInTime(now) {
+		let carsList = {};
+		for (let i in this.#cars) {
+			if (this.#cars[i].isActiveInTime(now)) {
+				carsList[i]=this.#cars[i]
+			}
+		}
+		return carsList;
+	}
+	activeCarIdsListInTime(now) {
+		let carsList = [];
+		for (let i in this.#cars) {
+			if (this.#cars[i].isActiveInTime(now)) {
+				carsList.push(Number(i));
+			}
+		}
+		return carsList;
+	}
 
 	get carsList() {
 		return this.#cars;
@@ -110,6 +129,16 @@ class AllFormations{
 				if (this.isStillEnrolled(formationId,ym)) {
 					list[formationId] = this.#formations[formationId];
 				}
+			}
+		}
+		return list;
+	}
+	//現在年月から、現在組成されている(組成年月<=現在年月<解除年月である)全編成を取得
+	getFormationsByYearMonth(ym) {
+		let list = {};
+		for (let formationId in this.#formations) {
+			if (this.isStillEnrolled(formationId,ym)) {
+				list[formationId] = this.#formations[formationId];
 			}
 		}
 		return list;

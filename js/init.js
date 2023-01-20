@@ -19,10 +19,13 @@ formations.addFormationFromTemplate(cars, formationTemplates.getFormationTemplat
 formations.addFormationFromTemplate(cars, formationTemplates.getFormationTemplate(1), 2,"",new YearMonth(1965,4));
 formations.addFormationFromTemplate(cars, formationTemplates.getFormationTemplate(1), 3,"",new YearMonth(1965,5));
 formations.addFormationFromTemplate(cars,formationTemplates.getFormationTemplate(0),3,"", new YearMonth(1965,6));
-cars.addCar(new Car(256,new YearMonth(1970,6)));
 formations.addFormationFromTemplate(cars,formationTemplates.getFormationTemplate(2),1);
 formations.addFormationFromTemplate(cars,formationTemplates.getFormationTemplate(2),2);
 formations.addFormationFromTemplate(cars,formationTemplates.getFormationTemplate(2),3);
 formations.addFormationFromTemplate(cars,formationTemplates.getFormationTemplate(2),4);
 formations.addFormationFromTemplate(cars,formationTemplates.getFormationTemplate(3),6,"",new YearMonth(1980,2));
 formations.addFormationFromTemplate(cars,formationTemplates.getFormationTemplate(4),1,"本線");
+formations.addFormationFromTemplate(cars,formationTemplates.getFormationTemplate(4),2,"本線");
+cars.addCar(new Car(1091,new YearMonth(1960,1)));
+cars.addCar(new Car(1092,new YearMonth(1960,1)));
+cars.addCar(new Car(1093,new YearMonth(1961,6)));

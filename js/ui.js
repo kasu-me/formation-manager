@@ -113,6 +113,20 @@ function addCarCell(table, carId, carListNow,isInFormation) {
 	}
 }
 
+//編成に所属していない車両のリストアップ
+function listUpNotFormatedCars() {
+	let carIdsList = [];
+	let enrolledFormations = formations.getFormationsByYearMonth(now);
+	for (let i in enrolledFormations) {
+		for (let j in enrolledFormations[i].cars) {
+			carIdsList.push(enrolledFormations[i].cars[j]);
+		}
+	}
+	return cars.activeCarIdsListInTime(now).filter((x) => {
+		return carIdsList.indexOf(x) == -1 && cars.carsList[x].isActiveInTime(now);
+	});
+}
+
 //表示を最新の状態にリフレッシュ
 function reflesh() {
 	//リストを表示
@@ -123,7 +137,6 @@ function reflesh() {
 	document.querySelector("#now-y").value = now.year;
 	document.querySelector("#now-m").value = now.month;
 }
-
 
 //以下、ダイアログ関連
 
@@ -405,7 +418,6 @@ function releaseFormationAndDropAllCars() {
 		}
 	}
 }
-
 //ダイアログ関連ここまで
 
 //現在年月の操作

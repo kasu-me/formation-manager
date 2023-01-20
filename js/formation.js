@@ -138,6 +138,14 @@ class Car{
 			return this.#droppedOn.serial <= now.serial;
 		}
 	}
+	//now時点で現役かどうかを取得
+	isActiveInTime(now) {
+		if (this.#droppedOn == undefined) {
+			return now.serial >= this.#manufacturedOn.serial;
+		} else {
+			return this.#droppedOn.serial > now.serial && now.serial >= this.#manufacturedOn.serial;
+		}
+	}
 
 	//now時点での車両番号を取得
 	numberInTime(now) {
