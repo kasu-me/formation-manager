@@ -26,8 +26,6 @@ function continueReadJSON() {
 //現存編成の編成表を表に出力
 function list() {
 	//ソート
-	formations.sortFormationByFormationNumber()
-
 	let seriesList = serieses.seriesesList;
 	let carListNow = [];
 	let tables = [];
@@ -45,8 +43,21 @@ function list() {
 		tables.at(-1).setAttributes({"class":"formation-table horizontal-stripes"});
 		//現時点で組成されている編成を取得
 		let formationList = formations.getBySeriesIdAndYearMonth(seriesId, now);
+
+		//ソート
+		let keys = Object.keys(formationList).sort((f1, f2) => {
+			if (formationList[f1].name < formationList[f2].name) {
+				return -1
+			} else if (formationList[f1].name > formationList[f2].name) {
+				return 1
+			} else {
+				return 0
+			}
+		});
+
+
 		//編成ごとに処理
-		for (let formationId in formationList) {
+		for (let formationId of keys) {
 			//行を追加
 			tables.at(-1).addRow();
 			//編成番号セルを追加

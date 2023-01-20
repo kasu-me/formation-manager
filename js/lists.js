@@ -97,7 +97,7 @@ class AllFormations{
 		}
 	}
 
-	//テンプレートから編成追加(AllCars 全車両リスト,テンプレートID, 番号, 所属, 組成年月(省略時は現在年月))
+	//テンプレートから編成追加(AllCars 全車両リスト,テンプレート, 番号, 所属, 組成年月(省略時は現在年月))
 	addFormationFromTemplate(allCars, formationTemplate, number, belongsTo, ym) {
 		if (belongsTo == "") { belongsTo = null; }
 		if (ym == null) { ym = now; }
@@ -107,6 +107,7 @@ class AllFormations{
 			carIds.push(allCars.addCar(new Car(baseCarNums[i](number).toString(),ym)));
 		}
 		this.addFormation(new Formation(formationTemplate.seriesId, formationTemplate.formationName(number).toString(), carIds, belongsTo, ym));
+		return { "carIds": carIds};
 	}
 
 	//編成解除
@@ -155,9 +156,9 @@ class AllFormations{
 		return list;
 	}
 
-	//編成を編成番号順に並び替え
+	//編成を編成番号順に並び替えたリストを返す
 	sortFormationByFormationNumber() {
-		this.#formations.sort((f1, f2) => {
+		return Array.from(this.#formations).sort((f1, f2) => {
 			if (f1.name < f2.name) {
 				return -1
 			} else if (f1.name > f2.name) {
