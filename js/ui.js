@@ -139,6 +139,11 @@ function reflesh() {
 	document.querySelector("#now-range").value = now.serial;
 	document.querySelector("#now-y").value = now.year;
 	document.querySelector("#now-m").value = now.month;
+
+	//ダイアログ内の表示を更新
+	if (carDetealDialog.isActive) {
+		displayCarDeteal(Number(document.querySelector('#cardt-car-id').innerHTML));
+	}
 }
 
 
@@ -245,7 +250,7 @@ function createFormationTemplate(x) {
 //車両の詳細ダイアログを表示
 function displayCarDeteal(x) {	
 	let table = new Table();
-	table.setSubtitle(`<p class="car-name"><b><span id="cardt-car-number">${cars.carsList[x].number}</span>号車</b><button class="lsf-icon" icon="pen" onclick="displayCarRenumberDialog()">改番</button><span class="car-status lsf-icon ${cars.carsList[x].isActive?"":"dropped"}">${cars.carsList[x].isActive?"現役":`${cars.carsList[x].droppedOn.toString()}廃車`}</span></p>`);
+	table.setSubtitle(`<p class="car-name"><b><span id="cardt-car-number">${cars.carsList[x].numberInTime(now)}</span>号車</b><button class="lsf-icon" icon="pen" onclick="displayCarRenumberDialog()">改番</button><span class="car-status lsf-icon ${cars.carsList[x].isActive?"":"dropped"}">${cars.carsList[x].isActive?"現役":`${cars.carsList[x].droppedOn.toString()}廃車`}</span></p>`);
 	table.setAttributes({ "class": "horizontal-stripes" });
 	//所属編成を探す
 	let formation = formations.searchCarById(x, now);
