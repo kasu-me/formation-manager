@@ -184,7 +184,8 @@ class Car{
 			oldNumbers:oldNumbers,
 			droppedOn:this.#droppedOn==undefined?undefined:{y:this.#droppedOn.year,m:this.#droppedOn.month},
 			isConserved:this.#isConserved,
-			manufacturedOn:{y:this.#manufacturedOn.year,m:this.#manufacturedOn.month}
+			manufacturedOn:{y:this.#manufacturedOn.year,m:this.#manufacturedOn.month},
+			remarks:this.#remarks
 		});
 	}
 }

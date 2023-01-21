@@ -233,7 +233,7 @@ class Deserializer{
 				for (let i in obj.oldNumbers) {
 					oldNumbers.push(new OldCarNumber(obj.oldNumbers[i].number, new YearMonth(obj.oldNumbers[i].renumberedOn)))
 				}
-				let car = new Car(obj.number, new YearMonth(obj.manufacturedOn.y,obj.manufacturedOn.m),oldNumbers);
+				let car = new Car(obj.number, new YearMonth(obj.manufacturedOn.y,obj.manufacturedOn.m),oldNumbers,obj.remarks);
 				if (Boolean(obj.droppedOn)) {
 					car.drop(new YearMonth(obj.droppedOn.y,obj.droppedOn.m));
 				}
