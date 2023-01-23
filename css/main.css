@@ -84,7 +84,10 @@ a.update-yearmonth-link::before{
 /* ヘッダ */
 div#header{
 	z-index: 999999;
-	position: relative;
+	position: fixed;
+	top:0;
+	left:0;
+	width: 100%;
 	background-color: #fff;
 	margin:0;
 	margin-bottom: 2.0em;
@@ -95,6 +98,7 @@ div#header{
 /* メイン編成表 */
 div#formation-table-container{
 	margin: 0.8em;
+	padding-top: 3.0em;
 }
 div#formation-table-container div.generated-table-container{
 	margin-bottom: 2.0em;
