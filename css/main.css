@@ -128,10 +128,19 @@ table.formation-view tr:nth-child(2) td:nth-child(2n){
 div#formation-table-container table.formation-table tr td{
 	padding: 0.15em 0.3em;
 }
+td.car{
+	text-align: center;
+}
+div#forfc-not-formated-cars-table td.car.selected{
+	background-color: #9a65d3;
+	color:#fff;
+}
+div#forfc-not-formated-cars-table td.car.selected a:link{
+	color:#fff;
+}
 div#formation-table-container table.formation-table tr td, table.formation-view tr:nth-child(2) td,div#cardt-main table td:nth-child(1),div#formationTemplatesDialog table tr td:not(.formation-name){
 	padding: 0.15em 0.5em;
 	border-right: 1px solid #ccc;
-	text-align: center;
 }
 div#cardt-main table td:nth-child(2){
 	padding: 0.15em 0.5em;
@@ -153,10 +162,14 @@ table.not-formated-car-table tr{
 }
 table.not-formated-car-table tr td{
 	border-left: 2px solid var(--formation-table-main-border);
+    padding: 0.15em 0.5em;
 }
 table.formation-view tr:nth-child(1) td{
 	background-color: var(--formation-table-main-border);
 	color:#fff;
+}
+div#forfc-new-formated-cars-table{
+	margin-top: 1.0em;
 }
 
 /* テーブル */

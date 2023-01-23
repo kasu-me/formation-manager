@@ -155,6 +155,9 @@ function reflesh() {
 	if (carDetealDialog.isActive) {
 		displayCarDeteal(Number(document.querySelector('#cardt-car-id').innerHTML));
 	}
+	if (createFormationFromFloatingCarsDialog.isActive) {
+		displayNotFormatedCars();
+	}
 }
 
 
@@ -208,7 +211,7 @@ function createFormationFromTemplate(x) {
 		createFormationFromTemplateDialog.on();
 	}
 }
-//編成テンプレートから編成を作成ダイアログのプレビューをアップデート
+//編成テンプレートから編成を作成ダイアログのプレビューをリフレッシュ
 function createFormationFromTemplateDialogUpdateTable(x,y) {
 	let formationTemplate = formationTemplates.getFormationTemplate(x);
 	let table = new Table();
@@ -230,9 +233,18 @@ function fromtCreate(){
 		createFormationFromTemplateDialog.off();
 	}
 }
-//編成されていない車両一覧ダイアログを表示
+
+let tentativeFormation=new Formation();
+//編成されていない車両から編成作成ダイアログを表示
 function displayNotFormatedCars() {
-	let formationTemplateList = formationTemplates.getFormationTemplateList();
+	tentativeFormation = new Formation(0, "", [], "", now);
+	let seriesSelectBox = document.querySelector("#forfc-series");
+	for (let i in serieses.seriesesList) {
+		let newDiv = document.createElement("option");
+		newDiv.setAttribute("value", i);
+		newDiv.innerHTML = serieses.seriesesList[i].name;
+		seriesSelectBox.appendChild(newDiv);
+	}
 	let table = new Table();
 	table.setAttributes({ "class": "vertical-stripes not-formated-car-table" });
 	table.setSubtitle("編成に所属していない車両一覧");
@@ -242,12 +254,43 @@ function displayNotFormatedCars() {
 		if (table.cellCountOfLastRow%maxCellCount == 0) {
 			table.addRow();
 		}
-		table.addCell(cars.carsList[id].number);
+		table.addCell(`<a href="javascript:void(0)" onclick="if(tentativeFormation.cars.indexOf(${id})==-1){tentativeFormation.cars.push(${id})}else{tentativeFormation.cars.splice(tentativeFormation.cars.indexOf(${id}),1)}this.parentNode.classList.toggle('selected');refleshNewFormationTable()">${cars.carsList[id].number}</a>`,{"class":"car","id":`forfc-car-${id}`});
 	}
 	table.addBlankCellToRowRightEnd();
-	document.querySelector("#forfc-not-formated-cars-table").innerHTML = table.generateTable();
+	document.querySelector("#forfc-not-formated-cars-table").innerHTML = table.generateTable();	
+	refleshNewFormationTable();
 	createFormationFromFloatingCarsDialog.on();
 }
+//作成予定の編成プレビューをリフレッシュ
+function refleshNewFormationTable() {
+	tentativeFormation.setSeries(document.querySelector("#forfc-series").value);
+	tentativeFormation.setName(document.querySelector("#forfc-formation-name").value);
+
+	let table = new Table();
+	table.setAttributes({ "class": "vertical-stripes not-formated-car-table formation-view" });
+	table.setSubtitle("作成される編成のプレビュー");
+	table.addRow();
+	table.addCell(`編成番号:${tentativeFormation.name}`, { "colspan": tentativeFormation.cars.length });
+	for (let i in tentativeFormation.cars) {
+		if(i%10==0){table.addRow()}
+		table.addCell(`<a href="javascript:void(0)" onclick="tentativeFormation.cars.splice(${i},1);document.querySelector('#forfc-car-${tentativeFormation.cars[i]}').classList.toggle('selected');refleshNewFormationTable()">${cars.carsList[tentativeFormation.cars[i]].number}</a>`);
+	}
+	let missingCellCount = (tentativeFormation.cars.length<=10)?0:(10-tentativeFormation.cars.length%10);
+	for (let i = 0; i < missingCellCount; i++){
+		table.addCell("");
+	}
+	document.querySelector("#forfc-new-formated-cars-table").innerHTML = table.generateTable();
+}
+//編成に組成されていない車両から編成を作成
+function forfcCreate(){
+	//親ダイアログが表示されている状態以外での実行を禁止
+	if (createFormationFromFloatingCarsDialog.isActive) {
+		formations.addFormation(tentativeFormation);
+		tentativeFormation=new Formation(0,0,[]);
+		createFormationFromFloatingCarsDialog.off();
+	}
+}
+
 //編成テンプレートを作成ダイアログを表示
 function createFormationTemplate(x) {
 	let formationTemplateList = formationTemplates.getFormationTemplateList();

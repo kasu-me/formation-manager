@@ -101,10 +101,13 @@ window.addEventListener("load",function(){
 	
 	//sed
 	seriesDispDialog = new Dialog("seriesDispDialog", "形式一覧", `<div class="table-container"></div>`, [{ "content": "形式追加", "event": ``, "icon": "add" }, { "content": "閉じる", "event": `seriesDispDialog.off();`, "icon": "close" }]);
+
 	//fort
 	formationTemplatesDialog = new Dialog("formationTemplatesDialog", "編成テンプレート一覧", `<div class="table-container"></div>`, [{ "content": "テンプレート追加", "event": ``, "icon": "add" }, { "content": "閉じる", "event": `formationTemplatesDialog.off();`, "icon": "close" }]);
+
 	//fora
 	formationAddingDialog = new Dialog("formationAddingDialog", "編成を作成", ``, [{ "content": "編成テンプレートから作成", "event": `displayTemplates()`, "icon": "add" }, { "content": "編成に所属していない車両から作成", "event": `displayNotFormatedCars()`, "icon": "add" }, { "content": "キャンセル", "event": `formationAddingDialog.off();`, "icon": "close" }]);
+
 	//fromt
 	createFormationFromTemplateDialog = new Dialog("createFormationFromTemplateDialog", "編成テンプレートから編成作成", `
 		<p><label><span>番号:</span><input id="fromt-car-number" type="number" value="1" onchange="createFormationFromTemplateDialogUpdateTable(Number(document.querySelector('#fromt-opening').innerHTML),Number(this.value))" onkeyup="createFormationFromTemplateDialogUpdateTable(Number(document.querySelector('#fromt-opening').innerHTML),Number(this.value))"></label></p>
@@ -116,12 +119,17 @@ window.addEventListener("load",function(){
 			<button onclick="displayTemplates()">他のテンプレートを使う</button>
 		</p>
 	`, [{ "content": "編成作成", "event": `fromtCreate()`, "icon": "check" }, { "content": "キャンセル", "event": `createFormationFromTemplateDialog.off();`, "icon": "close" }]);
+
 	//forfc
 	createFormationFromFloatingCarsDialog = new Dialog("createFormationFromFloatingCarsDialog", "編成に所属していない車両から編成作成", `
-	<div id="forfc-cars-table"></div>
-	<div id="forfc-not-formated-cars-table"></div>
+	<p>※車両が選択された状態で現在年月を操作すると選択がリセットされます</p>
+	<p><label><span>形式:</span><select id="forfc-series" oninput="refleshNewFormationTable()"></select></label></p>
+	<p><label><span>編成番号:</span><input id="forfc-formation-name" oninput="refleshNewFormationTable()"></label></p>
 	<p><label><span>所属:</span><input id="forfc-car-belongs-to"></label></p>
+	<div id="forfc-not-formated-cars-table"></div>
+	<div id="forfc-new-formated-cars-table"></div>
 	<div id="forfc-new-formation"></div>
+	<div id="forfc-formation-opening"></div>
 	<div id="forfc-template-legend"></div>
 `, [{ "content": "編成作成", "event": `forfcCreate()`, "icon": "check" }, { "content": "キャンセル", "event": `createFormationFromFloatingCarsDialog.off();`, "icon": "close" }]);
 	

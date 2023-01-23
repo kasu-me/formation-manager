@@ -229,6 +229,11 @@ class Formation{
 		this.#name = name;
 	}
 
+	//形式を変更 (形式ID)
+	setSeries(seriesId) {
+		this.#seriesId = seriesId;
+	}
+
 	//編成解除(YearMonth 編成解除年月)
 	release(terminatedOn) {
 		//this.#belongsTo = null;
