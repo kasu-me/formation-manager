@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<title>編成表マネージャ</title>
@@ -12,9 +13,11 @@
 	<script src="js/dialog.js"></script>
 	<script src="js/formation.js"></script>
 	<script src="js/lists.js"></script>
+	<script src="js/serialize.js"></script>
 	<script src="js/ui.js"></script>
 	<script src="js/init.js"></script>
 </head>
+
 <body>
 	<div id="header">
 		<button onclick="displaySerieses()">形式</button>
@@ -23,14 +26,20 @@
 		<button onclick="formationAddingDialog.on()">編成作成</button>
 		<button>車両を作成</button>
 		<div class="separator"></div>
-		<button class="lsf-icon" icon="file" onclick="showJSONLoadDialog()">JSONから読込</button><input type="file" id="jsonReader" style="display:none;" accept="application/json" onchange="readJson(event)">
+		<button class="lsf-icon" icon="file" onclick="showJSONLoadDialog()">JSONから読込</button><input type="file"
+			id="jsonReader" style="display:none;" accept="application/json" onchange="readJson(event)">
 		<button class="lsf-icon" icon="download" onclick="showJSONOutputDialog()">JSON保存</button>
 		<div class="separator"></div>
 		<input type="range" oninput="updateNowYearMonth(new YearMonth(Number(this.value)))" id="now-range">
-		<input type="number" id="now-y" onchange="updateNowYearMonthByInputBoxes()" oninput="updateNowYearMonthByInputBoxes()">年<input type="number" min="1" max="12" id="now-m" onchange="updateNowYearMonthByInputBoxes()" onkeydown="if(event.code=='ArrowDown'&&this.value=='1'){this.value='13';document.querySelector('#now-y').value=Number(document.querySelector('#now-y').value)-1}else if(event.code=='ArrowUp'&&this.value=='12'){this.value='0';document.querySelector('#now-y').value=Number(document.querySelector('#now-y').value)+1}" oninput="updateNowYearMonthByInputBoxes()">月
+		<input type="number" id="now-y" onchange="updateNowYearMonthByInputBoxes()"
+			oninput="updateNowYearMonthByInputBoxes()">年<input type="number" min="1" max="12" id="now-m"
+			onchange="updateNowYearMonthByInputBoxes()"
+			onkeydown="if(event.code=='ArrowDown'&&this.value=='1'){this.value='13';document.querySelector('#now-y').value=Number(document.querySelector('#now-y').value)-1}else if(event.code=='ArrowUp'&&this.value=='12'){this.value='0';document.querySelector('#now-y').value=Number(document.querySelector('#now-y').value)+1}"
+			oninput="updateNowYearMonthByInputBoxes()">月
 	</div>
 	<div id="formation-table-container">
 
 	</div>
 </body>
+
 </html>
