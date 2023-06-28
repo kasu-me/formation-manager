@@ -83,7 +83,7 @@ function list() {
 	tables.push(new Table("編成に所属していない車両"));
 	tables.at(-1).setAttributes({ "class": "not-formated-car-table vertical-stripes" });
 	for (let carId in cars.carsList) {
-		//編成に組み込まれている車両および未製造の車両は除外する
+		//編成に組み込まれている車両および未製造の車両および廃車は除外する
 		if (proccessedCarIds.includes(Number(carId)) || cars.carsList[carId].manufacturedOn.serial > now.serial) {
 			continue;
 		} else {
@@ -93,7 +93,7 @@ function list() {
 			addCarCell(tables.at(-1), carId, carListNow, false);
 		}
 	}
-	tables.at(-1).addBlankCellToRowRightEnd();
+	//tables.at(-1).addBlankCellToRowRightEnd();
 	html += tables.at(-1).generateTable();
 
 	//車両番号の重複をチェック
