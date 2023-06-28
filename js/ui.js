@@ -1,18 +1,18 @@
 //JSONを保存ウインドウ表示
 function showJSONOutputDialog() {
-	saveFile("formation.json",generateJSON())
+	saveFile("formation.json", generateJSON())
 }
 
 //JSON読み込み
-function showJSONLoadDialog(){
+function showJSONLoadDialog() {
 	document.querySelector("#jsonReader").click();
 }
 let tmpJSON = "";
-function readJson(evt){
+function readJson(evt) {
 	let file = evt.target.files;
 	let reader = new FileReader();
 	reader.readAsText(file[0]);
-	reader.onload = function(e) {
+	reader.onload = function (e) {
 		tmpJSON = e.target.result;
 		confirmJSONDialog.on();
 	}
@@ -33,14 +33,14 @@ function list() {
 
 	//編成に組み込まれている車両
 	let proccessedCarIds = [];
-	
+
 
 	//形式ごとに処理
 	for (let seriesId in seriesList) {
 		//テーブルを生成
 		tables.push(new Table(seriesList[seriesId].name));
 		tables.at(-1).setSubtitle(seriesList[seriesId].description);
-		tables.at(-1).setAttributes({"class":"formation-table horizontal-stripes"});
+		tables.at(-1).setAttributes({ "class": "formation-table horizontal-stripes" });
 		//現時点で組成されている編成を取得
 		let formationList = formations.getBySeriesIdAndYearMonth(seriesId, now);
 
@@ -61,11 +61,11 @@ function list() {
 			//行を追加
 			tables.at(-1).addRow();
 			//編成番号セルを追加
-			tables.at(-1).addCell(`${formationList[formationId].name}<button onclick="displayFormationDeteal(${formationId})" class="lsf-icon" icon="search">編成詳細</button>`,{"class":"formation-name"});
+			tables.at(-1).addCell(`${formationList[formationId].name}<button onclick="displayFormationDeteal(${formationId})" class="lsf-icon" icon="search">編成詳細</button>`, { "class": "formation-name" });
 			//車両ごとに処理
 			let carsOnFormation = formationList[formationId].cars;
 			for (let i in carsOnFormation) {
-				addCarCell(tables.at(-1),carsOnFormation[i],carListNow,true);
+				addCarCell(tables.at(-1), carsOnFormation[i], carListNow, true);
 				proccessedCarIds.push(carsOnFormation[i]);
 			}
 			//所属地セルを追加
@@ -76,7 +76,7 @@ function list() {
 			//tables.at(-1).addCell(`<button onclick="displayFormationDeteal(${formationId})">編成詳細</button>`);
 		}
 		tables.at(-1).addBlankCellToRowIn(1);
-		html+=tables.at(-1).generateTable();
+		html += tables.at(-1).generateTable();
 	}
 
 	//編成に組み込まれていない車両を処理
@@ -84,31 +84,31 @@ function list() {
 	tables.at(-1).setAttributes({ "class": "not-formated-car-table vertical-stripes" });
 	for (let carId in cars.carsList) {
 		//編成に組み込まれている車両および未製造の車両は除外する
-		if (proccessedCarIds.includes(Number(carId)) || cars.carsList[carId].manufacturedOn.serial>now.serial) {
+		if (proccessedCarIds.includes(Number(carId)) || cars.carsList[carId].manufacturedOn.serial > now.serial) {
 			continue;
 		} else {
-			if (tables.at(-1).cellCountOfLastRow%10==0) {
+			if (tables.at(-1).cellCountOfLastRow % 10 == 0) {
 				tables.at(-1).addRow();
 			}
-			addCarCell(tables.at(-1),carId,carListNow,false);
+			addCarCell(tables.at(-1), carId, carListNow, false);
 		}
 	}
 	tables.at(-1).addBlankCellToRowRightEnd();
 	html += tables.at(-1).generateTable();
 
 	//車両番号の重複をチェック
-	let duplications =  carListNow.filter(function (x, i, self) {
+	let duplications = carListNow.filter(function (x, i, self) {
 		return self.indexOf(x) === i && i !== self.lastIndexOf(x);
 	});
 
-	document.querySelector("#formation-table-container").innerHTML = `${(duplications.length > 0)?`<div class="warning message">車両番号の重複があります</div>`:""}${html}`;
+	document.querySelector("#formation-table-container").innerHTML = `${(duplications.length > 0) ? `<div class="warning message">車両番号の重複があります</div>` : ""}${html}`;
 
 	//重複ハイライト
 	if (duplications.length > 0) {
 		let tds = document.querySelectorAll("#formation-table-container td.car");
 		for (let td of tds) {
 			for (let j in duplications) {
-				if (td.innerHTML.match(new RegExp(duplications[j],"g"))!=null) {
+				if (td.innerHTML.match(new RegExp(duplications[j], "g")) != null) {
 					td.classList.add("duplicated");
 				}
 			}
@@ -118,10 +118,10 @@ function list() {
 
 //車両セルの追加
 //Table, 車両ID, 処理中の車両リスト, 今編成内の車両を処理しているか
-function addCarCell(table, carId, carListNow,isInFormation) {
+function addCarCell(table, carId, carListNow, isInFormation) {
 	if (cars.carsList[carId].isDroppedInTime(now)) {
 		if (isInFormation) { table.addCell("") }
-	}else {
+	} else {
 		table.addCell(Formatter.link(carId, cars.carsList[carId].numberInTime(now)), { "class": "car" + (cars.carsList[carId].isDroppedInTime(now) ? " dropped" : "") });
 		carListNow.push(cars.carsList[carId].numberInTime(now))
 	}
@@ -145,7 +145,7 @@ function listUpNotFormatedCarIds() {
 function reflesh() {
 	//リストを表示
 	list();
-	
+
 	//年月を反映
 	document.querySelector("#now-range").value = now.serial;
 	document.querySelector("#now-y").value = now.year;
@@ -170,7 +170,7 @@ function displaySerieses() {
 	table.setAttributes({ "class": "horizontal-stripes" });
 	for (let seriesId in seriesList) {
 		table.addRow();
-		table.addCell(`${seriesList[seriesId].name}`,{"class":"formation-name"});
+		table.addCell(`${seriesList[seriesId].name}`, { "class": "formation-name" });
 		table.addCell(`<button onclick="">編集</button>`);
 		table.addCell(`<button onclick="">編成一覧</button>`);
 		table.addCell(`<button onclick="">編成テンプレート一覧</button>`);
@@ -192,7 +192,7 @@ function displayTemplates() {
 				table.addCell("&nbsp;…&nbsp;", { "class": "separator" });
 				break;
 			}
-			table.addCell(formationTemplateList[formationTemplateId].carNumbers[i](1),{"class":"car"});
+			table.addCell(formationTemplateList[formationTemplateId].carNumbers[i](1), { "class": "car" });
 		}
 	}
 	table.addBlankCellToRowRightEnd();
@@ -212,13 +212,13 @@ function createFormationFromTemplate(x) {
 	}
 }
 //編成テンプレートから編成を作成ダイアログのプレビューをリフレッシュ
-function createFormationFromTemplateDialogUpdateTable(x,y) {
+function createFormationFromTemplateDialogUpdateTable(x, y) {
 	let formationTemplate = formationTemplates.getFormationTemplate(x);
 	let table = new Table();
 	table.setSubtitle("作成される編成のプレビュー");
 	table.setAttributes({ "class": "formation-view" });
 	table.addRow();
-	table.addCell(`編成番号:${formationTemplate.formationName(y)}`,{"colspan":formationTemplate.carNumbers.length});
+	table.addCell(`編成番号:${formationTemplate.formationName(y)}`, { "colspan": formationTemplate.carNumbers.length });
 	table.addRow();
 	for (let i in formationTemplate.carNumbers) {
 		table.addCell(formationTemplate.carNumbers[i](y));
@@ -226,7 +226,7 @@ function createFormationFromTemplateDialogUpdateTable(x,y) {
 	document.querySelector("#fromt-template-legend").innerHTML = table.generateTable();
 }
 //編成テンプレートから編成を作成
-function fromtCreate(){
+function fromtCreate() {
 	//親ダイアログが表示されている状態以外での実行を禁止
 	if (createFormationFromTemplateDialog.isActive) {
 		formations.addFormationFromTemplate(cars, formationTemplates.getFormationTemplate(Number(document.querySelector('#fromt-opening').innerHTML)), Number(document.querySelector("#fromt-car-number").value), document.querySelector("#fromt-car-belongs-to").value);
@@ -234,7 +234,7 @@ function fromtCreate(){
 	}
 }
 
-let tentativeFormation=new Formation();
+let tentativeFormation = new Formation();
 //編成されていない車両から編成作成ダイアログを表示
 function displayNotFormatedCars() {
 	tentativeFormation = new Formation(0, "", [], "", now);
@@ -251,13 +251,13 @@ function displayNotFormatedCars() {
 	let maxCellCount = 10;
 	let carIds = listUpNotFormatedCarIds();
 	for (let id of carIds) {
-		if (table.cellCountOfLastRow%maxCellCount == 0) {
+		if (table.cellCountOfLastRow % maxCellCount == 0) {
 			table.addRow();
 		}
-		table.addCell(`<a href="javascript:void(0)" onclick="if(tentativeFormation.cars.indexOf(${id})==-1){tentativeFormation.cars.push(${id})}else{tentativeFormation.cars.splice(tentativeFormation.cars.indexOf(${id}),1)}this.parentNode.classList.toggle('selected');refleshNewFormationTable()">${cars.carsList[id].number}</a>`,{"class":"car","id":`forfc-car-${id}`});
+		table.addCell(`<a href="javascript:void(0)" onclick="if(tentativeFormation.cars.indexOf(${id})==-1){tentativeFormation.cars.push(${id})}else{tentativeFormation.cars.splice(tentativeFormation.cars.indexOf(${id}),1)}this.parentNode.classList.toggle('selected');refleshNewFormationTable()">${cars.carsList[id].number}</a>`, { "class": "car", "id": `forfc-car-${id}` });
 	}
 	table.addBlankCellToRowRightEnd();
-	document.querySelector("#forfc-not-formated-cars-table").innerHTML = table.generateTable();	
+	document.querySelector("#forfc-not-formated-cars-table").innerHTML = table.generateTable();
 	refleshNewFormationTable();
 	createFormationFromFloatingCarsDialog.on();
 }
@@ -272,21 +272,21 @@ function refleshNewFormationTable() {
 	table.addRow();
 	table.addCell(`編成番号:${tentativeFormation.name}`, { "colspan": tentativeFormation.cars.length });
 	for (let i in tentativeFormation.cars) {
-		if(i%10==0){table.addRow()}
+		if (i % 10 == 0) { table.addRow() }
 		table.addCell(`<a href="javascript:void(0)" onclick="tentativeFormation.cars.splice(${i},1);document.querySelector('#forfc-car-${tentativeFormation.cars[i]}').classList.toggle('selected');refleshNewFormationTable()">${cars.carsList[tentativeFormation.cars[i]].number}</a>`);
 	}
-	let missingCellCount = (tentativeFormation.cars.length<=10)?0:(10-tentativeFormation.cars.length%10);
-	for (let i = 0; i < missingCellCount; i++){
+	let missingCellCount = (tentativeFormation.cars.length <= 10) ? 0 : (10 - tentativeFormation.cars.length % 10);
+	for (let i = 0; i < missingCellCount; i++) {
 		table.addCell("");
 	}
 	document.querySelector("#forfc-new-formated-cars-table").innerHTML = table.generateTable();
 }
 //編成に組成されていない車両から編成を作成
-function forfcCreate(){
+function forfcCreate() {
 	//親ダイアログが表示されている状態以外での実行を禁止
 	if (createFormationFromFloatingCarsDialog.isActive) {
 		formations.addFormation(tentativeFormation);
-		tentativeFormation=new Formation(0,0,[]);
+		tentativeFormation = new Formation(0, 0, []);
 		createFormationFromFloatingCarsDialog.off();
 	}
 }
@@ -302,9 +302,9 @@ function createFormationTemplate(x) {
 	createFormationFromTemplateDialog.on();
 }
 //車両の詳細ダイアログを表示
-function displayCarDeteal(x) {	
+function displayCarDeteal(x) {
 	let table = new Table();
-	table.setSubtitle(`<p class="car-name"><b><span id="cardt-car-number">${cars.carsList[x].numberInTime(now)}</span>号車</b><button class="lsf-icon" icon="pen" onclick="displayCarRenumberDialog()">改番</button><span class="car-status lsf-icon ${cars.carsList[x].isActive?"":"dropped"}">${cars.carsList[x].isActive?"現役":`${cars.carsList[x].droppedOn.toString()}廃車`}</span></p>`);
+	table.setSubtitle(`<p class="car-name"><b><span id="cardt-car-number">${cars.carsList[x].numberInTime(now)}</span>号車</b><button class="lsf-icon" icon="pen" onclick="displayCarRenumberDialog()">改番</button><span class="car-status lsf-icon ${cars.carsList[x].isActive ? "" : "dropped"}">${cars.carsList[x].isActive ? "現役" : `${cars.carsList[x].droppedOn.toString()}廃車`}</span></p>`);
 	table.setAttributes({ "class": "horizontal-stripes" });
 	//所属編成を探す
 	let formation = formations.searchByCarId(x, now);
@@ -312,13 +312,13 @@ function displayCarDeteal(x) {
 	let oldNumbers = cars.carsList[x].oldNumbers;
 	let oldNumbersText = ``;
 	for (let i in oldNumbers) {
-		oldNumbersText = `<li>${oldNumbers[i].number} <small>(${i!=0?oldNumbers[i-1].renumberedOn.toStringWithLink():cars.carsList[x].manufacturedOn.toStringWithLink()}～${oldNumbers[i].renumberedOn.toStringWithLink()})</small></li>${oldNumbersText}`;
+		oldNumbersText = `<li>${oldNumbers[i].number} <small>(${i != 0 ? oldNumbers[i - 1].renumberedOn.toStringWithLink() : cars.carsList[x].manufacturedOn.toStringWithLink()}～${oldNumbers[i].renumberedOn.toStringWithLink()})</small></li>${oldNumbersText}`;
 	}
-	oldNumbersText = `<ul><li>${cars.carsList[x].number} <small>(${oldNumbers.length>0?`${oldNumbers.at(-1).renumberedOn.toStringWithLink()}`:`${cars.carsList[x].manufacturedOn.toStringWithLink()}`}～${cars.carsList[x].isDropped?cars.carsList[x].droppedOn.toStringWithLink():""})</small></li>${oldNumbersText}</ul>`;
+	oldNumbersText = `<ul><li>${cars.carsList[x].number} <small>(${oldNumbers.length > 0 ? `${oldNumbers.at(-1).renumberedOn.toStringWithLink()}` : `${cars.carsList[x].manufacturedOn.toStringWithLink()}`}～${cars.carsList[x].isDropped ? cars.carsList[x].droppedOn.toStringWithLink() : ""})</small></li>${oldNumbersText}</ul>`;
 
 	table.addRow();
 	table.addCell("車両ID");
-	table.addCell(x,{"id":"cardt-car-id"});
+	table.addCell(x, { "id": "cardt-car-id" });
 	table.addRow();
 	table.addCell("製造年月");
 	table.addCell(cars.carsList[x].manufacturedOn.toStringWithLink());
@@ -329,7 +329,7 @@ function displayCarDeteal(x) {
 	}
 	table.addRow();
 	table.addCell(`所属編成`);
-	table.addCell(`${formation!=-1?formations.formationsList[formation].name:"編成に所属していません"}<small> (${now.toStringWithLink()}時点)</small>`);
+	table.addCell(`${formation != -1 ? formations.formationsList[formation].name : "編成に所属していません"}<small> (${now.toStringWithLink()}時点)</small>`);
 	table.addRow();
 	table.addCell("車歴");
 	table.addCell(oldNumbersText);
@@ -339,12 +339,12 @@ function displayCarDeteal(x) {
 		if (i != 0) {
 			table.addRow();
 		}
-		table.addCell(cars.carsList[x].remarks[i],{"class":"remark"});
+		table.addCell(cars.carsList[x].remarks[i], { "class": "remark" });
 	}
 	if (cars.carsList[x].remarks.length == 0) {
 		table.addCell("");
 	}
-	document.querySelector("#cardt-main").innerHTML=table.generateTable();
+	document.querySelector("#cardt-main").innerHTML = table.generateTable();
 	carDetealDialog.on();
 }
 //車両を改番ダイアログを表示
@@ -366,7 +366,7 @@ function renumberCar() {
 	//親ダイアログが表示されている状態以外での実行を禁止
 	if (carRenumberDialog.isActive) {
 		let carId = Number(document.querySelector('#carrn-opening').innerHTML);
-		cars.renumberCar(carId, Number(document.querySelector('#carrn-car-number').value));
+		cars.renumberCar(carId, document.querySelector('#carrn-car-number').value);
 		carRenumberDialog.off();
 		reflesh();
 	}
@@ -391,7 +391,7 @@ function dropCar(carId_) {
 				carDetealDialog.off();
 			}
 		}
-	//引数がある場合、廃車処理
+		//引数がある場合、廃車処理
 	} else {
 		//廃車
 		cars.dropCar(carId_, now);
@@ -399,8 +399,8 @@ function dropCar(carId_) {
 		//編成に所属していた場合、編成を解除
 		if (formationId != -1) {
 			let cars = formations.formationsList[formationId].cars;
-			let seriesId=formations.formationsList[formationId].seriesId;
-			let name=formations.formationsList[formationId].name;
+			let seriesId = formations.formationsList[formationId].seriesId;
+			let name = formations.formationsList[formationId].name;
 			let belongsTo = formations.formationsList[formationId].belongsTo;
 			let isTerminated = formations.formationsList[formationId].isTerminated;
 			let terminatedOn = formations.formationsList[formationId].terminatedOn;
@@ -413,7 +413,7 @@ function dropCar(carId_) {
 					newFormationCars.push(cars[i]);
 				}
 			}
-			let newFormationId=formations.addFormation(new Formation(seriesId, name, newFormationCars, belongsTo, now));
+			let newFormationId = formations.addFormation(new Formation(seriesId, name, newFormationCars, belongsTo, now));
 			//元の編成が未来で解除されていた編成の場合、今作成した編成をその年月で編成解除
 			if (isTerminated) {
 				formations.releaseFormation(newFormationId, terminatedOn);
@@ -434,13 +434,13 @@ function displayFormationDeteal(x) {
 	let formation = formations.formationsList[x];
 	table.setSubtitle(`<p class="car-name"><b><span id="fmdt-formation-number">${formation.name}</span></b> (${formation.formatedOn.toStringWithLink()}～${formation.isTerminated ? `${formation.terminatedOn.toStringWithLink()}` : ``})<button class="lsf-icon" icon="pen" onclick="displayFormationRenameDialog()">名称変更</button></p><div id="fmdt-opening">${x}</div>`);
 	table.addRow();
-	table.addCell(`編成ID:${x}`, {"colspan":formation.cars.length,"class":"formation-id"});
+	table.addCell(`編成ID:${x}`, { "colspan": formation.cars.length, "class": "formation-id" });
 	table.addRow();
 	for (let i in formation.cars) {
-		table.addCell(Formatter.link(formation.cars[i],cars.carsList[formation.cars[i]].number));
+		table.addCell(Formatter.link(formation.cars[i], cars.carsList[formation.cars[i]].number));
 	}
 	let html = table.generateTable();
-	document.querySelector("#fmdt-main").innerHTML=html;
+	document.querySelector("#fmdt-main").innerHTML = html;
 	formationDetealDialog.on();
 }
 //編成を改名ダイアログを表示
@@ -461,7 +461,7 @@ function renameFormation() {
 		let isTerminated = formation.isTerminated;
 		let terminatedOn = formation.terminatedOn;
 		formations.releaseFormation(formationId);
-		let newFormationId=formations.addFormation(new Formation(formation.seriesId, document.querySelector('#fmrn-formation-name').value, formation.cars, formation.belongsTo, now))
+		let newFormationId = formations.addFormation(new Formation(formation.seriesId, document.querySelector('#fmrn-formation-name').value, formation.cars, formation.belongsTo, now))
 		//元の編成が未来で解除されていた編成の場合、今作成した編成をその年月で編成解除
 		if (isTerminated) {
 			formations.releaseFormation(newFormationId, terminatedOn);
@@ -519,7 +519,7 @@ function updateNowYearMonth(ym) {
 	now = ym;
 	reflesh();
 }
-function updateNowYearMonthByInputBoxes(){
+function updateNowYearMonthByInputBoxes() {
 	updateNowYearMonth(new YearMonth(Number(document.querySelector('#now-y').value), Number(document.querySelector('#now-m').value)));
 }
 function setInputMaxAndMin() {
