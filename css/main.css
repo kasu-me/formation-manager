@@ -199,7 +199,7 @@ div#formation-table-container table.formation-table tr td:last-child {
 	border-left: 1px solid var(--formation-table-main-border);
 }
 
-/* 未組成車両セル */
+/* 未組成車両テーブル */
 table.not-formated-car-table tr {
 	border-bottom: 2px solid var(--formation-table-main-border);
 }
@@ -212,6 +212,18 @@ table.not-formated-car-table tr td {
 table.formation-view tr:nth-child(1) td {
 	background-color: var(--formation-table-main-border);
 	color: #fff;
+}
+
+div#formation-table-container table.not-formated-car-table {
+	border: none;
+}
+
+div#formation-table-container table.not-formated-car-table tr {
+	border-bottom: none;
+}
+
+div#formation-table-container table.not-formated-car-table tr td {
+	border: 2px solid var(--formation-table-main-border);
 }
 
 div#forfc-new-formated-cars-table {
