@@ -14,13 +14,13 @@ function readJson(evt) {
 	reader.readAsText(file[0]);
 	reader.onload = function (e) {
 		tmpJSON = e.target.result;
-		confirmJSONDialog.on();
+		Dialog.list.confirmJSONDialog.on();
 	}
 }
 function continueReadJSON() {
 	loadListsFromJSON(tmpJSON);
 	tmpJSON = "";
-	confirmJSONDialog.off();
+	Dialog.list.confirmJSONDialog.off();
 }
 
 //現存編成の編成表を表に出力
@@ -152,10 +152,10 @@ function reflesh() {
 	document.querySelector("#now-m").value = now.month;
 
 	//ダイアログ内の表示を更新
-	if (carDetealDialog.isActive) {
+	if (Dialog.list.carDetealDialog.isActive) {
 		displayCarDeteal(Number(document.querySelector('#cardt-car-id').innerHTML));
 	}
-	if (createFormationFromFloatingCarsDialog.isActive) {
+	if (Dialog.list.createFormationFromFloatingCarsDialog.isActive) {
 		displayNotFormatedCars();
 	}
 }
@@ -176,7 +176,7 @@ function displaySerieses() {
 		table.addCell(`<button onclick="">編成テンプレート一覧</button>`);
 	}
 	document.querySelector("#seriesDispDialog div.table-container").innerHTML = table.generateTable();
-	seriesDispDialog.on();
+	Dialog.list.seriesDispDialog.on();
 }
 //編成テンプレート一覧ダイアログを表示
 function displayTemplates() {
@@ -200,15 +200,15 @@ function displayTemplates() {
 		table.addCellTo(formationTemplateId, `<button onclick="createFormationFromTemplate(${formationTemplateId})">テンプレートを使用</button>`);
 	}
 	document.querySelector("#formationTemplatesDialog div.table-container").innerHTML = table.generateTable();
-	formationTemplatesDialog.on();
+	Dialog.list.formationTemplatesDialog.on();
 }
 //編成テンプレートから編成を作成ダイアログを表示
 function createFormationFromTemplate(x) {
 	//親ダイアログが表示されている状態以外での実行を禁止
-	if (formationTemplatesDialog.isActive) {
+	if (Dialog.list.formationTemplatesDialog.isActive) {
 		document.querySelector("#fromt-opening").innerHTML = x;
 		createFormationFromTemplateDialogUpdateTable(x, Number(document.querySelector("#fromt-car-number").value));
-		createFormationFromTemplateDialog.on();
+		Dialog.list.createFormationFromTemplateDialog.on();
 	}
 }
 //編成テンプレートから編成を作成ダイアログのプレビューをリフレッシュ
@@ -228,9 +228,9 @@ function createFormationFromTemplateDialogUpdateTable(x, y) {
 //編成テンプレートから編成を作成
 function fromtCreate() {
 	//親ダイアログが表示されている状態以外での実行を禁止
-	if (createFormationFromTemplateDialog.isActive) {
+	if (Dialog.list.createFormationFromTemplateDialog.isActive) {
 		formations.addFormationFromTemplate(cars, formationTemplates.getFormationTemplate(Number(document.querySelector('#fromt-opening').innerHTML)), Number(document.querySelector("#fromt-car-number").value), document.querySelector("#fromt-car-belongs-to").value);
-		createFormationFromTemplateDialog.off();
+		Dialog.list.createFormationFromTemplateDialog.off();
 	}
 }
 
@@ -259,7 +259,7 @@ function displayNotFormatedCars() {
 	table.addBlankCellToRowRightEnd();
 	document.querySelector("#forfc-not-formated-cars-table").innerHTML = table.generateTable();
 	refleshNewFormationTable();
-	createFormationFromFloatingCarsDialog.on();
+	Dialog.list.createFormationFromFloatingCarsDialog.on();
 }
 //作成予定の編成プレビューをリフレッシュ
 function refleshNewFormationTable() {
@@ -284,10 +284,10 @@ function refleshNewFormationTable() {
 //編成に組成されていない車両から編成を作成
 function forfcCreate() {
 	//親ダイアログが表示されている状態以外での実行を禁止
-	if (createFormationFromFloatingCarsDialog.isActive) {
+	if (Dialog.list.createFormationFromFloatingCarsDialog.isActive) {
 		formations.addFormation(tentativeFormation);
 		tentativeFormation = new Formation(0, 0, []);
-		createFormationFromFloatingCarsDialog.off();
+		Dialog.list.createFormationFromFloatingCarsDialog.off();
 	}
 }
 
@@ -299,7 +299,7 @@ function createFormationTemplate(x) {
 		html += `<option value="${formationTemplateId}">${formationTemplateId}</option>`;
 	}
 	document.querySelector("#createFormationTemplateDialog #formationTemplateId").innerHTML = html;
-	createFormationFromTemplateDialog.on();
+	Dialog.list.createFormationFromTemplateDialog.on();
 }
 //車両の詳細ダイアログを表示
 function displayCarDeteal(x) {
@@ -345,29 +345,29 @@ function displayCarDeteal(x) {
 		table.addCell("");
 	}
 	document.querySelector("#cardt-main").innerHTML = table.generateTable();
-	carDetealDialog.on();
+	Dialog.list.carDetealDialog.on();
 }
 //車両を改番ダイアログを表示
 function displayCarRenumberDialog() {
 	//親ダイアログが表示されている状態以外での実行を禁止
-	if (carDetealDialog.isActive) {
+	if (Dialog.list.carDetealDialog.isActive) {
 		let carId = Number(document.querySelector('#cardt-car-id').innerHTML);
 		if (cars.carsList[carId].isDroppedInTime(now)) {
 			alert("この車両は既に廃車されているため改番することはできません。");
-			carDetealDialog.off();
+			Dialog.list.carDetealDialog.off();
 			return;
 		}
 		document.querySelector("#carrn-main").innerHTML = `<p><input id="carrn-car-number" placeholder="${cars.carsList[carId].number}" value="${cars.carsList[carId].number}">号車</p><div id="carrn-opening">${carId}</div>`
-		carRenumberDialog.on();
+		Dialog.list.carRenumberDialog.on();
 	}
 }
 //車両を改番
 function renumberCar() {
 	//親ダイアログが表示されている状態以外での実行を禁止
-	if (carRenumberDialog.isActive) {
+	if (Dialog.list.carRenumberDialog.isActive) {
 		let carId = Number(document.querySelector('#carrn-opening').innerHTML);
 		cars.renumberCar(carId, document.querySelector('#carrn-car-number').value);
-		carRenumberDialog.off();
+		Dialog.list.carRenumberDialog.off();
 		reflesh();
 	}
 }
@@ -376,11 +376,11 @@ function dropCar(carId_) {
 	//引数がない場合、ダイアログからの処理
 	if (carId_ == undefined) {
 		//親ダイアログが表示されている状態以外での実行を禁止
-		if (carDetealDialog.isActive) {
+		if (Dialog.list.carDetealDialog.isActive) {
 			let carId = Number(document.querySelector('#cardt-car-id').innerHTML);
 			if (cars.carsList[carId].isDropped) {
 				alert("この車両は既に廃車されています。");
-				carDetealDialog.off();
+				Dialog.list.carDetealDialog.off();
 				return;
 			}
 			if (window.confirm(`${cars.carsList[carId].numberInTime(now)}号車を${now.toString()}付で廃車します。`)) {
@@ -388,7 +388,7 @@ function dropCar(carId_) {
 				dropCar(carId);
 				//廃車車両を除いた車両で編成
 				reflesh();
-				carDetealDialog.off();
+				Dialog.list.carDetealDialog.off();
 			}
 		}
 		//引数がある場合、廃車処理
@@ -441,21 +441,21 @@ function displayFormationDeteal(x) {
 	}
 	let html = table.generateTable();
 	document.querySelector("#fmdt-main").innerHTML = html;
-	formationDetealDialog.on();
+	Dialog.list.formationDetealDialog.on();
 }
 //編成を改名ダイアログを表示
 function displayFormationRenameDialog() {
 	//親ダイアログが表示されている状態以外での実行を禁止
-	if (formationDetealDialog.isActive) {
+	if (Dialog.list.formationDetealDialog.isActive) {
 		let formationId = Number(document.querySelector('#fmdt-opening').innerHTML);
 		document.querySelector("#fmrn-main").innerHTML = `<p><input id="fmrn-formation-name" placeholder="${formations.formationsList[formationId].name}" value="${formations.formationsList[formationId].name}"></p><div id="fmrn-opening">${formationId}</div>`
-		formationRenameDialog.on();
+		Dialog.list.formationRenameDialog.on();
 	}
 }
 //編成を改名
 function renameFormation() {
 	//親ダイアログが表示されている状態以外での実行を禁止
-	if (formationRenameDialog.isActive) {
+	if (Dialog.list.formationRenameDialog.isActive) {
 		let formationId = Number(document.querySelector('#fmrn-opening').innerHTML);
 		let formation = formations.formationsList[formationId];
 		let isTerminated = formation.isTerminated;
@@ -466,35 +466,35 @@ function renameFormation() {
 		if (isTerminated) {
 			formations.releaseFormation(newFormationId, terminatedOn);
 		}
-		formationRenameDialog.off();
+		Dialog.list.formationRenameDialog.off();
 		reflesh();
 	}
 }
 //編成を解除
 function releaseFormation() {
 	//親ダイアログが表示されている状態以外での実行を禁止
-	if (formationDetealDialog.isActive) {
+	if (Dialog.list.formationDetealDialog.isActive) {
 		let formationId = Number(document.querySelector('#fmdt-opening').innerHTML);
 		if (formations.formationsList[formationId].isTerminated) {
 			alert("この編成は未来で解除されているため編成解除できません。");
-			formationDetealDialog.off();
+			Dialog.list.formationDetealDialog.off();
 			return;
 		}
 		if (window.confirm(`${formations.formationsList[formationId].name}を${now.toString()}付で編成解除します。`)) {
 			formations.releaseFormation(formationId);
 			reflesh();
-			formationDetealDialog.off();
+			Dialog.list.formationDetealDialog.off();
 		}
 	}
 }
 //編成内の車両を全て廃車
 function releaseFormationAndDropAllCars() {
 	//親ダイアログが表示されている状態以外での実行を禁止
-	if (formationDetealDialog.isActive) {
+	if (Dialog.list.formationDetealDialog.isActive) {
 		let formationId = Number(document.querySelector('#fmdt-opening').innerHTML);
 		if (formations.formationsList[formationId].isTerminated) {
 			alert("この編成は未来で解除されているため操作できません。");
-			formationDetealDialog.off();
+			Dialog.list.formationDetealDialog.off();
 			return;
 		}
 		if (window.confirm(`${formations.formationsList[formationId].name}内の車両${formations.formationsList[formationId].cars.length}両を${now.toString()}付で全て廃車します。`)) {
@@ -508,7 +508,7 @@ function releaseFormationAndDropAllCars() {
 			//編成解除
 			formations.releaseFormation(formationId);
 			reflesh();
-			formationDetealDialog.off();
+			Dialog.list.formationDetealDialog.off();
 		}
 	}
 }
