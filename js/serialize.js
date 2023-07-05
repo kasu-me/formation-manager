@@ -30,7 +30,7 @@ class Deserializer {
 				}
 				return formation;
 			case "FormationTemplate":
-				let formationTemplate = new FormationTemplate(obj.seriesId, obj.carNumbers, obj.formationName);
+				let formationTemplate = new FormationTemplate(obj.seriesId, obj.name, obj.carNumbers, obj.formationName);
 				return formationTemplate;
 		}
 	}

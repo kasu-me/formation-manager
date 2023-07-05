@@ -187,6 +187,7 @@ function displayTemplates() {
 	for (let formationTemplateId in formationTemplateList) {
 		table.addRow();
 		table.addCell(`${serieses.seriesesList[formationTemplateList[formationTemplateId].seriesId].name}`, { "class": "formation-name" });
+		table.addCell(`${formationTemplateList[formationTemplateId].name}`);
 		for (let i in formationTemplateList[formationTemplateId].carNumbers) {
 			if (i >= maxCellCount) {
 				table.addCell("&nbsp;…&nbsp;", { "class": "separator" });

@@ -1,13 +1,13 @@
 //各種要素クラス定義
 //形式クラス
-class Series{
+class Series {
 	//形式名(3000系 等)
 	#name;
 	//ベース車両 (西武101系 等)
 	#base;
 	//説明
 	#description
-	
+
 	//コンストラクタ(形式名,ベース車両,説明)
 	constructor(name, base, description) {
 		this.#name = name;
@@ -30,13 +30,13 @@ class Series{
 			instanceof: "Series",
 			name: this.#name,
 			base: this.#base,
-			description:this.#description
+			description: this.#description
 		});
 	}
 }
 
 //旧車番クラス
-class OldCarNumber{
+class OldCarNumber {
 	#number;
 	//YearMonth この番号がいつまで使われていたか
 	#renumberedOn;
@@ -44,21 +44,21 @@ class OldCarNumber{
 		this.#number = number;
 		this.#renumberedOn = renumberedOn;
 	}
-	get number(){
+	get number() {
 		return this.#number;
 	}
-	get renumberedOn(){
+	get renumberedOn() {
 		return this.#renumberedOn;
 	}
 }
 
 //車両クラス
-class Car{
+class Car {
 	//車両番号
 	#number;
 	//以前の車両番号
 	//要素はOldCarNumberクラス
-	#oldNumbers=[];
+	#oldNumbers = [];
 	//除籍された年月
 	#droppedOn;
 	//保存されているか
@@ -69,10 +69,10 @@ class Car{
 	#remarks = [];
 
 	//コンストラクタ(車両番号,製造年月,...以前の車両ID)
-	constructor(number,manufacturedOn,oldNumbers, ...remarks) {
+	constructor(number, manufacturedOn, oldNumbers, ...remarks) {
 		this.#number = number.toString();
 		this.#manufacturedOn = manufacturedOn;
-		if (oldNumbers!=null) {
+		if (oldNumbers != null) {
 			this.#oldNumbers = oldNumbers;
 			this.sortOldNumbersByYearMonth();
 		}
@@ -127,7 +127,7 @@ class Car{
 		return this.#droppedOn;
 	}
 	get isActive() {
-		return !Boolean(this.#droppedOn) &&  !this.#isConserved;
+		return !Boolean(this.#droppedOn) && !this.#isConserved;
 	}
 	get isDropped() {
 		return Boolean(this.#droppedOn) && !this.#isConserved;
@@ -174,35 +174,35 @@ class Car{
 	}
 
 	convertToJSON() {
-		let oldNumbers=[];
+		let oldNumbers = [];
 		for (let i in this.#oldNumbers) {
-			oldNumbers.push({"number":this.#oldNumbers[i].number,"renumberedOn":this.#oldNumbers[i].renumberedOn.serial});
+			oldNumbers.push({ "number": this.#oldNumbers[i].number, "renumberedOn": this.#oldNumbers[i].renumberedOn.serial });
 		}
 		return JSON.stringify({
 			instanceof: "Car",
-			number:this.#number,
-			oldNumbers:oldNumbers,
-			droppedOn:this.#droppedOn==undefined?undefined:{y:this.#droppedOn.year,m:this.#droppedOn.month},
-			isConserved:this.#isConserved,
-			manufacturedOn:{y:this.#manufacturedOn.year,m:this.#manufacturedOn.month},
-			remarks:this.#remarks
+			number: this.#number,
+			oldNumbers: oldNumbers,
+			droppedOn: this.#droppedOn == undefined ? undefined : { y: this.#droppedOn.year, m: this.#droppedOn.month },
+			isConserved: this.#isConserved,
+			manufacturedOn: { y: this.#manufacturedOn.year, m: this.#manufacturedOn.month },
+			remarks: this.#remarks
 		});
 	}
 }
 
 //所属クラス
-class Belongs{
-	
+class Belongs {
+
 }
 
 //編成クラス
-class Formation{
+class Formation {
 	//形式ID
 	#seriesId;
 	//編成名(1003Fなど)
 	#name;
 	//[所属車両ID]
-	#cars=[];
+	#cars = [];
 	//所属
 	#belongsTo;
 	//YearMonth 編成組成年月
@@ -249,7 +249,7 @@ class Formation{
 			}
 		}
 	}
-	
+
 	get seriesId() {
 		return this.#seriesId;
 	}
@@ -285,17 +285,19 @@ class Formation{
 			name: this.#name,
 			cars: this.#cars,
 			belongsTo: this.#belongsTo,
-			formatedOn: {y:this.#formatedOn.year,m:this.#formatedOn.month},
-			terminatedOn: {y:this.#terminatedOn!=null?this.#terminatedOn.year:"",m:this.#terminatedOn!=null?this.#terminatedOn.month:""},
+			formatedOn: { y: this.#formatedOn.year, m: this.#formatedOn.month },
+			terminatedOn: { y: this.#terminatedOn != null ? this.#terminatedOn.year : "", m: this.#terminatedOn != null ? this.#terminatedOn.month : "" },
 			remarks: this.#remarks
 		});
 	}
 }
 
 //編成テンプレートクラス
-class FormationTemplate{
+class FormationTemplate {
 	//形式ID
 	#seriesId;
+	//名前
+	#name
 	//編成番号の一般形
 	#formationName;
 	//[車両番号の一般形]
@@ -303,18 +305,19 @@ class FormationTemplate{
 
 	//コンストラクタ(形式ID,[車両番号の一般形],ベースとなる編成番号の一般形(省略時は1号車の車番を利用))
 	//一般形にはnの関数を指定
-	constructor(seriesId, carNumbers, formationName) {
+	constructor(seriesId, name, carNumbers, formationName) {
 		this.#seriesId = seriesId;
+		this.#name = name;
 		for (let i in carNumbers) {
 			if (typeof (carNumbers[i]) == "string") {
 				this.#carNumbers.push(Function.call(this, `return ${carNumbers[i]}`)());
 			} else if (typeof (carNumbers[i]) == "number") {
-				this.#carNumbers.push(new Function("n",`return ${carNumbers[i]}+n`));
+				this.#carNumbers.push(new Function("n", `return ${carNumbers[i]}+n`));
 			} else {
 				this.#carNumbers.push(carNumbers[i]);
 			}
 		}
-		if (formationName != null && typeof(formationName)=="function") {
+		if (formationName != null && typeof (formationName) == "function") {
 			this.#formationName = formationName;
 		}
 	}
@@ -322,11 +325,14 @@ class FormationTemplate{
 	get seriesId() {
 		return this.#seriesId;
 	}
+	get name() {
+		return this.#name;
+	}
 	get formationName() {
 		if (this.#formationName != undefined) {
 			return this.#formationName;
 		} else {
-			return n=>this.carNumbers[0](n)+"F";
+			return n => this.carNumbers[0](n) + "F";
 		}
 	}
 	get carNumbers() {
@@ -335,13 +341,14 @@ class FormationTemplate{
 	addCarNumber(carNumber) {
 		this.#carNumbers.push(carNumber);
 	}
-	
+
 	convertToJSON() {
 		return JSON.stringify({
-			instanceof:"FormationTemplate",
-			seriesId:this.#seriesId,
-			formationName:this.#formationName,
-			carNumbers:this.#carNumbers.map(elm => {
+			instanceof: "FormationTemplate",
+			seriesId: this.#seriesId,
+			name: this.#name,
+			formationName: this.#formationName,
+			carNumbers: this.#carNumbers.map(elm => {
 				return elm.toString()
 			})
 		});
