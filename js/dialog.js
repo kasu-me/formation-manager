@@ -95,7 +95,7 @@ window.addEventListener("load", function () {
 	new Dialog("seriesDispDialog", "形式一覧", `<div class="table-container"></div>`, [{ "content": "形式追加", "event": ``, "icon": "add" }, { "content": "閉じる", "event": `Dialog.list.seriesDispDialog.off();`, "icon": "close" }]);
 
 	//編成テンプレート一覧:fort
-	new Dialog("formationTemplatesDialog", "編成テンプレート一覧", `<div class="table-container"></div>`, [{ "content": "テンプレート追加", "event": ``, "icon": "add" }, { "content": "閉じる", "event": `Dialog.list.formationTemplatesDialog.off();`, "icon": "close" }]);
+	new Dialog("formationTemplatesDialog", "編成テンプレート一覧", `<div class="table-container"></div>`, [{ "content": "テンプレート作成", "event": `displayCreateFormationTemplateDialog()`, "icon": "add" }, { "content": "閉じる", "event": `Dialog.list.formationTemplatesDialog.off();`, "icon": "close" }]);
 
 	//編成を作成:fora
 	new Dialog("formationAddingDialog", "編成を作成", ``, [{ "content": "編成テンプレートから作成", "event": `displayTemplates()`, "icon": "add" }, { "content": "編成に所属していない車両から作成", "event": `displayNotFormatedCars()`, "icon": "add" }, { "content": "キャンセル", "event": `Dialog.list.formationAddingDialog.off();`, "icon": "close" }]);
@@ -126,7 +126,7 @@ window.addEventListener("load", function () {
 `, [{ "content": "編成作成", "event": `forfcCreate()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createFormationFromFloatingCarsDialog.off();`, "icon": "close" }]);
 
 	//編成テンプレートを作成:cref
-	new Dialog("createFormationTemplateDialog", "編成テンプレートを作成", `<select id="cref-formationTemplateId"></select>`, [{ "content": "編成作成", "event": `displayTemplates()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createFormationTemplateDialog.off();`, "icon": "close" }]);
+	new Dialog("createFormationTemplateDialog", "編成テンプレートを作成", `形式:<select id="cref-series" onchange="refleshNewFormationTemplateTable()"></select><p>車両番号の一般式:<input id="cref-carnumber"><button onclick="tentativeFormationTemplate.addCarNumber(document.getElementById('cref-carnumber').value);refleshNewFormationTemplateTable();document.getElementById('cref-carnumber').value='';document.getElementById('cref-carnumber').focus()" class="lsf-icon" icon="add">追加</button></p><div id="cref-new-formated-template-table"></div>`, [{ "content": "編成作成", "event": ``, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createFormationTemplateDialog.off();`, "icon": "close" }]);
 
 	new Dialog("confirmJSONDialog", "確認", `JSON読み込みを実施すると現在のデータはクリアされます。本当に読み込んでよろしいですか？`, [{ "content": "はい", "event": `continueReadJSON()`, "icon": "check" }, { "content": "キャンセル", "event": `document.querySelector('#jsonReader').value='';tmpJSON='';Dialog.list.confirmJSONDialog.off();`, "icon": "close" }]);
 

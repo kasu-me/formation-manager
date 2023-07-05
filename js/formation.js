@@ -303,25 +303,30 @@ class FormationTemplate {
 	//[車両番号の一般形]
 	#carNumbers = [];
 
-	//コンストラクタ(形式ID,[車両番号の一般形],ベースとなる編成番号の一般形(省略時は1号車の車番を利用))
+	//コンストラクタ(形式ID,編成テンプレート詳細,[車両番号の一般形],ベースとなる編成番号の一般形(省略時は1号車の車番を利用))
 	//一般形にはnの関数を指定
 	constructor(seriesId, name, carNumbers, formationName) {
-		this.#seriesId = seriesId;
-		this.#name = name;
-		for (let i in carNumbers) {
-			if (typeof (carNumbers[i]) == "string") {
-				this.#carNumbers.push(Function.call(this, `return ${carNumbers[i]}`)());
-			} else if (typeof (carNumbers[i]) == "number") {
-				this.#carNumbers.push(new Function("n", `return ${carNumbers[i]}+n`));
-			} else {
-				this.#carNumbers.push(carNumbers[i]);
-			}
-		}
+		this.seriesId = seriesId;
+		this.name = name;
+		this.carNumbers = carNumbers;
 		if (formationName != null && typeof (formationName) == "function") {
-			this.#formationName = formationName;
+			this.formationName = formationName;
 		}
 	}
-
+	set seriesId(value) {
+		this.#seriesId = value;
+	}
+	set name(value) {
+		this.#name = value;
+	}
+	set carNumbers(carNumbers) {
+		for (let i in carNumbers) {
+			this.#carNumbers.push(FormationTemplate.convertToFunction(carNumbers[i], this));
+		}
+	}
+	set formationName(formationName) {
+		this.#formationName = formationName;
+	}
 	get seriesId() {
 		return this.#seriesId;
 	}
@@ -339,7 +344,7 @@ class FormationTemplate {
 		return this.#carNumbers;
 	}
 	addCarNumber(carNumber) {
-		this.#carNumbers.push(carNumber);
+		this.#carNumbers.push(FormationTemplate.convertToFunction(carNumber, this));
 	}
 
 	convertToJSON() {
@@ -352,5 +357,16 @@ class FormationTemplate {
 				return elm.toString()
 			})
 		});
+	}
+
+	static convertToFunction(text, tar) {
+		if (!isNaN(Number(text))) { text = Number(text); }
+		if (typeof (text) == "string") {
+			return (Function.call(tar, `return ${text}`)());
+		} else if (typeof (text) == "number") {
+			return (new Function("n", `return ${text}+n`));
+		} else {
+			return (text);
+		}
 	}
 }

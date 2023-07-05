@@ -235,17 +235,22 @@ function fromtCreate() {
 	}
 }
 
-let tentativeFormation = new Formation();
-//編成されていない車両から編成作成ダイアログを表示
-function displayNotFormatedCars() {
-	tentativeFormation = new Formation(0, "", [], "", now);
-	let seriesSelectBox = document.querySelector("#forfc-series");
+//セレクトボックスに形式名を投入
+function setSeriesesToSelectBox(seriesSelectBox) {
+	seriesSelectBox.innerHTML = "";
 	for (let i in serieses.seriesesList) {
 		let newDiv = document.createElement("option");
 		newDiv.setAttribute("value", i);
 		newDiv.innerHTML = serieses.seriesesList[i].name;
 		seriesSelectBox.appendChild(newDiv);
 	}
+}
+
+let tentativeFormation = new Formation();
+//編成されていない車両から編成作成ダイアログを表示
+function displayNotFormatedCars() {
+	tentativeFormation = new Formation(0, "", [], "", now);
+	setSeriesesToSelectBox(document.querySelector("#forfc-series"));
 	let table = new Table();
 	table.setAttributes({ "class": "vertical-stripes not-formated-car-table" });
 	table.setSubtitle("編成に所属していない車両一覧");
@@ -292,16 +297,6 @@ function forfcCreate() {
 	}
 }
 
-//編成テンプレートを作成ダイアログを表示
-function createFormationTemplate(x) {
-	let formationTemplateList = formationTemplates.getFormationTemplateList();
-	let html = "";
-	for (let formationTemplateId in formationTemplateList) {
-		html += `<option value="${formationTemplateId}">${formationTemplateId}</option>`;
-	}
-	document.querySelector("#createFormationTemplateDialog #formationTemplateId").innerHTML = html;
-	Dialog.list.createFormationFromTemplateDialog.on();
-}
 //車両の詳細ダイアログを表示
 function displayCarDeteal(x) {
 	let table = new Table();
@@ -512,6 +507,35 @@ function releaseFormationAndDropAllCars() {
 			Dialog.list.formationDetealDialog.off();
 		}
 	}
+}
+let tentativeFormationTemplate = new FormationTemplate();
+//編成テンプレートを作成ダイアログを表示
+function displayCreateFormationTemplateDialog() {
+	//セレクトボックスに形式名を投入
+	setSeriesesToSelectBox(document.querySelector("#cref-series"));
+	refleshNewFormationTemplateTable();
+	Dialog.list.createFormationTemplateDialog.on();
+}
+//作成予定の編成テンプレートプレビューをリフレッシュ
+function refleshNewFormationTemplateTable() {
+	tentativeFormationTemplate.seriesId = Number(document.querySelector("#cref-series").value);
+
+	let table = new Table();
+	table.setAttributes({ "class": "vertical-stripes not-formated-car-table formation-view" });
+	table.setSubtitle("作成される編成のプレビュー");
+	if (tentativeFormationTemplate.carNumbers.length != 0) {
+		table.addRow();
+		table.addCell(`編成番号:${tentativeFormationTemplate.formationName(1)}`, { "colspan": tentativeFormationTemplate.carNumbers.length });
+		for (let i in tentativeFormationTemplate.carNumbers) {
+			if (i % 10 == 0) { table.addRow() }
+			table.addCell(tentativeFormationTemplate.carNumbers[i](1));
+		}
+		let missingCellCount = (tentativeFormationTemplate.carNumbers.length <= 10) ? 0 : (10 - tentativeFormationTemplate.carNumbers.length % 10);
+		for (let i = 0; i < missingCellCount; i++) {
+			table.addCell("");
+		}
+	}
+	document.querySelector("#cref-new-formated-template-table").innerHTML = table.generateTable();
 }
 //ダイアログ関連ここまで
 
