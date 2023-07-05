@@ -1,67 +1,80 @@
-:root{
-	--formation-table-main-border:#5c3d7e;
+:root {
+	--formation-table-main-border: #5c3d7e;
 }
 
 /* 全般 */
-*{
+* {
 	font-family: sans-serif;
 	box-sizing: border-box;
-	color:#000;
+	color: #000;
 }
-body{
+
+body {
 	margin: 0;
 	font-size: 11pt;
 }
-a:link,a:visited{
+
+a:link,
+a:visited {
 	text-decoration: none;
-	color:#00f;
+	color: #00f;
 }
-a:hover{
-	color:#f00;
+
+a:hover {
+	color: #f00;
 	text-decoration: none;
 }
-button{
+
+button {
 	cursor: pointer;
 	background-color: var(--formation-table-main-border);
 	border: 1px solid var(--formation-table-main-border);
 	border-radius: 0.3em;
 	color: #fff;
 }
-button:hover{
+
+button:hover {
 	cursor: pointer;
 	background-color: #fff;
 	color: var(--formation-table-main-border);
 }
-table{
+
+table {
 	border-collapse: collapse;
 	border-color: #000;
-    border: 2px solid var(--formation-table-main-border);
+	border: 2px solid var(--formation-table-main-border);
 }
-td{
-	padding:0.15em;
+
+td {
+	padding: 0.15em;
 }
-div.separator{
+
+div.separator {
 	display: inline-block;
-	width:1px;
+	width: 1px;
 	margin: 0 0.5em;
 	height: 1.5em;
 	vertical-align: middle;
 	background-color: #bbb;
 }
-td.separator{
-    width: 0;
-    padding: 1px;
+
+td.separator {
+	width: 0;
+	padding: 1px;
 }
-a.update-yearmonth-link{
+
+a.update-yearmonth-link {
 	text-decoration: none;
 }
-a.update-yearmonth-link:hover{
-	color:#f00;
+
+a.update-yearmonth-link:hover {
+	color: #f00;
 }
-a.update-yearmonth-link::before{
-	content:"time";
-	margin:0 0.1em;
-	font-size:100%;
+
+a.update-yearmonth-link::before {
+	content: "time";
+	margin: 0 0.1em;
+	font-size: 100%;
 	font-family: 'LigatureSymbols';
 	-webkit-text-rendering: optimizeLegibility;
 	-moz-text-rendering: optimizeLegibility;
@@ -82,186 +95,233 @@ a.update-yearmonth-link::before{
 }
 
 /* ヘッダ */
-div#header{
+div#header {
 	z-index: 999999;
 	position: fixed;
-	top:0;
-	left:0;
+	top: 0;
+	left: 0;
 	width: 100%;
 	background-color: #fff;
-	margin:0;
+	margin: 0;
 	margin-bottom: 2.0em;
-	padding:0.8em;
+	padding: 0.8em;
 	border-bottom: 1px solid #bbb;
 }
 
 /* メイン編成表 */
-div#formation-table-container{
+div#formation-table-container {
 	margin: 0.8em;
 	padding-top: 3.0em;
 }
-div#formation-table-container div.generated-table-container{
+
+div#formation-table-container div.generated-table-container {
 	margin-bottom: 2.0em;
 }
-div#formation-table-container p.table-title{
+
+div#formation-table-container p.table-title {
 	background-color: var(--formation-table-main-border);
-	padding:0.25em;
-	color:#fff;
+	padding: 0.25em;
+	color: #fff;
 }
-div#formation-table-container p.table-subtitle{
+
+div#formation-table-container p.table-subtitle {
 	background-color: #dcccee;
-	padding:0.25em;
-	color:#000;
+	padding: 0.25em;
+	color: #000;
 }
-div#formation-table-container div.generated-table-headers{
+
+div#formation-table-container div.generated-table-headers {
 	margin-bottom: 0.5em;
 }
+
 /* 交互に色を付けるやつ */
 table.horizontal-stripes tr:nth-child(2n+1),
 table.vertical-stripes tr td:nth-child(2n+1),
 table.vertical-stripes.not-formated-car-table tr:nth-child(2n) td:nth-child(2n),
-table.formation-view tr:nth-child(2) td:nth-child(2n+1){
-	background-color:#f7f0ff;
+table.formation-view tr:nth-child(2) td:nth-child(2n+1) {
+	background-color: #f7f0ff;
 }
+
 table.horizontal-stripes tr:nth-child(2n),
 table.vertical-stripes tr td:nth-child(2n),
 table.vertical-stripes.not-formated-car-table tr:nth-child(2n) td:nth-child(2n+1),
-table.formation-view tr:nth-child(2) td:nth-child(2n){
+table.formation-view tr:nth-child(2) td:nth-child(2n) {
 	background-color: #fdfbff;
 }
-div#formation-table-container table.formation-table tr td{
+
+div#formation-table-container table.formation-table tr td {
 	padding: 0.15em 0.3em;
 }
-td.car{
+
+td.car {
 	text-align: center;
 }
-div#forfc-not-formated-cars-table td.car.selected{
+
+div#forfc-not-formated-cars-table td.car.selected {
 	background-color: #9a65d3;
-	color:#fff;
+	color: #fff;
 }
-div#forfc-not-formated-cars-table td.car.selected a:link{
-	color:#fff;
+
+div#forfc-not-formated-cars-table td.car.selected a:link {
+	color: #fff;
 }
-div#formation-table-container table.formation-table tr td, table.formation-view tr:nth-child(2) td,div#cardt-main table td:nth-child(1),div#formationTemplatesDialog table tr td:not(.formation-name){
+
+div#formation-table-container table.formation-table tr td,
+table.formation-view tr:nth-child(2) td,
+div#cardt-main table td:nth-child(1),
+div#formationTemplatesDialog table tr td:not(.formation-name):not(.formation-template-name) {
 	padding: 0.15em 0.5em;
 	border-right: 1px solid #ccc;
 }
-div#cardt-main table td:nth-child(2){
+
+div#cardt-main table td:nth-child(2) {
 	padding: 0.15em 0.5em;
 }
-div#formation-table-container table.formation-table tr td:nth-last-child(2){
+
+div#formation-table-container table.formation-table tr td:nth-last-child(2) {
 	border-right: none;
 }
+
 /* 右側に濃い色の線をつけるやつ */
-div#formation-table-container table.formation-table tr td:first-child, td.formation-name, div#formationTemplatesDialog table tr td:nth-last-child(2){
+div#formation-table-container table.formation-table tr td:first-child,
+td.formation-name,
+div#formationTemplatesDialog table tr td:nth-last-child(2),
+td.formation-template-name {
 	border-right: 1px solid var(--formation-table-main-border);
 }
+
+#formationTemplatesDialog td.formation-name {
+	border: none;
+}
+
 /* 左側に濃い色の線を付けるやつ */
-div#formation-table-container table.formation-table tr td:last-child{
+div#formation-table-container table.formation-table tr td:last-child {
 	border-left: 1px solid var(--formation-table-main-border);
 }
+
 /* 未組成車両セル */
-table.not-formated-car-table tr{
+table.not-formated-car-table tr {
 	border-bottom: 2px solid var(--formation-table-main-border);
 }
-table.not-formated-car-table tr td{
+
+table.not-formated-car-table tr td {
 	border-left: 2px solid var(--formation-table-main-border);
-    padding: 0.15em 0.5em;
+	padding: 0.15em 0.5em;
 }
-table.formation-view tr:nth-child(1) td{
+
+table.formation-view tr:nth-child(1) td {
 	background-color: var(--formation-table-main-border);
-	color:#fff;
+	color: #fff;
 }
-div#forfc-new-formated-cars-table{
+
+div#forfc-new-formated-cars-table {
 	margin-top: 1.0em;
 }
 
 /* テーブル */
-p.table-title{
+p.table-title {
 	font-weight: bold;
 	margin-bottom: 0;
 }
-p.table-subtitle{
+
+p.table-subtitle {
 	font-size: 0.8em;
 	margin: 0;
 }
 
 /* メッセージ */
-.message{
-	padding:1.0em;
+.message {
+	padding: 1.0em;
 	margin: 1.0em auto;
 }
-.warning{
+
+.warning {
 	border: 1px solid #f00;
 	margin-bottom: 2.0em;
 }
 
 /* ダイアログの中のテーブル */
-.dialog-content .table-container{
+.dialog-content .table-container {
 	max-height: 10em;
 	overflow: auto;
 }
 
+/* 編成テンプレート */
+td.formation-template-name {
+	font-size: 0.7em;
+	color: #444;
+	padding: 0.15em 0.6em;
+	padding-left: 0;
+}
+
 /* TD要素の見出し */
-td.formation-name,#cardt-main table tr > td:first-child:not(.remark){
+td.formation-name,
+#cardt-main table tr>td:first-child:not(.remark) {
 	font-weight: bold;
-	color:var(--formation-table-main-border);
+	color: var(--formation-table-main-border);
 	text-align: right;
 	padding: 0.15em 0.6em;
 }
-#cardt-main table tr > td:first-child.remark{
+
+#cardt-main table tr>td:first-child.remark {
 	text-align: left;
 }
+
 /*車両詳細ダイアログのTD内のUL*/
-#cardt-main table tr > td ul{
+#cardt-main table tr>td ul {
 	margin: 0;
 	padding-left: 0;
 	list-style: none;
 }
-#cardt-main table tr > td ul li::before{
-	content:"・";
-	display:inline;
+
+#cardt-main table tr>td ul li::before {
+	content: "・";
+	display: inline;
 }
 
 /* 廃車 */
-td.dropped{
+td.dropped {
 	text-decoration: line-through;
 	background-color: #bbb;
 }
+
 /* 重複した車両番号 */
-td.duplicated{
+td.duplicated {
 	background-color: #ff0;
 }
 
 /* ダイアログの情報保持用DIV */
-div[id$="-opening"]{
-	display:none;
+div[id$="-opening"] {
+	display: none;
 }
 
 /* 車両詳細および編成詳細ダイアログ内の車両番号･編成番号 */
-p:has(#cardt-car-number),p:has(#fmdt-formation-number){
+p:has(#cardt-car-number),
+p:has(#fmdt-formation-number) {
 	margin-top: -0.8em;
 }
-#cardt-car-number, #fmdt-formation-number{
-	font-size:2.0em;
+
+#cardt-car-number,
+#fmdt-formation-number {
+	font-size: 2.0em;
 }
 
 /* 改番ボタン */
-p.car-name button{
+p.car-name button {
 	margin-left: 1em;
 	font-size: 0.7em;
 	transform: translateY(-0.35em);
 }
 
 /* 編成編集ボタン */
-td.formation-name button{
+td.formation-name button {
 	margin-left: 0.5em;
 	font-size: 0.7em;
 	transform: translateY(-0.1em);
 }
 
 /* 車両及び編成の状態 */
-p.car-name span.car-status{
+p.car-name span.car-status {
 	background-color: #00c900;
 	border-radius: 5px;
 	color: #fff;
@@ -269,15 +329,19 @@ p.car-name span.car-status{
 	float: right;
 	margin-top: 0.5em;
 }
-p.car-name span.car-status::before{
+
+p.car-name span.car-status::before {
 	content: "check";
 }
-p.car-name span.car-status.dropped{
+
+p.car-name span.car-status.dropped {
 	background-color: #f00;
 }
-p.car-name span.car-status.dropped a.update-yearmonth-link{
-	color:#fff;
+
+p.car-name span.car-status.dropped a.update-yearmonth-link {
+	color: #fff;
 }
-p.car-name span.car-status.dropped::before{
+
+p.car-name span.car-status.dropped::before {
 	content: "ban";
 }

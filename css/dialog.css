@@ -8,8 +8,8 @@
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.5);
 	display: none;
-	margin:0;
-	z-index:99999;
+	margin: 0;
+	z-index: 99999;
 }
 
 #dialog-area .dialog-content {
@@ -17,7 +17,7 @@
 	top: 20%;
 	left: 50%;
 	transform: translate(-50%, 0);
-	visibility:visible;
+	visibility: visible;
 	background-color: #fff;
 	padding: 1.8em;
 	min-width: 512px;
@@ -25,32 +25,39 @@
 	max-height: 100%;
 	text-align: center;
 	border: 1px solid var(--main-color);
-	transition:var(--main-transition);
+	transition: var(--main-transition);
 	box-shadow: 0px 0px 10px #000;
-}
-#dialog-area .dialog-content > *{
-	text-align: left;
-}
-#dialog-area .dialog-content > p.dialog-title{
-	margin-top:0;
-	margin-bottom:1.5em;
-	font-weight: bold;
-}
-#dialog-area .dialog-content > p.dialog-foot-buttons-container{
-	margin-top:1.5em;
-	margin-bottom:0;
-	text-align: right;
-}
-#dialog-area .dialog-content > p.dialog-foot-buttons-container > button {
-	margin: 0 0.5em;
-	font-size: 1.0em;
-	padding:0.25em 0.5em;
+	overflow: hidden;
+	width: max-content;
 }
 
-#dialog-area .dialog-content > p.dialog-foot-buttons-container > button:first-child {
+#dialog-area .dialog-content>* {
+	text-align: left;
+}
+
+#dialog-area .dialog-content>p.dialog-title {
+	margin-top: 0;
+	margin-bottom: 1.5em;
+	font-weight: bold;
+}
+
+#dialog-area .dialog-content>p.dialog-foot-buttons-container {
+	margin-top: 1.5em;
+	margin-bottom: 0;
+	text-align: right;
+}
+
+#dialog-area .dialog-content>p.dialog-foot-buttons-container>button {
+	margin: 0 0.5em;
+	font-size: 1.0em;
+	padding: 0.25em 0.5em;
+}
+
+#dialog-area .dialog-content>p.dialog-foot-buttons-container>button:first-child {
 	margin-left: 0;
 }
-#dialog-area .dialog-content > p.dialog-foot-buttons-container > button:last-child {
+
+#dialog-area .dialog-content>p.dialog-foot-buttons-container>button:last-child {
 	margin-right: 0;
 }
 
@@ -58,42 +65,46 @@
 #dialog-area .dialog-content.on {
 	display: block;
 }
-#dialog-area.on{
+
+#dialog-area.on {
 	animation: show 150ms linear 0s;
 }
 
 #dialog-area.off {
-	display:block;
+	display: block;
 	animation: hide forwards 150ms linear 0s;
 }
 
-#dialog-area.on .dialog-content.off{
-	display:none;
+#dialog-area.on .dialog-content.off {
+	display: none;
 }
-#dialog-area.off .dialog-content.off{
-	display:block;
-	visibility:hidden;
+
+#dialog-area.off .dialog-content.off {
+	display: block;
+	visibility: hidden;
 	animation: hide forwards 150ms linear 0s;
 }
 
 
-@keyframes show{
-	from{
+@keyframes show {
+	from {
 		opacity: 0;
 	}
-	to{
+
+	to {
 		opacity: 1;
-		visibility:visible;
+		visibility: visible;
 	}
 }
 
-@keyframes hide{
-	0%{
+@keyframes hide {
+	0% {
 		opacity: 1;
 	}
-	100%{
+
+	100% {
 		opacity: 0;
-		visibility:hidden;
+		visibility: hidden;
 	}
 }
 
