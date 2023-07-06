@@ -1,18 +1,18 @@
 //テーブル生成クラス
-class Table{
+class Table {
 	#rows = [];
 	#title = null;
 	#subtitle = null;
 	#border = 0;
 	#attrs = {};
 	#maxCellCount = 0;
-	constructor(title,subtitle) {
+	constructor(title, subtitle) {
 		this.setTitle(title);
 		this.setSubtitle(subtitle);
 	}
 	//最期の行のセル数
 	get cellCountOfLastRow() {
-		if (this.#rows.length==0){return 0}
+		if (this.#rows.length == 0) { return 0 }
 		return this.#rows.at(-1).length;
 	}
 	//最後の行にセルを追加
@@ -21,18 +21,18 @@ class Table{
 	}
 	//n行目にセルを追加
 	addCellTo(n, html, attrs) {
-		this.addCellInto(n,this.#rows[n].length,html,attrs);
+		this.addCellInto(n, this.#rows[n].length, html, attrs);
 	}
 	//n行目m列にセルを追加
-	addCellInto(n,m,html,attrs) {
-		this.#rows[n].splice(m,0,new Cell(html,attrs));
+	addCellInto(n, m, html, attrs) {
+		this.#rows[n].splice(m, 0, new Cell(html, attrs));
 		if (this.#rows[n].length > this.#maxCellCount) {
 			this.#maxCellCount = this.#rows[n].length;
 		}
 	}
 	//行を追加
 	addRow() {
-		this.#rows.push([]);	
+		this.#rows.push([]);
 	}
 	//全行の一番右に空白のセルを追加して揃える
 	addBlankCellToRowRightEnd() {
@@ -43,7 +43,7 @@ class Table{
 		for (let n in this.#rows) {
 			if (this.#rows[n].length < this.#maxCellCount) {
 				for (let i = this.#rows[n].length; i < this.#maxCellCount; i++) {
-					this.addCellInto(n, this.#rows[n].length-x, "");
+					this.addCellInto(n, this.#rows[n].length - x, "");
 				}
 			}
 		}
@@ -65,7 +65,7 @@ class Table{
 			this.#attrs[attr] = attrs[attr];
 		}
 	}
-	get maxCellCount(){
+	get maxCellCount() {
 		return this.#maxCellCount;
 	}
 
@@ -88,7 +88,7 @@ class Table{
 }
 
 //セルクラス
-class Cell{
+class Cell {
 	#html;
 	#attrs = {};
 
@@ -106,9 +106,9 @@ class Cell{
 }
 
 //属性クラス
-class Attribute{
+class Attribute {
 	static generateHTML(attrs) {
-		let html="";
+		let html = "";
 		for (let attr in attrs) {
 			html += ` ${attr}="${attrs[attr]}"`;
 		}

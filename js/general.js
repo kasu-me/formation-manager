@@ -1,5 +1,5 @@
 //年月クラス
-class YearMonth{
+class YearMonth {
 	#y;
 	#m;
 	constructor(y, m) {
@@ -16,7 +16,7 @@ class YearMonth{
 	}
 
 	//年月を更新
-	update(y,m) {
+	update(y, m) {
 		if (m == null) {
 			this.update(Math.floor(y / 12) - (y % 12 == 0 ? 1 : 0), y % 12 == 0 ? 12 : y % 12);
 		} else {
@@ -41,7 +41,7 @@ class YearMonth{
 }
 
 //フォーマッタクラス
-class Formatter{
+class Formatter {
 	static link(href, text) {
 		return `<a href="javascript:displayCarDeteal(${href})">${text}</a>`
 	}
