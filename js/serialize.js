@@ -72,10 +72,10 @@ function generateJSON() {
 //各種一覧JSONから読み込み
 function loadListsFromJSON(json) {
 	//リセット
-	serieses = new AllSerieses();
-	cars = new AllCars();
-	formations = new AllFormations();
-	formationTemplates = new AllFormationTemplates();
+	AllSerieses.reset();
+	AllCars.reset();
+	AllFormations.reset();
+	AllFormationTemplates.reset();
 
 	//JSON→Object
 	let obj = JSON.parse(json);
