@@ -61,7 +61,7 @@ function list() {
 			//行を追加
 			tables.at(-1).addRow();
 			//編成番号セルを追加
-			tables.at(-1).addCell(`${formationList[formationId].name}<button onclick="Dialog.list.formationDetealDialog.functions.displayFormationDeteal(${formationId})" class="lsf-icon" icon="search">編成詳細</button>`, { "class": "formation-name" });
+			tables.at(-1).addCell(`${formationList[formationId].name}<button onclick="Dialog.list.formationDetealDialog.functions.display(${formationId})" class="lsf-icon" icon="search">編成詳細</button>`, { "class": "formation-name" });
 			//車両ごとに処理
 			let carsOnFormation = formationList[formationId].cars;
 			for (let i in carsOnFormation) {
@@ -73,7 +73,7 @@ function list() {
 			//組成年月セルを追加
 			tables.at(-1).addCell(formationList[formationId].formatedOn.toStringWithLink());
 			//コントロールセルを追加
-			//tables.at(-1).addCell(`<button onclick="Dialog.list.formationDetealDialog.functions.displayFormationDeteal(${formationId})">編成詳細</button>`);
+			//tables.at(-1).addCell(`<button onclick="Dialog.list.formationDetealDialog.functions.display(${formationId})">編成詳細</button>`);
 		}
 		tables.at(-1).addBlankCellToRowIn(1);
 		html += tables.at(-1).generateTable();
@@ -153,10 +153,10 @@ function reflesh() {
 
 	//ダイアログ内の表示を更新
 	if (Dialog.list.carDetealDialog.isActive) {
-		Dialog.list.carDetealDialog.functions.displayCarDeteal(Number(document.querySelector('#cardt-car-id').innerHTML));
+		Dialog.list.carDetealDialog.functions.display(Number(document.querySelector('#cardt-car-id').innerHTML));
 	}
 	if (Dialog.list.createFormationFromFloatingCarsDialog.isActive) {
-		Dialog.list.createFormationFromFloatingCarsDialog.functions.displayNotFormatedCars();
+		Dialog.list.createFormationFromFloatingCarsDialog.functions.display();
 	}
 }
 
