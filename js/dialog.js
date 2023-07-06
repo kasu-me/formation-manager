@@ -302,10 +302,14 @@ window.addEventListener("load", function () {
 		createFormationTemplate: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.createFormationTemplateDialog.isActive) {
-				AllFormationTemplates.addFormationTemplate(Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate);
-				Dialog.list.createFormationTemplateDialog.functions.clearInputs();
-				Dialog.list.createFormationTemplateDialog.off();
-				Dialog.list.formationTemplatesDialog.functions.display();
+				if (Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.length < 1) {
+					alert("最低1つは車両番号の一般式が必要です。");
+				} else {
+					AllFormationTemplates.addFormationTemplate(Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate);
+					Dialog.list.createFormationTemplateDialog.functions.clearInputs();
+					Dialog.list.createFormationTemplateDialog.off();
+					Dialog.list.formationTemplatesDialog.functions.display();
+				}
 			}
 		},
 		clearInputs: function () {
