@@ -267,10 +267,11 @@ window.addEventListener("load", function () {
 	});
 
 	//編成テンプレートを作成:cref
-	new Dialog("createFormationTemplateDialog", "編成テンプレートを作成", `形式:<select id="cref-series" onchange="Dialog.list.createFormationTemplateDialog.functions.reflesh()"></select><p>車両番号の一般式:<input id="cref-carnumber"><button onclick="Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.addCarNumber(document.getElementById('cref-carnumber').value);Dialog.list.createFormationTemplateDialog.functions.reflesh();document.getElementById('cref-carnumber').value='';document.getElementById('cref-carnumber').focus()" class="lsf-icon" icon="add">追加</button></p><div id="cref-new-formated-template-table"></div>`, [{ "content": "編成作成", "event": ``, "icon": "check" }, { "content": "クリア", "event": ``, "icon": "clear" }, { "content": "キャンセル", "event": `Dialog.list.createFormationTemplateDialog.off();`, "icon": "close" }], {
+	new Dialog("createFormationTemplateDialog", "編成テンプレートを作成", `形式:<select id="cref-series" onchange="Dialog.list.createFormationTemplateDialog.functions.reflesh()"></select><p>テンプレートの説明:<input id="cref-name" oninput="Dialog.list.createFormationTemplateDialog.functions.reflesh();"></p><p>車両番号の一般式:<input id="cref-carnumber"><button onclick="Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.addCarNumber(document.getElementById('cref-carnumber').value);Dialog.list.createFormationTemplateDialog.functions.reflesh();document.getElementById('cref-carnumber').value='';document.getElementById('cref-carnumber').focus()" class="lsf-icon" icon="add">追加</button></p><div id="cref-new-formated-template-table"></div>`, [{ "content": "編成テンプレート作成", "event": `Dialog.list.createFormationTemplateDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "クリア", "event": `Dialog.list.createFormationTemplateDialog.functions.clearInputs();Dialog.list.createFormationTemplateDialog.functions.reflesh();`, "icon": "clear" }, { "content": "キャンセル", "event": `Dialog.list.createFormationTemplateDialog.off();`, "icon": "close" }], {
 		tentativeFormationTemplate: new FormationTemplate(),
 		//編成テンプレートを作成ダイアログを表示
 		display: function () {
+			Dialog.list.createFormationTemplateDialog.functions.clearInputs();
 			//セレクトボックスに形式名を投入
 			setSeriesesToSelectBox(document.querySelector("#cref-series"));
 			Dialog.list.createFormationTemplateDialog.functions.reflesh();
@@ -279,6 +280,7 @@ window.addEventListener("load", function () {
 		//作成予定の編成テンプレートプレビューをリフレッシュ
 		reflesh: function () {
 			Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.seriesId = Number(document.querySelector("#cref-series").value);
+			Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.name = document.querySelector("#cref-name").value;
 
 			let table = new Table();
 			table.setAttributes({ "class": "vertical-stripes not-formated-car-table formation-view" });
@@ -296,6 +298,20 @@ window.addEventListener("load", function () {
 				}
 			}
 			document.querySelector("#cref-new-formated-template-table").innerHTML = table.generateTable();
+		},
+		createFormationTemplate: function () {
+			//親ダイアログが表示されている状態以外での実行を禁止
+			if (Dialog.list.createFormationTemplateDialog.isActive) {
+				formationTemplates.addFormationTemplate(Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate);
+				Dialog.list.createFormationTemplateDialog.functions.clearInputs();
+				Dialog.list.createFormationTemplateDialog.off();
+				Dialog.list.formationTemplatesDialog.functions.display();
+			}
+		},
+		clearInputs: function () {
+			Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate = new FormationTemplate();
+			document.querySelector("#cref-name").value = "";
+			document.querySelector("#cref-carnumber").value = "";
 		}
 	});
 
