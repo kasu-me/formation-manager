@@ -297,7 +297,7 @@ class FormationTemplate {
 	//形式ID
 	#seriesId;
 	//名前
-	#name
+	#name = "";
 	//編成番号の一般形
 	#formationName;
 	//[車両番号の一般形]
@@ -307,7 +307,7 @@ class FormationTemplate {
 	//一般形にはnの関数を指定
 	constructor(seriesId, name, carNumbers, formationName) {
 		this.seriesId = seriesId;
-		this.name = name;
+		this.name = name || this.name;
 		this.carNumbers = carNumbers;
 		if (formationName != null && typeof (formationName) == "function") {
 			this.formationName = formationName;
