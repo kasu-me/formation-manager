@@ -39,28 +39,28 @@ class Deserializer {
 //各種一覧JSON出力
 function generateJSON() {
 	//形式
-	let seriesList = serieses.seriesesList;
+	let seriesList = AllSerieses.seriesesList;
 	let seriesJSON = "";
 	for (let seriesId in seriesList) {
 		seriesJSON += seriesId != 0 ? "," : "";
 		seriesJSON += seriesList[seriesId].convertToJSON();
 	}
 	//車両
-	let carList = cars.carsList;
+	let carList = AllCars.carsList;
 	let carJSON = "";
 	for (let carId in carList) {
 		carJSON += carId != 0 ? "," : "";
 		carJSON += carList[carId].convertToJSON();
 	}
 	//編成
-	let formationList = formations.formationsList;
+	let formationList = AllFormations.formationsList;
 	let formationJSON = "";
 	for (let formationId in formationList) {
 		formationJSON += formationId != 0 ? "," : "";
 		formationJSON += formationList[formationId].convertToJSON();
 	}
 	//編成テンプレート
-	let formationTemplateList = formationTemplates.getFormationTemplateList();
+	let formationTemplateList = AllFormationTemplates.getFormationTemplateList();
 	let formationTemplateJSON = "";
 	for (let formationTemplateId in formationTemplateList) {
 		formationTemplateJSON += formationTemplateId != 0 ? "," : "";
@@ -81,16 +81,16 @@ function loadListsFromJSON(json) {
 	let obj = JSON.parse(json);
 
 	for (let seriesId in obj.serieses) {
-		serieses.addSeries(Deserializer.fromObject(obj.serieses[seriesId]));
+		AllSerieses.addSeries(Deserializer.fromObject(obj.serieses[seriesId]));
 	}
 	for (let carId in obj.cars) {
-		cars.addCar(Deserializer.fromObject(obj.cars[carId]));
+		AllCars.addCar(Deserializer.fromObject(obj.cars[carId]));
 	}
 	for (let formationId in obj.formations) {
-		formations.addFormation(Deserializer.fromObject(obj.formations[formationId]));
+		AllFormations.addFormation(Deserializer.fromObject(obj.formations[formationId]));
 	}
 	for (let formationTemplateId in obj.formationTemplates) {
-		formationTemplates.addFormationTemplate(Deserializer.fromObject(obj.formationTemplates[formationTemplateId]));
+		AllFormationTemplates.addFormationTemplate(Deserializer.fromObject(obj.formationTemplates[formationTemplateId]));
 	}
 
 	minYearMonth = new YearMonth(obj.minYearMonth.y, obj.minYearMonth.m);

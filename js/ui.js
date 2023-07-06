@@ -26,7 +26,7 @@ function continueReadJSON() {
 //現存編成の編成表を表に出力
 function list() {
 	//ソート
-	let seriesList = serieses.seriesesList;
+	let seriesList = AllSerieses.seriesesList;
 	let carListNow = [];
 	let tables = [];
 	let html = "";
@@ -42,7 +42,7 @@ function list() {
 		tables.at(-1).setSubtitle(seriesList[seriesId].description);
 		tables.at(-1).setAttributes({ "class": "formation-table horizontal-stripes" });
 		//現時点で組成されている編成を取得
-		let formationList = formations.getBySeriesIdAndYearMonth(seriesId, now);
+		let formationList = AllFormations.getBySeriesIdAndYearMonth(seriesId, now);
 
 		//ソート
 		let keys = Object.keys(formationList).sort((f1, f2) => {
@@ -82,9 +82,9 @@ function list() {
 	//編成に組み込まれていない車両を処理
 	tables.push(new Table("編成に所属していない車両"));
 	tables.at(-1).setAttributes({ "class": "not-formated-car-table vertical-stripes" });
-	for (let carId in cars.carsList) {
+	for (let carId in AllCars.carsList) {
 		//編成に組み込まれている車両および未製造の車両および廃車は除外する
-		if (proccessedCarIds.includes(Number(carId)) || cars.carsList[carId].manufacturedOn.serial > now.serial) {
+		if (proccessedCarIds.includes(Number(carId)) || AllCars.carsList[carId].manufacturedOn.serial > now.serial) {
 			continue;
 		} else {
 			if (tables.at(-1).cellCountOfLastRow % 10 == 0) {
@@ -119,25 +119,25 @@ function list() {
 //車両セルの追加
 //Table, 車両ID, 処理中の車両リスト, 今編成内の車両を処理しているか
 function addCarCell(table, carId, carListNow, isInFormation) {
-	if (cars.carsList[carId].isDroppedInTime(now)) {
+	if (AllCars.carsList[carId].isDroppedInTime(now)) {
 		if (isInFormation) { table.addCell("") }
 	} else {
-		table.addCell(Formatter.link(carId, cars.carsList[carId].numberInTime(now)), { "class": "car" + (cars.carsList[carId].isDroppedInTime(now) ? " dropped" : "") });
-		carListNow.push(cars.carsList[carId].numberInTime(now))
+		table.addCell(Formatter.link(carId, AllCars.carsList[carId].numberInTime(now)), { "class": "car" + (AllCars.carsList[carId].isDroppedInTime(now) ? " dropped" : "") });
+		carListNow.push(AllCars.carsList[carId].numberInTime(now))
 	}
 }
 
 //編成に所属していない車両のリストアップ
 function listUpNotFormatedCarIds() {
 	let carIdsList = [];
-	let enrolledFormations = formations.getFormationsByYearMonth(now);
+	let enrolledFormations = AllFormations.getFormationsByYearMonth(now);
 	for (let i in enrolledFormations) {
 		for (let j in enrolledFormations[i].cars) {
 			carIdsList.push(enrolledFormations[i].cars[j]);
 		}
 	}
-	return cars.activeCarIdsListInTime(now).filter((x) => {
-		return carIdsList.indexOf(x) == -1 && cars.carsList[x].isActiveInTime(now);
+	return AllCars.activeCarIdsListInTime(now).filter((x) => {
+		return carIdsList.indexOf(x) == -1 && AllCars.carsList[x].isActiveInTime(now);
 	});
 }
 
@@ -166,10 +166,10 @@ function reflesh() {
 //セレクトボックスに形式名を投入
 function setSeriesesToSelectBox(seriesSelectBox) {
 	seriesSelectBox.innerHTML = "";
-	for (let i in serieses.seriesesList) {
+	for (let i in AllSerieses.seriesesList) {
 		let newDiv = document.createElement("option");
 		newDiv.setAttribute("value", i);
-		newDiv.innerHTML = serieses.seriesesList[i].name;
+		newDiv.innerHTML = AllSerieses.seriesesList[i].name;
 		seriesSelectBox.appendChild(newDiv);
 	}
 }
@@ -181,12 +181,12 @@ function dropCar(carId_) {
 		//親ダイアログが表示されている状態以外での実行を禁止
 		if (Dialog.list.carDetealDialog.isActive) {
 			let carId = Number(document.querySelector('#cardt-car-id').innerHTML);
-			if (cars.carsList[carId].isDropped) {
+			if (AllCars.carsList[carId].isDropped) {
 				alert("この車両は既に廃車されています。");
 				Dialog.list.carDetealDialog.off();
 				return;
 			}
-			if (window.confirm(`${cars.carsList[carId].numberInTime(now)}号車を${now.toString()}付で廃車します。`)) {
+			if (window.confirm(`${AllCars.carsList[carId].numberInTime(now)}号車を${now.toString()}付で廃車します。`)) {
 				//廃車
 				dropCar(carId);
 				//廃車車両を除いた車両で編成
@@ -197,18 +197,18 @@ function dropCar(carId_) {
 		//引数がある場合、廃車処理
 	} else {
 		//廃車
-		cars.dropCar(carId_, now);
-		let formationId = formations.searchByCarId(carId_, now);
+		AllCars.dropCar(carId_, now);
+		let formationId = AllFormations.searchByCarId(carId_, now);
 		//編成に所属していた場合、編成を解除
 		if (formationId != -1) {
-			let cars = formations.formationsList[formationId].cars;
-			let seriesId = formations.formationsList[formationId].seriesId;
-			let name = formations.formationsList[formationId].name;
-			let belongsTo = formations.formationsList[formationId].belongsTo;
-			let isTerminated = formations.formationsList[formationId].isTerminated;
-			let terminatedOn = formations.formationsList[formationId].terminatedOn;
+			let cars = AllFormations.formationsList[formationId].cars;
+			let seriesId = AllFormations.formationsList[formationId].seriesId;
+			let name = AllFormations.formationsList[formationId].name;
+			let belongsTo = AllFormations.formationsList[formationId].belongsTo;
+			let isTerminated = AllFormations.formationsList[formationId].isTerminated;
+			let terminatedOn = AllFormations.formationsList[formationId].terminatedOn;
 			//編成解除
-			formations.releaseFormation(formationId, now);
+			AllFormations.releaseFormation(formationId, now);
 			//廃車した車両を除いて編成再組成
 			let newFormationCars = [];
 			for (let i in cars) {
@@ -216,15 +216,15 @@ function dropCar(carId_) {
 					newFormationCars.push(cars[i]);
 				}
 			}
-			let newFormationId = formations.addFormation(new Formation(seriesId, name, newFormationCars, belongsTo, now));
+			let newFormationId = AllFormations.addFormation(new Formation(seriesId, name, newFormationCars, belongsTo, now));
 			//元の編成が未来で解除されていた編成の場合、今作成した編成をその年月で編成解除
 			if (isTerminated) {
-				formations.releaseFormation(newFormationId, terminatedOn);
+				AllFormations.releaseFormation(newFormationId, terminatedOn);
 			}
 			//廃車した車両が未来に組成されている編成のメンバとして在籍している場合、除外する
-			for (let i in formations.formationsList) {
-				if (formations.formationsList[i].formatedOn.serial >= now.serial) {
-					formations.formationsList[i].removeCarByCarId(carId_);
+			for (let i in AllFormations.formationsList) {
+				if (AllFormations.formationsList[i].formatedOn.serial >= now.serial) {
+					AllFormations.formationsList[i].removeCarByCarId(carId_);
 				}
 			}
 		}
@@ -253,11 +253,6 @@ let now;
 let minYearMonth;
 let maxYearMonth;
 
-//実際データ領域定義
-let serieses = new AllSerieses();
-let cars = new AllCars();
-let formations = new AllFormations();
-let formationTemplates = new AllFormationTemplates();
 
 window.addEventListener("load", setInputMaxAndMin);
 window.addEventListener("load", reflesh);

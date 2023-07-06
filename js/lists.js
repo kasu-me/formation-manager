@@ -2,12 +2,12 @@
 
 //全形式一覧クラス
 class AllSerieses {
-	#serieses = [];
+	static #serieses = [];
 
-	get seriesesList() {
+	static get seriesesList() {
 		return this.#serieses;
 	}
-	addSeries(series) {
+	static addSeries(series) {
 		this.#serieses.push(series);
 		return this.#serieses.length - 1;
 	}
@@ -15,24 +15,24 @@ class AllSerieses {
 
 //全車両一覧クラス
 class AllCars {
-	#cars = [];
+	static #cars = [];
 
 	//車両改番(改番する車両ID,改番後の番号,YearMonth 改番年月)
-	renumberCar(carId, newNumber, renumberedOn) {
+	static renumberCar(carId, newNumber, renumberedOn) {
 		if (renumberedOn == undefined) {
 			renumberedOn = now;
 		}
 		this.#cars[carId].renumber(newNumber, renumberedOn);
 	}
 	//車両廃車(廃車する車両ID,YearMonth 廃車年月)
-	dropCar(carId, droppedOn) {
+	static dropCar(carId, droppedOn) {
 		if (droppedOn == undefined) {
 			droppedOn = now;
 		}
 		this.#cars[carId].drop(droppedOn);
 	}
 	//now時点で現役な車両
-	activeCarsListInTime(now) {
+	static activeCarsListInTime(now) {
 		let carsList = {};
 		for (let i in this.#cars) {
 			if (this.#cars[i].isActiveInTime(now)) {
@@ -41,7 +41,7 @@ class AllCars {
 		}
 		return carsList;
 	}
-	activeCarIdsListInTime(now) {
+	static activeCarIdsListInTime(now) {
 		let carsList = [];
 		for (let i in this.#cars) {
 			if (this.#cars[i].isActiveInTime(now)) {
@@ -52,7 +52,7 @@ class AllCars {
 	}
 
 	//車両番号で検索
-	searchCarNumber(number) {
+	static searchCarNumber(number) {
 		let carsList = {};
 		for (let i in this.#cars) {
 			if (this.#cars[i].number == number) {
@@ -62,10 +62,10 @@ class AllCars {
 		return carsList;
 	}
 
-	get carsList() {
+	static get carsList() {
 		return this.#cars;
 	}
-	get droppedCars() {
+	static get droppedCars() {
 		let cars = {}
 		for (let i in this.#cars) {
 			if (this.#cars[i].isDropped) {
@@ -74,7 +74,7 @@ class AllCars {
 		}
 		return cars;
 	}
-	addCar(car) {
+	static addCar(car) {
 		if (car instanceof Car) {
 			this.#cars.push(car);
 			return this.#cars.length - 1;
@@ -86,10 +86,10 @@ class AllCars {
 
 //全編成一覧クラス
 class AllFormations {
-	#formations = [];
+	static #formations = [];
 
 	//編成追加
-	addFormation(formation) {
+	static addFormation(formation) {
 		if (formation instanceof Formation) {
 			this.#formations.push(formation);
 			return this.#formations.length - 1;
@@ -99,7 +99,7 @@ class AllFormations {
 	}
 
 	//テンプレートから編成追加(AllCars 全車両リスト,テンプレート, 番号, 所属, 組成年月(省略時は現在年月))
-	addFormationFromTemplate(allCars, formationTemplate, number, belongsTo, ym) {
+	static addFormationFromTemplate(allCars, formationTemplate, number, belongsTo, ym) {
 		if (belongsTo == "") { belongsTo = null; }
 		if (ym == null) { ym = now; }
 		let baseCarNums = formationTemplate.carNumbers;
@@ -111,19 +111,19 @@ class AllFormations {
 	}
 
 	//編成解除
-	releaseFormation(formationId, terminatedOn) {
+	static releaseFormation(formationId, terminatedOn) {
 		if (terminatedOn == null) {
 			terminatedOn = now;
 		}
 		this.#formations[formationId].release(terminatedOn);
 	}
 
-	get formationsList() {
+	static get formationsList() {
 		return this.#formations;
 	}
 
 	//形式IDから特定形式の全編成を取得
-	getBySeriesId(seriesId) {
+	static getBySeriesId(seriesId) {
 		let list = {};
 		for (let formationId in this.#formations) {
 			if (this.#formations[formationId].seriesId == seriesId) {
@@ -133,7 +133,7 @@ class AllFormations {
 		return list;
 	}
 	//形式IDと現在年月から、現在組成されている(組成年月<=現在年月<解除年月である)特定形式の全編成を取得
-	getBySeriesIdAndYearMonth(seriesId, ym) {
+	static getBySeriesIdAndYearMonth(seriesId, ym) {
 		let list = {};
 		for (let formationId in this.#formations) {
 			//形式が合致する場合処理
@@ -146,7 +146,7 @@ class AllFormations {
 		return list;
 	}
 	//現在年月から、現在組成されている(組成年月<=現在年月<解除年月である)全編成を取得
-	getFormationsByYearMonth(ym) {
+	static getFormationsByYearMonth(ym) {
 		let list = {};
 		for (let formationId in this.#formations) {
 			if (this.isStillEnrolled(formationId, ym)) {
@@ -157,7 +157,7 @@ class AllFormations {
 	}
 
 	//編成を編成番号順に並び替えたリストを返す
-	sortFormationByFormationNumber() {
+	static sortFormationByFormationNumber() {
 		return Array.from(this.#formations).sort((f1, f2) => {
 			if (f1.name < f2.name) {
 				return -1
@@ -170,7 +170,7 @@ class AllFormations {
 	}
 
 	//車両IDから現時点での所属編成を探し編成IDで返す(見つからなかった場合-1を返す)
-	searchByCarId(targetCarId, ym) {
+	static searchByCarId(targetCarId, ym) {
 		for (let formationId in this.#formations) {
 			if (this.isStillEnrolled(formationId, ym)) {
 				for (let i in this.#formations[formationId].cars) {
@@ -184,7 +184,7 @@ class AllFormations {
 	}
 
 	//年月ym現在で現役の編成かどうか
-	isStillEnrolled(formationId, ym) {
+	static isStillEnrolled(formationId, ym) {
 		// 組成年月
 		let formatedOn = this.#formations[formationId].formatedOn.serial;
 		// 解除年月
@@ -195,21 +195,21 @@ class AllFormations {
 
 //全編成テンプレート一覧クラス
 class AllFormationTemplates {
-	#formationTemplates = [];
+	static #formationTemplates = [];
 
-	addFormationTemplate(formationTemplate) {
+	static addFormationTemplate(formationTemplate) {
 		if (formationTemplate instanceof FormationTemplate) {
-			this.#formationTemplates.push(formationTemplate);
-			return this.#formationTemplates.length - 1;
+			AllFormationTemplates.#formationTemplates.push(formationTemplate);
+			return AllFormationTemplates.#formationTemplates.length - 1;
 		} else {
 			console.error("FormationTemplateクラスのオブジェクトを追加してください");
 		}
 	}
-	getFormationTemplate(id) {
-		return this.#formationTemplates[id];
+	static getFormationTemplate(id) {
+		return AllFormationTemplates.#formationTemplates[id];
 	}
-	getFormationTemplateList() {
-		return this.#formationTemplates;
+	static getFormationTemplateList() {
+		return AllFormationTemplates.#formationTemplates;
 	}
 }
 //各種一覧クラス定義ここまで
