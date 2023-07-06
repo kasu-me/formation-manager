@@ -43,6 +43,6 @@ class YearMonth {
 //フォーマッタクラス
 class Formatter {
 	static link(href, text) {
-		return `<a href="javascript:displayCarDeteal(${href})">${text}</a>`
+		return `<a href="javascript:Dialog.list.carDetealDialog.functions.displayCarDeteal(${href})">${text}</a>`
 	}
 }
