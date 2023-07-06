@@ -2,6 +2,13 @@ class Dialog {
 	static area;
 	static list = {};
 
+	id;
+	dialogTitle;
+	dialog;
+	mainMessage;
+	buttons;
+	functions = {};
+
 	//new Dialog("ID","タイトル","本文",[{"event":"ボタン1のイベント","content":"ボタン1の本文"},{"event":"ボタン2のイベント","content":"ボタン2の本文"},...],{関数,関数,...});
 	constructor(id, dialogTitle, message, buttons, functions) {
 		this.dialog = document.createElement("div");
@@ -19,9 +26,15 @@ class Dialog {
 		this.dialog.appendChild(this.buttons);
 		this.dialog.setAttribute("id", id);
 		this.dialog.setAttribute("class", "dialog-content off");
-		this.functions = functions;
-		Dialog.area.appendChild(this.dialog);
 
+		this.functions = functions || this.functions;
+		if (this.functions.display == undefined) {
+			this.functions.display = () => {
+				this.on();
+			}
+		}
+
+		Dialog.area.appendChild(this.dialog);
 		Dialog.list[id] = this;
 	}
 	setContents(message, buttons) {

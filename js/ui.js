@@ -14,7 +14,7 @@ function readJson(evt) {
 	reader.readAsText(file[0]);
 	reader.onload = function (e) {
 		tmpJSON = e.target.result;
-		Dialog.list.confirmJSONDialog.on();
+		Dialog.list.confirmJSONDialog.functions.display();
 	}
 }
 function continueReadJSON() {
