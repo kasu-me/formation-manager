@@ -132,9 +132,12 @@ window.addEventListener("load", function () {
 	Dialog.areaOverlay.id = "dialog-area-overlay";
 	Dialog.areaOverlay.classList.add("dialog-area");
 	document.body.appendChild(Dialog.areaOverlay);
+});
 
-	//以下、ダイアログ定義
 
+
+//以下、ダイアログ定義
+window.addEventListener("load", function () {
 	//形式一覧:sed
 	new Dialog("seriesDispDialog", "形式一覧", `<div class="table-container"></div>`, [{ "content": "形式作成", "event": `Dialog.list.createSeriesDialog.functions.display()`, "icon": "add" }, { "content": "閉じる", "event": `Dialog.list.seriesDispDialog.off();`, "icon": "close" }], {
 		//形式一覧ダイアログを表示
@@ -473,7 +476,7 @@ window.addEventListener("load", function () {
 					Dialog.list.alertDialog.functions.display("この車両は既に廃車されているため改番することはできません。");
 					return;
 				}
-				document.querySelector("#carrn-main").innerHTML = `<p><input id="carrn-car-number" placeholder="${AllCars.carsList[carId].number}" value="${AllCars.carsList[carId].number}">号車</p><div id="carrn-opening">${carId}</div>`
+				document.querySelector("#carrn-main").innerHTML = `<table class="input-area"><tr><td>車両番号</td><td><input id="carrn-car-number" placeholder="${AllCars.carsList[carId].number}" value="${AllCars.carsList[carId].number}">号車</td></tr></table><div id="carrn-opening">${carId}</div>`
 				Dialog.list.carRenumberDialog.on();
 			}
 		},
@@ -556,7 +559,7 @@ window.addEventListener("load", function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.formationDetealDialog.isActive) {
 				let formationId = Number(document.querySelector('#fmdt-opening').innerHTML);
-				document.querySelector("#fmrn-main").innerHTML = `<p><input id="fmrn-formation-name" placeholder="${AllFormations.formationsList[formationId].name}" value="${AllFormations.formationsList[formationId].name}"></p><div id="fmrn-opening">${formationId}</div>`
+				document.querySelector("#fmrn-main").innerHTML = `<table class="input-area"><tr><td>編成番号</td><td><input id="fmrn-formation-name" placeholder="${AllFormations.formationsList[formationId].name}" value="${AllFormations.formationsList[formationId].name}"></td></tr></table><div id="fmrn-opening">${formationId}</div>`
 				Dialog.list.formationRenameDialog.on();
 			}
 		},
