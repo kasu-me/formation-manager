@@ -96,7 +96,7 @@ a.update-yearmonth-link::before {
 
 /* ヘッダ */
 div#header {
-	z-index: 999999;
+	z-index: 99998;
 	position: fixed;
 	top: 0;
 	left: 0;
