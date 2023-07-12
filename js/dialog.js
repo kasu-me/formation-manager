@@ -79,9 +79,9 @@ class Dialog {
 	on() {
 		if (!this.isOverlay) {
 			Dialog.offAll();
-			Dialog.open(Dialog.area);
+			Dialog.displayDialogArea();
 		} else {
-			Dialog.open(Dialog.areaOverlay);
+			Dialog.displayDialogAreaOverlay();
 		}
 		Dialog.open(this.dialog);
 	}
@@ -102,6 +102,12 @@ class Dialog {
 		for (let i of document.querySelectorAll(".dialog-content")) {
 			Dialog.close(i);
 		}
+	}
+	static displayDialogArea() {
+		Dialog.open(Dialog.area);
+	}
+	static displayDialogAreaOverlay() {
+		Dialog.open(Dialog.areaOverlay);
 	}
 	static closeDialogArea() {
 		Dialog.close(Dialog.area);
@@ -546,5 +552,15 @@ window.addEventListener("load", function () {
 			document.getElementById("alrt-main").innerHTML = message;
 			Dialog.list.alertDialog.on();
 		}
+	}, true);
+
+	//確認:cnfm
+	new Dialog("confirmDialog", "確認", `<div id="cnfm-main"></div>`, [{ "content": "OK", "event": `Dialog.list.alertDialog.functions.callback()`, "icon": "check" }, { "content": "NO", "event": `Dialog.list.alertDialog.off()`, "icon": "close" }], {
+		display: function (message, callback) {
+			document.getElementById("cnfm-main").innerHTML = message;
+			Dialog.list.confirmDialog.functions.callback = callback;
+			Dialog.list.confirmDialog.on();
+		},
+		callback: function () { }
 	}, true);
 })
