@@ -190,6 +190,7 @@ td.formation-template-name {
 	border-right: 1px solid var(--formation-table-main-border);
 }
 
+#seriesDispDialog td.formation-name,
 #formationTemplatesDialog td.formation-name {
 	border: none;
 }
