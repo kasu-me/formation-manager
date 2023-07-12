@@ -188,12 +188,19 @@ window.addEventListener("load", function () {
 	new Dialog("formationAddingDialog", "編成を作成", ``, [{ "content": "編成テンプレートから作成", "event": `Dialog.list.formationTemplatesDialog.functions.display()`, "icon": "add" }, { "content": "編成に所属していない車両から作成", "event": `Dialog.list.createFormationFromFloatingCarsDialog.functions.display()`, "icon": "add" }, { "content": "キャンセル", "event": `Dialog.list.formationAddingDialog.off();`, "icon": "close" }]);
 
 	//編成テンプレートから編成作成:fromt
-	new Dialog("createFormationFromTemplateDialog", "編成テンプレートから編成作成", `
-		<p><label><span>番号:</span><input id="fromt-car-number" type="number" value="1" onchange="Dialog.list.createFormationFromTemplateDialog.functions.reflesh(Number(document.querySelector('#fromt-opening').innerHTML),Number(this.value))" onkeyup="Dialog.list.createFormationFromTemplateDialog.functions.reflesh(Number(document.querySelector('#fromt-opening').innerHTML),Number(this.value))"></label></p>
-		<p><label><span>所属:</span><input id="fromt-car-belongs-to"></label></p>
+	new Dialog("createFormationFromTemplateDialog", "編成テンプレートから編成作成", `<table class="input-area">
+	<tr>
+		<td>番号</td>
+		<td><input id="fromt-car-number" type="number" value="1" onchange="Dialog.list.createFormationFromTemplateDialog.functions.reflesh(Number(document.querySelector('#fromt-opening').innerHTML),Number(this.value))" onkeyup="Dialog.list.createFormationFromTemplateDialog.functions.reflesh(Number(document.querySelector('#fromt-opening').innerHTML),Number(this.value))"></td>
+	</tr>
+	<tr>
+		<td><span>所属</span></td>
+		<td><input id="fromt-car-belongs-to"></td>
+	</tr>
+	</table>
 		<div id="fromt-opening">
 		</div>
-		<div id="fromt-template-legend"></div>
+		<div id="fromt-template-legend" class="element-bottom-of-input-area"></div>
 		<p>
 			<button onclick="Dialog.list.formationTemplatesDialog.functions.display()">他のテンプレートを使う</button>
 		</p>
@@ -234,15 +241,38 @@ window.addEventListener("load", function () {
 	//編成に所属していない車両から編成作成:forfc
 	new Dialog("createFormationFromFloatingCarsDialog", "編成に所属していない車両から編成作成", `
 	<p>※車両が選択された状態で現在年月を操作すると選択がリセットされます</p>
-	<p><label><span>形式:</span><select id="forfc-series" oninput="Dialog.list.createFormationFromFloatingCarsDialog.functions.reflesh()"></select></label></p>
-	<p><label><span>編成番号:</span><input id="forfc-formation-name" oninput="Dialog.list.createFormationFromFloatingCarsDialog.functions.reflesh()"></label></p>
-	<p><label><span>所属:</span><input id="forfc-car-belongs-to"></label></p>
-	<div id="forfc-not-formated-cars-table"></div>
+	<table class="input-area">
+	<tr>
+		<td>
+			<span>形式</span>
+		</td>
+		<td>
+			<select id="forfc-series" oninput="Dialog.list.createFormationFromFloatingCarsDialog.functions.reflesh()"></select>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<span>編成番号</span>
+		</td>
+		<td>
+			<input id="forfc-formation-name" oninput="Dialog.list.createFormationFromFloatingCarsDialog.functions.reflesh()">
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<span>所属</span>
+		</td>
+		<td>
+			<input id="forfc-car-belongs-to">
+		</td>
+	</tr>
+	</table>
+	<div id="forfc-not-formated-cars-table" class="element-bottom-of-input-area"></div>
 	<div id="forfc-new-formated-cars-table"></div>
 	<div id="forfc-new-formation"></div>
 	<div id="forfc-formation-opening"></div>
 	<div id="forfc-template-legend"></div>
-`, [{ "content": "編成作成", "event": `Dialog.list.createFormationFromFloatingCarsDialog.functions.createFormation()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createFormationFromFloatingCarsDialog.off();`, "icon": "close" }], {
+		`, [{ "content": "編成作成", "event": `Dialog.list.createFormationFromFloatingCarsDialog.functions.createFormation()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createFormationFromFloatingCarsDialog.off();`, "icon": "close" }], {
 		tentativeFormation: new Formation(),
 		//編成されていない車両から編成作成ダイアログを表示
 		display: function () {
@@ -300,7 +330,7 @@ window.addEventListener("load", function () {
 	});
 
 	//編成テンプレートを作成:cref
-	new Dialog("createFormationTemplateDialog", "編成テンプレートを作成", `形式:<select id="cref-series" onchange="Dialog.list.createFormationTemplateDialog.functions.reflesh()"></select><p>テンプレートの説明:<input id="cref-name" oninput="Dialog.list.createFormationTemplateDialog.functions.reflesh();"></p><p>車両番号の一般式:<input id="cref-carnumber" onkeyup="if(event.keyCode==13){document.getElementById('cref-add-number-button').click()}"><button id="cref-add-number-button" onclick="Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.addCarNumber(document.getElementById('cref-carnumber').value);Dialog.list.createFormationTemplateDialog.functions.reflesh();document.getElementById('cref-carnumber').value='';document.getElementById('cref-carnumber').focus()" class="lsf-icon" icon="add">追加</button></p><div id="cref-new-formated-template-table"></div>`, [{ "content": "編成テンプレート作成", "event": `Dialog.list.createFormationTemplateDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "クリア", "event": `Dialog.list.createFormationTemplateDialog.functions.clearInputs();Dialog.list.createFormationTemplateDialog.functions.reflesh();`, "icon": "clear" }, { "content": "キャンセル", "event": `Dialog.list.createFormationTemplateDialog.off();`, "icon": "close" }], {
+	new Dialog("createFormationTemplateDialog", "編成テンプレートを作成", `<table class="input-area"><tr><td>形式</td><td><select id="cref-series" onchange="Dialog.list.createFormationTemplateDialog.functions.reflesh()"></select></td></tr><tr><td>テンプレートの説明</td><td><input id="cref-name" oninput="Dialog.list.createFormationTemplateDialog.functions.reflesh();"></td></tr><tr><td>車両番号の一般式</td><td><input id="cref-carnumber" onkeyup="if(event.keyCode==13){document.getElementById('cref-add-number-button').click()}"><button id="cref-add-number-button" onclick="Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.addCarNumber(document.getElementById('cref-carnumber').value);Dialog.list.createFormationTemplateDialog.functions.reflesh();document.getElementById('cref-carnumber').value='';document.getElementById('cref-carnumber').focus()" class="lsf-icon" icon="add">追加</button></td></tr></table><div id="cref-new-formated-template-table" class="element-bottom-of-input-area"></div>`, [{ "content": "編成テンプレート作成", "event": `Dialog.list.createFormationTemplateDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "クリア", "event": `Dialog.list.createFormationTemplateDialog.functions.clearInputs();Dialog.list.createFormationTemplateDialog.functions.reflesh();`, "icon": "clear" }, { "content": "キャンセル", "event": `Dialog.list.createFormationTemplateDialog.off();`, "icon": "close" }], {
 		tentativeFormationTemplate: new FormationTemplate(),
 		//編成テンプレートを作成ダイアログを表示
 		display: function () {
@@ -353,7 +383,7 @@ window.addEventListener("load", function () {
 	});
 
 	//形式を作成:crsr
-	new Dialog("createSeriesDialog", "形式を作成", `<p>形式名:<input id="crsr-series-name"></p><p>説明:<input id="crsr-series-description"></p>`, [{ "content": "形式作成", "event": `Dialog.list.createSeriesDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createSeriesDialog.off();`, "icon": "close" }], {
+	new Dialog("createSeriesDialog", "形式を作成", `<table class="input-area"><tr><td>形式名</td><td><input id="crsr-series-name"></td></tr><tr><td>説明</td><td><input id="crsr-series-description"></td></tr></table>`, [{ "content": "形式作成", "event": `Dialog.list.createSeriesDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createSeriesDialog.off();`, "icon": "close" }], {
 		tentativeFormationTemplate: new FormationTemplate(),
 		display: function () {
 			Dialog.list.createSeriesDialog.functions.clearInputs();

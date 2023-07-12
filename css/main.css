@@ -358,3 +358,37 @@ p.car-name span.car-status.dropped a.update-yearmonth-link {
 p.car-name span.car-status.dropped::before {
 	content: "ban";
 }
+
+
+.input-area {
+	border-collapse: collapse;
+}
+
+.input-area td:first-child {
+	background-color: #f5f5f5;
+}
+
+.input-area td {
+	padding: 6px;
+	border: 1px solid #ccc;
+}
+
+.input-area td:first-child::after {
+	content: "：";
+	float: right;
+}
+
+.input-area input,
+.input-area select {
+	padding: 4px;
+	border: 1px solid #5c3d7e;
+}
+
+
+.input-area button {
+	padding: 0.25em;
+}
+
+.element-bottom-of-input-area {
+	margin-top: 1.5em;
+}
