@@ -39,8 +39,11 @@ class Table {
 		this.addBlankCellToRowIn(0);
 	}
 	//全行の一番右からx番目に空白のセルを追加して揃える
-	addBlankCellToRowIn(x) {
+	addBlankCellToRowIn(x, withOutTop) {
+		withOutTop = withOutTop == undefined ? false : withOutTop;
+		console.log(this.#maxCellCount)
 		for (let n in this.#rows) {
+			if (withOutTop && n == 0) { continue; }
 			if (this.#rows[n].length < this.#maxCellCount) {
 				for (let i = this.#rows[n].length; i < this.#maxCellCount; i++) {
 					this.addCellInto(n, this.#rows[n].length - x, "");

@@ -184,10 +184,7 @@ window.addEventListener("load", function () {
 				if (i % 10 == 0) { table.addRow() }
 				table.addCell(`<a href="javascript:void(0)" onclick="Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.splice(${i},1);document.querySelector('#forfc-car-${Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[i]}').classList.toggle('selected');Dialog.list.createFormationFromFloatingCarsDialog.functions.reflesh()">${AllCars.carsList[Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[i]].number}</a>`);
 			}
-			let missingCellCount = (Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.length <= 10) ? 0 : (10 - Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.length % 10);
-			for (let i = 0; i < missingCellCount; i++) {
-				table.addCell("");
-			}
+			table.addBlankCellToRowIn(0, true);
 			document.querySelector("#forfc-new-formated-cars-table").innerHTML = table.generateTable();
 		},
 		//編成に組成されていない車両から編成を作成
@@ -231,10 +228,7 @@ window.addEventListener("load", function () {
 					if (i % 10 == 0) { table.addRow() }
 					table.addCell(Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers[i](1));
 				}
-				let missingCellCount = (Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.length <= 10) ? 0 : (10 - Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.length % 10);
-				for (let i = 0; i < missingCellCount; i++) {
-					table.addCell("");
-				}
+				table.addBlankCellToRowIn(0, true);
 			}
 			document.querySelector("#cref-new-formated-template-table").innerHTML = table.generateTable();
 		},
