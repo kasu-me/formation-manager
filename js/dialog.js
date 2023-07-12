@@ -108,7 +108,7 @@ window.addEventListener("load", function () {
 	//以下、ダイアログ定義
 
 	//形式一覧:sed
-	new Dialog("seriesDispDialog", "形式一覧", `<div class="table-container"></div>`, [{ "content": "形式追加", "event": ``, "icon": "add" }, { "content": "閉じる", "event": `Dialog.list.seriesDispDialog.off();`, "icon": "close" }], {
+	new Dialog("seriesDispDialog", "形式一覧", `<div class="table-container"></div>`, [{ "content": "形式作成", "event": `Dialog.list.createSeriesDialog.functions.display()`, "icon": "add" }, { "content": "閉じる", "event": `Dialog.list.seriesDispDialog.off();`, "icon": "close" }], {
 		//形式一覧ダイアログを表示
 		display: function () {
 			let seriesList = AllSerieses.seriesesList;
@@ -316,6 +316,33 @@ window.addEventListener("load", function () {
 			Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate = new FormationTemplate();
 			document.querySelector("#cref-name").value = "";
 			document.querySelector("#cref-carnumber").value = "";
+		}
+	});
+
+	//形式を作成:crsr
+	new Dialog("createSeriesDialog", "形式を作成", `<p>形式名:<input id="crsr-series-name"></p><p>説明:<input id="crsr-series-description"></p>`, [{ "content": "形式作成", "event": `Dialog.list.createSeriesDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createSeriesDialog.off();`, "icon": "close" }], {
+		tentativeFormationTemplate: new FormationTemplate(),
+		display: function () {
+			Dialog.list.createSeriesDialog.functions.clearInputs();
+			Dialog.list.createSeriesDialog.on();
+		},
+		createFormationTemplate: function () {
+			//親ダイアログが表示されている状態以外での実行を禁止
+			if (Dialog.list.createSeriesDialog.isActive) {
+				let seriesName = document.getElementById("crsr-series-name").value;
+				let seriesDescription = document.getElementById("crsr-series-description").value;
+				if (seriesName == "") {
+					alert("形式名は必須です。");
+				} else {
+					AllSerieses.addSeries(new Series(seriesName, "", seriesDescription == "" ? "　" : seriesDescription));
+					Dialog.list.createSeriesDialog.off();
+					Dialog.list.createSeriesDialog.functions.clearInputs();
+				}
+			}
+		},
+		clearInputs: function () {
+			document.getElementById("crsr-series-name").value = "";
+			document.getElementById("crsr-series-description").value = "";
 		}
 	});
 
