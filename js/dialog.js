@@ -334,9 +334,9 @@ window.addEventListener("load", function () {
 			let oldNumbers = AllCars.carsList[x].oldNumbers;
 			let oldNumbersText = ``;
 			for (let i in oldNumbers) {
-				oldNumbersText = `<li>${oldNumbers[i].number} <small>(${i != 0 ? oldNumbers[i - 1].renumberedOn.toStringWithLink() : AllCars.carsList[x].manufacturedOn.toStringWithLink()}～${oldNumbers[i].renumberedOn.toStringWithLink()})</small></li>${oldNumbersText}`;
+				oldNumbersText += `<li>${oldNumbers[i].number} <small>(${i != 0 ? oldNumbers[i - 1].renumberedOn.toStringWithLink() : AllCars.carsList[x].manufacturedOn.toStringWithLink()}～${oldNumbers[i].renumberedOn.toStringWithLink()})</small></li>`;
 			}
-			oldNumbersText = `<ul><li>${AllCars.carsList[x].number} <small>(${oldNumbers.length > 0 ? `${oldNumbers.at(-1).renumberedOn.toStringWithLink()}` : `${AllCars.carsList[x].manufacturedOn.toStringWithLink()}`}～${AllCars.carsList[x].isDropped ? AllCars.carsList[x].droppedOn.toStringWithLink() : ""})</small></li>${oldNumbersText}</ul>`;
+			oldNumbersText = `<ul>${oldNumbersText}<li>${AllCars.carsList[x].number} <small>(${oldNumbers.length > 0 ? `${oldNumbers.at(-1).renumberedOn.toStringWithLink()}` : `${AllCars.carsList[x].manufacturedOn.toStringWithLink()}`}～${AllCars.carsList[x].isDropped ? AllCars.carsList[x].droppedOn.toStringWithLink() : ""})</small></li></ul>`;
 
 			table.addRow();
 			table.addCell("車両ID");
