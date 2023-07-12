@@ -185,7 +185,7 @@ function dropCar(carId_) {
 				Dialog.list.alertDialog.functions.display("この車両は既に廃車されています。");
 				return;
 			}
-			Dialog.list.confirmDialog.functions.display(`${AllCars.carsList[carId].numberInTime(now)}号車を${now.toString()}付で廃車します。`, function () {
+			Dialog.list.confirmDialog.functions.display(Message.list["MC004"].toString({ "carNumber": AllCars.carsList[carId].numberInTime(now), "now": now.toString() }), function () {
 				//廃車
 				dropCar(carId);
 				//廃車車両を除いた車両で編成
