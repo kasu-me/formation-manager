@@ -1,5 +1,6 @@
 class Dialog {
-	static area;
+	static area = document.createElement("div");
+	static areaOverlay = document.createElement("div");
 	static list = {};
 
 	id;
@@ -8,9 +9,10 @@ class Dialog {
 	mainMessage;
 	buttons;
 	functions = {};
+	isOverlay = false;
 
-	//new Dialog("ID","タイトル","本文",[{"event":"ボタン1のイベント","content":"ボタン1の本文"},{"event":"ボタン2のイベント","content":"ボタン2の本文"},...],{関数,関数,...});
-	constructor(id, dialogTitle, message, buttons, functions) {
+	//new Dialog("ID","タイトル","本文",[{"event":"ボタン1のイベント","content":"ボタン1の本文"},{"event":"ボタン2のイベント","content":"ボタン2の本文"},...],{関数,関数,...},重ねがけするかどうか);
+	constructor(id, dialogTitle, message, buttons, functions, isOverlay) {
 		this.dialog = document.createElement("div");
 		if (dialogTitle != "") {
 			this.dialogTitle = document.createElement("p");
@@ -34,7 +36,13 @@ class Dialog {
 			}
 		}
 
-		Dialog.area.appendChild(this.dialog);
+		this.isOverlay = isOverlay || this.isOverlay;
+
+		if (this.isOverlay) {
+			Dialog.areaOverlay.appendChild(this.dialog);
+		} else {
+			Dialog.area.appendChild(this.dialog);
+		}
 		Dialog.list[id] = this;
 	}
 	setContents(message, buttons) {
@@ -69,13 +77,21 @@ class Dialog {
 		this.buttons.innerHTML = buttonContent;
 	}
 	on() {
-		Dialog.offAll();
-		Dialog.open(Dialog.area);
+		if (!this.isOverlay) {
+			Dialog.offAll();
+			Dialog.open(Dialog.area);
+		} else {
+			Dialog.open(Dialog.areaOverlay);
+		}
 		Dialog.open(this.dialog);
 	}
 	off() {
 		reflesh();
-		Dialog.closeDialogArea();
+		if (!this.isOverlay) {
+			Dialog.closeDialogArea();
+		} else {
+			Dialog.closeDialogAreaOverlay();
+		}
 		Dialog.close(this.dialog);
 	}
 	get isActive() {
@@ -90,6 +106,9 @@ class Dialog {
 	static closeDialogArea() {
 		Dialog.close(Dialog.area);
 	}
+	static closeDialogAreaOverlay() {
+		Dialog.close(Dialog.areaOverlay);
+	}
 	static open(div) {
 		div.classList.remove("off");
 		div.classList.add("on");
@@ -101,9 +120,12 @@ class Dialog {
 }
 
 window.addEventListener("load", function () {
-	Dialog.area = document.createElement("div");
 	Dialog.area.id = "dialog-area";
+	Dialog.area.classList.add("dialog-area");
 	document.body.appendChild(Dialog.area);
+	Dialog.areaOverlay.id = "dialog-area-overlay";
+	Dialog.areaOverlay.classList.add("dialog-area");
+	document.body.appendChild(Dialog.areaOverlay);
 
 	//以下、ダイアログ定義
 
@@ -304,7 +326,7 @@ window.addEventListener("load", function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.createFormationTemplateDialog.isActive) {
 				if (Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.length < 1) {
-					alert("最低1つは車両番号の一般式が必要です。");
+					Dialog.list.alertDialog.functions.display("最低1つは車両番号の一般式が必要です。");
 				} else {
 					AllFormationTemplates.addFormationTemplate(Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate);
 					Dialog.list.createFormationTemplateDialog.functions.clearInputs();
@@ -333,7 +355,7 @@ window.addEventListener("load", function () {
 				let seriesName = document.getElementById("crsr-series-name").value;
 				let seriesDescription = document.getElementById("crsr-series-description").value;
 				if (seriesName == "") {
-					alert("形式名は必須です。");
+					Dialog.list.alertDialog.functions.display("形式名は必須です。");
 				} else {
 					AllSerieses.addSeries(new Series(seriesName, "", seriesDescription == "" ? "　" : seriesDescription));
 					Dialog.list.createSeriesDialog.off();
@@ -408,8 +430,7 @@ window.addEventListener("load", function () {
 			if (Dialog.list.carDetealDialog.isActive) {
 				let carId = Number(document.querySelector('#cardt-car-id').innerHTML);
 				if (AllCars.carsList[carId].isDroppedInTime(now)) {
-					alert("この車両は既に廃車されているため改番することはできません。");
-					Dialog.list.carDetealDialog.off();
+					Dialog.list.alertDialog.functions.display("この車両は既に廃車されているため改番することはできません。");
 					return;
 				}
 				document.querySelector("#carrn-main").innerHTML = `<p><input id="carrn-car-number" placeholder="${AllCars.carsList[carId].number}" value="${AllCars.carsList[carId].number}">号車</p><div id="carrn-opening">${carId}</div>`
@@ -452,8 +473,7 @@ window.addEventListener("load", function () {
 			if (Dialog.list.formationDetealDialog.isActive) {
 				let formationId = Number(document.querySelector('#fmdt-opening').innerHTML);
 				if (AllFormations.formationsList[formationId].isTerminated) {
-					alert("この編成は未来で解除されているため編成解除できません。");
-					Dialog.list.formationDetealDialog.off();
+					Dialog.list.alertDialog.functions.display("この編成は未来で解除されているため編成解除できません。");
 					return;
 				}
 				if (window.confirm(`${AllFormations.formationsList[formationId].name}を${now.toString()}付で編成解除します。`)) {
@@ -469,8 +489,7 @@ window.addEventListener("load", function () {
 			if (Dialog.list.formationDetealDialog.isActive) {
 				let formationId = Number(document.querySelector('#fmdt-opening').innerHTML);
 				if (AllFormations.formationsList[formationId].isTerminated) {
-					alert("この編成は未来で解除されているため操作できません。");
-					Dialog.list.formationDetealDialog.off();
+					Dialog.list.alertDialog.functions.display("この編成は未来で解除されているため操作できません。");
 					return;
 				}
 				if (window.confirm(`${AllFormations.formationsList[formationId].name}内の車両${AllFormations.formationsList[formationId].cars.length}両を${now.toString()}付で全て廃車します。`)) {
@@ -520,4 +539,12 @@ window.addEventListener("load", function () {
 			}
 		}
 	});
+
+	//アラート:alrt
+	new Dialog("alertDialog", "警告", `<div id="alrt-main"></div>`, [{ "content": "OK", "event": `Dialog.list.alertDialog.off()`, "icon": "check" }], {
+		display: function (message) {
+			document.getElementById("alrt-main").innerHTML = message;
+			Dialog.list.alertDialog.on();
+		}
+	}, true);
 })

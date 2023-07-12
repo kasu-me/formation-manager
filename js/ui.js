@@ -182,8 +182,7 @@ function dropCar(carId_) {
 		if (Dialog.list.carDetealDialog.isActive) {
 			let carId = Number(document.querySelector('#cardt-car-id').innerHTML);
 			if (AllCars.carsList[carId].isDropped) {
-				alert("この車両は既に廃車されています。");
-				Dialog.list.carDetealDialog.off();
+				Dialog.list.alertDialog.functions.display("この車両は既に廃車されています。");
 				return;
 			}
 			if (window.confirm(`${AllCars.carsList[carId].numberInTime(now)}号車を${now.toString()}付で廃車します。`)) {

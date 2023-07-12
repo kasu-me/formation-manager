@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-#dialog-area {
+.dialog-area {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -9,10 +9,14 @@
 	background-color: rgba(0, 0, 0, 0.5);
 	display: none;
 	margin: 0;
+	z-index: 99998;
+}
+
+#dialog-area-overlay {
 	z-index: 99999;
 }
 
-#dialog-area .dialog-content {
+.dialog-area .dialog-content {
 	position: absolute;
 	top: 20%;
 	left: 50%;
@@ -31,55 +35,60 @@
 	width: max-content;
 }
 
-#dialog-area .dialog-content>* {
+#dialog-area-overlay .dialog-content {
+	top: 40%;
+	transform: translate(-50%, -50%);
+}
+
+.dialog-area .dialog-content>* {
 	text-align: left;
 }
 
-#dialog-area .dialog-content>p.dialog-title {
+.dialog-area .dialog-content>p.dialog-title {
 	margin-top: 0;
 	margin-bottom: 1.5em;
 	font-weight: bold;
 }
 
-#dialog-area .dialog-content>p.dialog-foot-buttons-container {
+.dialog-area .dialog-content>p.dialog-foot-buttons-container {
 	margin-top: 1.5em;
 	margin-bottom: 0;
 	text-align: right;
 }
 
-#dialog-area .dialog-content>p.dialog-foot-buttons-container>button {
+.dialog-area .dialog-content>p.dialog-foot-buttons-container>button {
 	margin: 0 0.5em;
 	font-size: 1.0em;
 	padding: 0.25em 0.5em;
 }
 
-#dialog-area .dialog-content>p.dialog-foot-buttons-container>button:first-child {
+.dialog-area .dialog-content>p.dialog-foot-buttons-container>button:first-child {
 	margin-left: 0;
 }
 
-#dialog-area .dialog-content>p.dialog-foot-buttons-container>button:last-child {
+.dialog-area .dialog-content>p.dialog-foot-buttons-container>button:last-child {
 	margin-right: 0;
 }
 
-#dialog-area.on,
-#dialog-area .dialog-content.on {
+.dialog-area.on,
+.dialog-area .dialog-content.on {
 	display: block;
 }
 
-#dialog-area.on {
+.dialog-area.on {
 	animation: show 150ms linear 0s;
 }
 
-#dialog-area.off {
+.dialog-area.off {
 	display: block;
 	animation: hide forwards 150ms linear 0s;
 }
 
-#dialog-area.on .dialog-content.off {
+.dialog-area.on .dialog-content.off {
 	display: none;
 }
 
-#dialog-area.off .dialog-content.off {
+.dialog-area.off .dialog-content.off {
 	display: block;
 	visibility: hidden;
 	animation: hide forwards 150ms linear 0s;
@@ -109,7 +118,7 @@
 }
 
 @media screen and (max-width: 768px) {
-	#dialog-area .dialog-content {
+	.dialog-area .dialog-content {
 		width: 90%;
 	}
 }
