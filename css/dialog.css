@@ -94,6 +94,11 @@
 	animation: hide forwards 150ms linear 0s;
 }
 
+.dialog-area .dialog-content .dialog-icon {
+	float: left;
+	width: 45px;
+	margin-right: 0.5em;
+}
 
 @keyframes show {
 	from {
