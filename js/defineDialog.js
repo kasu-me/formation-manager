@@ -226,7 +226,7 @@ window.addEventListener("load", function () {
 				table.addCell(`編成番号:${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.formationName(1)}`, { "colspan": Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.length });
 				for (let i in Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers) {
 					if (i % 10 == 0) { table.addRow() }
-					table.addCell(Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers[i](1));
+					table.addCell(`<a href="javascript:void(0)" onclick="Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.splice(${i},1);Dialog.list.createFormationTemplateDialog.functions.reflesh()">${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers[i](1)}</a>`);
 				}
 				table.addBlankCellToRowIn(0, true);
 			}
