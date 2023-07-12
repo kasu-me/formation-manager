@@ -288,9 +288,13 @@ window.addEventListener("load", function () {
 		createFormation: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.createFormationFromFloatingCarsDialog.isActive) {
-				AllFormations.addFormation(Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation);
-				Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation = new Formation(0, 0, []);
-				Dialog.list.createFormationFromFloatingCarsDialog.off();
+				if (Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.length == 0) {
+					Dialog.list.alertDialog.functions.display("編成には最低1両の車両を組成してください。");
+				} else {
+					AllFormations.addFormation(Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation);
+					Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation = new Formation(0, 0, []);
+					Dialog.list.createFormationFromFloatingCarsDialog.off();
+				}
 			}
 		}
 	});
