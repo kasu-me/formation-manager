@@ -41,7 +41,6 @@ class Table {
 	//全行の一番右からx番目に空白のセルを追加して揃える
 	addBlankCellToRowIn(x, withOutTop) {
 		withOutTop = withOutTop == undefined ? false : withOutTop;
-		console.log(this.#maxCellCount)
 		for (let n in this.#rows) {
 			if (withOutTop && n == 0) { continue; }
 			if (this.#rows[n].length < this.#maxCellCount) {
