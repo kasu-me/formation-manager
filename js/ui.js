@@ -185,13 +185,13 @@ function dropCar(carId_) {
 				Dialog.list.alertDialog.functions.display("この車両は既に廃車されています。");
 				return;
 			}
-			if (window.confirm(`${AllCars.carsList[carId].numberInTime(now)}号車を${now.toString()}付で廃車します。`)) {
+			Dialog.list.confirmDialog.functions.display(`${AllCars.carsList[carId].numberInTime(now)}号車を${now.toString()}付で廃車します。`, function () {
 				//廃車
 				dropCar(carId);
 				//廃車車両を除いた車両で編成
 				reflesh();
 				Dialog.list.carDetealDialog.off();
-			}
+			});
 		}
 		//引数がある場合、廃車処理
 	} else {

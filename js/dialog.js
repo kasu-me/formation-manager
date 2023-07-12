@@ -482,11 +482,11 @@ window.addEventListener("load", function () {
 					Dialog.list.alertDialog.functions.display("この編成は未来で解除されているため編成解除できません。");
 					return;
 				}
-				if (window.confirm(`${AllFormations.formationsList[formationId].name}を${now.toString()}付で編成解除します。`)) {
+				Dialog.list.confirmDialog.functions.display(`${AllFormations.formationsList[formationId].name}を${now.toString()}付で編成解除します。`, function () {
 					AllFormations.releaseFormation(formationId);
 					reflesh();
 					Dialog.list.formationDetealDialog.off();
-				}
+				});
 			}
 		},
 		//編成内の車両を全て廃車
@@ -498,7 +498,7 @@ window.addEventListener("load", function () {
 					Dialog.list.alertDialog.functions.display("この編成は未来で解除されているため操作できません。");
 					return;
 				}
-				if (window.confirm(`${AllFormations.formationsList[formationId].name}内の車両${AllFormations.formationsList[formationId].cars.length}両を${now.toString()}付で全て廃車します。`)) {
+				Dialog.list.confirmDialog.functions.display(`${AllFormations.formationsList[formationId].name}内の車両${AllFormations.formationsList[formationId].cars.length}両を${now.toString()}付で全て廃車します。`, function () {
 					for (let i in AllFormations.formationsList[formationId].cars) {
 						//車両が未来で廃車されている場合スキップ
 						if (AllCars.carsList[AllFormations.formationsList[formationId].cars[i]].isDropped) {
@@ -510,7 +510,7 @@ window.addEventListener("load", function () {
 					AllFormations.releaseFormation(formationId);
 					reflesh();
 					Dialog.list.formationDetealDialog.off();
-				}
+				});
 			}
 		}
 	});
@@ -555,7 +555,7 @@ window.addEventListener("load", function () {
 	}, true);
 
 	//確認:cnfm
-	new Dialog("confirmDialog", "確認", `<div id="cnfm-main"></div>`, [{ "content": "OK", "event": `Dialog.list.alertDialog.functions.callback()`, "icon": "check" }, { "content": "NO", "event": `Dialog.list.alertDialog.off()`, "icon": "close" }], {
+	new Dialog("confirmDialog", "確認", `<div id="cnfm-main"></div>`, [{ "content": "OK", "event": `Dialog.list.confirmDialog.functions.callback();Dialog.list.alertDialog.off()`, "icon": "check" }, { "content": "NO", "event": `Dialog.list.confirmDialog.off()`, "icon": "close" }], {
 		display: function (message, callback) {
 			document.getElementById("cnfm-main").innerHTML = message;
 			Dialog.list.confirmDialog.functions.callback = callback;
