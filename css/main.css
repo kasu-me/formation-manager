@@ -461,3 +461,7 @@ input[type="range"]::-moz-range-track {
 	background-color: #ddd;
 	outline: none;
 }
+
+#now-range {
+	margin-right: 0.7em;
+}
