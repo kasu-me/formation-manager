@@ -450,6 +450,37 @@ window.addEventListener("load", function () {
 		}
 	});
 
+	//以下、設定系
+
+	//年月上下限を作成:stym
+	new Dialog("settingYearMonthDialog", "年月上下限の設定", `<table class="input-area"><tr><td>年月下限</td><td><span class="time-inputs"><input id="stym-min-y" class="yearmonth-y" type="number">年<input id="stym-min-m" class="yearmonth-m" type="number">月</span></td></tr><tr><td>年月上限</td><td><span class="time-inputs"><input id="stym-max-y" class="yearmonth-y" type="number">年<input id="stym-max-m" class="yearmonth-m" type="number">月</span></td></tr></table>`, [{ "content": "設定", "event": `Dialog.list.settingYearMonthDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.settingYearMonthDialog.off();`, "icon": "close" }], {
+		display: function () {
+			document.getElementById("stym-max-y").value = maxYearMonth.year;
+			document.getElementById("stym-max-m").value = maxYearMonth.month;
+			document.getElementById("stym-min-y").value = minYearMonth.year;
+			document.getElementById("stym-min-m").value = maxYearMonth.month;
+			Dialog.list.settingYearMonthDialog.on();
+		},
+		createFormationTemplate: function () {
+			//親ダイアログが表示されている状態以外での実行を禁止
+			if (Dialog.list.createSeriesDialog.isActive) {
+				let seriesName = document.getElementById("crsr-series-name").value;
+				let seriesDescription = document.getElementById("crsr-series-description").value;
+				if (seriesName == "") {
+					Dialog.list.alertDialog.functions.display(Message.list["MA003"]);
+				} else {
+					AllSerieses.addSeries(new Series(seriesName, "", seriesDescription == "" ? "　" : seriesDescription));
+					Dialog.list.createSeriesDialog.off();
+					Dialog.list.createSeriesDialog.functions.clearInputs();
+				}
+			}
+		},
+		clearInputs: function () {
+			document.getElementById("crsr-series-name").value = "";
+			document.getElementById("crsr-series-description").value = "";
+		}
+	});
+
 	//JSON確認
 	new Dialog("confirmJSONDialog", "確認", Message.list["MC001"], [{ "content": "はい", "event": `continueReadJSON()`, "icon": "check" }, { "content": "キャンセル", "event": `document.querySelector('#jsonReader').value='';tmpJSON='';Dialog.list.confirmJSONDialog.off();`, "icon": "close" }]);
 

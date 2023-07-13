@@ -255,3 +255,19 @@ let maxYearMonth;
 
 window.addEventListener("load", setInputMaxAndMin);
 window.addEventListener("load", reflesh);
+window.addEventListener("load", function () {
+	document.querySelectorAll("span.time-inputs").forEach((inputArea) => {
+		let monthInput = inputArea.querySelector(".yearmonth-m");
+		monthInput.setAttribute("min", "1");
+		monthInput.setAttribute("max", "12");
+		monthInput.addEventListener("keydown", (event) => {
+			if (event.code == 'ArrowDown' && monthInput.value == '1') {
+				monthInput.value = '13';
+				inputArea.querySelector('.yearmonth-y').value = Number(inputArea.querySelector('.yearmonth-y').value) - 1
+			} else if (event.code == 'ArrowUp' && monthInput.value == '12') {
+				monthInput.value = '0';
+				inputArea.querySelector('.yearmonth-y').value = Number(inputArea.querySelector('.yearmonth-y').value) + 1
+			}
+		});
+	});
+});

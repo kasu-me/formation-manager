@@ -111,6 +111,16 @@ div#header {
 	border-bottom: 1px solid #bbb;
 }
 
+/* 年月 */
+.yearmonth-y {
+	width: 5em;
+}
+
+.yearmonth-m {
+	width: 3.5em;
+}
+
+
 /* メイン編成表 */
 div#formation-table-container {
 	margin: 0.8em;
@@ -463,6 +473,6 @@ input[type="range"]::-moz-range-track {
 	outline: none;
 }
 
-#now-range {
-	margin-right: 0.7em;
+#now-time-inputs {
+	margin: auto 0.6em;
 }

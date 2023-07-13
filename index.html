@@ -35,11 +35,15 @@
 		<button class="lsf-icon" icon="download" onclick="showJSONOutputDialog()">JSON保存</button>
 		<div class="separator"></div>
 		<input type="range" oninput="updateNowYearMonth(new YearMonth(Number(this.value)))" id="now-range">
-		<input type="number" id="now-y" onchange="updateNowYearMonthByInputBoxes()"
-			oninput="updateNowYearMonthByInputBoxes()">年<input type="number" min="1" max="12" id="now-m"
-			onchange="updateNowYearMonthByInputBoxes()"
-			onkeydown="if(event.code=='ArrowDown'&&this.value=='1'){this.value='13';document.querySelector('#now-y').value=Number(document.querySelector('#now-y').value)-1}else if(event.code=='ArrowUp'&&this.value=='12'){this.value='0';document.querySelector('#now-y').value=Number(document.querySelector('#now-y').value)+1}"
-			oninput="updateNowYearMonthByInputBoxes()">月
+		<span id="now-time-inputs" class="time-inputs">
+			<input type="number" id="now-y" class="yearmonth-y" onchange="updateNowYearMonthByInputBoxes()"
+				oninput="updateNowYearMonthByInputBoxes()">年<input type="number" id="now-m" class="yearmonth-m"
+				onchange="updateNowYearMonthByInputBoxes()" oninput="updateNowYearMonthByInputBoxes()">月
+		</span>
+		<button class="lsf-icon" icon="setting"
+			onclick="Dialog.list.settingYearMonthDialog.functions.display()">年月設定</button>
+		<div class="separator"></div>
+		<button class="lsf-icon" icon="setting">全般設定</button>
 	</div>
 	<div id="formation-table-container">
 
