@@ -35,7 +35,6 @@ button {
 }
 
 button:hover {
-	cursor: pointer;
 	background-color: #8c6eae;
 }
 
@@ -395,4 +394,67 @@ p.car-name span.car-status.dropped::before {
 
 .element-bottom-of-input-area {
 	margin-top: 1.5em;
+}
+
+/* スライダーのトラック */
+input[type="range"] {
+	-webkit-appearance: none;
+	appearance: none;
+	height: 10px;
+	border-radius: 5px;
+	background-color: #ddd;
+	outline: none;
+}
+
+/* スライダーのハンドル（つまみ） */
+input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background-color: #4c2d5e;
+	cursor: pointer;
+	transform: translateY(-5px);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+	background-color: #8c6eae;
+}
+
+input[type="range"]::-webkit-slider-thumb:active {
+	background-color: #6c4e86;
+}
+
+/* スライダーのトラックの進行状況 */
+input[type="range"]::-webkit-slider-runnable-track {
+	width: 100%;
+	height: 10px;
+	border-radius: 5px;
+	background-color: #dcccee;
+}
+
+/* スライダーの値のハイライト */
+input[type="range"]::-moz-range-thumb {
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background-color: #4c2d5e;
+	cursor: pointer;
+}
+
+/* スライダーの値のトラックの進行状況 */
+input[type="range"]::-moz-range-progress {
+	height: 10px;
+	border-radius: 5px;
+	background-color: #8c6eae;
+}
+
+/* Firefoxでスライダーの外見を調整するためのスタイル */
+input[type="range"]::-moz-range-track {
+	width: 100%;
+	height: 10px;
+	border-radius: 5px;
+	background-color: #ddd;
+	outline: none;
 }
