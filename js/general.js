@@ -16,6 +16,9 @@ class YearMonth {
 	}
 
 	//年月を更新
+	updateByYearMonth(ym) {
+		this.update(ym.year, ym.month);
+	}
 	update(y, m) {
 		if (m == null) {
 			this.update(Math.floor(y / 12) - (y % 12 == 0 ? 1 : 0), y % 12 == 0 ? 12 : y % 12);

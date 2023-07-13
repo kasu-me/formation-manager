@@ -1,7 +1,7 @@
 //データ入力
 minYearMonth = new YearMonth(1960, 1);
 maxYearMonth = new YearMonth(2020, 12);
-now = minYearMonth;
+now.updateByYearMonth(minYearMonth);
 
 AllSerieses.addSeries(new Series("1000系", "西武601系", "あああ"));
 AllSerieses.addSeries(new Series("1400系", "西武411系", "いいい"));

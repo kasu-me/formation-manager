@@ -458,7 +458,7 @@ window.addEventListener("load", function () {
 			document.getElementById("stym-max-y").value = maxYearMonth.year;
 			document.getElementById("stym-max-m").value = maxYearMonth.month;
 			document.getElementById("stym-min-y").value = minYearMonth.year;
-			document.getElementById("stym-min-m").value = maxYearMonth.month;
+			document.getElementById("stym-min-m").value = minYearMonth.month;
 			Dialog.list.settingYearMonthDialog.on();
 		},
 		updateYearMonthLimitation: function () {

@@ -247,7 +247,7 @@ function setInputMaxAndMin() {
 }
 
 //年月関連のグローバル変数の定義
-let now;
+let now = new YearMonth();
 let minYearMonth;
 let maxYearMonth;
 
