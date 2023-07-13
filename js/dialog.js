@@ -19,6 +19,31 @@ class Dialog {
 			this.dialogTitle.classList.add("dialog-title");
 			this.dialogTitle.innerHTML = dialogTitle;
 			this.dialog.appendChild(this.dialogTitle);
+
+			//ドラッグ移動
+			this.dialogTitle.addEventListener("mousedown", (event) => {
+				this.dialogTitle.style.cursor = "grabbing";
+				let offsetX = event.clientX - this.dialog.getBoundingClientRect().left;
+				let offsetY = event.clientY - this.dialog.getBoundingClientRect().top;
+				let dialogWidth = this.dialog.getBoundingClientRect().width;
+				let dialogHeight = this.dialog.getBoundingClientRect().height;
+
+				let movePosition = (pageX, pageY) => {
+					this.dialog.style.left = `${pageX - offsetX + dialogWidth / 2}px`;
+					this.dialog.style.top = `${pageY - offsetY + (this.isOverlay ? dialogHeight / 2 : 0)}px`;
+				}
+				let mouseMove = (event) => {
+					movePosition(event.pageX, event.pageY);
+				}
+
+				document.addEventListener("mousemove", mouseMove);
+
+				document.addEventListener("mouseup", () => {
+					document.removeEventListener('mousemove', mouseMove);
+					this.dialogTitle.style.cursor = "grab";
+				});
+
+			});
 		}
 		this.mainMessage = document.createElement("div");
 		this.buttons = document.createElement("p");
@@ -77,6 +102,8 @@ class Dialog {
 		this.buttons.innerHTML = buttonContent;
 	}
 	on() {
+		this.dialog.style.top = "";
+		this.dialog.style.left = "";
 		if (!this.isOverlay) {
 			Dialog.offAll();
 			Dialog.displayDialogArea();

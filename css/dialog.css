@@ -49,6 +49,13 @@
 	margin-top: 0;
 	margin-bottom: 1.5em;
 	font-weight: bold;
+	font-size: 1.1em;
+	user-select: none;
+	cursor: grab;
+}
+
+.dialog-area .dialog-content>p.dialog-title.grabbed {
+	cursor: grabbing;
 }
 
 .dialog-area .dialog-content>p.dialog-foot-buttons-container {
