@@ -22,11 +22,13 @@
 
 <body>
 	<div id="header">
-		<button onclick="Dialog.list.seriesDispDialog.functions.display()">形式</button>
-		<button onclick="Dialog.list.formationTemplatesDialog.functions.display()">編成テンプレート</button>
+		<button class="lsf-icon" icon="list" onclick="Dialog.list.seriesDispDialog.functions.display()">形式</button>
+		<button class="lsf-icon" icon="list"
+			onclick="Dialog.list.formationTemplatesDialog.functions.display()">編成テンプレート</button>
 		<div class="separator"></div>
-		<button onclick="Dialog.list.formationAddingDialog.functions.display()">編成作成</button>
-		<button>車両を作成</button>
+		<button class="lsf-icon" icon="add"
+			onclick="Dialog.list.formationAddingDialog.functions.display()">編成作成</button>
+		<button class="lsf-icon" icon="add">車両を作成</button>
 		<div class="separator"></div>
 		<button class="lsf-icon" icon="file" onclick="showJSONLoadDialog()">JSONから読込</button><input type="file"
 			id="jsonReader" style="display:none;" accept="application/json" onchange="readJson(event)">

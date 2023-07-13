@@ -22,9 +22,9 @@ window.addEventListener("load", function () {
 				table.addRow();
 				table.addCell(`${seriesList[seriesId].name}`, { "class": "formation-name" });
 				table.addCell(`${seriesList[seriesId].description}`, { "class": "formation-template-name" });
-				table.addCell(`<button onclick="">編集</button>`);
-				table.addCell(`<button onclick="">編成一覧</button>`);
-				table.addCell(`<button onclick="">編成テンプレート一覧</button>`);
+				table.addCell(`<button class="lsf-icon" icon="pen" onclick="">編集</button>`);
+				table.addCell(`<button class="lsf-icon" icon="list" onclick="">編成一覧</button>`);
+				table.addCell(`<button class="lsf-icon" icon="list" onclick="">編成テンプレート一覧</button>`);
 			}
 			document.querySelector("#seriesDispDialog div.table-container").innerHTML = table.generateTable();
 			Dialog.list.seriesDispDialog.on();
