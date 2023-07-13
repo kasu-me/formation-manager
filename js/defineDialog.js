@@ -332,16 +332,17 @@ window.addEventListener("load", function () {
 
 	//車両の改番:carrn
 	new Dialog("carRenumberDialog", "車両の改番", `<div id="carrn-main"></div>`, [{ "content": "改番", "event": `Dialog.list.carRenumberDialog.functions.renumberCar()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.carRenumberDialog.off();`, "icon": "close" }], {
+		carId: 0,
 		//車両を改番ダイアログを表示
 		display: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.carDetealDialog.isActive) {
-				let carId = Number(document.querySelector('#cardt-car-id').innerHTML);
-				if (AllCars.carsList[carId].isDroppedInTime(now)) {
+				Dialog.list.carDetealDialog.functions.carId = Number(document.querySelector('#cardt-car-id').innerHTML);
+				if (AllCars.carsList[Dialog.list.carDetealDialog.functions.carId].isDroppedInTime(now)) {
 					Dialog.list.alertDialog.functions.display(Message.list["MA004"]);
 					return;
 				}
-				document.querySelector("#carrn-main").innerHTML = `<table class="input-area"><tr><td>車両番号</td><td><input id="carrn-car-number" placeholder="${AllCars.carsList[carId].number}" value="${AllCars.carsList[carId].number}">号車</td></tr></table><div id="carrn-opening">${carId}</div>`
+				document.querySelector("#carrn-main").innerHTML = `<table class="input-area"><tr><td>車両番号</td><td><input id="carrn-car-number" placeholder="${AllCars.carsList[Dialog.list.carDetealDialog.functions.carId].number}" value="${AllCars.carsList[Dialog.list.carDetealDialog.functions.carId].number}">号車</td></tr></table><div id="carrn-opening">${Dialog.list.carDetealDialog.functions.carId}</div>`
 				Dialog.list.carRenumberDialog.on();
 			}
 		},
@@ -349,10 +350,10 @@ window.addEventListener("load", function () {
 		renumberCar: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.carRenumberDialog.isActive) {
-				let carId = Number(document.querySelector('#carrn-opening').innerHTML);
-				AllCars.renumberCar(carId, document.querySelector('#carrn-car-number').value);
+				AllCars.renumberCar(Dialog.list.carDetealDialog.functions.carId, document.querySelector('#carrn-car-number').value);
 				Dialog.list.carRenumberDialog.off();
 				reflesh();
+				Dialog.list.carDetealDialog.functions.display(Dialog.list.carDetealDialog.functions.carId);
 			}
 		}
 	});
@@ -419,12 +420,13 @@ window.addEventListener("load", function () {
 
 	//編成の改名:fmrn
 	new Dialog("formationRenameDialog", "編成の改名", `<div id="fmrn-main"></div>`, [{ "content": "改名", "event": `Dialog.list.formationRenameDialog.functions.renameFormation()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.formationRenameDialog.off();`, "icon": "close" }], {
+		formationId: 0,
 		//編成を改名ダイアログを表示
 		display: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.formationDetealDialog.isActive) {
-				let formationId = Number(document.querySelector('#fmdt-opening').innerHTML);
-				document.querySelector("#fmrn-main").innerHTML = `<table class="input-area"><tr><td>編成番号</td><td><input id="fmrn-formation-name" placeholder="${AllFormations.formationsList[formationId].name}" value="${AllFormations.formationsList[formationId].name}"></td></tr></table><div id="fmrn-opening">${formationId}</div>`
+				Dialog.list.formationRenameDialog.functions.formationId = Number(document.querySelector('#fmdt-opening').innerHTML);
+				document.querySelector("#fmrn-main").innerHTML = `<table class="input-area"><tr><td>編成番号</td><td><input id="fmrn-formation-name" placeholder="${AllFormations.formationsList[Dialog.list.formationRenameDialog.functions.formationId].name}" value="${AllFormations.formationsList[Dialog.list.formationRenameDialog.functions.formationId].name}"></td></tr></table><div id="fmrn-opening">${Dialog.list.formationRenameDialog.functions.formationId}</div>`
 				Dialog.list.formationRenameDialog.on();
 			}
 		},
@@ -432,11 +434,10 @@ window.addEventListener("load", function () {
 		renameFormation: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.formationRenameDialog.isActive) {
-				let formationId = Number(document.querySelector('#fmrn-opening').innerHTML);
-				let formation = AllFormations.formationsList[formationId];
+				let formation = AllFormations.formationsList[Dialog.list.formationRenameDialog.functions.formationId];
 				let isTerminated = formation.isTerminated;
 				let terminatedOn = formation.terminatedOn;
-				AllFormations.releaseFormation(formationId);
+				AllFormations.releaseFormation(Dialog.list.formationRenameDialog.functions.formationId);
 				let newFormationId = AllFormations.addFormation(new Formation(formation.seriesId, document.querySelector('#fmrn-formation-name').value, formation.cars, formation.belongsTo, now))
 				//元の編成が未来で解除されていた編成の場合、今作成した編成をその年月で編成解除
 				if (isTerminated) {
@@ -444,6 +445,7 @@ window.addEventListener("load", function () {
 				}
 				Dialog.list.formationRenameDialog.off();
 				reflesh();
+				Dialog.list.formationDetealDialog.functions.display(newFormationId);
 			}
 		}
 	});
