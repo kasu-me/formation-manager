@@ -97,6 +97,10 @@ a.update-yearmonth-link::before {
 	font-weight: 100;
 }
 
+select {
+	cursor: pointer;
+}
+
 /* ヘッダ */
 div#header {
 	z-index: 99998;

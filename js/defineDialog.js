@@ -356,7 +356,7 @@ window.addEventListener("load", function () {
 				Dialog.list.carDetealDialog.functions.display(Dialog.list.carDetealDialog.functions.carId);
 			}
 		}
-	});
+	}, true);
 
 	//編成の詳細:fmdt
 	new Dialog("formationDetealDialog", "編成の詳細", `<div id="fmdt-main"></div>`, [{ "content": "編成解除", "event": `Dialog.list.formationDetealDialog.functions.releaseFormation()`, "icon": "clear" }, { "content": "編成内の車両をまとめて廃車", "event": `Dialog.list.formationDetealDialog.functions.releaseFormationAndDropAllCars()`, "icon": "delete" }, { "content": "閉じる", "event": `Dialog.list.formationDetealDialog.off();`, "icon": "close" }], {
@@ -448,7 +448,7 @@ window.addEventListener("load", function () {
 				Dialog.list.formationDetealDialog.functions.display(newFormationId);
 			}
 		}
-	});
+	}, true);
 
 	//以下、設定系
 
