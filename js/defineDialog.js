@@ -331,7 +331,7 @@ window.addEventListener("load", function () {
 	});
 
 	//車両の改番:carrn
-	new Dialog("carRenumberDialog", "車両の改番", `<div id="carrn-main"></div>`, [{ "content": "改番", "event": `Dialog.list.carRenumberDialog.functions.renumberCar()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.carRenumberDialog.off();`, "icon": "close" }], {
+	new Dialog("carRenumberDialog", "車両の改番", `<div id="carrn-main"></div>`, [{ "content": "改番", "event": `Dialog.list.carRenumberDialog.functions.renumberCar()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.carRenumberDialog.off();Dialog.list.carDetealDialog.functions.display(Dialog.list.carDetealDialog.functions.carId)`, "icon": "close" }], {
 		carId: 0,
 		//車両を改番ダイアログを表示
 		display: function () {
@@ -419,7 +419,7 @@ window.addEventListener("load", function () {
 	});
 
 	//編成の改名:fmrn
-	new Dialog("formationRenameDialog", "編成の改名", `<div id="fmrn-main"></div>`, [{ "content": "改名", "event": `Dialog.list.formationRenameDialog.functions.renameFormation()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.formationRenameDialog.off();`, "icon": "close" }], {
+	new Dialog("formationRenameDialog", "編成の改名", `<div id="fmrn-main"></div>`, [{ "content": "改名", "event": `Dialog.list.formationRenameDialog.functions.renameFormation()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.formationRenameDialog.off();Dialog.list.formationDetealDialog.functions.display(Dialog.list.formationRenameDialog.functions.formationId)`, "icon": "close" }], {
 		formationId: 0,
 		//編成を改名ダイアログを表示
 		display: function () {
