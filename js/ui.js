@@ -236,6 +236,9 @@ function updateNowYearMonth(ym) {
 	now = ym;
 	reflesh();
 }
+function updateNowYearMonthByObject(ym) {
+	now = new YearMonth(ym.year, ym.month);
+}
 function updateNowYearMonthByInputBoxes() {
 	updateNowYearMonth(new YearMonth(Number(document.querySelector('#now-y').value), Number(document.querySelector('#now-m').value)));
 }
