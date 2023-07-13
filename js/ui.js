@@ -244,7 +244,6 @@ function setInputMaxAndMin() {
 	document.querySelector("#now-range").setAttribute("max", maxYearMonth.serial);
 	document.querySelector("#now-y").setAttribute("min", minYearMonth.year);
 	document.querySelector("#now-y").setAttribute("max", maxYearMonth.year);
-	now = maxYearMonth;
 }
 
 //年月関連のグローバル変数の定義

@@ -453,7 +453,7 @@ window.addEventListener("load", function () {
 	//以下、設定系
 
 	//年月上下限を作成:stym
-	new Dialog("settingYearMonthDialog", "年月上下限の設定", `<table class="input-area"><tr><td>年月下限</td><td><span class="time-inputs"><input id="stym-min-y" class="yearmonth-y" type="number">年<input id="stym-min-m" class="yearmonth-m" type="number">月</span></td></tr><tr><td>年月上限</td><td><span class="time-inputs"><input id="stym-max-y" class="yearmonth-y" type="number">年<input id="stym-max-m" class="yearmonth-m" type="number">月</span></td></tr></table>`, [{ "content": "設定", "event": `Dialog.list.settingYearMonthDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.settingYearMonthDialog.off();`, "icon": "close" }], {
+	new Dialog("settingYearMonthDialog", "年月上下限の設定", `<table class="input-area"><tr><td>年月下限</td><td><span class="time-inputs"><input id="stym-min-y" class="yearmonth-y" type="number">年<input id="stym-min-m" class="yearmonth-m" type="number">月</span></td></tr><tr><td>年月上限</td><td><span class="time-inputs"><input id="stym-max-y" class="yearmonth-y" type="number">年<input id="stym-max-m" class="yearmonth-m" type="number">月</span></td></tr></table>`, [{ "content": "設定", "event": `Dialog.list.settingYearMonthDialog.functions.updateYearMonthLimitation()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.settingYearMonthDialog.off();`, "icon": "close" }], {
 		display: function () {
 			document.getElementById("stym-max-y").value = maxYearMonth.year;
 			document.getElementById("stym-max-m").value = maxYearMonth.month;
@@ -461,23 +461,14 @@ window.addEventListener("load", function () {
 			document.getElementById("stym-min-m").value = maxYearMonth.month;
 			Dialog.list.settingYearMonthDialog.on();
 		},
-		createFormationTemplate: function () {
+		updateYearMonthLimitation: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
-			if (Dialog.list.createSeriesDialog.isActive) {
-				let seriesName = document.getElementById("crsr-series-name").value;
-				let seriesDescription = document.getElementById("crsr-series-description").value;
-				if (seriesName == "") {
-					Dialog.list.alertDialog.functions.display(Message.list["MA003"]);
-				} else {
-					AllSerieses.addSeries(new Series(seriesName, "", seriesDescription == "" ? "　" : seriesDescription));
-					Dialog.list.createSeriesDialog.off();
-					Dialog.list.createSeriesDialog.functions.clearInputs();
-				}
+			if (Dialog.list.settingYearMonthDialog.isActive) {
+				minYearMonth.update(Number(document.getElementById("stym-min-y").value), Number(document.getElementById("stym-min-m").value));
+				maxYearMonth.update(Number(document.getElementById("stym-max-y").value), Number(document.getElementById("stym-max-m").value));
+				setInputMaxAndMin();
+				Dialog.list.settingYearMonthDialog.off();
 			}
-		},
-		clearInputs: function () {
-			document.getElementById("crsr-series-name").value = "";
-			document.getElementById("crsr-series-description").value = "";
 		}
 	});
 
