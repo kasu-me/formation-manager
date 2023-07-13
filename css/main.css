@@ -362,7 +362,7 @@ p.car-name span.car-status.dropped::before {
 	content: "ban";
 }
 
-
+/* フィールドセット */
 .input-area {
 	border-collapse: collapse;
 }
@@ -392,9 +392,12 @@ p.car-name span.car-status.dropped::before {
 	padding: 0.25em;
 }
 
+/* フィールドセットの下の要素 */
 .element-bottom-of-input-area {
 	margin-top: 1.5em;
 }
+
+/* フィールドセットここまで */
 
 /* スライダーのトラック */
 input[type="range"] {

@@ -61,7 +61,7 @@ window.addEventListener("load", function () {
 	});
 
 	//編成を作成:fora
-	new Dialog("formationAddingDialog", "編成を作成", ``, [{ "content": "編成テンプレートから作成", "event": `Dialog.list.formationTemplatesDialog.functions.display()`, "icon": "add" }, { "content": "編成に所属していない車両から作成", "event": `Dialog.list.createFormationFromFloatingCarsDialog.functions.display()`, "icon": "add" }, { "content": "キャンセル", "event": `Dialog.list.formationAddingDialog.off();`, "icon": "close" }]);
+	new Dialog("formationAddingDialog", "編成を作成", `<p><button onclick="Dialog.list.formationTemplatesDialog.functions.display()" class="lsf-icon dialog-main-button" icon="add">編成テンプレートから作成</button></p><p><button onclick="Dialog.list.createFormationFromFloatingCarsDialog.functions.display()" class="lsf-icon dialog-main-button" icon="add">編成に所属していない車両から作成</button></p>`, [{ "content": "キャンセル", "event": `Dialog.list.formationAddingDialog.off();`, "icon": "close" }]);
 
 	//編成テンプレートから編成作成:fromt
 	new Dialog("createFormationFromTemplateDialog", "編成テンプレートから編成作成", `<table class="input-area">

@@ -72,7 +72,7 @@ class Dialog {
 					attributes += ` ${j}=${buttons[i][j]}`;
 				}
 			}
-			buttonContent += `<button onclick="${buttons[i]["event"]}" class="${classes}"${attributes}>${buttons[i]["content"]}</button>`;
+			buttonContent += `<button onclick="${buttons[i]["event"]}" class="dialog-main-button${classes}"${attributes}>${buttons[i]["content"]}</button>`;
 		}
 		this.buttons.innerHTML = buttonContent;
 	}
