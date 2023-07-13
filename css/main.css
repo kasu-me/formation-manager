@@ -39,6 +39,10 @@ button:hover {
 	background-color: #8c6eae;
 }
 
+button:active {
+	background-color: #6c4e86;
+}
+
 table {
 	border-collapse: collapse;
 	border-color: #000;
