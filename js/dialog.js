@@ -102,8 +102,10 @@ class Dialog {
 		this.buttons.innerHTML = buttonContent;
 	}
 	on() {
-		this.dialog.style.top = "";
-		this.dialog.style.left = "";
+		if (!this.isActive) {
+			this.dialog.style.top = "";
+			this.dialog.style.left = "";
+		}
 		if (!this.isOverlay) {
 			Dialog.offAll();
 			Dialog.displayDialogArea();
