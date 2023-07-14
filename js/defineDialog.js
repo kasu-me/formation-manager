@@ -493,9 +493,6 @@ window.addEventListener("load", function () {
 		}
 	});
 
-	//JSON確認
-	new Dialog("confirmJSONDialog", "確認", Message.list["MC001"], [{ "content": "はい", "event": `continueReadJSON()`, "icon": "check" }, { "content": "キャンセル", "event": `document.querySelector('#jsonReader').value='';tmpJSON='';Dialog.list.confirmJSONDialog.off();`, "icon": "close" }]);
-
 	//アラート:alrt
 	new Dialog("alertDialog", "警告", `<img src="./js/alert.svg" class="dialog-icon"><div id="alrt-main"></div>`, [{ "content": "OK", "event": `Dialog.list.alertDialog.off()`, "icon": "check" }], {
 		display: function (message) {
@@ -505,13 +502,15 @@ window.addEventListener("load", function () {
 	}, true);
 
 	//確認:cnfm
-	new Dialog("confirmDialog", "確認", `<img src="./js/confirm.svg" class="dialog-icon"><div id="cnfm-main"></div>`, [{ "content": "OK", "event": `Dialog.list.confirmDialog.functions.callback();Dialog.list.confirmDialog.off()`, "icon": "check" }, { "content": "NO", "event": `Dialog.list.confirmDialog.off()`, "icon": "close" }], {
-		display: function (message, callback) {
+	new Dialog("confirmDialog", "確認", `<img src="./js/confirm.svg" class="dialog-icon"><div id="cnfm-main"></div>`, [{ "content": "OK", "event": `Dialog.list.confirmDialog.functions.callback();Dialog.list.confirmDialog.off()`, "icon": "check" }, { "content": "NO", "event": `Dialog.list.confirmDialog.functions.interruption();Dialog.list.confirmDialog.off()`, "icon": "close" }], {
+		display: function (message, callback, interruption) {
 			document.getElementById("cnfm-main").innerHTML = message;
 			Dialog.list.confirmDialog.functions.callback = callback;
+			Dialog.list.confirmDialog.functions.interruption = interruption || Dialog.list.confirmDialog.functions.interruption;
 			Dialog.list.confirmDialog.on();
 		},
-		callback: function () { }
+		callback: function () { },
+		interruption: function () { }
 	}, true);
 
 	//情報:info

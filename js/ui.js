@@ -14,13 +14,12 @@ function readJson(evt) {
 	reader.readAsText(file[0]);
 	reader.onload = function (e) {
 		tmpJSON = e.target.result;
-		Dialog.list.confirmJSONDialog.functions.display();
+		Dialog.list.confirmDialog.functions.display(Message.list["MC001"], continueReadJSON, () => { document.querySelector('#jsonReader').value = ''; tmpJSON = ''; });
 	}
 }
 function continueReadJSON() {
 	loadListsFromJSON(tmpJSON);
 	tmpJSON = "";
-	Dialog.list.confirmJSONDialog.off();
 }
 
 //現存編成の編成表を表に出力
