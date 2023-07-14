@@ -452,7 +452,7 @@ window.addEventListener("load", function () {
 
 	//以下、設定系
 
-	//年月上下限を作成:stym
+	//年月上下限を設定:stym
 	new Dialog("settingYearMonthDialog", "年月上下限の設定", `<table class="input-area"><tr><td>年月下限</td><td><span class="time-inputs"><input id="stym-min-y" class="yearmonth-y" type="number">年<input id="stym-min-m" class="yearmonth-m" type="number">月</span></td></tr><tr><td>年月上限</td><td><span class="time-inputs"><input id="stym-max-y" class="yearmonth-y" type="number">年<input id="stym-max-m" class="yearmonth-m" type="number">月</span></td></tr></table>`, [{ "content": "設定", "event": `Dialog.list.settingYearMonthDialog.functions.updateYearMonthLimitation()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.settingYearMonthDialog.off();`, "icon": "close" }], {
 		display: function () {
 			document.getElementById("stym-max-y").value = maxYearMonth.year;
