@@ -262,13 +262,17 @@ p.table-subtitle {
 
 /* メッセージ */
 .message {
-	padding: 1.0em;
+	padding: 1.5em;
 	margin: 1.0em auto;
 }
 
 .warning {
-	border: 1px solid #f00;
 	margin-bottom: 2.0em;
+	background-color: #ffebeb;
+	color: #ff0000;
+	border: 1px solid #ff0000;
+	padding: 15px;
+	border-radius: 5px;
 }
 
 /* ダイアログの中のテーブル */

@@ -100,7 +100,24 @@ function list() {
 		return self.indexOf(x) === i && i !== self.lastIndexOf(x);
 	});
 
-	document.querySelector("#formation-table-container").innerHTML = `${(duplications.length > 0) ? `<div class="warning message">車両番号の重複があります</div>` : ""}${html}`;
+	document.querySelector("#formation-table-container").innerHTML = `${(duplications.length > 0) ? `<div class="warning message">
+	<style type="text/css">
+	.wn_st1{fill:#ff0000;}
+	.wn_st0{fill:#ffebeb;}
+	</style>
+	<svg version="1.1" id="レイヤー_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+		y="0px" viewBox="0 0 768 680.8" style="enable-background:new 0 0 768 680.8;height: 1em; transform:translateY(1px);" xml:space="preserve">
+		<path class="wn_st1" d="M760,592.3L435.1,29.5c-22.7-39.3-79.5-39.3-102.2,0L8,592.3c-22.7,39.3,5.7,88.5,51.1,88.5h649.9
+			C754.3,680.8,782.7,631.6,760,592.3z"/>
+		<g>
+			<g>
+				<path class="wn_st0" d="M333,507.8H435V608H333V507.8z M431.8,268.6l-25.4,200.2h-46.2l-24.7-200.2V143.8h96.2L431.8,268.6
+					L431.8,268.6z"/>
+			</g>
+		</g>
+	</svg>
+
+	車両番号の重複があります</div>` : ""}${html}`;
 
 	//重複ハイライト
 	if (duplications.length > 0) {
