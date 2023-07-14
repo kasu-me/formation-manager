@@ -74,8 +74,8 @@ a.update-yearmonth-link:hover {
 	color: #f00;
 }
 
-a.update-yearmonth-link::before {
-	content: "time";
+a.update-yearmonth-link::before,
+#cref-new-formated-template-table a::after {
 	margin: 0 0.1em;
 	font-size: 100%;
 	font-family: 'LigatureSymbols';
@@ -481,6 +481,18 @@ input[type="range"]::-moz-range-track {
 	outline: none;
 }
 
+/* 年月入力欄 */
 #now-time-inputs {
 	margin: auto 0.6em;
+}
+
+/* 編成テンプレートプレビュー欄 */
+#cref-new-formated-template-table a::after {
+	content: "delete";
+	margin-left: 0.3em;
+}
+
+/* 時間遷移リンク */
+a.update-yearmonth-link::before {
+	content: "time";
 }
