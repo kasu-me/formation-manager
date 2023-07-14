@@ -273,7 +273,7 @@ p.table-subtitle {
 
 /* ダイアログの中のテーブル */
 .dialog-content .table-container {
-	max-height: 10em;
+	max-height: 20em;
 	overflow: auto;
 }
 

@@ -108,8 +108,9 @@ window.addEventListener("load", function () {
 		createFormation: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.createFormationFromTemplateDialog.isActive) {
-				AllFormations.addFormationFromTemplate(AllCars, AllFormationTemplates.getFormationTemplate(Number(document.querySelector('#fromt-opening').innerHTML)), Number(document.querySelector("#fromt-car-number").value), document.querySelector("#fromt-car-belongs-to").value);
+				let formationInfo = AllFormations.addFormationFromTemplate(AllCars, AllFormationTemplates.getFormationTemplate(Number(document.querySelector('#fromt-opening').innerHTML)), Number(document.querySelector("#fromt-car-number").value), document.querySelector("#fromt-car-belongs-to").value);
 				Dialog.list.createFormationFromTemplateDialog.off();
+				Dialog.list.formationDetealDialog.functions.display(formationInfo.formationId);
 			}
 		}
 	});
@@ -194,9 +195,10 @@ window.addEventListener("load", function () {
 				if (Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.length == 0) {
 					Dialog.list.alertDialog.functions.display(Message.list["MA001"]);
 				} else {
-					AllFormations.addFormation(Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation);
+					let formationId = AllFormations.addFormation(Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation);
 					Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation = new Formation(0, 0, []);
 					Dialog.list.createFormationFromFloatingCarsDialog.off();
+					Dialog.list.formationDetealDialog.functions.display(formationId);
 				}
 			}
 		}
