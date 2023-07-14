@@ -309,7 +309,7 @@ class FormationTemplate {
 		this.seriesId = seriesId;
 		this.name = name || this.#name;
 		this.carNumbers = carNumbers;
-		if (formationName != null && typeof (formationName) == "function") {
+		if (formationName != null) {
 			this.formationName = formationName;
 		}
 	}
@@ -320,12 +320,17 @@ class FormationTemplate {
 		this.#name = value;
 	}
 	set carNumbers(carNumbers) {
+		this.#carNumbers = [];
 		for (let i in carNumbers) {
 			this.#carNumbers.push(FormationTemplate.convertToFunction(carNumbers[i], this));
 		}
 	}
 	set formationName(formationName) {
-		this.#formationName = formationName;
+		if (formationName == "") {
+			this.#formationName = "";
+		} else {
+			this.#formationName = FormationTemplate.convertToFunction(formationName, this);
+		}
 	}
 	get seriesId() {
 		return this.#seriesId;
@@ -334,7 +339,7 @@ class FormationTemplate {
 		return this.#name;
 	}
 	get formationName() {
-		if (this.#formationName != undefined) {
+		if (this.#formationName != undefined && this.#formationName != "") {
 			return this.#formationName;
 		} else {
 			return n => this.carNumbers[0](n) + "F";
