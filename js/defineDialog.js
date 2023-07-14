@@ -251,6 +251,7 @@ window.addEventListener("load", function () {
 			Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate = new FormationTemplate();
 			document.querySelector("#cref-name").value = "";
 			document.querySelector("#cref-carnumber").value = "";
+			document.querySelector("#cref-formationnumber").value = "";
 		}
 	});
 
