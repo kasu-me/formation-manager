@@ -279,6 +279,25 @@ window.addEventListener("load", function () {
 		}
 	});
 
+	//車両の作成:crcar
+	new Dialog("createCarDialog", "車両の作成", `<table class="input-area"><tr><td>車両番号</td><td><input id="crcar-carNumber"></td></tr></table>`, [{ "content": "作成", "event": `Dialog.list.createCarDialog.functions.createCar()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createCarDialog.off();`, "icon": "close" }], {
+		carId: 0,
+		//車両を改番ダイアログを表示
+		display: function () {
+			document.getElementById("crcar-carNumber").value = "";
+			Dialog.list.createCarDialog.on();
+		},
+		//車両を改番
+		createCar: function () {
+			//親ダイアログが表示されている状態以外での実行を禁止
+			if (Dialog.list.createCarDialog.isActive) {
+				let carId = AllCars.addCar(new Car(document.getElementById("crcar-carNumber").value, now));
+				Dialog.list.createCarDialog.off();
+				Dialog.list.carDetealDialog.functions.display(carId);
+			}
+		}
+	});
+
 	//車両の詳細:cardt
 	new Dialog("carDetealDialog", "車両の詳細", `<div id="cardt-main"></div>`, [{ "content": "廃車", "event": `dropCar()`, "icon": "delete" }, { "content": "閉じる", "event": `Dialog.list.carDetealDialog.off();`, "icon": "close" }], {
 		//車両の詳細ダイアログを表示
