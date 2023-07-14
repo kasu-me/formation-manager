@@ -221,9 +221,9 @@ window.addEventListener("load", function () {
 			Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.name = document.querySelector("#cref-name").value;
 
 			let table = new Table();
-			table.setAttributes({ "class": "vertical-stripes not-formated-car-table formation-view" });
-			table.setSubtitle("作成される編成テンプレートから作成できる編成のトップナンバーのプレビュー");
 			if (Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.length != 0) {
+				table.setAttributes({ "class": "vertical-stripes not-formated-car-table formation-view" });
+				table.setSubtitle("作成される編成テンプレートから作成できる編成のトップナンバーのプレビュー");
 				table.addRow();
 				table.addCell(`編成番号:${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.formationName(1)}`, { "colspan": Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.length });
 				for (let i in Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers) {
@@ -505,12 +505,20 @@ window.addEventListener("load", function () {
 	}, true);
 
 	//確認:cnfm
-	new Dialog("confirmDialog", "確認", `<img src="./js/confirm.svg" class="dialog-icon"><div id="cnfm-main"></div>`, [{ "content": "OK", "event": `Dialog.list.confirmDialog.functions.callback();Dialog.list.alertDialog.off()`, "icon": "check" }, { "content": "NO", "event": `Dialog.list.confirmDialog.off()`, "icon": "close" }], {
+	new Dialog("confirmDialog", "確認", `<img src="./js/confirm.svg" class="dialog-icon"><div id="cnfm-main"></div>`, [{ "content": "OK", "event": `Dialog.list.confirmDialog.functions.callback();Dialog.list.confirmDialog.off()`, "icon": "check" }, { "content": "NO", "event": `Dialog.list.confirmDialog.off()`, "icon": "close" }], {
 		display: function (message, callback) {
 			document.getElementById("cnfm-main").innerHTML = message;
 			Dialog.list.confirmDialog.functions.callback = callback;
 			Dialog.list.confirmDialog.on();
 		},
 		callback: function () { }
+	}, true);
+
+	//情報:info
+	new Dialog("infoDialog", "情報", `<img src="./js/info.svg" class="dialog-icon"><div id="info-main"></div>`, [{ "content": "OK", "event": `Dialog.list.infoDialog.off()`, "icon": "close" }], {
+		display: function (message) {
+			document.getElementById("info-main").innerHTML = message;
+			Dialog.list.infoDialog.on();
+		}
 	}, true);
 })
