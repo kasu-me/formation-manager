@@ -303,8 +303,10 @@ class FormationTemplate {
 	#name = "";
 	//編成番号の一般形
 	#formationName;
-	//[車両番号の一般形]
+	//[車両番号の一般形(関数)]
 	#carNumbers = [];
+	//[車両番号の一般系(生データ)]
+	#rawCarNumbers = [];
 
 	//コンストラクタ(形式ID,編成テンプレート詳細,[車両番号の一般形],ベースとなる編成番号の一般形(省略時は1号車の車番を利用))
 	//一般形にはnの関数を指定
@@ -324,8 +326,10 @@ class FormationTemplate {
 	}
 	set carNumbers(carNumbers) {
 		this.#carNumbers = [];
+		this.#rawCarNumbers = [];
 		for (let i in carNumbers) {
 			this.#carNumbers.push(FormationTemplate.convertToFunction(carNumbers[i], this));
+			this.#rawCarNumbers.push(carNumbers[i]);
 		}
 	}
 	set formationName(formationName) {
@@ -351,8 +355,12 @@ class FormationTemplate {
 	get carNumbers() {
 		return this.#carNumbers;
 	}
+	get rawCarNumbers() {
+		return this.#rawCarNumbers;
+	}
 	addCarNumber(carNumber) {
 		this.#carNumbers.push(FormationTemplate.convertToFunction(carNumber, this));
+		this.#rawCarNumbers.push(carNumber);
 	}
 
 	convertToJSON() {

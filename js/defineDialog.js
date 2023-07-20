@@ -23,7 +23,7 @@ window.addEventListener("load", function () {
 				table.addRow();
 				table.addCell(`${seriesList[seriesId].name}`, { "class": "formation-name" });
 				table.addCell(`${seriesList[seriesId].description}`, { "class": "formation-template-name" });
-				table.addCell(`<button class="lsf-icon" icon="pen" onclick="">編集</button>`);
+				table.addCell(`<button class="lsf-icon" icon="pen" onclick="">編集</button>`, { "class": "buttons" });
 			}
 			document.querySelector("#seriesDispDialog div.table-container").innerHTML = table.generateTable();
 			Dialog.list.seriesDispDialog.on();
@@ -52,11 +52,40 @@ window.addEventListener("load", function () {
 			}
 			table.addBlankCellToRowRightEnd();
 			for (let formationTemplateId in formationTemplateList) {
-				table.addCellTo(formationTemplateId, `<button onclick="Dialog.list.createFormationFromTemplateDialog.functions.display(${formationTemplateId})">テンプレートを使用</button>`);
+				table.addCellTo(formationTemplateId, `<!--<button class="lsf-icon" icon="pen" onclick="Dialog.list.editFormationFromTemplateDialog.functions.display(${formationTemplateId})">編集</button>--><button onclick="Dialog.list.createFormationFromTemplateDialog.functions.display(${formationTemplateId})">テンプレートを使用</button>`, { "class": "buttons" });
 			}
 			table.rows.sort((a, b) => { return a[0].getAttibute("seriesId") < b[0].getAttibute("seriesId") ? -1 : 1 })
 			document.querySelector("#formationTemplatesDialog div.table-container").innerHTML = table.generateTable();
 			Dialog.list.formationTemplatesDialog.on();
+		}
+	});
+
+	//編成テンプレートを編集:edft
+	new Dialog("editFormationFromTemplateDialog", "編成テンプレートを編集", `<div id="edft-new-formated-template-table" class="element-bottom-of-input-area"></div>`, [{ "content": "完了", "event": `Dialog.list.editFormationFromTemplateDialog.functions.createFormation()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editFormationFromTemplateDialog.off();`, "icon": "close" }], {
+		tentativeFormationTemplate: new FormationTemplate(),
+		//編成テンプレートから編成を作成ダイアログを表示
+		display: function (x) {
+			//親ダイアログが表示されている状態以外での実行を禁止
+			if (Dialog.list.formationTemplatesDialog.isActive) {
+				Dialog.list.editFormationFromTemplateDialog.functions.tentativeFormationTemplate = AllFormationTemplates.getFormationTemplate(x);
+				console.log(Dialog.list.editFormationFromTemplateDialog.functions.tentativeFormationTemplate)
+				Dialog.list.editFormationFromTemplateDialog.on();
+			}
+		},
+		reflesh: function () {
+			let table = new Table();
+			if (Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.length != 0) {
+				table.setAttributes({ "class": "vertical-stripes not-formated-car-table formation-view" });
+				table.setSubtitle("作成される編成テンプレートから作成できる編成のトップナンバーのプレビュー");
+				table.addRow();
+				table.addCell(`編成番号:${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.formationName(1)}`, { "colspan": Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.length });
+				for (let i in Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers) {
+					if (i % 10 == 0) { table.addRow() }
+					table.addCell(`<a href="javascript:void(0)" onclick="Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.splice(${i},1);Dialog.list.createFormationTemplateDialog.functions.reflesh()">${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers[i](1)}</a>`);
+				}
+				table.addBlankCellToRowIn(0, true);
+			}
+			document.querySelector("#cref-new-formated-template-table").innerHTML = table.generateTable();
 		}
 	});
 
