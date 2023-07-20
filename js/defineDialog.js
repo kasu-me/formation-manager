@@ -573,6 +573,7 @@ window.addEventListener("load", function () {
 		display: function (message) {
 			document.getElementById("alrt-main").innerHTML = message;
 			Dialog.list.alertDialog.on();
+			Dialog.list.alertDialog.buttons.querySelector("button[icon='check']").focus();
 		}
 	}, true);
 
@@ -583,6 +584,7 @@ window.addEventListener("load", function () {
 			Dialog.list.confirmDialog.functions.callback = callback;
 			Dialog.list.confirmDialog.functions.interruption = interruption || Dialog.list.confirmDialog.functions.interruption;
 			Dialog.list.confirmDialog.on();
+			Dialog.list.confirmDialog.buttons.querySelector("button[icon='check']").focus();
 		},
 		callback: function () { },
 		interruption: function () { }
@@ -593,6 +595,7 @@ window.addEventListener("load", function () {
 		display: function (message) {
 			document.getElementById("info-main").innerHTML = message;
 			Dialog.list.infoDialog.on();
+			Dialog.list.infoDialog.buttons.querySelector("button[icon='check']").focus();
 		}
 	}, true);
 })
