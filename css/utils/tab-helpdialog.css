@@ -1,6 +1,9 @@
 #helpDialog.dialog-content {
-	width: 100%;
+	max-width: 100%;
+	width: 768px;
 	top: 50%;
+	resize: horizontal;
+	overflow: hidden;
 }
 
 #helpDialog>p.dialog-title {
@@ -63,4 +66,14 @@
 
 .mku-tab-container .mku-tab-content *:first-of-type {
 	margin-top: 0;
+}
+
+
+
+@media screen and (max-width: 768px) {
+	#helpDialog.dialog-content {
+		max-width: 100%;
+		width: 100%;
+	}
+
 }
