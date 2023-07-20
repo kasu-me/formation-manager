@@ -8,6 +8,7 @@ new Message("MC001", "JSON読み込みを実施すると現在のデータはク
 new Message("MC002", "${formationName}を${now}付で編成解除します。");
 new Message("MC003", "${formationName}内の車両${carLength}両を${now}付で全て廃車します。");
 new Message("MC004", "${carNumber}号車を${now}付で廃車します。");
+new Message("MC005", "前回自動的にセーブされたデータが残っています。読み込みますか？");
 
 //以下、ダイアログ定義
 window.addEventListener("load", function () {

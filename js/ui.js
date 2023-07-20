@@ -159,6 +159,9 @@ function listUpNotFormatedCarIds() {
 
 //表示を最新の状態にリフレッシュ
 function reflesh() {
+	//自動セーブ
+	autoSave();
+
 	//リストを表示
 	list();
 
@@ -247,6 +250,17 @@ function dropCar(carId_) {
 }
 //ダイアログ関連ここまで
 
+//自動セーブ
+function autoSave() {
+	localStorage.setItem('formation-autosave', generateJSON());
+}
+function getAutoSavedData() {
+	return localStorage.getItem("formation-autosave");
+}
+function loadAutoSavedData() {
+	loadListsFromJSON(getAutoSavedData());
+}
+
 //現在年月の操作
 function updateNowYearMonth(ym) {
 	now = ym;
@@ -270,10 +284,9 @@ let now = new YearMonth();
 let minYearMonth;
 let maxYearMonth;
 
-
 window.addEventListener("load", setInputMaxAndMin);
-window.addEventListener("load", reflesh);
 window.addEventListener("load", function () {
+	//入力欄のイベント
 	document.querySelectorAll("span.time-inputs").forEach((inputArea) => {
 		let monthInput = inputArea.querySelector(".yearmonth-m");
 		monthInput.setAttribute("min", "1");
@@ -288,4 +301,13 @@ window.addEventListener("load", function () {
 			}
 		});
 	});
+
+	//自動セーブ関係
+	if (localStorage.getItem("formation-autosave") != null) {
+		Dialog.list.confirmDialog.functions.display(Message.list["MC005"], loadAutoSavedData, () => { localStorage.removeItem("formation-autosave") });
+	} else {
+		//画面表示
+		reflesh();
+	}
+
 });
