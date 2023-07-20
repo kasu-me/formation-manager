@@ -1,0 +1,66 @@
+#helpDialog.dialog-content {
+	width: 100%;
+	top: 50%;
+}
+
+#helpDialog>p.dialog-title {
+	margin-bottom: 0;
+}
+
+.mku-tab-container .mku-tab-label-container {
+	transform: translateY(1px);
+}
+
+.mku-tab-container .mku-tab-label-container label {
+	border-color: var(--formation-table-main-border);
+	background: var(--formation-table-main-border);
+	color: #fff;
+	border-radius: 5px 5px 0 0;
+	margin-right: 0.25em;
+}
+
+.mku-tab-container .mku-tab-label-container label:hover {
+	background-color: #8c6eae;
+}
+
+.mku-tab-container .mku-tab-label-container label:active {
+	background-color: #6c4e86;
+}
+
+.mku-tab-container .mku-tab-label-container label.on {
+	background-color: #fff;
+	color: var(--formation-table-main-border);
+}
+
+.mku-tab-container .mku-tab-content {
+	height: 280pt;
+	overflow-y: auto;
+	border: 1px solid var(--formation-table-main-border);
+	padding: 1em;
+	width: 100%;
+	font-size: 10pt;
+}
+
+.mku-tab-container .mku-tab-content h2 {
+	border-left: 8px solid var(--formation-table-main-border);
+	padding-left: 0.25em;
+	font-size: 11.5pt;
+	margin-top: 1.5em;
+}
+
+.mku-tab-container .mku-tab-content h3 {
+	font-size: 10.5pt;
+}
+
+.mku-tab-container .mku-tab-content h3::before {
+	content: "●";
+	display: inline-block;
+	color: var(--formation-table-main-border);
+	margin-right: 0.25em;
+	font-size: 0.8em;
+	vertical-align: middle;
+}
+
+.mku-tab-container .mku-tab-content *:first-of-type {
+	margin-top: 0;
+}

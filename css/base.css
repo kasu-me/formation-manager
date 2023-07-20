@@ -1,0 +1,17 @@
+main {
+	padding: 0 4.0em;
+}
+
+h1 {
+	border-bottom: 2px solid #f00;
+	margin-bottom: 1.5em;
+}
+
+h2 {
+	border-left: 6px solid #f00;
+	padding-left: 0.25em;
+}
+
+section {
+	margin-bottom: 2em;
+}
