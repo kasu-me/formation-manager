@@ -23,7 +23,7 @@ window.addEventListener("load", function () {
 				table.addRow();
 				table.addCell(`${seriesList[seriesId].name}`, { "class": "formation-name" });
 				table.addCell(`${seriesList[seriesId].description}`, { "class": "formation-template-name" });
-				table.addCell(`<button class="lsf-icon" icon="pen" onclick="">編集</button>`, { "class": "buttons" });
+				table.addCell(`<button class="lsf-icon" icon="pen" onclick="Dialog.list.createSeriesDialog.functions.display(${seriesId})">編集</button>`, { "class": "buttons" });
 			}
 			document.querySelector("#seriesDispDialog div.table-container").innerHTML = table.generateTable();
 			Dialog.list.seriesDispDialog.on();
@@ -288,11 +288,20 @@ window.addEventListener("load", function () {
 		}
 	});
 
-	//形式を作成:crsr
-	new Dialog("createSeriesDialog", "形式を作成", `<table class="input-area"><tr><td>形式名</td><td><input id="crsr-series-name"></td></tr><tr><td>説明</td><td><input id="crsr-series-description"></td></tr></table>`, [{ "content": "形式作成", "event": `Dialog.list.createSeriesDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createSeriesDialog.off();`, "icon": "close" }], {
-		tentativeFormationTemplate: new FormationTemplate(),
-		display: function () {
+	//形式を作成･編集:crsr
+	new Dialog("createSeriesDialog", "形式の作成･編集", `<table class="input-area"><tr><td>形式名</td><td><input id="crsr-series-name"></td></tr><tr><td>説明</td><td><input id="crsr-series-description"></td></tr></table>`, [{ "content": "確定", "event": `Dialog.list.createSeriesDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createSeriesDialog.off();`, "icon": "close" }], {
+		tentativeSeries: null,
+		display: function (x) {
 			Dialog.list.createSeriesDialog.functions.clearInputs();
+			if (x != undefined && Dialog.list.seriesDispDialog.isActive) {
+				//新規編成
+				Dialog.list.createSeriesDialog.functions.tentativeSeries = AllSerieses.seriesesList[x];
+				document.getElementById("crsr-series-name").value = Dialog.list.createSeriesDialog.functions.tentativeSeries.name;
+				document.getElementById("crsr-series-description").value = Dialog.list.createSeriesDialog.functions.tentativeSeries.description;
+			} else {
+				//既存編成
+				Dialog.list.createSeriesDialog.functions.tentativeSeries = null;
+			}
 			Dialog.list.createSeriesDialog.on();
 		},
 		createFormationTemplate: function () {
@@ -303,13 +312,22 @@ window.addEventListener("load", function () {
 				if (seriesName == "") {
 					Dialog.list.alertDialog.functions.display(Message.list["MA003"]);
 				} else {
-					AllSerieses.addSeries(new Series(seriesName, "", seriesDescription == "" ? "　" : seriesDescription));
+					if (Dialog.list.createSeriesDialog.functions.tentativeSeries == null) {
+						//新規編成
+						AllSerieses.addSeries(new Series(seriesName, "", seriesDescription == "" ? "　" : seriesDescription));
+					} else {
+						//既存編成
+						Dialog.list.createSeriesDialog.functions.tentativeSeries.name = seriesName;
+						Dialog.list.createSeriesDialog.functions.tentativeSeries.description = seriesDescription;
+					}
 					Dialog.list.createSeriesDialog.off();
 					Dialog.list.createSeriesDialog.functions.clearInputs();
+					Dialog.list.seriesDispDialog.functions.display();
 				}
 			}
 		},
 		clearInputs: function () {
+			Dialog.list.createSeriesDialog.functions.tentativeSeries = null;
 			document.getElementById("crsr-series-name").value = "";
 			document.getElementById("crsr-series-description").value = "";
 		}

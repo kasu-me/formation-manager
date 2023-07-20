@@ -15,6 +15,13 @@ class Series {
 		this.#description = description;
 	}
 
+	set name(name) {
+		this.#name = name;
+	}
+	set description(description) {
+		this.#description = description;
+	}
+
 	get name() {
 		return this.#name;
 	}
