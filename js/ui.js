@@ -234,15 +234,18 @@ function dropCar(carId_) {
 					newFormationCars.push(cars[i]);
 				}
 			}
-			let newFormationId = AllFormations.addFormation(new Formation(seriesId, name, newFormationCars, belongsTo, now));
-			//元の編成が未来で解除されていた編成の場合、今作成した編成をその年月で編成解除
-			if (isTerminated) {
-				AllFormations.releaseFormation(newFormationId, terminatedOn);
-			}
-			//廃車した車両が未来に組成されている編成のメンバとして在籍している場合、除外する
-			for (let i in AllFormations.formationsList) {
-				if (AllFormations.formationsList[i].formatedOn.serial >= now.serial) {
-					AllFormations.formationsList[i].removeCarByCarId(carId_);
+			//新しい編成の車両数が0両だった場合、編成の作成を行わない
+			if (newFormationCars != 0) {
+				let newFormationId = AllFormations.addFormation(new Formation(seriesId, name, newFormationCars, belongsTo, now));
+				//元の編成が未来で解除されていた編成の場合、今作成した編成をその年月で編成解除
+				if (isTerminated) {
+					AllFormations.releaseFormation(newFormationId, terminatedOn);
+				}
+				//廃車した車両が未来に組成されている編成のメンバとして在籍している場合、除外する
+				for (let i in AllFormations.formationsList) {
+					if (AllFormations.formationsList[i].formatedOn.serial >= now.serial) {
+						AllFormations.formationsList[i].removeCarByCarId(carId_);
+					}
 				}
 			}
 		}
