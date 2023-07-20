@@ -497,3 +497,18 @@ input[type="range"]::-moz-range-track {
 a.update-yearmonth-link::before {
 	content: "time";
 }
+
+/* ダイアログのテーブル内ボタン */
+.dialog-content td.buttons button {
+	margin-left: 0.4em;
+}
+
+.dialog-content td.buttons button:first-child {
+	margin-left: 0;
+}
+
+/* ダイアログ内のTRハイライト */
+#seriesDispDialog tr:hover,
+#formationTemplatesDialog tr:hover {
+	background-color: #c7def5;
+}
