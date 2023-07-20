@@ -71,6 +71,10 @@ class Table {
 		return this.#maxCellCount;
 	}
 
+	get rows() {
+		return this.#rows;
+	}
+
 	//表HTMLを生成
 	generateTable() {
 		let html = `<div class="generated-table-container"><div class="generated-table-headers">`;
@@ -101,6 +105,9 @@ class Cell {
 
 	get HTML() {
 		return this.#html;
+	}
+	getAttibute(key) {
+		return this.#attrs[key];
 	}
 	get attibutes() {
 		return Attribute.generateHTML(this.#attrs);

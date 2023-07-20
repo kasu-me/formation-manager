@@ -40,7 +40,7 @@ window.addEventListener("load", function () {
 			let maxCellCount = 3;
 			for (let formationTemplateId in formationTemplateList) {
 				table.addRow();
-				table.addCell(`${AllSerieses.seriesesList[formationTemplateList[formationTemplateId].seriesId].name}`, { "class": "formation-name" });
+				table.addCell(`${AllSerieses.seriesesList[formationTemplateList[formationTemplateId].seriesId].name}`, { "class": "formation-name", "seriesId": formationTemplateList[formationTemplateId].seriesId });
 				table.addCell(`${formationTemplateList[formationTemplateId].name}`, { "class": "formation-template-name" });
 				for (let i in formationTemplateList[formationTemplateId].carNumbers) {
 					if (i >= maxCellCount) {
@@ -54,6 +54,7 @@ window.addEventListener("load", function () {
 			for (let formationTemplateId in formationTemplateList) {
 				table.addCellTo(formationTemplateId, `<button onclick="Dialog.list.createFormationFromTemplateDialog.functions.display(${formationTemplateId})">テンプレートを使用</button>`);
 			}
+			table.rows.sort((a, b) => { return a[0].getAttibute("seriesId") < b[0].getAttibute("seriesId") ? -1 : 1 })
 			document.querySelector("#formationTemplatesDialog div.table-container").innerHTML = table.generateTable();
 			Dialog.list.formationTemplatesDialog.on();
 		}
