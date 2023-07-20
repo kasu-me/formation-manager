@@ -195,6 +195,10 @@ window.addEventListener("load", function () {
 				if (Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.length == 0) {
 					Dialog.list.alertDialog.functions.display(Message.list["MA001"]);
 				} else {
+					console.log(Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.name)
+					if (Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.name == "") {
+						Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.name = `${AllCars.carsList[Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[0]].number}F`;
+					}
 					let formationId = AllFormations.addFormation(Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation);
 					Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation = new Formation(0, 0, []);
 					Dialog.list.createFormationFromFloatingCarsDialog.off();

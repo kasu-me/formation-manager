@@ -274,6 +274,9 @@ class Formation {
 	get remarks() {
 		return this.#remarks;
 	}
+	set name(name) {
+		this.#name = name;
+	}
 	set belongsTo(belongsTo) {
 		this.#belongsTo = belongsTo;
 	}
