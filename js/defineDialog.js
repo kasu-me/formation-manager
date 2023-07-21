@@ -556,6 +556,7 @@ window.addEventListener("load", function () {
 		<div class="mku-tab-content" tab-title="編成表マネージャ概要">
 			<h2>このアプリについて</h2>
 			<p>鉄道車両の編成について、改番や編成組成の年月などを含めた編成表データセットと、それを動的に確認できるUIです。スライダーで年代を任意に設定しながら、その時々の編成を確認することができます。</p>
+			<p>本アプリはサーバとの通信は一切行っておらず、本アプリで製作したデータは皆さんのPC内で完結しています。バックアップ等はご自身の責任において行っていただくようお願いいたします。</p>
 			<h2>謝辞</h2>
 			<p>ボタン等の各種アイコンに「<a href="https://kudakurage.com/ligature_symbols/" target="_blank">Ligature Symbols</a>」を利用させていただきました。御礼申し上げます。</p>
 			<h2>お問い合わせ</h2>
