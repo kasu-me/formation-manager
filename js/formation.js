@@ -308,8 +308,10 @@ class FormationTemplate {
 	#seriesId;
 	//名前
 	#name = "";
-	//編成番号の一般形
+	//編成番号の一般形(関数)
 	#formationName;
+	//編成番号の一般形(生データ)
+	#rawFormationName;
 	//[車両番号の一般形(関数)]
 	#carNumbers = [];
 	//[車両番号の一般系(生データ)]
@@ -340,6 +342,7 @@ class FormationTemplate {
 		}
 	}
 	set formationName(formationName) {
+		this.#rawFormationName = formationName;
 		if (formationName == "") {
 			this.#formationName = "";
 		} else {
@@ -358,6 +361,9 @@ class FormationTemplate {
 		} else {
 			return n => this.carNumbers[0](n) + "F";
 		}
+	}
+	get rawFormationName() {
+		return this.#rawFormationName;
 	}
 	get carNumbers() {
 		return this.#carNumbers;
