@@ -40,20 +40,28 @@ window.addEventListener("load", function () {
 			table.setAttributes({ "class": "horizontal-stripes" });
 			let maxCellCount = 3;
 			for (let formationTemplateId in formationTemplateList) {
+				if (AllSerieses.seriesesList[formationTemplateList[formationTemplateId].seriesId].isHidden) {
+					continue;
+				}
 				table.addRow();
 				table.addCell(`${AllSerieses.seriesesList[formationTemplateList[formationTemplateId].seriesId].name}`, { "class": "formation-name", "seriesId": formationTemplateList[formationTemplateId].seriesId });
 				table.addCell(`${formationTemplateList[formationTemplateId].name}`, { "class": "formation-template-name" });
+				let cellCount = 0;
 				for (let i in formationTemplateList[formationTemplateId].carNumbers) {
+					cellCount++;
 					if (i >= maxCellCount) {
 						table.addCell("&nbsp;…&nbsp;", { "class": "separator" });
 						break;
 					}
 					table.addCell(formationTemplateList[formationTemplateId].carNumbers[i](1), { "class": "car" });
 				}
-			}
-			table.addBlankCellToRowRightEnd();
-			for (let formationTemplateId in formationTemplateList) {
-				table.addCellTo(formationTemplateId, `<button class="lsf-icon" icon="pen" onclick="Dialog.list.createFormationTemplateDialog.functions.display(${formationTemplateId})">編集</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.confirmDialog.functions.display(Message.list['MC006'],()=>{Dialog.list.formationTemplatesDialog.functions.deleteFormationTemplate(${formationTemplateId})})">削除</button><button onclick="Dialog.list.createFormationFromTemplateDialog.functions.display(${formationTemplateId})">テンプレートを使用</button>`, { "class": "buttons" });
+				let carDiff = maxCellCount + 1 - cellCount;
+				if (carDiff > 0) {
+					for (let i = 0; i < carDiff; i++) {
+						table.addCell("");
+					}
+				}
+				table.addCell(`<button class="lsf-icon" icon="pen" onclick="Dialog.list.createFormationTemplateDialog.functions.display(${formationTemplateId})">編集</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.confirmDialog.functions.display(Message.list['MC006'],()=>{Dialog.list.formationTemplatesDialog.functions.deleteFormationTemplate(${formationTemplateId})})">削除</button><button onclick="Dialog.list.createFormationFromTemplateDialog.functions.display(${formationTemplateId})">テンプレートを使用</button>`, { "class": "buttons" });
 			}
 			table.rows.sort((a, b) => { return a[0].getAttibute("seriesId") < b[0].getAttibute("seriesId") ? -1 : 1 })
 			document.querySelector("#formationTemplatesDialog div.table-container").innerHTML = table.generateTable();
