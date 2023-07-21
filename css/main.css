@@ -118,11 +118,11 @@ div#header {
 
 /* 年月 */
 .yearmonth-y {
-	width: 5em;
+	width: 5em !important;
 }
 
 .yearmonth-m {
-	width: 3.5em;
+	width: 3.5em !important;
 }
 
 
@@ -423,6 +423,7 @@ p.car-name span.car-status.dropped::before {
 .input-area select {
 	padding: 4px;
 	border: 1px solid #5c3d7e;
+	width: 20em;
 }
 
 
