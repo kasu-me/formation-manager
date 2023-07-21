@@ -401,7 +401,7 @@ p.car-name span.car-status.dropped::before {
 	float: right;
 }
 
-.input-area input,
+.input-area input:not([type="checkbox"]),
 .input-area select {
 	padding: 4px;
 	border: 1px solid #5c3d7e;

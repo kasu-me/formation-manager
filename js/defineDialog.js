@@ -281,17 +281,18 @@ window.addEventListener("load", function () {
 	});
 
 	//形式を作成･編集:crsr
-	new Dialog("createSeriesDialog", "形式の作成･編集", `<table class="input-area"><tr><td>形式名</td><td><input id="crsr-series-name"></td></tr><tr><td>説明</td><td><input id="crsr-series-description"></td></tr></table>`, [{ "content": "確定", "event": `Dialog.list.createSeriesDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createSeriesDialog.off();`, "icon": "close" }], {
+	new Dialog("createSeriesDialog", "形式の作成･編集", `<table class="input-area"><tr><td>形式名</td><td><input id="crsr-series-name"></td></tr><tr><td>説明</td><td><input id="crsr-series-description"></td></tr><tr><td>隠し形式</td><td><label for="crsr-series-ishidden" class="mku-checkbox-container"><input id="crsr-series-ishidden" type="checkbox"></label></td></tr></table>`, [{ "content": "確定", "event": `Dialog.list.createSeriesDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createSeriesDialog.off();`, "icon": "close" }], {
 		tentativeSeries: null,
 		display: function (x) {
 			Dialog.list.createSeriesDialog.functions.clearInputs();
 			if (x != undefined && Dialog.list.seriesDispDialog.isActive) {
-				//新規編成
+				//既存形式
 				Dialog.list.createSeriesDialog.functions.tentativeSeries = AllSerieses.seriesesList[x];
 				document.getElementById("crsr-series-name").value = Dialog.list.createSeriesDialog.functions.tentativeSeries.name;
 				document.getElementById("crsr-series-description").value = Dialog.list.createSeriesDialog.functions.tentativeSeries.description;
+				document.getElementById("crsr-series-ishidden").checked = Dialog.list.createSeriesDialog.functions.tentativeSeries.isHidden;
 			} else {
-				//既存編成
+				//新規形式
 				Dialog.list.createSeriesDialog.functions.tentativeSeries = null;
 			}
 			Dialog.list.createSeriesDialog.on();
@@ -305,12 +306,13 @@ window.addEventListener("load", function () {
 					Dialog.list.alertDialog.functions.display(Message.list["MA003"]);
 				} else {
 					if (Dialog.list.createSeriesDialog.functions.tentativeSeries == null) {
-						//新規編成
+						//新規形式
 						AllSerieses.addSeries(new Series(seriesName, "", seriesDescription));
 					} else {
-						//既存編成
+						//既存形式
 						Dialog.list.createSeriesDialog.functions.tentativeSeries.name = seriesName;
 						Dialog.list.createSeriesDialog.functions.tentativeSeries.description = seriesDescription;
+						Dialog.list.createSeriesDialog.functions.tentativeSeries.isHidden = document.getElementById("crsr-series-ishidden").checked;
 					}
 					Dialog.list.createSeriesDialog.off();
 					Dialog.list.createSeriesDialog.functions.clearInputs();
@@ -322,6 +324,7 @@ window.addEventListener("load", function () {
 			Dialog.list.createSeriesDialog.functions.tentativeSeries = null;
 			document.getElementById("crsr-series-name").value = "";
 			document.getElementById("crsr-series-description").value = "";
+			document.getElementById("crsr-series-ishidden").checked = false;
 		}
 	});
 

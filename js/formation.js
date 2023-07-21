@@ -7,12 +7,15 @@ class Series {
 	#base;
 	//説明
 	#description
+	//隠し形式
+	#isHidden = false;
 
-	//コンストラクタ(形式名,ベース車両,説明)
-	constructor(name, base, description) {
+	//コンストラクタ(形式名,ベース車両,説明,隠すかどうか)
+	constructor(name, base, description, isHidden) {
 		this.#name = name;
 		this.#base = base;
 		this.#description = description;
+		this.#isHidden = isHidden == undefined ? this.#isHidden : isHidden;
 	}
 
 	set name(name) {
@@ -20,6 +23,9 @@ class Series {
 	}
 	set description(description) {
 		this.#description = description;
+	}
+	set isHidden(isHidden) {
+		this.#isHidden = isHidden;
 	}
 
 	get name() {
@@ -31,13 +37,17 @@ class Series {
 	get description() {
 		return this.#description == "" ? "　" : this.#description;
 	}
+	get isHidden() {
+		return this.#isHidden;
+	}
 
 	convertToJSON() {
 		return JSON.stringify({
 			instanceof: "Series",
 			name: this.#name,
 			base: this.#base,
-			description: this.#description
+			description: this.#description,
+			isHidden: this.#isHidden
 		});
 	}
 }
@@ -75,7 +85,7 @@ class Car {
 	//[備考]
 	#remarks = [];
 
-	//コンストラクタ(車両番号,製造年月,...以前の車両ID)
+	//コンストラクタ(車両番号,製造年月,以前の車両ID,...備考)
 	constructor(number, manufacturedOn, oldNumbers, ...remarks) {
 		this.#number = number.toString();
 		this.#manufacturedOn = manufacturedOn;

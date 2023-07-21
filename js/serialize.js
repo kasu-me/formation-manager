@@ -8,7 +8,7 @@ class Deserializer {
 	static fromObject(obj) {
 		switch (obj.instanceof) {
 			case "Series":
-				let series = new Series(obj.name, obj.base, obj.description);
+				let series = new Series(obj.name, obj.base, obj.description, obj.isHidden);
 				return series;
 			case "Car":
 				let oldNumbers = []

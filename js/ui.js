@@ -36,6 +36,9 @@ function list() {
 
 	//形式ごとに処理
 	for (let seriesId in seriesList) {
+		if (seriesList[seriesId].isHidden) {
+			continue;
+		}
 		//テーブルを生成
 		tables.push(new Table(seriesList[seriesId].name));
 		tables.at(-1).setSubtitle(seriesList[seriesId].description);
