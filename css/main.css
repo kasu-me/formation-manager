@@ -488,8 +488,7 @@ input[type="range"]::-moz-range-track {
 }
 
 /* 編成テンプレートプレビュー欄 */
-#cref-new-formated-template-table a::after {
-	content: "delete";
+#cref-new-formated-template-table a.lsf {
 	margin-left: 0.3em;
 }
 

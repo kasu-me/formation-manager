@@ -52,7 +52,7 @@ window.addEventListener("load", function () {
 			}
 			table.addBlankCellToRowRightEnd();
 			for (let formationTemplateId in formationTemplateList) {
-				table.addCellTo(formationTemplateId, `<button class="lsf-icon" icon="pen" onclick="Dialog.list.createFormationTemplateDialog.functions.display(${formationTemplateId})">編集</button><button onclick="Dialog.list.createFormationFromTemplateDialog.functions.display(${formationTemplateId})">テンプレートを使用</button>`, { "class": "buttons" });
+				table.addCellTo(formationTemplateId, `<button class="lsf-icon" icon="pen" onclick="Dialog.list.createFormationTemplateDialog.functions.display(${formationTemplateId})">編集</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.createFormationTemplateDialog.functions.display(${formationTemplateId})">削除</button><button onclick="Dialog.list.createFormationFromTemplateDialog.functions.display(${formationTemplateId})">テンプレートを使用</button>`, { "class": "buttons" });
 			}
 			table.rows.sort((a, b) => { return a[0].getAttibute("seriesId") < b[0].getAttibute("seriesId") ? -1 : 1 })
 			document.querySelector("#formationTemplatesDialog div.table-container").innerHTML = table.generateTable();
@@ -242,7 +242,7 @@ window.addEventListener("load", function () {
 				table.addCell(`編成番号:${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.formationName(1)}`, { "colspan": Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.length });
 				for (let i in Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers) {
 					if (i % 10 == 0) { table.addRow() }
-					table.addCell(`<a href="javascript:void(0)" onclick="Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.splice(${i},1);Dialog.list.createFormationTemplateDialog.functions.reflesh()">${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers[i](1)}</a>`);
+					table.addCell(`${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers[i](1)}<a href="javascript:void(0)" onclick="Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.splice(${i},1);Dialog.list.createFormationTemplateDialog.functions.reflesh()" class="lsf" title="削除">delete</a>`);
 				}
 				table.addBlankCellToRowIn(0, true);
 			}
