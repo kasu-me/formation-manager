@@ -310,17 +310,18 @@ window.addEventListener("load", function () {
 			if (Dialog.list.createSeriesDialog.isActive) {
 				let seriesName = document.getElementById("crsr-series-name").value;
 				let seriesDescription = document.getElementById("crsr-series-description").value;
+				let seriesIsHidden = document.getElementById("crsr-series-ishidden").checked;
 				if (seriesName == "") {
 					Dialog.list.alertDialog.functions.display(Message.list["MA003"]);
 				} else {
 					if (Dialog.list.createSeriesDialog.functions.tentativeSeries == null) {
 						//新規形式
-						AllSerieses.addSeries(new Series(seriesName, "", seriesDescription));
+						AllSerieses.addSeries(new Series(seriesName, "", seriesDescription, seriesIsHidden));
 					} else {
 						//既存形式
 						Dialog.list.createSeriesDialog.functions.tentativeSeries.name = seriesName;
 						Dialog.list.createSeriesDialog.functions.tentativeSeries.description = seriesDescription;
-						Dialog.list.createSeriesDialog.functions.tentativeSeries.isHidden = document.getElementById("crsr-series-ishidden").checked;
+						Dialog.list.createSeriesDialog.functions.tentativeSeries.isHidden = seriesIsHidden;
 					}
 					Dialog.list.createSeriesDialog.off();
 					Dialog.list.createSeriesDialog.functions.clearInputs();
