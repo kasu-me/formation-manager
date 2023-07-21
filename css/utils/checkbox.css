@@ -35,7 +35,7 @@
 }
 
 .mku-checkbox-container:has(input[type="checkbox"]:checked) {
-	background: #35c759;
+	background: #00cd33;
 }
 
 .mku-checkbox-container:has(input[type="checkbox"]:checked):after {
