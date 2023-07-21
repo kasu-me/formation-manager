@@ -24,7 +24,7 @@ window.addEventListener("load", function () {
 				table.addRow();
 				table.addCell(`${seriesList[seriesId].name}`, { "class": `formation-name${seriesList[seriesId].isHidden ? " hidden" : ""}` });
 				table.addCell(`${seriesList[seriesId].description}`, { "class": "formation-template-name" });
-				table.addCell(`<button class="lsf-icon" icon="pen" onclick="Dialog.list.createSeriesDialog.functions.display(${seriesId})">編集</button>`, { "class": "buttons" });
+				table.addCell(`<label for="sed-series-ishidden-${seriesId}" class="mku-checkbox-container"><input id="sed-series-ishidden-${seriesId}" type="checkbox" ${!seriesList[seriesId].isHidden ? "checked" : ""} onchange="AllSerieses.seriesesList[${seriesId}].isHidden=!this.checked;this.parentNode.parentNode.parentNode.querySelector('td').classList.toggle('hidden');reflesh()"></label><button class="lsf-icon" icon="pen" onclick="Dialog.list.createSeriesDialog.functions.display(${seriesId})">編集</button>`, { "class": "buttons" });
 			}
 			document.querySelector("#seriesDispDialog div.table-container").innerHTML = table.generateTable();
 			Dialog.list.seriesDispDialog.on();
@@ -298,7 +298,7 @@ window.addEventListener("load", function () {
 				Dialog.list.createSeriesDialog.functions.tentativeSeries = AllSerieses.seriesesList[x];
 				document.getElementById("crsr-series-name").value = Dialog.list.createSeriesDialog.functions.tentativeSeries.name;
 				document.getElementById("crsr-series-description").value = Dialog.list.createSeriesDialog.functions.tentativeSeries.description;
-				document.getElementById("crsr-series-ishidden").checked = Dialog.list.createSeriesDialog.functions.tentativeSeries.isHidden;
+				document.getElementById("crsr-series-ishidden").checked = !Dialog.list.createSeriesDialog.functions.tentativeSeries.isHidden;
 			} else {
 				//新規形式
 				Dialog.list.createSeriesDialog.functions.tentativeSeries = null;
@@ -310,7 +310,7 @@ window.addEventListener("load", function () {
 			if (Dialog.list.createSeriesDialog.isActive) {
 				let seriesName = document.getElementById("crsr-series-name").value;
 				let seriesDescription = document.getElementById("crsr-series-description").value;
-				let seriesIsHidden = document.getElementById("crsr-series-ishidden").checked;
+				let seriesIsHidden = !document.getElementById("crsr-series-ishidden").checked;
 				if (seriesName == "") {
 					Dialog.list.alertDialog.functions.display(Message.list["MA003"]);
 				} else {

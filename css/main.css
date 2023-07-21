@@ -225,6 +225,12 @@ td.formation-template-name {
 	color: #ccc;
 }
 
+#seriesDispDialog label.mku-checkbox-container {
+	display: inline-block;
+	font-size: 0.8em;
+	vertical-align: middle;
+}
+
 /* 左側に濃い色の線を付けるやつ */
 div#formation-table-container table.formation-table tr td:last-child,
 #formationTemplatesDialog tr td:last-child {
