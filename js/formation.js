@@ -29,7 +29,7 @@ class Series {
 		return this.#base;
 	}
 	get description() {
-		return this.#description;
+		return this.#description == "" ? "　" : this.#description;
 	}
 
 	convertToJSON() {

@@ -306,7 +306,7 @@ window.addEventListener("load", function () {
 				} else {
 					if (Dialog.list.createSeriesDialog.functions.tentativeSeries == null) {
 						//新規編成
-						AllSerieses.addSeries(new Series(seriesName, "", seriesDescription == "" ? "　" : seriesDescription));
+						AllSerieses.addSeries(new Series(seriesName, "", seriesDescription));
 					} else {
 						//既存編成
 						Dialog.list.createSeriesDialog.functions.tentativeSeries.name = seriesName;
