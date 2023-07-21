@@ -507,7 +507,8 @@ a.update-yearmonth-link::before {
 	margin-left: 0;
 }
 
-/* ダイアログ内のTRハイライト */
+/* TRハイライト */
+#formation-table-container tr:hover,
 #seriesDispDialog tr:hover,
 #formationTemplatesDialog tr:hover {
 	background-color: #c7def5;
