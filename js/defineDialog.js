@@ -24,7 +24,7 @@ window.addEventListener("load", function () {
 				table.addRow();
 				table.addCell(`${seriesList[seriesId].name}`, { "class": `formation-name${seriesList[seriesId].isHidden ? " hidden" : ""}` });
 				table.addCell(`${seriesList[seriesId].description}`, { "class": "formation-template-name" });
-				table.addCell(`<label for="sed-series-ishidden-${seriesId}" class="mku-checkbox-container"><input id="sed-series-ishidden-${seriesId}" type="checkbox" ${!seriesList[seriesId].isHidden ? "checked" : ""} onchange="AllSerieses.seriesesList[${seriesId}].isHidden=!this.checked;this.parentNode.parentNode.parentNode.querySelector('td').classList.toggle('hidden');reflesh()"></label><button class="lsf-icon" icon="pen" onclick="Dialog.list.createSeriesDialog.functions.display(${seriesId})">編集</button>`, { "class": "buttons" });
+				table.addCell(`<label for="sed-series-ishidden-${seriesId}" class="mku-checkbox-container" title="形式を表示/隠す"><input id="sed-series-ishidden-${seriesId}" type="checkbox" ${!seriesList[seriesId].isHidden ? "checked" : ""} onchange="AllSerieses.seriesesList[${seriesId}].isHidden=!this.checked;this.parentNode.parentNode.parentNode.querySelector('td').classList.toggle('hidden');reflesh()"></label><button class="lsf-icon" icon="pen" onclick="Dialog.list.createSeriesDialog.functions.display(${seriesId})">編集</button>`, { "class": "buttons" });
 			}
 			document.querySelector("#seriesDispDialog div.table-container").innerHTML = table.generateTable();
 			Dialog.list.seriesDispDialog.on();
