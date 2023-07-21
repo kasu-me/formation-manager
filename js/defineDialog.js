@@ -289,7 +289,7 @@ window.addEventListener("load", function () {
 	});
 
 	//形式を作成･編集:crsr
-	new Dialog("createSeriesDialog", "形式の作成･編集", `<table class="input-area"><tr><td>形式名</td><td><input id="crsr-series-name"></td></tr><tr><td>説明</td><td><input id="crsr-series-description"></td></tr><tr><td>隠し形式</td><td><label for="crsr-series-ishidden" class="mku-checkbox-container"><input id="crsr-series-ishidden" type="checkbox"></label></td></tr></table>`, [{ "content": "確定", "event": `Dialog.list.createSeriesDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createSeriesDialog.off();`, "icon": "close" }], {
+	new Dialog("createSeriesDialog", "形式の作成･編集", `<table class="input-area"><tr><td>形式名</td><td><input id="crsr-series-name"></td></tr><tr><td>説明</td><td><input id="crsr-series-description"></td></tr><tr><td>編成を表示する</td><td><label for="crsr-series-ishidden" class="mku-checkbox-container"><input id="crsr-series-ishidden" type="checkbox" checked></label></td></tr></table>`, [{ "content": "確定", "event": `Dialog.list.createSeriesDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createSeriesDialog.off();`, "icon": "close" }], {
 		tentativeSeries: null,
 		display: function (x) {
 			Dialog.list.createSeriesDialog.functions.clearInputs();
@@ -333,7 +333,7 @@ window.addEventListener("load", function () {
 			Dialog.list.createSeriesDialog.functions.tentativeSeries = null;
 			document.getElementById("crsr-series-name").value = "";
 			document.getElementById("crsr-series-description").value = "";
-			document.getElementById("crsr-series-ishidden").checked = false;
+			document.getElementById("crsr-series-ishidden").checked = true;
 		}
 	});
 
