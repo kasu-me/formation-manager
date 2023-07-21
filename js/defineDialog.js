@@ -4,6 +4,7 @@ new Message("MA003", "形式名は必須です。");
 new Message("MA004", "この車両は既に廃車されているため改番することはできません。");
 new Message("MA005", "この編成は未来で解除されているため編成解除できません。");
 new Message("MA006", "この編成は未来で解除されているため操作できません。");
+new Message("MA007", "車両番号は必須です。");
 new Message("MC001", "JSON読み込みを実施すると現在のデータはクリアされます。本当に読み込んでよろしいですか？");
 new Message("MC002", "${formationName}を${now}付で編成解除します。");
 new Message("MC003", "${formationName}内の車両${carLength}両を${now}付で全て廃車します。");
@@ -349,9 +350,13 @@ window.addEventListener("load", function () {
 		createCar: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.createCarDialog.isActive) {
-				let carId = AllCars.addCar(new Car(document.getElementById("crcar-carNumber").value, now));
-				Dialog.list.createCarDialog.off();
-				Dialog.list.carDetealDialog.functions.display(carId);
+				if (document.getElementById("crcar-carNumber").value == "") {
+					Dialog.list.alertDialog.functions.display(Message.list["MA007"]);
+				} else {
+					let carId = AllCars.addCar(new Car(document.getElementById("crcar-carNumber").value, now));
+					Dialog.list.createCarDialog.off();
+					Dialog.list.carDetealDialog.functions.display(carId);
+				}
 			}
 		}
 	});
