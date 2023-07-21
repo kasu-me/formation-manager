@@ -36,7 +36,7 @@
 }
 
 .mku-tab-container .mku-tab-content {
-	height: 280pt;
+	height: calc(100vh - 20em);
 	overflow-y: auto;
 	border: 1px solid var(--formation-table-main-border);
 	padding: 1em;
