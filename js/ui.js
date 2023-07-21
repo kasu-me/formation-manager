@@ -186,6 +186,7 @@ function reflesh() {
 function setSeriesesToSelectBox(seriesSelectBox) {
 	seriesSelectBox.innerHTML = "";
 	for (let i in AllSerieses.seriesesList) {
+		if (AllSerieses.seriesesList[i].isHidden) { continue; }
 		let newDiv = document.createElement("option");
 		newDiv.setAttribute("value", i);
 		newDiv.innerHTML = AllSerieses.seriesesList[i].name;
