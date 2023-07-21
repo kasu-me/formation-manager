@@ -22,7 +22,7 @@ window.addEventListener("load", function () {
 			table.setAttributes({ "class": "horizontal-stripes" });
 			for (let seriesId in seriesList) {
 				table.addRow();
-				table.addCell(`${seriesList[seriesId].name}`, { "class": "formation-name" });
+				table.addCell(`${seriesList[seriesId].name}`, { "class": `formation-name${seriesList[seriesId].isHidden ? " hidden" : ""}` });
 				table.addCell(`${seriesList[seriesId].description}`, { "class": "formation-template-name" });
 				table.addCell(`<button class="lsf-icon" icon="pen" onclick="Dialog.list.createSeriesDialog.functions.display(${seriesId})">編集</button>`, { "class": "buttons" });
 			}

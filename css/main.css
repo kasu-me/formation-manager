@@ -192,8 +192,16 @@ div#formationTemplatesDialog table tr td:not(.formation-name):not(.formation-tem
 	border-right: 1px solid #ccc;
 }
 
+#seriesDispDialog .formation-template-name {
+	width: 30em;
+}
+
 div#cardt-main table td:nth-child(2) {
 	padding: 0.15em 0.5em;
+}
+
+div.generated-table-container:has(table.formation-table.hidden) {
+	display: none;
 }
 
 div#formation-table-container table.formation-table tr td:nth-last-child(2) {
@@ -211,6 +219,10 @@ td.formation-template-name {
 #seriesDispDialog td.formation-name,
 #formationTemplatesDialog td.formation-name {
 	border: none;
+}
+
+#seriesDispDialog td.formation-name.hidden {
+	color: #ccc;
 }
 
 /* 左側に濃い色の線を付けるやつ */
