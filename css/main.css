@@ -229,6 +229,7 @@ td.formation-template-name {
 	display: inline-block;
 	font-size: 0.8em;
 	vertical-align: middle;
+	margin-left: 0.15em;
 }
 
 /* 左側に濃い色の線を付けるやつ */
