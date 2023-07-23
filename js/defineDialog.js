@@ -391,7 +391,7 @@ window.addEventListener("load", function () {
 			}
 			table.addRow();
 			table.addCell(`所属編成`);
-			table.addCell(`${formation != -1 ? `<a href="javascript:Dialog.list.formationDetealDialog.functions.display(${formation})">${AllFormations.formationsList[formation].name}</a>` : "編成に所属していません"}<small> (${now.toStringWithLink()}時点)</small>`);
+			table.addCell(`${formation != -1 ? `<a href="javascript:Dialog.list.formationDetealDialog.functions.display(${formation})">${AllFormations.formationsList[formation].name}</a><small> (${AllFormations.formationsList[formation].formatedOn.toStringWithLink()}～${AllFormations.formationsList[formation].isTerminated ? AllFormations.formationsList[formation].terminatedOn.toStringWithLink() : ""})` : `編成に所属していません<small> (${now.toStringWithLink()}時点)`}</small>`);
 			table.addRow();
 			table.addCell("車歴");
 			table.addCell(oldNumbersText);
