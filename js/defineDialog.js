@@ -106,6 +106,7 @@ window.addEventListener("load", function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.formationTemplatesDialog.isActive) {
 				document.querySelector("#fromt-opening").innerHTML = x;
+				document.querySelector('#fromt-car-remark').value = "";
 				Dialog.list.createFormationFromTemplateDialog.functions.reflesh(x, Number(document.querySelector("#fromt-car-number").value));
 				Dialog.list.createFormationFromTemplateDialog.on();
 			}
@@ -182,6 +183,9 @@ window.addEventListener("load", function () {
 		tentativeFormation: new Formation(),
 		//編成されていない車両から編成作成ダイアログを表示
 		display: function () {
+			document.getElementById("forfc-formation-name").value = "";
+			document.getElementById("forfc-car-belongs-to").value = "";
+			document.getElementById("forfc-car-remark").value = "";
 			Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation = new Formation(0, "", [], "", now);
 			setSeriesesToSelectBox(document.querySelector("#forfc-series"));
 			let table = new Table();
@@ -358,6 +362,7 @@ window.addEventListener("load", function () {
 		//車両の作成ダイアログを表示
 		display: function () {
 			document.getElementById("crcar-carNumber").value = "";
+			document.getElementById("crcar-carRemark").value = "";
 			Dialog.list.createCarDialog.on();
 		},
 		//車両の作成
