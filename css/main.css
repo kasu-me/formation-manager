@@ -369,7 +369,8 @@ p.car-name button {
 }
 
 /* 編成編集ボタン */
-td.formation-name button {
+td.formation-name button,
+.table-title button {
 	margin-left: 0.5em;
 	font-size: 0.7em;
 	transform: translateY(-0.1em);

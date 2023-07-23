@@ -294,7 +294,7 @@ window.addEventListener("load", function () {
 		tentativeSeries: null,
 		display: function (x) {
 			Dialog.list.createSeriesDialog.functions.clearInputs();
-			if (x != undefined && Dialog.list.seriesDispDialog.isActive) {
+			if (x != undefined) {
 				//既存形式
 				Dialog.list.createSeriesDialog.functions.tentativeSeries = AllSerieses.seriesesList[x];
 				document.getElementById("crsr-series-name").value = Dialog.list.createSeriesDialog.functions.tentativeSeries.name;
