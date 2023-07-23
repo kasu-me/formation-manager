@@ -397,7 +397,7 @@ window.addEventListener("load", function () {
 			table.addCell(oldNumbersText);
 			table.addRow();
 			table.addCell("備考");
-			table.addCell(`${AllCars.carsList[x].remark == undefined || AllCars.carsList[x].remark == "" ? "" : `<span>${AllCars.carsList[x].remark}</span>`}<button class="lsf-icon" icon="pen">編集</button>`, { "class": "remark" });
+			table.addCell(`${AllCars.carsList[x].remark == undefined || AllCars.carsList[x].remark == "" ? "" : `<span>${AllCars.carsList[x].remark}</span>`}<button class="lsf-icon" icon="pen" onclick="Dialog.list.editRemarkDialog.functions.display('car',${x})">編集</button>`, { "class": "remark" });
 			document.querySelector("#cardt-main").innerHTML = table.generateTable();
 			Dialog.list.carDetealDialog.on();
 		},
@@ -429,6 +429,34 @@ window.addEventListener("load", function () {
 				reflesh();
 				Dialog.list.carDetealDialog.functions.display(Dialog.list.carDetealDialog.functions.carId);
 			}
+		}
+	}, true);
+
+	//備考編集:edrm
+	new Dialog("editRemarkDialog", "備考の編集", `<table class="input-area"><tr><td id="edrm-title"></td><td><input id="edrm-remark"></td></tr></table>`, [{ "content": "決定", "event": `Dialog.list.editRemarkDialog.functions.setRemark()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editRemarkDialog.off();`, "icon": "close" }], {
+		id: 0,
+		type: 0,
+		//備考編集ダイアログを表示
+		display: function (type, x) {
+			Dialog.list.editRemarkDialog.functions.type = type;
+			Dialog.list.editRemarkDialog.functions.id = x;
+			if (Dialog.list.editRemarkDialog.functions.type == "car") {
+				document.getElementById("edrm-title").innerHTML = "車両の備考";
+				document.getElementById("edrm-remark").value = AllCars.carsList[Dialog.list.editRemarkDialog.functions.id].remark == undefined ? "" : AllCars.carsList[Dialog.list.editRemarkDialog.functions.id].remark;
+			}
+			Dialog.list.editRemarkDialog.on();
+		},
+		//車両を改番
+		setRemark: function () {
+			//親ダイアログが表示されている状態以外での実行を禁止
+			if (Dialog.list.editRemarkDialog.isActive) {
+				if (Dialog.list.editRemarkDialog.functions.type == "car") {
+					AllCars.carsList[Dialog.list.editRemarkDialog.functions.id].remark = document.getElementById("edrm-remark").value;
+				}
+			}
+			Dialog.list.editRemarkDialog.functions.type = 0;
+			Dialog.list.editRemarkDialog.functions.id = 0;
+			Dialog.list.editRemarkDialog.off();
 		}
 	}, true);
 
