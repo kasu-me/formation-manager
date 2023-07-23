@@ -221,17 +221,6 @@ td.formation-template-name {
 	border: none;
 }
 
-#seriesDispDialog td.formation-name.hidden {
-	color: #ccc;
-}
-
-#seriesDispDialog label.mku-checkbox-container {
-	display: inline-block;
-	font-size: 0.8em;
-	vertical-align: middle;
-	margin-left: 0.15em;
-}
-
 /* 左側に濃い色の線を付けるやつ */
 div#formation-table-container table.formation-table tr td:last-child,
 #formationTemplatesDialog tr td:last-child {
@@ -365,6 +354,7 @@ p:has(#fmdt-formation-number) {
 p.car-name button,
 td.formation-name button,
 .remark button,
+#fmdt-remark button,
 .table-title button {
 	font-size: 0.7em;
 	margin-left: 0.5em;
@@ -382,6 +372,25 @@ p.car-name button {
 	transform: translateY(-0.35em);
 }
 
+/* 各種ダイアログ */
+#seriesDispDialog td.formation-name.hidden {
+	color: #ccc;
+}
+
+#seriesDispDialog label.mku-checkbox-container {
+	display: inline-block;
+	font-size: 0.8em;
+	vertical-align: middle;
+	margin-left: 0.15em;
+}
+
+#formationDetealDialog #fmdt-remark {
+	margin-top: 1.0em;
+}
+
+#formationDetealDialog #fmdt-remark-remark {
+	margin-right: 0.25em;
+}
 
 /* 車両及び編成の状態 */
 p.car-name span.car-status {

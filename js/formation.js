@@ -224,18 +224,16 @@ class Formation {
 	//YearMonth 編成解除年月
 	#terminatedOn;
 	//[備考]
-	#remarks = [];
+	#remark;
 
 	//コンストラクタ(所属形式,編成名,[所属車両ID],所属 ,YearMonth 編成組成年月,...備考)
-	constructor(seriesId, name, cars, belongsTo, formatedOn, ...remarks) {
+	constructor(seriesId, name, cars, belongsTo, formatedOn, remark) {
 		this.#seriesId = seriesId;
 		this.#name = name;
 		this.#cars = cars;
 		this.#belongsTo = belongsTo;
 		this.#formatedOn = formatedOn;
-		for (let i in remarks) {
-			this.#remarks.push(remarks[i]);
-		}
+		this.#remark = remark;
 	}
 
 	//編成名を変更 (編成名)
@@ -285,14 +283,17 @@ class Formation {
 	get belongsTo() {
 		return this.#belongsTo;
 	}
-	get remarks() {
-		return this.#remarks;
+	get remark() {
+		return this.#remark;
 	}
 	set name(name) {
 		this.#name = name;
 	}
 	set belongsTo(belongsTo) {
 		this.#belongsTo = belongsTo;
+	}
+	set remark(remark) {
+		this.#remark = remark;
 	}
 
 	convertToJSON() {
@@ -304,7 +305,7 @@ class Formation {
 			belongsTo: this.#belongsTo,
 			formatedOn: { y: this.#formatedOn.year, m: this.#formatedOn.month },
 			terminatedOn: { y: this.#terminatedOn != null ? this.#terminatedOn.year : "", m: this.#terminatedOn != null ? this.#terminatedOn.month : "" },
-			remarks: this.#remarks
+			remark: this.#remark
 		});
 	}
 }

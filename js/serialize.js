@@ -24,7 +24,7 @@ class Deserializer {
 				}
 				return car;
 			case "Formation":
-				let formation = new Formation(obj.seriesId, obj.name, obj.cars, obj.belongsTo, new YearMonth(obj.formatedOn.y, obj.formatedOn.m), obj.remarks);
+				let formation = new Formation(obj.seriesId, obj.name, obj.cars, obj.belongsTo, new YearMonth(obj.formatedOn.y, obj.formatedOn.m), obj.remark);
 				if (obj.terminatedOn.y != "" && obj.terminatedOn.m != "") {
 					formation.release(new YearMonth(obj.terminatedOn.y, obj.terminatedOn.m));
 				}

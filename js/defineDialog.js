@@ -440,18 +440,30 @@ window.addEventListener("load", function () {
 		display: function (type, x) {
 			Dialog.list.editRemarkDialog.functions.type = type;
 			Dialog.list.editRemarkDialog.functions.id = x;
-			if (Dialog.list.editRemarkDialog.functions.type == "car") {
-				document.getElementById("edrm-title").innerHTML = "車両の備考";
-				document.getElementById("edrm-remark").value = AllCars.carsList[Dialog.list.editRemarkDialog.functions.id].remark == undefined ? "" : AllCars.carsList[Dialog.list.editRemarkDialog.functions.id].remark;
+			switch (Dialog.list.editRemarkDialog.functions.type) {
+				case "car":
+					document.getElementById("edrm-title").innerHTML = `${AllCars.carsList[Dialog.list.editRemarkDialog.functions.id].number}号車の備考`;
+					document.getElementById("edrm-remark").value = AllCars.carsList[Dialog.list.editRemarkDialog.functions.id].remark == undefined ? "" : AllCars.carsList[Dialog.list.editRemarkDialog.functions.id].remark;
+					break;
+				case "formation":
+					document.getElementById("edrm-title").innerHTML = `${AllFormations.formationsList[Dialog.list.editRemarkDialog.functions.id].name}の備考`;
+					document.getElementById("edrm-remark").value = AllFormations.formationsList[Dialog.list.editRemarkDialog.functions.id].remark == undefined ? "" : AllFormations.formationsList[Dialog.list.editRemarkDialog.functions.id].remark;
+					break;
 			}
 			Dialog.list.editRemarkDialog.on();
 		},
-		//車両を改番
+		//備考編集
 		setRemark: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.editRemarkDialog.isActive) {
-				if (Dialog.list.editRemarkDialog.functions.type == "car") {
-					AllCars.carsList[Dialog.list.editRemarkDialog.functions.id].remark = document.getElementById("edrm-remark").value;
+				switch (Dialog.list.editRemarkDialog.functions.type) {
+					case "car":
+						AllCars.carsList[Dialog.list.editRemarkDialog.functions.id].remark = document.getElementById("edrm-remark").value;
+						break;
+					case "formation":
+						AllFormations.formationsList[Dialog.list.editRemarkDialog.functions.id].remark = document.getElementById("edrm-remark").value;
+						Dialog.list.formationDetealDialog.functions.display(Dialog.list.editRemarkDialog.functions.id);
+						break;
 				}
 			}
 			Dialog.list.editRemarkDialog.functions.type = 0;
@@ -461,7 +473,7 @@ window.addEventListener("load", function () {
 	}, true);
 
 	//編成の詳細:fmdt
-	new Dialog("formationDetealDialog", "編成の詳細", `<div id="fmdt-main"></div>`, [{ "content": "編成解除", "event": `Dialog.list.formationDetealDialog.functions.releaseFormation()`, "icon": "clear" }, { "content": "編成内の車両をまとめて廃車", "event": `Dialog.list.formationDetealDialog.functions.releaseFormationAndDropAllCars()`, "icon": "delete" }, { "content": "閉じる", "event": `Dialog.list.formationDetealDialog.off();`, "icon": "close" }], {
+	new Dialog("formationDetealDialog", "編成の詳細", `<div id="fmdt-main"></div><div id="fmdt-remark">備考：<span id="fmdt-remark-remark"></span><span id="fmdt-remark-button"></span></div>`, [{ "content": "編成解除", "event": `Dialog.list.formationDetealDialog.functions.releaseFormation()`, "icon": "clear" }, { "content": "編成内の車両をまとめて廃車", "event": `Dialog.list.formationDetealDialog.functions.releaseFormationAndDropAllCars()`, "icon": "delete" }, { "content": "閉じる", "event": `Dialog.list.formationDetealDialog.off();`, "icon": "close" }], {
 		//編成の詳細ダイアログを表示
 		display: function (x) {
 			let table = new Table();
@@ -476,6 +488,8 @@ window.addEventListener("load", function () {
 			}
 			let html = table.generateTable();
 			document.querySelector("#fmdt-main").innerHTML = html;
+			document.querySelector("#fmdt-remark-remark").innerHTML = formation.remark == undefined ? "" : formation.remark;
+			document.querySelector("#fmdt-remark-button").innerHTML = `<button class="lsf-icon" icon="pen" onclick="Dialog.list.editRemarkDialog.functions.display('formation',${x})">編集</button>`
 			Dialog.list.formationDetealDialog.on();
 		},
 		//編成を解除
