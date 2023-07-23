@@ -339,21 +339,21 @@ window.addEventListener("load", function () {
 	});
 
 	//車両の作成:crcar
-	new Dialog("createCarDialog", "車両の作成", `<table class="input-area"><tr><td>車両番号</td><td><input id="crcar-carNumber"></td></tr></table>`, [{ "content": "作成", "event": `Dialog.list.createCarDialog.functions.createCar()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createCarDialog.off();`, "icon": "close" }], {
+	new Dialog("createCarDialog", "車両の作成", `<table class="input-area"><tr><td>車両番号</td><td><input id="crcar-carNumber"></td></tr><tr><td>備考</td><td><input id="crcar-carRemark"></td></tr></table>`, [{ "content": "作成", "event": `Dialog.list.createCarDialog.functions.createCar()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createCarDialog.off();`, "icon": "close" }], {
 		carId: 0,
-		//車両を改番ダイアログを表示
+		//車両の作成ダイアログを表示
 		display: function () {
 			document.getElementById("crcar-carNumber").value = "";
 			Dialog.list.createCarDialog.on();
 		},
-		//車両を改番
+		//車両の作成
 		createCar: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.createCarDialog.isActive) {
 				if (document.getElementById("crcar-carNumber").value == "") {
 					Dialog.list.alertDialog.functions.display(Message.list["MA007"]);
 				} else {
-					let carId = AllCars.addCar(new Car(document.getElementById("crcar-carNumber").value, now));
+					let carId = AllCars.addCar(new Car(document.getElementById("crcar-carNumber").value, now, null, document.getElementById("crcar-carRemark").value));
 					Dialog.list.createCarDialog.off();
 					Dialog.list.carDetealDialog.functions.display(carId);
 				}
@@ -396,16 +396,8 @@ window.addEventListener("load", function () {
 			table.addCell("車歴");
 			table.addCell(oldNumbersText);
 			table.addRow();
-			table.addCell("備考", { "rowspan": AllCars.carsList[x].remarks.length });
-			for (let i in AllCars.carsList[x].remarks) {
-				if (i != 0) {
-					table.addRow();
-				}
-				table.addCell(AllCars.carsList[x].remarks[i], { "class": "remark" });
-			}
-			if (AllCars.carsList[x].remarks.length == 0) {
-				table.addCell("");
-			}
+			table.addCell("備考");
+			table.addCell(`${AllCars.carsList[x].remark == undefined ? "" : `<span>${AllCars.carsList[x].remark}</span>`}<button class="lsf-icon" icon="pen">編集</button>`, { "class": "remark" });
 			document.querySelector("#cardt-main").innerHTML = table.generateTable();
 			Dialog.list.carDetealDialog.on();
 		},

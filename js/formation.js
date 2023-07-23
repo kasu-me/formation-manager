@@ -83,23 +83,17 @@ class Car {
 	//製造年月
 	#manufacturedOn;
 	//[備考]
-	#remarks = [];
+	#remark;
 
-	//コンストラクタ(車両番号,製造年月,以前の車両ID,...備考)
-	constructor(number, manufacturedOn, oldNumbers, ...remarks) {
+	//コンストラクタ(車両番号,製造年月,以前の車両ID,備考)
+	constructor(number, manufacturedOn, oldNumbers, remark) {
 		this.#number = number.toString();
 		this.#manufacturedOn = manufacturedOn;
 		if (oldNumbers != null) {
 			this.#oldNumbers = oldNumbers;
 			this.sortOldNumbersByYearMonth();
 		}
-		for (let i in remarks) {
-			this.#remarks.push(remarks[i]);
-		}
-	}
-	//備考追加
-	addRemark(remark) {
-		this.#remarks.push(remark);
+		this.#remark = remark;
 	}
 	//改番
 	renumber(newNumber, renumberedOn) {
@@ -155,8 +149,11 @@ class Car {
 	get manufacturedOn() {
 		return this.#manufacturedOn;
 	}
-	get remarks() {
-		return this.#remarks;
+	get remark() {
+		return this.#remark;
+	}
+	set remark(remark) {
+		this.#remark = remark;
 	}
 
 	//now時点で廃車されているかどうかを取得
@@ -202,7 +199,7 @@ class Car {
 			droppedOn: this.#droppedOn == undefined ? undefined : { y: this.#droppedOn.year, m: this.#droppedOn.month },
 			isConserved: this.#isConserved,
 			manufacturedOn: { y: this.#manufacturedOn.year, m: this.#manufacturedOn.month },
-			remarks: this.#remarks
+			remark: this.#remark
 		});
 	}
 }

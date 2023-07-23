@@ -364,8 +364,16 @@ p:has(#fmdt-formation-number) {
 /* 小さいボタン */
 p.car-name button,
 td.formation-name button,
+.remark button,
 .table-title button {
 	font-size: 0.7em;
+	margin-left: 0.5em;
+	transform: translateY(-0.1em);
+}
+
+/* 備考編集ボタン */
+.remark button:first-child {
+	margin-left: 0;
 }
 
 /* 改番ボタン */
@@ -374,12 +382,6 @@ p.car-name button {
 	transform: translateY(-0.35em);
 }
 
-/* 編集ボタン */
-td.formation-name button,
-.table-title button {
-	margin-left: 0.5em;
-	transform: translateY(-0.1em);
-}
 
 /* 車両及び編成の状態 */
 p.car-name span.car-status {
