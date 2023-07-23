@@ -361,18 +361,23 @@ p:has(#fmdt-formation-number) {
 	font-size: 2.0em;
 }
 
+/* 小さいボタン */
+p.car-name button,
+td.formation-name button,
+.table-title button {
+	font-size: 0.7em;
+}
+
 /* 改番ボタン */
 p.car-name button {
 	margin-left: 1em;
-	font-size: 0.7em;
 	transform: translateY(-0.35em);
 }
 
-/* 編成編集ボタン */
+/* 編集ボタン */
 td.formation-name button,
 .table-title button {
 	margin-left: 0.5em;
-	font-size: 0.7em;
 	transform: translateY(-0.1em);
 }
 
