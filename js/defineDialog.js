@@ -397,7 +397,7 @@ window.addEventListener("load", function () {
 			table.addCell(oldNumbersText);
 			table.addRow();
 			table.addCell("備考");
-			table.addCell(`${AllCars.carsList[x].remark == undefined ? "" : `<span>${AllCars.carsList[x].remark}</span>`}<button class="lsf-icon" icon="pen">編集</button>`, { "class": "remark" });
+			table.addCell(`${AllCars.carsList[x].remark == undefined || AllCars.carsList[x].remark == "" ? "" : `<span>${AllCars.carsList[x].remark}</span>`}<button class="lsf-icon" icon="pen">編集</button>`, { "class": "remark" });
 			document.querySelector("#cardt-main").innerHTML = table.generateTable();
 			Dialog.list.carDetealDialog.on();
 		},
