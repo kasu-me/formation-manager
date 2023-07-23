@@ -89,6 +89,10 @@ window.addEventListener("load", function () {
 		<td><span>所属</span></td>
 		<td><input id="fromt-car-belongs-to"></td>
 	</tr>
+	<tr>
+		<td><span>備考</span></td>
+		<td><input id="fromt-car-remark"></td>
+	</tr>
 	</table>
 		<div id="fromt-opening">
 		</div>
@@ -125,6 +129,7 @@ window.addEventListener("load", function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.createFormationFromTemplateDialog.isActive) {
 				let formationInfo = AllFormations.addFormationFromTemplate(AllCars, AllFormationTemplates.getFormationTemplate(Number(document.querySelector('#fromt-opening').innerHTML)), Number(document.querySelector("#fromt-car-number").value), document.querySelector("#fromt-car-belongs-to").value);
+				AllFormations.formationsList[formationInfo.formationId].remark = document.querySelector('#fromt-car-remark').value;
 				Dialog.list.createFormationFromTemplateDialog.off();
 				Dialog.list.formationDetealDialog.functions.display(formationInfo.formationId);
 			}
@@ -157,6 +162,14 @@ window.addEventListener("load", function () {
 		</td>
 		<td>
 			<input id="forfc-car-belongs-to">
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<span>備考</span>
+		</td>
+		<td>
+			<input id="forfc-car-remark">
 		</td>
 	</tr>
 	</table>
@@ -215,6 +228,7 @@ window.addEventListener("load", function () {
 					if (Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.name == "") {
 						Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.name = `${AllCars.carsList[Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[0]].number}F`;
 					}
+					Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.remark = document.querySelector("#forfc-car-remark").value;
 					let formationId = AllFormations.addFormation(Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation);
 					Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation = new Formation(0, 0, []);
 					Dialog.list.createFormationFromFloatingCarsDialog.off();
