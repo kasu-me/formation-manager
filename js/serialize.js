@@ -95,7 +95,7 @@ function loadListsFromJSON(json) {
 			AllCars.addCar(Deserializer.fromObject(obj.cars[carId]));
 		}
 		for (let formationId in obj.formations) {
-			AllFormations.addFormation(Deserializer.fraaomObject(obj.formations[formationId]));
+			AllFormations.addFormation(Deserializer.fromObject(obj.formations[formationId]));
 		}
 		for (let formationTemplateId in obj.formationTemplates) {
 			AllFormationTemplates.addFormationTemplate(Deserializer.fromObject(obj.formationTemplates[formationTemplateId]));
@@ -109,6 +109,7 @@ function loadListsFromJSON(json) {
 		loadJSONLoopCount = 0;
 		return true;
 	} catch (error) {
+		console.log(error)
 		if (loadJSONLoopCount < 2) {
 			loadListsFromJSON(currentData);
 			setTimeout(() => { Dialog.list.alertDialog.functions.display(Message.list["MA008"]); }, 10);
