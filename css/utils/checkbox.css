@@ -14,7 +14,7 @@
 	overflow: hidden;
 	cursor: pointer;
 	background: #c4c4c4;
-	transition: 200ms ease-out 0s all;
+	transition: 100ms ease-out 0s all;
 }
 
 .mku-checkbox-container input[type="checkbox"] {
@@ -31,7 +31,7 @@
 	display: block;
 	border-radius: 100%;
 	background: #fff;
-	transition: 200ms ease-out 0s all;
+	transition: 100ms ease-out 0s all;
 }
 
 .mku-checkbox-container:has(input[type="checkbox"]:checked) {

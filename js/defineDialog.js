@@ -216,7 +216,7 @@ window.addEventListener("load", function () {
 			table.addCell(`編成番号:${Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.name}`, { "colspan": Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.length });
 			for (let i in Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars) {
 				if (i % 10 == 0) { table.addRow() }
-				table.addCell(`<a href="javascript:void(0)" onclick="Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.splice(${i},1);document.querySelector('#forfc-car-${Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[i]}').classList.toggle('selected');Dialog.list.createFormationFromFloatingCarsDialog.functions.reflesh()">${AllCars.carsList[Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[i]].number}</a>`);
+				table.addCell(`${AllCars.carsList[Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[i]].number}<a href="javascript:void(0)" onclick="Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.splice(${i},1);document.querySelector('#forfc-car-${Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[i]}').classList.toggle('selected');Dialog.list.createFormationFromFloatingCarsDialog.functions.reflesh()" class="lsf preview-delete-button" title="削除">delete</a>`);
 			}
 			table.addBlankCellToRowIn(0, true);
 			document.querySelector("#forfc-new-formated-cars-table").innerHTML = table.generateTable();
@@ -279,7 +279,7 @@ window.addEventListener("load", function () {
 				table.addCell(`編成番号:${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.formationName(1)}`, { "colspan": Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.length });
 				for (let i in Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers) {
 					if (i % 10 == 0) { table.addRow() }
-					table.addCell(`${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers[i](1)}<a href="javascript:void(0)" onclick="Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.splice(${i},1);Dialog.list.createFormationTemplateDialog.functions.reflesh()" class="lsf" title="削除">delete</a>`);
+					table.addCell(`${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers[i](1)}<a href="javascript:void(0)" onclick="Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.splice(${i},1);Dialog.list.createFormationTemplateDialog.functions.reflesh()" class="lsf preview-delete-button" title="削除">delete</a>`);
 				}
 				table.addBlankCellToRowIn(0, true);
 			}

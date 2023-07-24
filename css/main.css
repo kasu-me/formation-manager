@@ -361,6 +361,13 @@ td.formation-name button,
 	transform: translateY(-0.1em);
 }
 
+/* 編成表内形式名横ボタン */
+.table-title button {
+	border: #fff 1px solid;
+	margin-left: 0.8em;
+	transform: translateY(-0.2em);
+}
+
 /* 備考編集ボタン */
 .remark button:first-child {
 	margin-left: 0;
@@ -524,8 +531,8 @@ input[type="range"]::-moz-range-track {
 	margin: auto 0.6em;
 }
 
-/* 編成テンプレートプレビュー欄 */
-#cref-new-formated-template-table a.lsf {
+/* プレビュー欄削除ボタン */
+a.lsf.preview-delete-button {
 	margin-left: 0.3em;
 }
 
