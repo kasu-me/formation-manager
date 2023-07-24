@@ -69,8 +69,12 @@ function generateJSON() {
 	return `{"minYearMonth":{"y":${minYearMonth.year},"m":${minYearMonth.month}},"maxYearMonth":{"y":${maxYearMonth.year},"m":${maxYearMonth.month}},"serieses":[${seriesJSON}],"cars":[${carJSON}],"formations":[${formationJSON}],"formationTemplates":[${formationTemplateJSON}]}`;
 }
 
+//無限ループ対策
+let loadJSONLoopCount = 0;
 //各種一覧JSONから読み込み
 function loadListsFromJSON(json) {
+	loadJSONLoopCount++;
+
 	//現在データのバックアップ
 	let currentData = generateJSON();
 
@@ -91,7 +95,7 @@ function loadListsFromJSON(json) {
 			AllCars.addCar(Deserializer.fromObject(obj.cars[carId]));
 		}
 		for (let formationId in obj.formations) {
-			AllFormations.addFormation(Deserializer.fromObject(obj.formations[formationId]));
+			AllFormations.addFormation(Deserializer.fraaomObject(obj.formations[formationId]));
 		}
 		for (let formationTemplateId in obj.formationTemplates) {
 			AllFormationTemplates.addFormationTemplate(Deserializer.fromObject(obj.formationTemplates[formationTemplateId]));
@@ -102,10 +106,16 @@ function loadListsFromJSON(json) {
 
 		setInputMaxAndMin();
 		reflesh();
+		loadJSONLoopCount = 0;
 		return true;
 	} catch (error) {
-		loadListsFromJSON(currentData);
-		setTimeout(() => { Dialog.list.alertDialog.functions.display(Message.list["MA008"]); }, 10);
+		if (loadJSONLoopCount < 2) {
+			loadListsFromJSON(currentData);
+			setTimeout(() => { Dialog.list.alertDialog.functions.display(Message.list["MA008"]); }, 10);
+		} else {
+			setTimeout(() => { Dialog.list.alertDialog.functions.display(Message.list["MA009"]); }, 20);
+			loadJSONLoopCount = 0;
+		}
 		return false;
 	}
 }

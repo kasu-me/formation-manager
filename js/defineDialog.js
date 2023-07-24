@@ -1,3 +1,4 @@
+//Alert Message
 new Message("MA001", "編成には最低1両の車両を組成してください。");
 new Message("MA002", "最低1つは車両番号の一般式が必要です。");
 new Message("MA003", "形式名は必須です。");
@@ -6,6 +7,8 @@ new Message("MA005", "この編成は未来で解除されているため編成�
 new Message("MA006", "この編成は未来で解除されているため操作できません。");
 new Message("MA007", "車両番号は必須です。");
 new Message("MA008", "データを読み込めませんでした。データが壊れていないか確認してください。");
+new Message("MA009", "処理エラーです。");
+//Confirm Message
 new Message("MC001", "この操作を実行すると現在のデータはクリアされます。本当に読み込んでよろしいですか？");
 new Message("MC002", "${formationName}を${now}付で編成解除します。");
 new Message("MC003", "${formationName}内の車両${carLength}両を${now}付で全て廃車します。");
