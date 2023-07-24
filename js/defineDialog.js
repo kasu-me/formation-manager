@@ -139,7 +139,7 @@ window.addEventListener("load", function () {
 
 	//編成に所属していない車両から編成作成:forfc
 	new Dialog("createFormationFromFloatingCarsDialog", "編成に所属していない車両から編成作成", `
-	<p>※車両が選択された状態で現在年月を操作すると選択がリセットされます</p>
+	<p class="dialog-warn warning">車両が選択された状態で現在年月を操作すると選択がリセットされます</p>
 	<table class="input-area">
 	<tr>
 		<td>
@@ -614,6 +614,20 @@ window.addEventListener("load", function () {
 				maxYearMonth.update(Number(document.getElementById("stym-max-y").value), Number(document.getElementById("stym-max-m").value));
 				setInputMaxAndMin();
 				Dialog.list.settingYearMonthDialog.off();
+			}
+		}
+	});
+
+	//JSON直接編集:jsed
+	new Dialog("editJSONDialog", "JSON直接編集", `<p class="dialog-warn warning">このデータの書き換えを誤ると、当アプリで作成･編集した全てのデータに影響を及ぼし、最悪の場合はデータを読み込めなくなります。バックアップは個人の責任で確実に行ってください。</p><textarea id="jsed-main"></textarea>`, [{ "content": "保存", "event": `Dialog.list.editJSONDialog.functions.save()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editJSONDialog.off();`, "icon": "close" }], {
+		display: function () {
+			document.getElementById("jsed-main").value = generateJSON();
+			Dialog.list.editJSONDialog.on();
+		},
+		save: function () {
+			//親ダイアログが表示されている状態以外での実行を禁止
+			if (Dialog.list.editJSONDialog.isActive) {
+				Dialog.list.confirmDialog.functions.display(Message.list["MC001"], () => { loadListsFromJSON(document.getElementById("jsed-main").value); Dialog.list.editJSONDialog.off(); });
 			}
 		}
 	});
