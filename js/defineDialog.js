@@ -624,12 +624,13 @@ window.addEventListener("load", function () {
 	<div class="mku-tab-container" id="help-tab">
 		<div class="mku-tab-content" tab-title="編成表マネージャ概要">
 			<h2>このアプリについて</h2>
-			<p>鉄道車両の編成について、改番や編成組成の年月などを含めた編成表データセットと、それを動的に確認できるUIです。スライダーで年代を任意に設定しながら、その時々の編成を確認することができます。</p>
+			<p>鉄道車両の編成について、改番履歴や編成組成･解除の履歴を含めた編成表データセットと、それを動的に確認できるUIです。スライダーで年代を任意に設定しながら、その時々の編成を確認することができます。</p>
 			<p>本アプリはサーバとの通信は一切行っておらず、本アプリで製作したデータは皆さんのPC内で完結しています。バックアップ等はご自身の責任において行っていただくようお願いいたします。</p>
 			<h2>謝辞</h2>
 			<p>ボタン等の各種アイコンに「<a href="https://kudakurage.com/ligature_symbols/" target="_blank">Ligature Symbols</a>」を利用させていただきました。御礼申し上げます。</p>
 			<h2>お問い合わせ</h2>
 			<p>バグ報告･ご意見･ご要望･ご質問は<a href="https://twitter.com/KasumiTrans" target="_blank">Twitter</a>または<a href="mailto:morooka@kasu.me" target="_blank">メール</a>までお願いいたします。</p>
+			<p>変更履歴は<a href="https://github.com/kasu-me/formation-manager" target="_blank">GitHub</a>をご覧ください。</p>
 			<p>© 2023 M_Kasumi</p>
 		</div>
 		<div class="mku-tab-content" tab-title="編成･車両">
