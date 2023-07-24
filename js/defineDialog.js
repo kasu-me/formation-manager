@@ -5,7 +5,7 @@ new Message("MA004", "この車両は既に廃車されているため改番す�
 new Message("MA005", "この編成は未来で解除されているため編成解除できません。");
 new Message("MA006", "この編成は未来で解除されているため操作できません。");
 new Message("MA007", "車両番号は必須です。");
-new Message("MC001", "JSON読み込みを実施すると現在のデータはクリアされます。本当に読み込んでよろしいですか？");
+new Message("MC001", "この操作を実行すると現在のデータはクリアされます。本当に読み込んでよろしいですか？");
 new Message("MC002", "${formationName}を${now}付で編成解除します。");
 new Message("MC003", "${formationName}内の車両${carLength}両を${now}付で全て廃車します。");
 new Message("MC004", "${carNumber}号車を${now}付で廃車します。");
