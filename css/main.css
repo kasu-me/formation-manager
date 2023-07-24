@@ -331,7 +331,7 @@ td.dropped {
 
 /* 重複した車両番号 */
 td.duplicated {
-	background-color: #ff0;
+	background-color: #ff0 !important;
 }
 
 /* ダイアログの情報保持用DIV */

@@ -124,7 +124,7 @@ function list() {
 		let tds = document.querySelectorAll("#formation-table-container td.car");
 		for (let td of tds) {
 			for (let j in duplications) {
-				if (td.innerHTML.match(new RegExp(duplications[j], "g")) != null) {
+				if (td.innerHTML.match(new RegExp(`<a href=\\"javascript\\:Dialog\\.list\\.carDetealDialog\\.functions\\.display\\(\\d+\\)\\">${duplications[j]}</a>`, "g")) != null) {
 					td.classList.add("duplicated");
 				}
 			}
