@@ -98,7 +98,7 @@ window.addEventListener("load", function () {
 		</div>
 		<div id="fromt-template-legend" class="element-bottom-of-input-area"></div>
 		<p>
-			<button onclick="Dialog.list.formationTemplatesDialog.functions.display()">他のテンプレートを使う</button>
+			<button onclick="Dialog.list.formationTemplatesDialog.functions.display()" class="lsf-icon" icon="shuffle">他のテンプレートを使う</button>
 		</p>
 	`, [{ "content": "編成作成", "event": `Dialog.list.createFormationFromTemplateDialog.functions.createFormation()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createFormationFromTemplateDialog.off();`, "icon": "close" }], {
 		//編成テンプレートから編成を作成ダイアログを表示
