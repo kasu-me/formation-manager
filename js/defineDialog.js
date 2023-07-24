@@ -77,7 +77,7 @@ window.addEventListener("load", function () {
 	});
 
 	//編成を作成:fora
-	new Dialog("formationAddingDialog", "編成を作成", `<p><button onclick="Dialog.list.formationTemplatesDialog.functions.display()" class="lsf-icon dialog-main-button" icon="add">編成テンプレートから作成</button></p><p><button onclick="Dialog.list.createFormationFromFloatingCarsDialog.functions.display()" class="lsf-icon dialog-main-button" icon="add">編成に所属していない車両から作成</button></p>`, [{ "content": "キャンセル", "event": `Dialog.list.formationAddingDialog.off();`, "icon": "close" }]);
+	new Dialog("formationAddingDialog", "編成作成", `<p><button onclick="Dialog.list.formationTemplatesDialog.functions.display()" class="lsf-icon dialog-main-button" icon="add">編成テンプレートから作成</button></p><p><button onclick="Dialog.list.createFormationFromFloatingCarsDialog.functions.display()" class="lsf-icon dialog-main-button" icon="add">編成に所属していない車両から作成</button></p>`, [{ "content": "キャンセル", "event": `Dialog.list.formationAddingDialog.off();`, "icon": "close" }]);
 
 	//編成テンプレートから編成作成:fromt
 	new Dialog("createFormationFromTemplateDialog", "編成テンプレートから編成作成", `<table class="input-area">
@@ -368,7 +368,7 @@ window.addEventListener("load", function () {
 	});
 
 	//車両の作成:crcar
-	new Dialog("createCarDialog", "車両の作成", `<table class="input-area"><tr><td>車両番号</td><td><input id="crcar-carNumber"></td></tr><tr><td>備考</td><td><input id="crcar-carRemark"></td></tr></table>`, [{ "content": "作成", "event": `Dialog.list.createCarDialog.functions.createCar()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createCarDialog.off();`, "icon": "close" }], {
+	new Dialog("createCarDialog", "車両作成", `<table class="input-area"><tr><td>車両番号</td><td><input id="crcar-carNumber"></td></tr><tr><td>備考</td><td><input id="crcar-carRemark"></td></tr></table>`, [{ "content": "作成", "event": `Dialog.list.createCarDialog.functions.createCar()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createCarDialog.off();`, "icon": "close" }], {
 		carId: 0,
 		//車両の作成ダイアログを表示
 		display: function () {

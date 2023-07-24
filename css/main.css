@@ -105,7 +105,7 @@ select {
 /* ヘッダ */
 div#header {
 	z-index: 99998;
-	position: fixed;
+	position: sticky;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -114,6 +114,18 @@ div#header {
 	margin-bottom: 2.0em;
 	padding: 0.8em;
 	border-bottom: 1px solid #bbb;
+	display: flex;
+}
+
+div#header div.button-group {
+	margin-right: 1.0em;
+	padding-right: 1.0em;
+	border-right: 1px solid #bbb;
+}
+
+div#header div.button-group div.button-group-title {
+	font-weight: bold;
+	margin-bottom: 0.1em;
 }
 
 /* 年月 */
@@ -129,7 +141,6 @@ div#header {
 /* メイン編成表 */
 div#formation-table-container {
 	margin: 0.8em;
-	padding-top: 3.0em;
 }
 
 div#formation-table-container div.generated-table-container {
