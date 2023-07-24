@@ -29,13 +29,13 @@ class Series {
 	}
 
 	get name() {
-		return this.#name;
+		return Formatter.toHTML(this.#name);
 	}
 	get base() {
-		return this.#base;
+		return Formatter.toHTML(this.#base);
 	}
 	get description() {
-		return this.#description == "" ? "　" : this.#description;
+		return this.#description == "" ? "　" : Formatter.toHTML(this.#description);
 	}
 	get isHidden() {
 		return this.#isHidden;
@@ -62,7 +62,7 @@ class OldCarNumber {
 		this.#renumberedOn = renumberedOn;
 	}
 	get number() {
-		return this.#number;
+		return Formatter.toHTML(this.#number);
 	}
 	get renumberedOn() {
 		return this.#renumberedOn;
@@ -129,7 +129,7 @@ class Car {
 	}
 
 	get number() {
-		return this.#number;
+		return Formatter.toHTML(this.#number);
 	}
 	get oldNumbers() {
 		return this.#oldNumbers;
@@ -150,7 +150,7 @@ class Car {
 		return this.#manufacturedOn;
 	}
 	get remark() {
-		return this.#remark;
+		return Formatter.toHTML(this.#remark);
 	}
 	set remark(remark) {
 		this.#remark = remark;
@@ -266,7 +266,7 @@ class Formation {
 		return this.#seriesId;
 	}
 	get name() {
-		return this.#name;
+		return Formatter.toHTML(this.#name);
 	}
 	get cars() {
 		return this.#cars;
@@ -284,7 +284,7 @@ class Formation {
 		return this.#belongsTo;
 	}
 	get remark() {
-		return this.#remark;
+		return Formatter.toHTML(this.#remark);
 	}
 	set name(name) {
 		this.#name = name;
@@ -314,7 +314,7 @@ class Formation {
 class FormationTemplate {
 	//形式ID
 	#seriesId;
-	//名前
+	//テンプレートの説明
 	#name = "";
 	//編成番号の一般形(関数)
 	#formationName;
@@ -361,7 +361,7 @@ class FormationTemplate {
 		return this.#seriesId;
 	}
 	get name() {
-		return this.#name;
+		return Formatter.toHTML(this.#name);
 	}
 	get formationName() {
 		if (this.#formationName != undefined && this.#formationName != "") {

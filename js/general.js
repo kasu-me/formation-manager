@@ -42,10 +42,3 @@ class YearMonth {
 		return `<a class="update-yearmonth-link" href="javascript:updateNowYearMonth(new YearMonth(${this.#y},${this.#m}))">${this.toString()}</a>`;
 	}
 }
-
-//フォーマッタクラス
-class Formatter {
-	static link(href, text) {
-		return `<a href="javascript:Dialog.list.carDetealDialog.functions.display(${href})">${text}</a>`
-	}
-}
