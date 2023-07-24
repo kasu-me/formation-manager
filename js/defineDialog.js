@@ -5,6 +5,7 @@ new Message("MA004", "この車両は既に廃車されているため改番す�
 new Message("MA005", "この編成は未来で解除されているため編成解除できません。");
 new Message("MA006", "この編成は未来で解除されているため操作できません。");
 new Message("MA007", "車両番号は必須です。");
+new Message("MA008", "データを読み込めませんでした。データが壊れていないか確認してください。");
 new Message("MC001", "この操作を実行すると現在のデータはクリアされます。本当に読み込んでよろしいですか？");
 new Message("MC002", "${formationName}を${now}付で編成解除します。");
 new Message("MC003", "${formationName}内の車両${carLength}両を${now}付で全て廃車します。");
@@ -627,7 +628,13 @@ window.addEventListener("load", function () {
 		save: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.editJSONDialog.isActive) {
-				Dialog.list.confirmDialog.functions.display(Message.list["MC001"], () => { loadListsFromJSON(document.getElementById("jsed-main").value); Dialog.list.editJSONDialog.off(); });
+				Dialog.list.confirmDialog.functions.display(Message.list["MC001"], () => {
+					Dialog.list.editJSONDialog.off();
+					//正常に読み込めなかった場合、自画面を再表示
+					if (!loadListsFromJSON(document.getElementById("jsed-main").value)) {
+						Dialog.list.editJSONDialog.functions.display();
+					}
+				});
 			}
 		}
 	});

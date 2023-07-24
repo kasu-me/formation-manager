@@ -71,33 +71,43 @@ function generateJSON() {
 
 //各種一覧JSONから読み込み
 function loadListsFromJSON(json) {
-	//リセット
-	AllSerieses.reset();
-	AllCars.reset();
-	AllFormations.reset();
-	AllFormationTemplates.reset();
+	//現在データのバックアップ
+	let currentData = generateJSON();
 
-	//JSON→Object
-	let obj = JSON.parse(json);
+	try {
+		//リセット
+		AllSerieses.reset();
+		AllCars.reset();
+		AllFormations.reset();
+		AllFormationTemplates.reset();
 
-	for (let seriesId in obj.serieses) {
-		AllSerieses.addSeries(Deserializer.fromObject(obj.serieses[seriesId]));
-	}
-	for (let carId in obj.cars) {
-		AllCars.addCar(Deserializer.fromObject(obj.cars[carId]));
-	}
-	for (let formationId in obj.formations) {
-		AllFormations.addFormation(Deserializer.fromObject(obj.formations[formationId]));
-	}
-	for (let formationTemplateId in obj.formationTemplates) {
-		AllFormationTemplates.addFormationTemplate(Deserializer.fromObject(obj.formationTemplates[formationTemplateId]));
-	}
+		//JSON→Object
+		let obj = JSON.parse(json);
 
-	minYearMonth = new YearMonth(obj.minYearMonth.y, obj.minYearMonth.m);
-	maxYearMonth = new YearMonth(obj.maxYearMonth.y, obj.maxYearMonth.m);
+		for (let seriesId in obj.serieses) {
+			AllSerieses.addSeries(Deserializer.fromObject(obj.serieses[seriesId]));
+		}
+		for (let carId in obj.cars) {
+			AllCars.addCar(Deserializer.fromObject(obj.cars[carId]));
+		}
+		for (let formationId in obj.formations) {
+			AllFormations.addFormation(Deserializer.fromObject(obj.formations[formationId]));
+		}
+		for (let formationTemplateId in obj.formationTemplates) {
+			AllFormationTemplates.addFormationTemplate(Deserializer.fromObject(obj.formationTemplates[formationTemplateId]));
+		}
 
-	setInputMaxAndMin();
-	reflesh();
+		minYearMonth = new YearMonth(obj.minYearMonth.y, obj.minYearMonth.m);
+		maxYearMonth = new YearMonth(obj.maxYearMonth.y, obj.maxYearMonth.m);
+
+		setInputMaxAndMin();
+		reflesh();
+		return true;
+	} catch (error) {
+		loadListsFromJSON(currentData);
+		setTimeout(() => { Dialog.list.alertDialog.functions.display(Message.list["MA008"]); }, 10);
+		return false;
+	}
 }
 
 //ファイル保存
