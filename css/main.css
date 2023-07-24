@@ -373,6 +373,10 @@ td.formation-name button,
 	margin-left: 0;
 }
 
+.remark button:not(:first-child) {
+	margin-left: 1em;
+}
+
 /* 改番ボタン */
 p.car-name button {
 	margin-left: 1em;
