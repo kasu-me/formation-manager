@@ -28,14 +28,14 @@ class Drag {
 						if (!elem.classList.contains("selected-origin")) {
 							elem.classList.remove("left-border");
 							elem.classList.remove("right-border");
-							let elemL = elem.parentNode.getBoundingClientRect().left;
+							let elemL = elem.parentNode.getBoundingClientRect().left - 1;
 							let elemC = elemL + elem.parentNode.clientWidth / 2;
-							let elemR = elemL + elem.parentNode.clientWidth;
-							if (elemL < e.clientX && e.clientX < elemC) {
+							let elemR = elemL + elem.parentNode.clientWidth + 1;
+							if (elemL < e.clientX && e.clientX <= elemC) {
 								elem.classList.add("left-border");
 								dragResult.to = i;
 								dragResult.direction = 0;
-							} else if (elemC < e.clientX && e.clientX < elemR) {
+							} else if (elemC < e.clientX && e.clientX <= elemR) {
 								elem.classList.add("right-border");
 								dragResult.to = i;
 								dragResult.direction = 1;
@@ -62,11 +62,10 @@ class Drag {
 Drag.dragContainer = document.createElement("div");
 Drag.dragContainer.id = "drag-container";
 Drag.dragContainer.style.position = "absolute";
-Drag.dragContainer.style.top = 0;
-Drag.dragContainer.style.left = 0;
 Drag.dragContainer.style.border = "1px solid #000";
 Drag.dragContainer.style.backgroundColor = "#fff";
 Drag.dragContainer.style.cursor = "grabbing";
 Drag.dragContainer.style.zIndex = "9999999";
 Drag.dragContainer.style.userSelect = "none";
 Drag.dragContainer.style.padding = "0.15em 0.5em";
+Drag.dragContainer.style.opacity = "0.8";
