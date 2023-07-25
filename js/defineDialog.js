@@ -485,6 +485,7 @@ window.addEventListener("load", function () {
 				}
 				document.querySelector("#carrn-main").innerHTML = `<table class="input-area"><tr><td>車両番号</td><td><input id="carrn-car-number" placeholder="${AllCars.carsList[Dialog.list.carDetealDialog.functions.carId].number}" value="${AllCars.carsList[Dialog.list.carDetealDialog.functions.carId].number}">号車</td></tr></table><div id="carrn-opening">${Dialog.list.carDetealDialog.functions.carId}</div>`
 				Dialog.list.carRenumberDialog.on();
+				document.querySelector('#carrn-car-number').focus();
 			}
 		},
 		//車両を改番
@@ -518,6 +519,7 @@ window.addEventListener("load", function () {
 					break;
 			}
 			Dialog.list.editRemarkDialog.on();
+			document.getElementById("edrm-remark").focus();
 		},
 		//備考編集
 		setRemark: function () {
@@ -611,6 +613,7 @@ window.addEventListener("load", function () {
 				Dialog.list.formationRenameDialog.functions.formationId = Number(document.querySelector('#fmdt-opening').innerHTML);
 				document.querySelector("#fmrn-main").innerHTML = `<table class="input-area"><tr><td>編成番号</td><td><input id="fmrn-formation-name" placeholder="${AllFormations.formationsList[Dialog.list.formationRenameDialog.functions.formationId].name}" value="${AllFormations.formationsList[Dialog.list.formationRenameDialog.functions.formationId].name}"></td></tr></table><div id="fmrn-opening">${Dialog.list.formationRenameDialog.functions.formationId}</div>`
 				Dialog.list.formationRenameDialog.on();
+				document.querySelector('#fmrn-formation-name').focus();
 			}
 		},
 		//編成を改名
