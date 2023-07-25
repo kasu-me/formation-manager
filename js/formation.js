@@ -384,6 +384,15 @@ class FormationTemplate {
 		this.#rawCarNumbers.push(carNumber);
 	}
 
+	addCarNumberTo(carNumber, index) {
+		this.#carNumbers.splice(index, 0, FormationTemplate.convertToFunction(carNumber, this));
+		this.#rawCarNumbers.splice(index, 0, carNumber);
+	}
+	deleteCarNumber(index) {
+		this.#carNumbers.splice(index, 1);
+		this.#rawCarNumbers.splice(index, 1);
+	}
+
 	convertToJSON() {
 		return JSON.stringify({
 			instanceof: "FormationTemplate",

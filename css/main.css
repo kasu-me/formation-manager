@@ -419,6 +419,28 @@ p.car-name button {
 	height: 20em;
 }
 
+td.preview-car span {
+	user-select: none;
+	cursor: grab;
+	display: inline-block;
+}
+
+td.preview-car:has(span.selected) {
+	background-color: #ccc !important;
+}
+
+td.preview-car:has(span.left-border) {
+	border-left: 2px #f00 solid !important;
+}
+
+td.preview-car:has(span.right-border) {
+	border-right: 2px #f00 solid !important;
+}
+
+td.preview-car:has(span.selected) {
+	background-color: #ccc !important;
+}
+
 /* 車両及び編成の状態 */
 p.car-name span.car-status {
 	background-color: #00c900;
