@@ -41,7 +41,7 @@ class Dialog {
 				document.addEventListener("mouseup", () => {
 					document.removeEventListener('mousemove', mouseMove);
 					this.dialogTitle.style.cursor = "grab";
-				});
+				}, { once: true });
 
 			});
 		}
