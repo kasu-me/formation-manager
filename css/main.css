@@ -407,6 +407,13 @@ p.car-name button {
 	margin-left: 0.15em;
 }
 
+.mku-checkbox-container.small {
+	display: inline-block;
+	font-size: 0.8em;
+	vertical-align: bottom;
+	margin-right: 0.4em;
+}
+
 #formationDetealDialog #fmdt-remark {
 	margin-top: 1.4em;
 }

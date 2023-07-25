@@ -98,9 +98,10 @@ window.addEventListener("load", function () {
 		<td><input id="fromt-car-remark"></td>
 	</tr>
 	</table>
-		<div id="fromt-opening">
-		</div>
-		<div id="fromt-template-legend" class="element-bottom-of-input-area"></div>
+	<div id="fromt-opening">
+	</div>
+	<p class="element-bottom-of-input-area"><label for="fora-continue" class="mku-checkbox-container small"><input id="fora-continue" type="checkbox"></label>連続で作成</p>
+		<div id="fromt-template-legend"></div>
 		<p>
 			<button onclick="Dialog.list.formationTemplatesDialog.functions.display()" class="lsf-icon" icon="shuffle">他のテンプレートを使う</button>
 		</p>
@@ -113,6 +114,7 @@ window.addEventListener("load", function () {
 				document.querySelector('#fromt-car-remark').value = "";
 				Dialog.list.createFormationFromTemplateDialog.functions.reflesh(x, Number(document.querySelector("#fromt-car-number").value));
 				Dialog.list.createFormationFromTemplateDialog.on();
+				document.querySelector('#fromt-car-number').focus();
 			}
 		},
 		//編成テンプレートから編成を作成ダイアログのプレビューをリフレッシュ
@@ -135,8 +137,13 @@ window.addEventListener("load", function () {
 			if (Dialog.list.createFormationFromTemplateDialog.isActive) {
 				let formationInfo = AllFormations.addFormationFromTemplate(AllCars, AllFormationTemplates.getFormationTemplate(Number(document.querySelector('#fromt-opening').innerHTML)), Number(document.querySelector("#fromt-car-number").value), document.querySelector("#fromt-car-belongs-to").value);
 				AllFormations.formationsList[formationInfo.formationId].remark = document.querySelector('#fromt-car-remark').value;
-				Dialog.list.createFormationFromTemplateDialog.off();
-				Dialog.list.formationDetealDialog.functions.display(formationInfo.formationId);
+				if (!document.getElementById("fora-continue").checked) {
+					Dialog.list.createFormationFromTemplateDialog.off();
+					Dialog.list.formationDetealDialog.functions.display(formationInfo.formationId);
+				} else {
+					reflesh();
+					document.querySelector('#fromt-car-number').focus();
+				}
 			}
 		}
 	});
@@ -178,7 +185,8 @@ window.addEventListener("load", function () {
 		</td>
 	</tr>
 	</table>
-	<div id="forfc-not-formated-cars-table" class="element-bottom-of-input-area"></div>
+	<p class="element-bottom-of-input-area"><label for="forfc-continue" class="mku-checkbox-container small"><input id="forfc-continue" type="checkbox"></label>連続で作成</p>
+	<div id="forfc-not-formated-cars-table"></div>
 	<div id="forfc-new-formated-cars-table"></div>
 	<div id="forfc-new-formation"></div>
 	<div id="forfc-formation-opening"></div>
@@ -239,15 +247,20 @@ window.addEventListener("load", function () {
 				if (Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.length == 0) {
 					Dialog.list.alertDialog.functions.display(Message.list["MA001"]);
 				} else {
-					console.log(Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.name)
 					if (Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.name == "") {
 						Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.name = `${AllCars.carsList[Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[0]].number}F`;
 					}
 					Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.remark = document.querySelector("#forfc-car-remark").value;
 					let formationId = AllFormations.addFormation(Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation);
 					Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation = new Formation(0, 0, []);
-					Dialog.list.createFormationFromFloatingCarsDialog.off();
-					Dialog.list.formationDetealDialog.functions.display(formationId);
+
+					if (!document.getElementById("forfc-continue").checked) {
+						Dialog.list.createFormationFromFloatingCarsDialog.off();
+						Dialog.list.formationDetealDialog.functions.display(formationId);
+					} else {
+						Dialog.list.createFormationFromFloatingCarsDialog.functions.display();
+						reflesh();
+					}
 				}
 			}
 		}
@@ -386,13 +399,14 @@ window.addEventListener("load", function () {
 	});
 
 	//車両の作成:crcar
-	new Dialog("createCarDialog", "車両作成", `<table class="input-area"><tr><td>車両番号</td><td><input id="crcar-carNumber"></td></tr><tr><td>備考</td><td><input id="crcar-carRemark"></td></tr></table>`, [{ "content": "作成", "event": `Dialog.list.createCarDialog.functions.createCar()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createCarDialog.off();`, "icon": "close" }], {
+	new Dialog("createCarDialog", "車両作成", `<table class="input-area"><tr><td>車両番号</td><td><input id="crcar-carNumber"></td></tr><tr><td>備考</td><td><input id="crcar-carRemark"></td></tr></table><p class="element-bottom-of-input-area"><label for="crcar-continue" class="mku-checkbox-container small"><input id="crcar-continue" type="checkbox"></label>連続で作成</p>`, [{ "content": "作成", "event": `Dialog.list.createCarDialog.functions.createCar()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createCarDialog.off();`, "icon": "close" }], {
 		carId: 0,
 		//車両の作成ダイアログを表示
 		display: function () {
 			document.getElementById("crcar-carNumber").value = "";
 			document.getElementById("crcar-carRemark").value = "";
 			Dialog.list.createCarDialog.on();
+			document.getElementById("crcar-carNumber").focus();
 		},
 		//車両の作成
 		createCar: function () {
@@ -402,8 +416,13 @@ window.addEventListener("load", function () {
 					Dialog.list.alertDialog.functions.display(Message.list["MA007"]);
 				} else {
 					let carId = AllCars.addCar(new Car(document.getElementById("crcar-carNumber").value, now, null, document.getElementById("crcar-carRemark").value));
-					Dialog.list.createCarDialog.off();
-					Dialog.list.carDetealDialog.functions.display(carId);
+					if (!document.getElementById("crcar-continue").checked) {
+						Dialog.list.createCarDialog.off();
+						Dialog.list.carDetealDialog.functions.display(carId);
+					} else {
+						Dialog.list.createCarDialog.functions.display();
+						reflesh();
+					}
 				}
 			}
 		}
