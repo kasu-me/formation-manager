@@ -100,7 +100,7 @@ window.addEventListener("load", function () {
 	</table>
 	<div id="fromt-opening">
 	</div>
-	<p class="element-bottom-of-input-area"><label for="fora-continue" class="mku-checkbox-container small"><input id="fora-continue" type="checkbox"></label>連続で作成</p>
+	<p class="element-bottom-of-input-area"><label for="fora-continue" class="mku-checkbox-container small"><input id="fora-continue" type="checkbox"></label><label for="fora-continue">連続で作成</label></p>
 		<div id="fromt-template-legend"></div>
 		<p>
 			<button onclick="Dialog.list.formationTemplatesDialog.functions.display()" class="lsf-icon" icon="shuffle">他のテンプレートを使う</button>
@@ -185,7 +185,7 @@ window.addEventListener("load", function () {
 		</td>
 	</tr>
 	</table>
-	<p class="element-bottom-of-input-area"><label for="forfc-continue" class="mku-checkbox-container small"><input id="forfc-continue" type="checkbox"></label>連続で作成</p>
+	<p class="element-bottom-of-input-area"><label for="forfc-continue" class="mku-checkbox-container small"><input id="forfc-continue" type="checkbox"></label><label for="forfc-continue">連続で作成</label></p>
 	<div id="forfc-not-formated-cars-table"></div>
 	<div id="forfc-new-formated-cars-table"></div>
 	<div id="forfc-new-formation"></div>
@@ -399,7 +399,7 @@ window.addEventListener("load", function () {
 	});
 
 	//車両の作成:crcar
-	new Dialog("createCarDialog", "車両作成", `<table class="input-area"><tr><td>車両番号</td><td><input id="crcar-carNumber"></td></tr><tr><td>備考</td><td><input id="crcar-carRemark"></td></tr></table><p class="element-bottom-of-input-area"><label for="crcar-continue" class="mku-checkbox-container small"><input id="crcar-continue" type="checkbox"></label>連続で作成</p>`, [{ "content": "作成", "event": `Dialog.list.createCarDialog.functions.createCar()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createCarDialog.off();`, "icon": "close" }], {
+	new Dialog("createCarDialog", "車両作成", `<table class="input-area"><tr><td>車両番号</td><td><input id="crcar-carNumber"></td></tr><tr><td>備考</td><td><input id="crcar-carRemark"></td></tr></table><p class="element-bottom-of-input-area"><label for="crcar-continue" class="mku-checkbox-container small"><input id="crcar-continue" type="checkbox"></label><label for="crcar-continue">連続で作成</label></p>`, [{ "content": "作成", "event": `Dialog.list.createCarDialog.functions.createCar()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createCarDialog.off();`, "icon": "close" }], {
 		carId: 0,
 		//車両の作成ダイアログを表示
 		display: function () {

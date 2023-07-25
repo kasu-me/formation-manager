@@ -400,6 +400,11 @@ p.car-name button {
 	color: #ccc;
 }
 
+label {
+	user-select: none;
+	cursor: pointer;
+}
+
 #seriesDispDialog label.mku-checkbox-container {
 	display: inline-block;
 	font-size: 0.8em;
