@@ -398,7 +398,7 @@ class FormationTemplate {
 			instanceof: "FormationTemplate",
 			seriesId: this.#seriesId,
 			name: this.#name,
-			formationName: this.#formationName,
+			formationName: this.#formationName == undefined ? undefined : this.#formationName.toString(),
 			carNumbers: this.#carNumbers.map(elm => {
 				return elm.toString()
 			})
