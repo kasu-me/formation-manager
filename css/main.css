@@ -1,6 +1,7 @@
 :root {
 	--formation-table-main-border: #5c3d7e;
 	--button-face: #4c2d5e;
+	--selection-highlight: #c7def5;
 }
 
 /* 全般 */
@@ -431,10 +432,12 @@ td.preview-car:has(span.selected) {
 
 td.preview-car:has(span.left-border) {
 	border-left: 2px #f00 solid !important;
+	background-color: var(--selection-highlight) !important;
 }
 
 td.preview-car:has(span.right-border) {
 	border-right: 2px #f00 solid !important;
+	background-color: var(--selection-highlight) !important;
 }
 
 td.preview-car:has(span.selected) {
@@ -596,5 +599,5 @@ a.update-yearmonth-link::before {
 #formation-table-container tr:hover,
 #seriesDispDialog tr:hover,
 #formationTemplatesDialog tr:hover {
-	background-color: #c7def5;
+	background-color: var(--selection-highlight);
 }

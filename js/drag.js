@@ -69,3 +69,4 @@ Drag.dragContainer.style.backgroundColor = "#fff";
 Drag.dragContainer.style.cursor = "grabbing";
 Drag.dragContainer.style.zIndex = "9999999";
 Drag.dragContainer.style.userSelect = "none";
+Drag.dragContainer.style.padding = "0.15em 0.5em";
