@@ -1,0 +1,10 @@
+#drag-container {
+	position: absolute;
+	border: 1px solid #000;
+	background-color: #fff;
+	cursor: grabbing;
+	z-index: 9999999;
+	user-select: none;
+	padding: 0.15em 0.5em;
+	opacity: 0.8;
+}
