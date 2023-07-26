@@ -281,8 +281,7 @@ window.addEventListener("load", function () {
 				Dialog.list.createFormationTemplateDialog.functions.isExisting = true;
 				Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplateId = x;
 				let tmpTemplate = AllFormationTemplates.getFormationTemplate(x);
-				Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate = new FormationTemplate(tmpTemplate.seriesId, tmpTemplate.name, tmpTemplate.carNumbers, tmpTemplate.formationName);
-				console.log()
+				Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate = new FormationTemplate(tmpTemplate.seriesId, tmpTemplate.name, tmpTemplate.carNumbers, tmpTemplate.rawFormationName);
 				document.querySelector("#cref-series").value = Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.seriesId;
 				document.querySelector("#cref-name").value = Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.name;
 				document.querySelector("#cref-formationnumber").value = Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.rawFormationName || "";
@@ -332,7 +331,7 @@ window.addEventListener("load", function () {
 						tmpTemplate.seriesId = Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.seriesId;
 						tmpTemplate.name = Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.name;
 						tmpTemplate.carNumbers = Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers;
-						tmpTemplate.formationName = Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.formationName;
+						tmpTemplate.formationName = Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.rawFormationName;
 					}
 					Dialog.list.createFormationTemplateDialog.off();
 					Dialog.list.formationTemplatesDialog.functions.display();

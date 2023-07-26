@@ -331,9 +331,7 @@ class FormationTemplate {
 		this.seriesId = seriesId;
 		this.name = name || this.#name;
 		this.carNumbers = carNumbers;
-		if (formationName != null) {
-			this.formationName = formationName;
-		}
+		this.formationName = formationName;
 	}
 	set seriesId(value) {
 		this.#seriesId = value;
@@ -350,11 +348,12 @@ class FormationTemplate {
 		}
 	}
 	set formationName(formationName) {
-		this.#rawFormationName = formationName;
-		if (formationName == "") {
-			this.#formationName = "";
+		if (formationName == "" || formationName == undefined) {
+			this.#formationName = n => this.carNumbers[0](n) + "F";
+			this.#rawFormationName = "";
 		} else {
 			this.#formationName = FormationTemplate.convertToFunction(formationName, this);
+			this.#rawFormationName = formationName;
 		}
 	}
 	get seriesId() {
@@ -364,11 +363,7 @@ class FormationTemplate {
 		return Formatter.toHTML(this.#name);
 	}
 	get formationName() {
-		if (this.#formationName != undefined && this.#formationName != "") {
-			return this.#formationName;
-		} else {
-			return n => this.carNumbers[0](n) + "F";
-		}
+		return this.#formationName;
 	}
 	get rawFormationName() {
 		return this.#rawFormationName;
@@ -398,7 +393,7 @@ class FormationTemplate {
 			instanceof: "FormationTemplate",
 			seriesId: this.#seriesId,
 			name: this.#name,
-			formationName: this.#formationName == undefined ? undefined : this.#formationName.toString(),
+			formationName: this.#formationName == undefined ? undefined : this.#rawFormationName.toString(),
 			carNumbers: this.#carNumbers.map(elm => {
 				return elm.toString()
 			})
