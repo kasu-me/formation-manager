@@ -76,4 +76,8 @@
 		width: 100%;
 	}
 
+	.mku-tab-container .mku-tab-content {
+		height: calc(80vh - 20em);
+	}
+
 }
