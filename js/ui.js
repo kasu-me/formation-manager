@@ -22,6 +22,7 @@ function continueReadJSON() {
 	tmpJSON = "";
 }
 
+
 //現存編成の編成表を表に出力
 function list() {
 	//ソート
@@ -44,14 +45,9 @@ function list() {
 		let formationList = AllFormations.getBySeriesIdAndYearMonth(seriesId, now);
 
 		//ソート
+		let natSorter = natsort();
 		let keys = Object.keys(formationList).sort((f1, f2) => {
-			if (formationList[f1].name < formationList[f2].name) {
-				return -1
-			} else if (formationList[f1].name > formationList[f2].name) {
-				return 1
-			} else {
-				return 0
-			}
+			return natSorter(formationList[f1].name, formationList[f2].name);
 		});
 
 
