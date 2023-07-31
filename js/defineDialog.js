@@ -688,7 +688,11 @@ window.addEventListener("load", function () {
 			<h2>推奨環境</h2>
 			<p>PCの最新版GoogleChromeでのご利用を推奨します。スマートフォン等のタッチデバイスでの動作の保証はいたしかねます。</p>
 			<h2>謝辞</h2>
-			<p>ボタン等の各種アイコンに「<a href="https://kudakurage.com/ligature_symbols/" target="_blank">Ligature Symbols</a>」を利用させていただきました。御礼申し上げます。</p>
+			<ul>
+			<li>ボタン等の各種アイコンに「<a href="https://kudakurage.com/ligature_symbols/" target="_blank">Ligature Symbols</a>」を利用させていただきました。</li>
+			<li>ソートに「<a href="https://github.com/bubkoo/natsort" target="_blank">natsort</a>」を利用させていただきました。</li>
+			</ul>
+			<p>以上、皆様に御礼申し上げます。</p>
 			<h2>お問い合わせ</h2>
 			<p>バグ報告･ご意見･ご要望･ご質問は<a href="https://twitter.com/KasumiTrans" target="_blank">Twitter</a>または<a href="mailto:morooka@kasu.me" target="_blank">メール</a>までお願いいたします。</p>
 			<p>変更履歴は<a href="https://github.com/kasu-me/formation-manager" target="_blank">GitHub</a>をご覧ください。</p>
