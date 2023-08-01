@@ -267,7 +267,7 @@ window.addEventListener("load", function () {
 	});
 
 	//編成テンプレートを作成･編集:cref
-	new Dialog("createFormationTemplateDialog", "編成テンプレートの作成･編集", `<table class="input-area"><tr><td>形式</td><td><select id="cref-series" onchange="Dialog.list.createFormationTemplateDialog.functions.reflesh()"></select></td></tr><tr><td>テンプレートの説明</td><td><input id="cref-name" oninput="Dialog.list.createFormationTemplateDialog.functions.reflesh();"></td></tr><tr><td>編成番号の一般式</td><td><input id="cref-formationnumber" oninput="try{Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.formationName=this.value;Dialog.list.createFormationTemplateDialog.functions.reflesh()}catch(e){}"></td></tr><tr><td>車両番号の一般式</td><td><input id="cref-carnumber" onkeyup="if(event.keyCode==13){document.getElementById('cref-add-number-button').click()}"><button id="cref-add-number-button" onclick="try{Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.addCarNumber(document.getElementById('cref-carnumber').value);Dialog.list.createFormationTemplateDialog.functions.reflesh();document.getElementById('cref-carnumber').value='';}catch(e){}document.getElementById('cref-carnumber').focus()" class="lsf-icon" icon="add">追加</button></td></tr></table><div id="cref-new-formated-template-table" class="element-bottom-of-input-area"></div>`, [{ "content": "確定", "event": `Dialog.list.createFormationTemplateDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "クリア", "event": `Dialog.list.createFormationTemplateDialog.functions.clearInputs();Dialog.list.createFormationTemplateDialog.functions.reflesh();`, "icon": "clear" }, { "content": "キャンセル", "event": `Dialog.list.createFormationTemplateDialog.off();`, "icon": "close" }], {
+	new Dialog("createFormationTemplateDialog", "編成テンプレートの作成･編集･複製", `<table class="input-area"><tr><td>形式</td><td><select id="cref-series" onchange="Dialog.list.createFormationTemplateDialog.functions.reflesh()"></select></td></tr><tr><td>テンプレートの説明</td><td><input id="cref-name" oninput="Dialog.list.createFormationTemplateDialog.functions.reflesh();"></td></tr><tr><td>編成番号の一般式</td><td><input id="cref-formationnumber" oninput="try{Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.formationName=this.value;Dialog.list.createFormationTemplateDialog.functions.reflesh()}catch(e){}"></td></tr><tr><td>車両番号の一般式</td><td><input id="cref-carnumber" onkeyup="if(event.keyCode==13){document.getElementById('cref-add-number-button').click()}"><button id="cref-add-number-button" onclick="try{Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.addCarNumber(document.getElementById('cref-carnumber').value);Dialog.list.createFormationTemplateDialog.functions.reflesh();document.getElementById('cref-carnumber').value='';}catch(e){}document.getElementById('cref-carnumber').focus()" class="lsf-icon" icon="add">追加</button></td></tr></table><div id="cref-new-formated-template-table" class="element-bottom-of-input-area"></div>`, [{ "content": "確定", "event": `Dialog.list.createFormationTemplateDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "クリア", "event": `Dialog.list.createFormationTemplateDialog.functions.clearInputs();Dialog.list.createFormationTemplateDialog.functions.reflesh();`, "icon": "clear" }, { "content": "キャンセル", "event": `Dialog.list.createFormationTemplateDialog.off();`, "icon": "close" }], {
 		tentativeFormationTemplate: new FormationTemplate(),
 		tentativeFormationTemplateId: 0,
 		isExisting: false,
@@ -280,13 +280,24 @@ window.addEventListener("load", function () {
 			//既存の編成テンプレートの場合
 			if (x != undefined) {
 				Dialog.list.createFormationTemplateDialog.functions.isExisting = true;
-				Dialog.list.createFormationTemplateDialog.functions.isCopyMode = isCopyMode === undefined ? false : isCopyMode;
+				if (isCopyMode) {
+					Dialog.list.createFormationTemplateDialog.dialogTitle.innerHTML = "編成テンプレートの複製";
+					Dialog.list.createFormationTemplateDialog.buttons.querySelector("button").innerHTML = "複製";
+					Dialog.list.createFormationTemplateDialog.functions.isCopyMode = true;
+				} else {
+					Dialog.list.createFormationTemplateDialog.dialogTitle.innerHTML = "編成テンプレートの編集";
+					Dialog.list.createFormationTemplateDialog.buttons.querySelector("button").innerHTML = "保存";
+					Dialog.list.createFormationTemplateDialog.functions.isCopyMode = false;
+				}
 				Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplateId = x;
 				let tmpTemplate = AllFormationTemplates.getFormationTemplate(x);
 				Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate = new FormationTemplate(tmpTemplate.seriesId, tmpTemplate.name, tmpTemplate.carNumbers, tmpTemplate.rawFormationName);
 				document.querySelector("#cref-series").value = Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.seriesId;
 				document.querySelector("#cref-name").value = Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.name;
 				document.querySelector("#cref-formationnumber").value = Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.rawFormationName || "";
+			} else {
+				Dialog.list.createFormationTemplateDialog.dialogTitle.innerHTML = "編成テンプレートの作成";
+				Dialog.list.createFormationTemplateDialog.buttons.querySelector("button").innerHTML = "作成";
 			}
 			Dialog.list.createFormationTemplateDialog.functions.reflesh();
 			Dialog.list.createFormationTemplateDialog.on();
@@ -341,6 +352,8 @@ window.addEventListener("load", function () {
 			}
 		},
 		clearInputs: function () {
+			Dialog.list.createFormationTemplateDialog.dialogTitle.innerHTML = "";
+			Dialog.list.createFormationTemplateDialog.buttons.querySelector("button").innerHTML = "確定";
 			Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate = new FormationTemplate();
 			Dialog.list.createFormationTemplateDialog.functions.isExisting = false;
 			Dialog.list.createFormationTemplateDialog.functions.isCopyMode = false;
@@ -358,12 +371,14 @@ window.addEventListener("load", function () {
 			Dialog.list.createSeriesDialog.functions.clearInputs();
 			if (x != undefined) {
 				//既存形式
+				Dialog.list.createSeriesDialog.dialogTitle.innerHTML = "形式の編集";
 				Dialog.list.createSeriesDialog.functions.tentativeSeries = AllSerieses.seriesesList[x];
 				document.getElementById("crsr-series-name").value = Dialog.list.createSeriesDialog.functions.tentativeSeries.name;
 				document.getElementById("crsr-series-description").value = Dialog.list.createSeriesDialog.functions.tentativeSeries.description;
 				document.getElementById("crsr-series-ishidden").checked = !Dialog.list.createSeriesDialog.functions.tentativeSeries.isHidden;
 			} else {
 				//新規形式
+				Dialog.list.createSeriesDialog.dialogTitle.innerHTML = "形式の作成";
 				Dialog.list.createSeriesDialog.functions.tentativeSeries = null;
 			}
 			Dialog.list.createSeriesDialog.on();
@@ -393,6 +408,7 @@ window.addEventListener("load", function () {
 			}
 		},
 		clearInputs: function () {
+			Dialog.list.createSeriesDialog.dialogTitle.innerHTML = "";
 			Dialog.list.createSeriesDialog.functions.tentativeSeries = null;
 			document.getElementById("crsr-series-name").value = "";
 			document.getElementById("crsr-series-description").value = "";
