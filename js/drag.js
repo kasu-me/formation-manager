@@ -7,8 +7,8 @@ class Drag {
 				elem.classList.add("selected");
 				elem.classList.add("selected-origin");
 
-				Drag.dragContainer.style.width = `${elem.parentNode.clientWidth + 2}px`;
-				Drag.dragContainer.style.height = `${elem.parentNode.clientHeight + 2}px`;
+				Drag.dragContainer.style.width = `${elem.parentNode.clientWidth + 3}px`;
+				Drag.dragContainer.style.height = `${elem.parentNode.clientHeight + 3}px`;
 
 				Drag.dragContainer.style.top = `${elem.parentNode.getBoundingClientRect().top}px`;
 				Drag.dragContainer.style.left = `${elem.parentNode.getBoundingClientRect().left}px`;
