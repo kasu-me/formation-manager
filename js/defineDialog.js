@@ -560,7 +560,7 @@ window.addEventListener("load", function () {
 	}, true);
 
 	//編成の詳細:fmdt
-	new Dialog("formationDetealDialog", "編成の詳細", `<div id="fmdt-main"></div><div id="fmdt-remark">備考：<span id="fmdt-remark-remark"></span><span id="fmdt-remark-button"></span></div>`, [{ "content": "編成解除", "event": `Dialog.list.formationDetealDialog.functions.releaseFormation()`, "icon": "clear" }, { "content": "編成内の車両をまとめて廃車", "event": `Dialog.list.formationDetealDialog.functions.releaseFormationAndDropAllCars()`, "icon": "delete" }, { "content": "閉じる", "event": `Dialog.list.formationDetealDialog.off();`, "icon": "close" }], {
+	new Dialog("formationDetealDialog", "編成の詳細", `<div id="fmdt-main"></div><div id="fmdt-remark">備考：<span id="fmdt-remark-remark"></span><span id="fmdt-remark-button"></span></div>`, [{ "content": "車両並替", "event": `Dialog.list.formationShuffleDialog.functions.display(Number(document.querySelector('#fmdt-opening').innerHTML))`, "icon": "shuffle" }, { "content": "編成解除", "event": `Dialog.list.formationDetealDialog.functions.releaseFormation()`, "icon": "clear" }, { "content": "まとめて廃車", "event": `Dialog.list.formationDetealDialog.functions.releaseFormationAndDropAllCars()`, "icon": "delete" }, { "content": "閉じる", "event": `Dialog.list.formationDetealDialog.off();`, "icon": "close" }], {
 		//編成の詳細ダイアログを表示
 		display: function (x) {
 			let table = new Table();
@@ -648,6 +648,62 @@ window.addEventListener("load", function () {
 					AllFormations.releaseFormation(newFormationId, terminatedOn);
 				}
 				Dialog.list.formationRenameDialog.off();
+				reflesh();
+				Dialog.list.formationDetealDialog.functions.display(newFormationId);
+			}
+		}
+	}, true);
+
+	//編成内車両の並べ替え:fmsh
+	new Dialog("formationShuffleDialog", "編成内車両の並べ替え", `<div id="fmsh-main"></div>`, [{ "content": "確定", "event": `Dialog.list.formationShuffleDialog.functions.shuffleFormation()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.formationShuffleDialog.off();Dialog.list.formationDetealDialog.functions.display(Dialog.list.formationShuffleDialog.functions.formationId)`, "icon": "close" }], {
+		formationId: 0,
+		tentativeFormation: new Formation(),
+		//編成を改名ダイアログを表示
+		display: function (x) {
+			//親ダイアログが表示されている状態以外での実行を禁止
+			if (Dialog.list.formationDetealDialog.isActive) {
+				Dialog.list.formationShuffleDialog.functions.formationId = x;
+				let tmpFormation = AllFormations.formationsList[x];
+				Dialog.list.formationShuffleDialog.functions.tentativeFormation = new Formation(tmpFormation.seriesId, tmpFormation.name, [...tmpFormation.cars], tmpFormation.belongsTo, now, tmpFormation.remark);
+				Dialog.list.formationShuffleDialog.functions.reflesh();
+				Dialog.list.formationShuffleDialog.on();
+			}
+		},
+		reflesh: function () {
+			let table = new Table();
+			table.setAttributes({ "class": "vertical-stripes not-formated-car-table" });
+			table.setSubtitle("編成に所属している車両一覧");
+			let maxCellCount = 10;
+			let carIds = listUpNotFormatedCarIds();
+			for (let id of Dialog.list.formationShuffleDialog.functions.tentativeFormation.cars) {
+				if (table.cellCountOfLastRow % maxCellCount == 0) {
+					table.addRow();
+				}
+				table.addCell(`<span>${AllCars.carsList[id].number}</span>`, { "class": "car preview-car", "id": `fmsh-car-${id}` });
+			}
+			table.addBlankCellToRowRightEnd();
+			document.querySelector("#fmsh-main").innerHTML = table.generateTable();
+			Drag.setElements(document.querySelectorAll("#fmsh-main td.car span"), (dragResult) => {
+				if (dragResult.to != -1) {
+					Dialog.list.formationShuffleDialog.functions.tentativeFormation.cars.splice(dragResult.to + dragResult.direction, 0, Dialog.list.formationShuffleDialog.functions.tentativeFormation.cars[dragResult.me]);
+					Dialog.list.formationShuffleDialog.functions.tentativeFormation.cars.splice(dragResult.me + ((dragResult.to < dragResult.me) ? 1 : 0), 1);
+					Dialog.list.formationShuffleDialog.functions.reflesh();
+				}
+			});
+		},
+		shuffleFormation: function () {
+			//親ダイアログが表示されている状態以外での実行を禁止
+			if (Dialog.list.formationShuffleDialog.isActive) {
+				let formation = AllFormations.formationsList[Dialog.list.formationShuffleDialog.functions.formationId];
+				let isTerminated = formation.isTerminated;
+				let terminatedOn = formation.terminatedOn;
+				AllFormations.releaseFormation(Dialog.list.formationShuffleDialog.functions.formationId);
+				let newFormationId = AllFormations.addFormation(Dialog.list.formationShuffleDialog.functions.tentativeFormation);
+				//元の編成が未来で解除されていた編成の場合、今作成した編成をその年月で編成解除
+				if (isTerminated) {
+					AllFormations.releaseFormation(newFormationId, terminatedOn);
+				}
+				Dialog.list.formationShuffleDialog.off();
 				reflesh();
 				Dialog.list.formationDetealDialog.functions.display(newFormationId);
 			}
