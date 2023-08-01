@@ -66,7 +66,7 @@ window.addEventListener("load", function () {
 						table.addCell("");
 					}
 				}
-				table.addCell(`<button class="lsf-icon" icon="forward" onclick="Dialog.list.createFormationFromTemplateDialog.functions.display(${formationTemplateId})">テンプレートを使用</button><button class="lsf-icon" icon="pen" onclick="Dialog.list.createFormationTemplateDialog.functions.display(${formationTemplateId})">編集</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.confirmDialog.functions.display(Message.list['MC006'],()=>{Dialog.list.formationTemplatesDialog.functions.deleteFormationTemplate(${formationTemplateId})})">削除</button>`, { "class": "buttons" });
+				table.addCell(`<button class="lsf-icon" icon="forward" onclick="Dialog.list.createFormationFromTemplateDialog.functions.display(${formationTemplateId})">使用</button><button class="lsf-icon" icon="pen" onclick="Dialog.list.createFormationTemplateDialog.functions.display(${formationTemplateId})">編集</button><button class="lsf-icon" icon="copy" onclick="Dialog.list.createFormationTemplateDialog.functions.display(${formationTemplateId},true)">複製</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.confirmDialog.functions.display(Message.list['MC006'],()=>{Dialog.list.formationTemplatesDialog.functions.deleteFormationTemplate(${formationTemplateId})})">削除</button>`, { "class": "buttons" });
 			}
 			table.rows.sort((a, b) => { return a[0].getAttibute("seriesId") < b[0].getAttibute("seriesId") ? -1 : 1 })
 			document.querySelector("#formationTemplatesDialog div.table-container").innerHTML = table.generateTable();
@@ -271,14 +271,16 @@ window.addEventListener("load", function () {
 		tentativeFormationTemplate: new FormationTemplate(),
 		tentativeFormationTemplateId: 0,
 		isExisting: false,
+		isCopyMode: false,
 		//編成テンプレートを作成ダイアログを表示
-		display: function (x) {
+		display: function (x, isCopyMode) {
 			Dialog.list.createFormationTemplateDialog.functions.clearInputs();
 			//セレクトボックスに形式名を投入
 			setSeriesesToSelectBox(document.querySelector("#cref-series"));
 			//既存の編成テンプレートの場合
 			if (x != undefined) {
 				Dialog.list.createFormationTemplateDialog.functions.isExisting = true;
+				Dialog.list.createFormationTemplateDialog.functions.isCopyMode = isCopyMode === undefined ? false : isCopyMode;
 				Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplateId = x;
 				let tmpTemplate = AllFormationTemplates.getFormationTemplate(x);
 				Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate = new FormationTemplate(tmpTemplate.seriesId, tmpTemplate.name, tmpTemplate.carNumbers, tmpTemplate.rawFormationName);
@@ -321,7 +323,7 @@ window.addEventListener("load", function () {
 				if (Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.length < 1) {
 					Dialog.list.alertDialog.functions.display(Message.list["MA002"]);
 				} else {
-					if (!Dialog.list.createFormationTemplateDialog.functions.isExisting) {
+					if (!Dialog.list.createFormationTemplateDialog.functions.isExisting || Dialog.list.createFormationTemplateDialog.functions.isCopyMode) {
 						//新規編成テンプレートの場合
 						AllFormationTemplates.addFormationTemplate(Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate);
 						Dialog.list.createFormationTemplateDialog.functions.clearInputs();
@@ -341,6 +343,7 @@ window.addEventListener("load", function () {
 		clearInputs: function () {
 			Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate = new FormationTemplate();
 			Dialog.list.createFormationTemplateDialog.functions.isExisting = false;
+			Dialog.list.createFormationTemplateDialog.functions.isCopyMode = false;
 			Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplateId = 0;
 			document.querySelector("#cref-name").value = "";
 			document.querySelector("#cref-carnumber").value = "";
