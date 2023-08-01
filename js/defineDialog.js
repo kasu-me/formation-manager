@@ -672,7 +672,7 @@ window.addEventListener("load", function () {
 		reflesh: function () {
 			let table = new Table();
 			table.setAttributes({ "class": "vertical-stripes not-formated-car-table" });
-			table.setSubtitle("編成に所属している車両一覧");
+			table.setSubtitle("ドラッグで車両順序を変更");
 			let maxCellCount = 10;
 			let carIds = listUpNotFormatedCarIds();
 			for (let id of Dialog.list.formationShuffleDialog.functions.tentativeFormation.cars) {
