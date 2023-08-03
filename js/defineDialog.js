@@ -87,7 +87,7 @@ window.addEventListener("load", function () {
 	new Dialog("createFormationFromTemplateDialog", "編成テンプレートから編成作成", `<table class="input-area">
 	<tr>
 		<td>番号</td>
-		<td><input id="fromt-car-number" type="number" value="1" onchange="Dialog.list.createFormationFromTemplateDialog.functions.reflesh(Number(document.querySelector('#fromt-opening').innerHTML),Number(this.value))" onkeyup="Dialog.list.createFormationFromTemplateDialog.functions.reflesh(Number(document.querySelector('#fromt-opening').innerHTML),Number(this.value))"></td>
+		<td><input id="fromt-car-number" type="number" value="1" onchange="Dialog.list.createFormationFromTemplateDialog.functions.reflesh(Number(document.getElementById('fromt-opening').innerHTML),Number(this.value))" onkeyup="Dialog.list.createFormationFromTemplateDialog.functions.reflesh(Number(document.getElementById('fromt-opening').innerHTML),Number(this.value))"></td>
 	</tr>
 	<tr>
 		<td><span>所属</span></td>
@@ -110,11 +110,11 @@ window.addEventListener("load", function () {
 		display: function (x) {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.formationTemplatesDialog.isActive) {
-				document.querySelector("#fromt-opening").innerHTML = x;
-				document.querySelector('#fromt-car-remark').value = "";
-				Dialog.list.createFormationFromTemplateDialog.functions.reflesh(x, Number(document.querySelector("#fromt-car-number").value));
+				document.getElementById("fromt-opening").innerHTML = x;
+				document.getElementById("fromt-car-remark").value = "";
+				Dialog.list.createFormationFromTemplateDialog.functions.reflesh(x, Number(document.getElementById("fromt-car-number").value));
 				Dialog.list.createFormationFromTemplateDialog.on();
-				document.querySelector('#fromt-car-number').focus();
+				document.getElementById("fromt-car-number").focus();
 			}
 		},
 		//編成テンプレートから編成を作成ダイアログのプレビューをリフレッシュ
@@ -129,20 +129,20 @@ window.addEventListener("load", function () {
 			for (let i in formationTemplate.carNumbers) {
 				table.addCell(formationTemplate.carNumbers[i](y));
 			}
-			document.querySelector("#fromt-template-legend").innerHTML = table.generateTable();
+			document.getElementById("fromt-template-legend").innerHTML = table.generateTable();
 		},
 		//編成テンプレートから編成を作成
 		createFormation: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.createFormationFromTemplateDialog.isActive) {
-				let formationInfo = AllFormations.addFormationFromTemplate(AllCars, AllFormationTemplates.getFormationTemplate(Number(document.querySelector('#fromt-opening').innerHTML)), Number(document.querySelector("#fromt-car-number").value), document.querySelector("#fromt-car-belongs-to").value);
-				AllFormations.formationsList[formationInfo.formationId].remark = document.querySelector('#fromt-car-remark').value;
+				let formationInfo = AllFormations.addFormationFromTemplate(AllCars, AllFormationTemplates.getFormationTemplate(Number(document.getElementById("fromt-opening").innerHTML)), Number(document.getElementById("fromt-car-number").value), document.getElementById("fromt-car-belongs-to").value);
+				AllFormations.formationsList[formationInfo.formationId].remark = document.getElementById("fromt-car-remark").value;
 				if (!document.getElementById("fora-continue").checked) {
 					Dialog.list.createFormationFromTemplateDialog.off();
 					Dialog.list.formationDetealDialog.functions.display(formationInfo.formationId);
 				} else {
 					reflesh();
-					document.querySelector('#fromt-car-number').focus();
+					document.getElementById("fromt-car-number").focus();
 				}
 			}
 		}
@@ -199,7 +199,7 @@ window.addEventListener("load", function () {
 			document.getElementById("forfc-car-belongs-to").value = "";
 			document.getElementById("forfc-car-remark").value = "";
 			Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation = new Formation(0, "", [], "", now);
-			setSeriesesToSelectBox(document.querySelector("#forfc-series"));
+			setSeriesesToSelectBox(document.getElementById("forfc-series"));
 			let table = new Table();
 			table.setAttributes({ "class": "vertical-stripes not-formated-car-table" });
 			table.setSubtitle("編成に所属していない車両一覧");
@@ -212,14 +212,14 @@ window.addEventListener("load", function () {
 				table.addCell(`<a href="javascript:void(0)" onclick="if(Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.indexOf(${id})==-1){Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.push(${id})}else{Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.splice(Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.indexOf(${id}),1)}this.parentNode.classList.toggle('selected');Dialog.list.createFormationFromFloatingCarsDialog.functions.reflesh()">${AllCars.carsList[id].number}</a>`, { "class": "car", "id": `forfc-car-${id}` });
 			}
 			table.addBlankCellToRowRightEnd();
-			document.querySelector("#forfc-not-formated-cars-table").innerHTML = table.generateTable();
+			document.getElementById("forfc-not-formated-cars-table").innerHTML = table.generateTable();
 			Dialog.list.createFormationFromFloatingCarsDialog.functions.reflesh();
 			Dialog.list.createFormationFromFloatingCarsDialog.on();
 		},
 		//作成予定の編成プレビューをリフレッシュ
 		reflesh: function () {
-			Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.setSeries(document.querySelector("#forfc-series").value);
-			Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.setName(document.querySelector("#forfc-formation-name").value);
+			Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.setSeries(document.getElementById("forfc-series").value);
+			Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.setName(document.getElementById("forfc-formation-name").value);
 
 			let table = new Table();
 			table.setAttributes({ "class": "vertical-stripes not-formated-car-table formation-view" });
@@ -228,10 +228,10 @@ window.addEventListener("load", function () {
 			table.addCell(`編成番号:${Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.name}`, { "colspan": Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.length });
 			for (let i in Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars) {
 				if (i % 10 == 0) { table.addRow() }
-				table.addCell(`<span>${AllCars.carsList[Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[i]].number}</span><a href="javascript:void(0)" onclick="Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.splice(${i},1);document.querySelector('#forfc-car-${Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[i]}').classList.toggle('selected');Dialog.list.createFormationFromFloatingCarsDialog.functions.reflesh()" class="lsf preview-delete-button" title="削除">delete</a>`, { "class": "preview-car" });
+				table.addCell(`<span>${AllCars.carsList[Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[i]].number}</span><a href="javascript:void(0)" onclick="Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.splice(${i},1);document.getElementById('forfc-car-${Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[i]}').classList.toggle('selected');Dialog.list.createFormationFromFloatingCarsDialog.functions.reflesh()" class="lsf preview-delete-button" title="削除">delete</a>`, { "class": "preview-car" });
 			}
 			table.addBlankCellToRowIn(0, true);
-			document.querySelector("#forfc-new-formated-cars-table").innerHTML = table.generateTable();
+			document.getElementById("forfc-new-formated-cars-table").innerHTML = table.generateTable();
 			Drag.setElements(document.querySelectorAll("#forfc-new-formated-cars-table td.preview-car span"), (dragResult) => {
 				if (dragResult.to != -1) {
 					Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.splice(dragResult.to + dragResult.direction, 0, Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[dragResult.me]);
@@ -250,7 +250,7 @@ window.addEventListener("load", function () {
 					if (Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.name == "") {
 						Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.name = `${AllCars.carsList[Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[0]].number}F`;
 					}
-					Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.remark = document.querySelector("#forfc-car-remark").value;
+					Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.remark = document.getElementById("forfc-car-remark").value;
 					let formationId = AllFormations.addFormation(Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation);
 					Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation = new Formation(0, 0, []);
 
@@ -276,7 +276,7 @@ window.addEventListener("load", function () {
 		display: function (x, isCopyMode) {
 			Dialog.list.createFormationTemplateDialog.functions.clearInputs();
 			//セレクトボックスに形式名を投入
-			setSeriesesToSelectBox(document.querySelector("#cref-series"));
+			setSeriesesToSelectBox(document.getElementById("cref-series"));
 			//既存の編成テンプレートの場合
 			if (x != undefined) {
 				Dialog.list.createFormationTemplateDialog.functions.isExisting = true;
@@ -292,9 +292,9 @@ window.addEventListener("load", function () {
 				Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplateId = x;
 				let tmpTemplate = AllFormationTemplates.getFormationTemplate(x);
 				Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate = new FormationTemplate(tmpTemplate.seriesId, tmpTemplate.name, tmpTemplate.carNumbers, tmpTemplate.rawFormationName);
-				document.querySelector("#cref-series").value = Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.seriesId;
-				document.querySelector("#cref-name").value = Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.name;
-				document.querySelector("#cref-formationnumber").value = Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.rawFormationName || "";
+				document.getElementById("cref-series").value = Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.seriesId;
+				document.getElementById("cref-name").value = Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.name;
+				document.getElementById("cref-formationnumber").value = Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.rawFormationName || "";
 			} else {
 				Dialog.list.createFormationTemplateDialog.dialogTitle.innerHTML = "編成テンプレートの作成";
 				Dialog.list.createFormationTemplateDialog.buttons.querySelector("button").innerHTML = "作成";
@@ -304,8 +304,8 @@ window.addEventListener("load", function () {
 		},
 		//作成予定の編成テンプレートプレビューをリフレッシュ
 		reflesh: function () {
-			Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.seriesId = Number(document.querySelector("#cref-series").value);
-			Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.name = document.querySelector("#cref-name").value;
+			Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.seriesId = Number(document.getElementById("cref-series").value);
+			Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.name = document.getElementById("cref-name").value;
 
 			let table = new Table();
 			if (Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.length != 0) {
@@ -319,7 +319,7 @@ window.addEventListener("load", function () {
 				}
 				table.addBlankCellToRowIn(0, true);
 			}
-			document.querySelector("#cref-new-formated-template-table").innerHTML = table.generateTable();
+			document.getElementById("cref-new-formated-template-table").innerHTML = table.generateTable();
 			Drag.setElements(document.querySelectorAll("#cref-new-formated-template-table td.preview-car span"), (dragResult) => {
 				if (dragResult.to != -1) {
 					Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.addCarNumberTo(Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.rawCarNumbers[dragResult.me], dragResult.to + dragResult.direction);
@@ -358,9 +358,9 @@ window.addEventListener("load", function () {
 			Dialog.list.createFormationTemplateDialog.functions.isExisting = false;
 			Dialog.list.createFormationTemplateDialog.functions.isCopyMode = false;
 			Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplateId = 0;
-			document.querySelector("#cref-name").value = "";
-			document.querySelector("#cref-carnumber").value = "";
-			document.querySelector("#cref-formationnumber").value = "";
+			document.getElementById("cref-name").value = "";
+			document.getElementById("cref-carnumber").value = "";
+			document.getElementById("cref-formationnumber").value = "";
 		}
 	});
 
@@ -483,7 +483,7 @@ window.addEventListener("load", function () {
 			table.addRow();
 			table.addCell("備考");
 			table.addCell(`${AllCars.carsList[x].remark == undefined || AllCars.carsList[x].remark == "" ? "" : `<span>${AllCars.carsList[x].remark}</span>`}<button class="lsf-icon" icon="pen" onclick="Dialog.list.editRemarkDialog.functions.display('car',${x})">編集</button>`, { "class": "remark" });
-			document.querySelector("#cardt-main").innerHTML = table.generateTable();
+			document.getElementById("cardt-main").innerHTML = table.generateTable();
 			Dialog.list.carDetealDialog.on();
 		},
 
@@ -496,21 +496,21 @@ window.addEventListener("load", function () {
 		display: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.carDetealDialog.isActive) {
-				Dialog.list.carDetealDialog.functions.carId = Number(document.querySelector('#cardt-car-id').innerHTML);
+				Dialog.list.carDetealDialog.functions.carId = Number(document.getElementById("cardt-car-id").innerHTML);
 				if (AllCars.carsList[Dialog.list.carDetealDialog.functions.carId].isDroppedInTime(now)) {
 					Dialog.list.alertDialog.functions.display(Message.list["MA004"]);
 					return;
 				}
-				document.querySelector("#carrn-main").innerHTML = `<table class="input-area"><tr><td>車両番号</td><td><input id="carrn-car-number" placeholder="${AllCars.carsList[Dialog.list.carDetealDialog.functions.carId].number}" value="${AllCars.carsList[Dialog.list.carDetealDialog.functions.carId].number}">号車</td></tr></table><div id="carrn-opening">${Dialog.list.carDetealDialog.functions.carId}</div>`
+				document.getElementById("carrn-main").innerHTML = `<table class="input-area"><tr><td>車両番号</td><td><input id="carrn-car-number" placeholder="${AllCars.carsList[Dialog.list.carDetealDialog.functions.carId].number}" value="${AllCars.carsList[Dialog.list.carDetealDialog.functions.carId].number}">号車</td></tr></table><div id="carrn-opening">${Dialog.list.carDetealDialog.functions.carId}</div>`
 				Dialog.list.carRenumberDialog.on();
-				document.querySelector('#carrn-car-number').focus();
+				document.getElementById("carrn-car-number").focus();
 			}
 		},
 		//車両を改番
 		renumberCar: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.carRenumberDialog.isActive) {
-				AllCars.renumberCar(Dialog.list.carDetealDialog.functions.carId, document.querySelector('#carrn-car-number').value);
+				AllCars.renumberCar(Dialog.list.carDetealDialog.functions.carId, document.getElementById("carrn-car-number").value);
 				Dialog.list.carRenumberDialog.off();
 				reflesh();
 				Dialog.list.carDetealDialog.functions.display(Dialog.list.carDetealDialog.functions.carId);
@@ -560,7 +560,7 @@ window.addEventListener("load", function () {
 	}, true);
 
 	//編成の詳細:fmdt
-	new Dialog("formationDetealDialog", "編成の詳細", `<div id="fmdt-main"></div><div id="fmdt-remark">備考：<span id="fmdt-remark-remark"></span><span id="fmdt-remark-button"></span></div>`, [{ "content": "車両並替", "event": `Dialog.list.formationShuffleDialog.functions.display(Number(document.querySelector('#fmdt-opening').innerHTML))`, "icon": "shuffle" }, { "content": "編成解除", "event": `Dialog.list.formationDetealDialog.functions.releaseFormation()`, "icon": "clear" }, { "content": "まとめて廃車", "event": `Dialog.list.formationDetealDialog.functions.releaseFormationAndDropAllCars()`, "icon": "delete" }, { "content": "閉じる", "event": `Dialog.list.formationDetealDialog.off();`, "icon": "close" }], {
+	new Dialog("formationDetealDialog", "編成の詳細", `<div id="fmdt-main"></div><div id="fmdt-remark">備考：<span id="fmdt-remark-remark"></span><span id="fmdt-remark-button"></span></div>`, [{ "content": "車両並替", "event": `Dialog.list.formationShuffleDialog.functions.display(Number(document.getElementById('fmdt-opening').innerHTML))`, "icon": "shuffle" }, { "content": "編成解除", "event": `Dialog.list.formationDetealDialog.functions.releaseFormation()`, "icon": "clear" }, { "content": "まとめて廃車", "event": `Dialog.list.formationDetealDialog.functions.releaseFormationAndDropAllCars()`, "icon": "delete" }, { "content": "閉じる", "event": `Dialog.list.formationDetealDialog.off();`, "icon": "close" }], {
 		//編成の詳細ダイアログを表示
 		display: function (x) {
 			let table = new Table();
@@ -574,16 +574,16 @@ window.addEventListener("load", function () {
 				table.addCell(Formatter.link(formation.cars[i], AllCars.carsList[formation.cars[i]].number));
 			}
 			let html = table.generateTable();
-			document.querySelector("#fmdt-main").innerHTML = html;
-			document.querySelector("#fmdt-remark-remark").innerHTML = formation.remark == undefined ? "" : formation.remark;
-			document.querySelector("#fmdt-remark-button").innerHTML = `<button class="lsf-icon" icon="pen" onclick="Dialog.list.editRemarkDialog.functions.display('formation',${x})">編集</button>`
+			document.getElementById("fmdt-main").innerHTML = html;
+			document.getElementById("fmdt-remark-remark").innerHTML = formation.remark == undefined ? "" : formation.remark;
+			document.getElementById("fmdt-remark-button").innerHTML = `<button class="lsf-icon" icon="pen" onclick="Dialog.list.editRemarkDialog.functions.display('formation',${x})">編集</button>`
 			Dialog.list.formationDetealDialog.on();
 		},
 		//編成を解除
 		releaseFormation: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.formationDetealDialog.isActive) {
-				let formationId = Number(document.querySelector('#fmdt-opening').innerHTML);
+				let formationId = Number(document.getElementById("fmdt-opening").innerHTML);
 				if (AllFormations.formationsList[formationId].isTerminated) {
 					Dialog.list.alertDialog.functions.display(Message.list["MA005"]);
 					return;
@@ -599,7 +599,7 @@ window.addEventListener("load", function () {
 		releaseFormationAndDropAllCars: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.formationDetealDialog.isActive) {
-				let formationId = Number(document.querySelector('#fmdt-opening').innerHTML);
+				let formationId = Number(document.getElementById("fmdt-opening").innerHTML);
 				if (AllFormations.formationsList[formationId].isTerminated) {
 					Dialog.list.alertDialog.functions.display(Message.list["MA006"]);
 					return;
@@ -628,10 +628,10 @@ window.addEventListener("load", function () {
 		display: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.formationDetealDialog.isActive) {
-				Dialog.list.formationRenameDialog.functions.formationId = Number(document.querySelector('#fmdt-opening').innerHTML);
-				document.querySelector("#fmrn-main").innerHTML = `<table class="input-area"><tr><td>編成番号</td><td><input id="fmrn-formation-name" placeholder="${AllFormations.formationsList[Dialog.list.formationRenameDialog.functions.formationId].name}" value="${AllFormations.formationsList[Dialog.list.formationRenameDialog.functions.formationId].name}"></td></tr></table><div id="fmrn-opening">${Dialog.list.formationRenameDialog.functions.formationId}</div>`
+				Dialog.list.formationRenameDialog.functions.formationId = Number(document.getElementById("fmdt-opening").innerHTML);
+				document.getElementById("fmrn-main").innerHTML = `<table class="input-area"><tr><td>編成番号</td><td><input id="fmrn-formation-name" placeholder="${AllFormations.formationsList[Dialog.list.formationRenameDialog.functions.formationId].name}" value="${AllFormations.formationsList[Dialog.list.formationRenameDialog.functions.formationId].name}"></td></tr></table><div id="fmrn-opening">${Dialog.list.formationRenameDialog.functions.formationId}</div>`
 				Dialog.list.formationRenameDialog.on();
-				document.querySelector('#fmrn-formation-name').focus();
+				document.getElementById("fmrn-formation-name").focus();
 			}
 		},
 		//編成を改名
@@ -642,7 +642,7 @@ window.addEventListener("load", function () {
 				let isTerminated = formation.isTerminated;
 				let terminatedOn = formation.terminatedOn;
 				AllFormations.releaseFormation(Dialog.list.formationRenameDialog.functions.formationId);
-				let newFormationId = AllFormations.addFormation(new Formation(formation.seriesId, document.querySelector('#fmrn-formation-name').value, formation.cars, formation.belongsTo, now))
+				let newFormationId = AllFormations.addFormation(new Formation(formation.seriesId, document.getElementById("fmrn-formation-name").value, formation.cars, formation.belongsTo, now))
 				//元の編成が未来で解除されていた編成の場合、今作成した編成をその年月で編成解除
 				if (isTerminated) {
 					AllFormations.releaseFormation(newFormationId, terminatedOn);
@@ -682,7 +682,7 @@ window.addEventListener("load", function () {
 				table.addCell(`<span>${AllCars.carsList[id].number}</span>`, { "class": "car preview-car", "id": `fmsh-car-${id}` });
 			}
 			table.addBlankCellToRowRightEnd();
-			document.querySelector("#fmsh-main").innerHTML = table.generateTable();
+			document.getElementById("fmsh-main").innerHTML = table.generateTable();
 			Drag.setElements(document.querySelectorAll("#fmsh-main td.car span"), (dragResult) => {
 				if (dragResult.to != -1) {
 					Dialog.list.formationShuffleDialog.functions.tentativeFormation.cars.splice(dragResult.to + dragResult.direction, 0, Dialog.list.formationShuffleDialog.functions.tentativeFormation.cars[dragResult.me]);

@@ -5,7 +5,7 @@ function showJSONOutputDialog() {
 
 //JSON読み込み
 function showJSONLoadDialog() {
-	document.querySelector("#jsonReader").click();
+	document.getElementById("jsonReader").click();
 }
 let tmpJSON = "";
 function readJson(evt) {
@@ -14,7 +14,7 @@ function readJson(evt) {
 	reader.readAsText(file[0]);
 	reader.onload = function (e) {
 		tmpJSON = e.target.result;
-		Dialog.list.confirmDialog.functions.display(Message.list["MC001"], continueReadJSON, () => { document.querySelector('#jsonReader').value = ''; tmpJSON = ''; });
+		Dialog.list.confirmDialog.functions.display(Message.list["MC001"], continueReadJSON, () => { document.getElementById("jsonReader").value = ""; tmpJSON = ""; });
 	}
 }
 function continueReadJSON() {
@@ -96,7 +96,7 @@ function list() {
 		return self.indexOf(x) === i && i !== self.lastIndexOf(x);
 	});
 
-	document.querySelector("#formation-table-container").innerHTML = `${(duplications.length > 0) ? `<div class="warning message">
+	document.getElementById("formation-table-container").innerHTML = `${(duplications.length > 0) ? `<div class="warning message">
 	<style type="text/css">
 	.wn_st1{fill:#ff0000;}
 	.wn_st0{fill:#ffebeb;}
@@ -162,13 +162,13 @@ function reflesh() {
 	list();
 
 	//年月を反映
-	document.querySelector("#now-range").value = now.serial;
-	document.querySelector("#now-y").value = now.year;
-	document.querySelector("#now-m").value = now.month;
+	document.getElementById("now-range").value = now.serial;
+	document.getElementById("now-y").value = now.year;
+	document.getElementById("now-m").value = now.month;
 
 	//ダイアログ内の表示を更新
 	if (Dialog.list.carDetealDialog.isActive) {
-		Dialog.list.carDetealDialog.functions.display(Number(document.querySelector('#cardt-car-id').innerHTML));
+		Dialog.list.carDetealDialog.functions.display(Number(document.getElementById("cardt-car-id").innerHTML));
 	}
 	if (Dialog.list.createFormationFromFloatingCarsDialog.isActive) {
 		Dialog.list.createFormationFromFloatingCarsDialog.functions.display();
@@ -196,7 +196,7 @@ function dropCar(carId_) {
 	if (carId_ == undefined) {
 		//親ダイアログが表示されている状態以外での実行を禁止
 		if (Dialog.list.carDetealDialog.isActive) {
-			let carId = Number(document.querySelector('#cardt-car-id').innerHTML);
+			let carId = Number(document.getElementById("cardt-car-id").innerHTML);
 			if (AllCars.carsList[carId].isDropped) {
 				Dialog.list.alertDialog.functions.display("この車両は既に廃車されています。");
 				return;
@@ -270,13 +270,13 @@ function updateNowYearMonthByObject(ym) {
 	now = new YearMonth(ym.year, ym.month);
 }
 function updateNowYearMonthByInputBoxes() {
-	updateNowYearMonth(new YearMonth(Number(document.querySelector('#now-y').value), Number(document.querySelector('#now-m').value)));
+	updateNowYearMonth(new YearMonth(Number(document.getElementById("now-y").value), Number(getElementById("now-m").value)));
 }
 function setInputMaxAndMin() {
-	document.querySelector("#now-range").setAttribute("min", minYearMonth.serial);
-	document.querySelector("#now-range").setAttribute("max", maxYearMonth.serial);
-	document.querySelector("#now-y").setAttribute("min", minYearMonth.year);
-	document.querySelector("#now-y").setAttribute("max", maxYearMonth.year);
+	document.getElementById("now-range").setAttribute("min", minYearMonth.serial);
+	document.getElementById("now-range").setAttribute("max", maxYearMonth.serial);
+	document.getElementById("now-y").setAttribute("min", minYearMonth.year);
+	document.getElementById("now-y").setAttribute("max", maxYearMonth.year);
 }
 
 //年月関連のグローバル変数の定義
