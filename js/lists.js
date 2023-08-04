@@ -191,6 +191,20 @@ class AllFormations {
 		return -1;
 	}
 
+	//車両IDからその車両が所属したことのある全ての編成を探し編成IDの配列で返す(見つからなかった場合空の配列を返す)
+	static searchAllByCarId(targetCarId) {
+		let formations = [];
+		for (let formationId in AllFormations.#formations) {
+			for (let i in AllFormations.#formations[formationId].cars) {
+				if (AllFormations.#formations[formationId].cars[i] == targetCarId) {
+					formations.push(formationId);
+					break;
+				}
+			}
+		}
+		return formations;
+	}
+
 	//年月ym現在で現役の編成かどうか
 	static isStillEnrolled(formationId, ym) {
 		// 組成年月
