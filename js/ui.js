@@ -27,7 +27,8 @@ function continueReadJSON() {
 function list() {
 	//ソート
 	let seriesList = AllSerieses.seriesesList;
-	let carListNow = [];
+	let carIdListNow = [];
+	let carNumberListNow = [];
 	let tables = [];
 	let html = "";
 
@@ -56,11 +57,11 @@ function list() {
 			//行を追加
 			tables.at(-1).addRow();
 			//編成番号セルを追加
-			tables.at(-1).addCell(`${formationList[formationId].name}<button onclick="Dialog.list.formationDetealDialog.functions.display(${formationId})" class="lsf-icon" icon="search">編成詳細</button>`, { "class": "formation-name" });
+			tables.at(-1).addCell(`${formationList[formationId].name}<button onclick="Dialog.list.formationDetealDialog.functions.display(${formationId})" class="lsf-icon" icon="search">編成詳細</button>`, { "class": `formation-name` });
 			//車両ごとに処理
 			let carsOnFormation = formationList[formationId].cars;
 			for (let i in carsOnFormation) {
-				addCarCell(tables.at(-1), carsOnFormation[i], carListNow, true);
+				addCarCell(tables.at(-1), carsOnFormation[i], carIdListNow, carNumberListNow, true);
 				proccessedCarIds.push(carsOnFormation[i]);
 			}
 			//所属地セルを追加
@@ -85,57 +86,58 @@ function list() {
 			if (tables.at(-1).cellCountOfLastRow % 10 == 0) {
 				tables.at(-1).addRow();
 			}
-			addCarCell(tables.at(-1), carId, carListNow, false);
+			addCarCell(tables.at(-1), carId, carIdListNow, carNumberListNow, false);
 		}
 	}
 	//tables.at(-1).addBlankCellToRowRightEnd();
 	html += tables.at(-1).generateTable();
 
 	//車両番号の重複をチェック
-	let duplications = carListNow.filter(function (x, i, self) {
+	let duplicationNumbers = carNumberListNow.filter(function (x, i, self) {
 		return self.indexOf(x) === i && i !== self.lastIndexOf(x);
 	});
 
-	document.getElementById("formation-table-container").innerHTML = `${(duplications.length > 0) ? `<div class="warning message">
-	<style type="text/css">
-	.wn_st1{fill:#ff0000;}
-	.wn_st0{fill:#ffebeb;}
-	</style>
-	<svg version="1.1" id="レイヤー_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-		y="0px" viewBox="0 0 768 680.8" style="enable-background:new 0 0 768 680.8;height: 1em; transform:translateY(1px);" xml:space="preserve">
-		<path class="wn_st1" d="M760,592.3L435.1,29.5c-22.7-39.3-79.5-39.3-102.2,0L8,592.3c-22.7,39.3,5.7,88.5,51.1,88.5h649.9
-			C754.3,680.8,782.7,631.6,760,592.3z"/>
-		<g>
-			<g>
-				<path class="wn_st0" d="M333,507.8H435V608H333V507.8z M431.8,268.6l-25.4,200.2h-46.2l-24.7-200.2V143.8h96.2L431.8,268.6
-					L431.8,268.6z"/>
-			</g>
-		</g>
-	</svg>
-
-	車両番号の重複があります</div>` : ""}${html}`;
+	document.getElementById("formation-table-container").innerHTML = html;
 
 	//重複ハイライト
-	if (duplications.length > 0) {
+	if (duplicationNumbers.length > 0) {
 		let tds = document.querySelectorAll("#formation-table-container td.car");
 		for (let td of tds) {
-			for (let j in duplications) {
-				if (td.innerHTML.match(new RegExp(`<a href=\\"javascript\\:Dialog\\.list\\.carDetealDialog\\.functions\\.display\\(\\d+\\)\\">${duplications[j]}</a>`, "g")) != null) {
-					td.classList.add("duplicated");
+			for (let j in duplicationNumbers) {
+				if (td.innerHTML.match(new RegExp(`<a href=\\"javascript\\:Dialog\\.list\\.carDetealDialog\\.functions\\.display\\(\\d+\\)\\">${duplicationNumbers[j]}</a>`, "g")) != null) {
+					td.classList.add("duplicated-carnumber");
 				}
 			}
 		}
+
+		//車両番号の重複があった場合、車両そのものの重複がないかもチェック
+		let duplicationCars = carIdListNow.filter(function (x, i, self) {
+			return self.indexOf(x) === i && i !== self.lastIndexOf(x);
+		});
+		if (duplicationCars.length > 0) {
+			duplicationCars.forEach((carId) => {
+				document.querySelectorAll(`.car-id-${carId}`).forEach((td) => {
+					td.classList.add("duplicated-car")
+				})
+			});
+		}
+		let warningMessage = document.createElement("div");
+		warningMessage.classList.add("warning");
+		warningMessage.classList.add("message");
+		warningMessage.innerHTML = `${Message.list["MS001"]}${(duplicationCars.length > 0) ? Message.list["MA011"] : Message.list["MA010"]}`;
+		document.getElementById("formation-table-container").prepend(warningMessage);
 	}
 }
 
 //車両セルの追加
 //Table, 車両ID, 処理中の車両リスト, 今編成内の車両を処理しているか
-function addCarCell(table, carId, carListNow, isInFormation) {
+function addCarCell(table, carId, carIdListNow, carNumberListNow, isInFormation) {
 	if (AllCars.carsList[carId].isDroppedInTime(now)) {
 		if (isInFormation) { table.addCell("") }
 	} else {
-		table.addCell(Formatter.link(carId, AllCars.carsList[carId].numberInTime(now)), { "class": "car" + (AllCars.carsList[carId].isDroppedInTime(now) ? " dropped" : "") });
-		carListNow.push(AllCars.carsList[carId].numberInTime(now))
+		table.addCell(Formatter.link(carId, AllCars.carsList[carId].numberInTime(now)), { "class": "car" + ` car-id-${carId}` + (AllCars.carsList[carId].isDroppedInTime(now) ? " dropped" : "") });
+		carIdListNow.push(carId);
+		carNumberListNow.push(AllCars.carsList[carId].numberInTime(now))
 	}
 }
 
@@ -270,7 +272,7 @@ function updateNowYearMonthByObject(ym) {
 	now = new YearMonth(ym.year, ym.month);
 }
 function updateNowYearMonthByInputBoxes() {
-	updateNowYearMonth(new YearMonth(Number(document.getElementById("now-y").value), Number(getElementById("now-m").value)));
+	updateNowYearMonth(new YearMonth(Number(document.getElementById("now-y").value), Number(document.getElementById("now-m").value)));
 }
 function setInputMaxAndMin() {
 	document.getElementById("now-range").setAttribute("min", minYearMonth.serial);

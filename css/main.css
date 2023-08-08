@@ -342,8 +342,13 @@ td.dropped {
 }
 
 /* 重複した車両番号 */
-td.duplicated {
+td.duplicated-carnumber {
 	background-color: #ff0 !important;
+}
+
+/* 重複した車両 */
+td.duplicated-car {
+	background-color: #f00 !important;
 }
 
 /* ダイアログの情報保持用DIV */

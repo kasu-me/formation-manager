@@ -8,6 +8,8 @@ new Message("MA006", "この編成は未来で解除されているため操作�
 new Message("MA007", "車両番号は必須です。");
 new Message("MA008", "データを読み込めませんでした。データが壊れていないか確認してください。");
 new Message("MA009", "処理エラーです。");
+new Message("MA010", "車両番号の重複があります。");
+new Message("MA011", "同じ車両が複数の編成に組成されています。");
 //Confirm Message
 new Message("MC001", "この操作を実行すると現在のデータはクリアされます。本当に読み込んでよろしいですか？");
 new Message("MC002", "${formationName}を${now}付で編成解除します。");
@@ -15,6 +17,22 @@ new Message("MC003", "${formationName}内の車両${carLength}両を${now}付で
 new Message("MC004", "${carNumber}号車を${now}付で廃車します。");
 new Message("MC005", "前回自動的にセーブされたデータが残っています。読み込みますか？");
 new Message("MC006", "編成テンプレートを削除します。");
+//Symbol
+new Message("MS001", `<style type="text/css">
+.wn_st1{fill:#ff0000;}
+.wn_st0{fill:#ffebeb;}
+</style>
+<svg version="1.1" id="レイヤー_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	y="0px" viewBox="0 0 768 680.8" style="enable-background:new 0 0 768 680.8;height: 1em; transform:translateY(1px);margin-right:0.25em;" xml:space="preserve">
+	<path class="wn_st1" d="M760,592.3L435.1,29.5c-22.7-39.3-79.5-39.3-102.2,0L8,592.3c-22.7,39.3,5.7,88.5,51.1,88.5h649.9
+		C754.3,680.8,782.7,631.6,760,592.3z"/>
+	<g>
+		<g>
+			<path class="wn_st0" d="M333,507.8H435V608H333V507.8z M431.8,268.6l-25.4,200.2h-46.2l-24.7-200.2V143.8h96.2L431.8,268.6
+				L431.8,268.6z"/>
+		</g>
+	</g>
+</svg>`);
 
 //以下、ダイアログ定義
 window.addEventListener("load", function () {
