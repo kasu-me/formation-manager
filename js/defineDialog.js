@@ -754,6 +754,9 @@ window.addEventListener("load", function () {
 		}
 	});
 
+	//編成表データ管理:mnfd
+	new Dialog("formationDataManagementDialog", "編成表データ管理", `<p><button onclick="Dialog.list.editJSONDialog.functions.display()" class="lsf-icon dialog-main-button" icon="pen">JSON直接編集</button></p>`, [{ "content": "キャンセル", "event": `Dialog.list.formationDataManagementDialog.off();`, "icon": "close" }]);
+
 	//JSON直接編集:jsed
 	new Dialog("editJSONDialog", "JSON直接編集", `<p class="dialog-warn warning">このデータの書き換えを誤ると、当アプリで作成･編集した全てのデータに影響を及ぼし、最悪の場合はデータを読み込めなくなります。バックアップは個人の責任で確実に行ってください。</p><textarea id="jsed-main"></textarea>`, [{ "content": "保存", "event": `Dialog.list.editJSONDialog.functions.save()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editJSONDialog.off();`, "icon": "close" }], {
 		display: function () {
