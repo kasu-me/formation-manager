@@ -779,8 +779,7 @@ window.addEventListener("load", function () {
 
 
 	//ヘルプダイアログ:help
-	new Dialog("helpDialog", "ヘルプ", helpDialogContents, [{ "content": "閉じる", "event": `Dialog.list.helpDialog.off();`, "icon": "close" }], {
-	}, true);
+	new Dialog("helpDialog", "ヘルプ", helpDialogContents, [{ "content": "閉じる", "event": `Dialog.list.helpDialog.off();`, "icon": "close" }], {}, true);
 
 	//アラート:alrt
 	new Dialog("alertDialog", "警告", `<img src="./js/alert.svg" class="dialog-icon"><div id="alrt-main"></div>`, [{ "content": "OK", "event": `Dialog.list.alertDialog.off()`, "icon": "check" }], {
