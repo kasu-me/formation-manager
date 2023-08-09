@@ -42,7 +42,7 @@ window.addEventListener("load", function () {
 		display: function () {
 			let seriesList = AllSerieses.seriesesList;
 			let table = new Table();
-			table.setAttributes({ "class": "horizontal-stripes" });
+			table.setAttributes({ "class": "horizontal-stripes row-hover-hilight" });
 			for (let seriesId in seriesList) {
 				table.addRow();
 				table.addCell(`${seriesList[seriesId].name}`, { "class": `formation-name${seriesList[seriesId].isHidden ? " hidden" : ""}` });
@@ -60,7 +60,7 @@ window.addEventListener("load", function () {
 		display: function () {
 			let formationTemplateList = AllFormationTemplates.getFormationTemplateList();
 			let table = new Table();
-			table.setAttributes({ "class": "horizontal-stripes" });
+			table.setAttributes({ "class": "horizontal-stripes row-hover-hilight" });
 			let maxCellCount = 3;
 			for (let formationTemplateId in formationTemplateList) {
 				if (AllSerieses.seriesesList[formationTemplateList[formationTemplateId].seriesId].isHidden) {
@@ -768,7 +768,7 @@ window.addEventListener("load", function () {
 		},
 		createTable: function () {
 			let table = new Table();
-			table.setAttributes({ "class": "raw-selectable management-dialog-objects-list" });
+			table.setAttributes({ "class": "row-hover-hilight management-dialog-objects-list horizontal-stripes" });
 			table.addRow();
 			table.addCell("<input type='checkbox'>");
 			table.addCell("車両ID");
@@ -801,7 +801,7 @@ window.addEventListener("load", function () {
 		},
 		createTable: function () {
 			let table = new Table();
-			table.setAttributes({ "class": "raw-selectable management-dialog-objects-list" });
+			table.setAttributes({ "class": "row-hover-hilight management-dialog-objects-list horizontal-stripes" });
 			table.addRow();
 			table.addCell("<input type='checkbox'>");
 			table.addCell("編成ID");

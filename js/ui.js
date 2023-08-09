@@ -41,7 +41,7 @@ function list() {
 		//テーブルを生成
 		tables.push(new Table(`${seriesList[seriesId].name}<button class="lsf-icon" icon="pen" onclick="Dialog.list.createSeriesDialog.functions.display(${seriesId})">編集</button>`));
 		tables.at(-1).setSubtitle(seriesList[seriesId].description);
-		tables.at(-1).setAttributes({ "class": `formation-table horizontal-stripes${seriesList[seriesId].isHidden ? " hidden" : ""}` });
+		tables.at(-1).setAttributes({ "class": `formation-table row-hover-hilight horizontal-stripes${seriesList[seriesId].isHidden ? " hidden" : ""}` });
 		//現時点で組成されている編成を取得
 		let formationList = AllFormations.getBySeriesIdAndYearMonth(seriesId, now);
 
