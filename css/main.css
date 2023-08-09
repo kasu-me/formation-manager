@@ -81,10 +81,12 @@ div#forfc-not-formated-cars-table td.car.selected a:link {
 	color: #fff;
 }
 
+/* テーブルのセルにグレーの線をつける */
 div#formation-table-container table.formation-table tr td,
 table.formation-view tr:nth-child(2) td,
 div#cardt-main table td:nth-child(1),
-div#formationTemplatesDialog table tr td:not(.formation-name):not(.formation-template-name):not(:nth-last-child(2)) {
+div#formationTemplatesDialog table tr td:not(.formation-name):not(.formation-template-name):not(:nth-last-child(2)),
+table.management-dialog-objects-list tr td {
 	padding: 0.15em 0.5em;
 	border-right: 1px solid #ccc;
 }
@@ -391,6 +393,14 @@ table.management-dialog-objects-list tr:nth-child(1) {
 	position: sticky;
 	top: 0;
 	left: 0;
+}
+
+table.management-dialog-objects-list tr td:first-child {
+	padding: 0;
+}
+
+table.management-dialog-objects-list tr td:last-child {
+	border-right: none;
 }
 
 table.management-dialog-objects-list tr:nth-child(1) td {
