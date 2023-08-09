@@ -643,8 +643,16 @@ a.update-yearmonth-link::before {
 }
 
 /* TRハイライト */
+table.raw-selectable tr:hover,
 #formation-table-container tr:hover,
 #seriesDispDialog tr:hover,
 #formationTemplatesDialog tr:hover {
 	background-color: var(--selection-highlight);
+}
+
+
+/* 管理画面のリスト */
+.generated-table-container:has(.management-dialog-objects-list) {
+	height: 50vh;
+	overflow-y: auto;
 }
