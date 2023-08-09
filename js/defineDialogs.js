@@ -765,7 +765,7 @@ window.addEventListener("load", function () {
 	new Dialog("manageAllCarsDialog", "全車両マスタデータ管理", `<div>
 		<input><button class="lsf-icon" icon="search">検索</button>
 	</div>
-	<div id="mnalc-table"></div>`, [{ "content": "終了", "event": `Dialog.list.manageAllCarsDialog.off();`, "icon": "close" }], {
+	<div id="mnalc-table"></div>`, [{ "content": "一括削除", "event": `Dialog.list.formationDataManagementDialog.off();`, "icon": "delete", "disabled": "disabled" }, { "content": "終了", "event": `Dialog.list.manageAllCarsDialog.off();`, "icon": "close" }], {
 		display: function () {
 			Dialog.list.manageAllCarsDialog.functions.createTable();
 			Dialog.list.manageAllCarsDialog.on();
@@ -798,7 +798,7 @@ window.addEventListener("load", function () {
 	new Dialog("manageAllFormationsDialog", "全編成マスタデータ管理", `<div>
 		<input><button class="lsf-icon" icon="search">検索</button>
 	</div>
-	<div id="mnalf-table"></div>`, [{ "content": "終了", "event": `Dialog.list.manageAllFormationsDialog.off();`, "icon": "close" }], {
+	<div id="mnalf-table"></div>`, [{ "content": "一括削除", "event": `Dialog.list.formationDataManagementDialog.off();`, "icon": "delete", "disabled": "disabled" }, { "content": "終了", "event": `Dialog.list.manageAllFormationsDialog.off();`, "icon": "close" }], {
 		display: function () {
 			Dialog.list.manageAllFormationsDialog.functions.createTable();
 			Dialog.list.manageAllFormationsDialog.on();

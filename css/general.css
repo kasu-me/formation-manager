@@ -68,6 +68,13 @@ button:focus {
 	background-color: #6c4e86;
 }
 
+button:disabled {
+	pointer-events: none;
+	background-color: #ddd;
+	border-color: #ccc;
+	color: #777;
+}
+
 /* テーブル */
 table {
 	border-collapse: collapse;
