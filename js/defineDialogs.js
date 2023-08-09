@@ -755,10 +755,14 @@ window.addEventListener("load", function () {
 	});
 
 	//編成表データ管理:mnfd
-	new Dialog("formationDataManagementDialog", "編成表データ管理", `<ul class="dialog-buttons-list"><li><button onclick="Dialog.list.manageAllCarsDialog.functions.display()" class="lsf-icon dialog-main-button" icon="list">全車両管理</button></li><li><button onclick="Dialog.list.manageAllFormationsDialog.functions.display()" class="lsf-icon dialog-main-button" icon="list">全編成管理</button></li><li><button onclick="Dialog.list.editJSONDialog.functions.display()" class="lsf-icon dialog-main-button" icon="pen">JSON直接編集</button></li></ul>`, [{ "content": "終了", "event": `Dialog.list.formationDataManagementDialog.off();`, "icon": "close" }]);
+	new Dialog("formationDataManagementDialog", "編成表データ管理", `<ul class="dialog-buttons-list">
+		<li><button onclick="Dialog.list.manageAllCarsDialog.functions.display()" class="lsf-icon dialog-main-button" icon="list">全車両マスタデータ管理</button></li>
+		<li><button onclick="Dialog.list.manageAllFormationsDialog.functions.display()" class="lsf-icon dialog-main-button" icon="list">全編成マスタデータ管理</button></li>
+		<li><button onclick="Dialog.list.editJSONDialog.functions.display()" class="lsf-icon dialog-main-button" icon="pen">JSON直接編集</button></li>
+	</ul>`, [{ "content": "終了", "event": `Dialog.list.formationDataManagementDialog.off();`, "icon": "close" }]);
 
 	//全車両管理:mnalc
-	new Dialog("manageAllCarsDialog", "全車両管理", `<div>
+	new Dialog("manageAllCarsDialog", "全車両マスタデータ管理", `<div>
 		<input><button class="lsf-icon" icon="search">検索</button>
 	</div>
 	<div id="mnalc-table"></div>`, [{ "content": "終了", "event": `Dialog.list.manageAllCarsDialog.off();`, "icon": "close" }], {
@@ -791,7 +795,7 @@ window.addEventListener("load", function () {
 	});
 
 	//全編成管理:mnalf
-	new Dialog("manageAllFormationsDialog", "全編成管理", `<div>
+	new Dialog("manageAllFormationsDialog", "全編成マスタデータ管理", `<div>
 		<input><button class="lsf-icon" icon="search">検索</button>
 	</div>
 	<div id="mnalf-table"></div>`, [{ "content": "終了", "event": `Dialog.list.manageAllFormationsDialog.off();`, "icon": "close" }], {
@@ -806,6 +810,7 @@ window.addEventListener("load", function () {
 			table.addCell("<input type='checkbox'>");
 			table.addCell("編成ID");
 			table.addCell("編成番号");
+			table.addCell("車両数");
 			table.addCell("形式");
 			table.addCell("組成年月");
 			table.addCell("解除年月");
@@ -815,6 +820,7 @@ window.addEventListener("load", function () {
 				table.addCell("<input type='checkbox' class='mnalf-raw-select'>");
 				table.addCell(formationId);
 				table.addCell(formation.name);
+				table.addCell(formation.cars.length);
 				table.addCell(AllSerieses.seriesesList[formation.seriesId].name);
 				table.addCell(formation.formatedOn);
 				table.addCell(formation.terminatedOn == undefined ? "-" : formation.terminatedOn);
