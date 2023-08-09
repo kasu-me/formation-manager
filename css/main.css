@@ -59,6 +59,10 @@ button:focus {
 table {
 	border-collapse: collapse;
 	border-color: #000;
+}
+
+table,
+.generated-table-container:has(.management-dialog-objects-list) {
 	border: 2px solid var(--formation-table-main-border);
 }
 
@@ -655,4 +659,29 @@ table.raw-selectable tr:hover,
 .generated-table-container:has(.management-dialog-objects-list) {
 	height: 50vh;
 	overflow-y: auto;
+}
+
+.management-dialog-objects-list {
+	border: none;
+}
+
+.management-dialog-objects-list tr:nth-child(1) {
+	text-align: center;
+	font-weight: bold;
+	background-color: var(--formation-table-main-border) !important;
+	position: sticky;
+	top: 0;
+	left: 0;
+}
+
+.management-dialog-objects-list tr:nth-child(1) td {
+	color: #fff;
+}
+
+.management-dialog-objects-list tr:not(:nth-child(1)) td:nth-child(1) {
+	text-align: right;
+}
+
+.management-dialog-objects-list tr:not(:nth-child(1)) td:not(:nth-child(1)) {
+	text-align: center;
 }
