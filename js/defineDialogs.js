@@ -831,16 +831,36 @@ window.addEventListener("load", function () {
 		}
 	});
 
+	//表+チェックボックスで行選択
 	function setTableCheckboxEvents(tableContainer) {
-		let checkBox = tableContainer.querySelector("tr td input[type='checkbox']");
-		checkBox.addEventListener("click", () => {
+		//全件選択チェックボックス
+		let allSelectCheckBox = tableContainer.querySelector("tr td input[type='checkbox']");
+		allSelectCheckBox.addEventListener("click", () => {
 			tableContainer.querySelectorAll("tr:not(:nth-child(1))").forEach((tr) => {
-				tr.querySelector("input[type='checkbox']").checked = checkBox.checked;
+				tr.querySelector("input[type='checkbox']").checked = allSelectCheckBox.checked;
 			});
 		});
-		tableContainer.querySelectorAll("tr:not(:nth-child(1))").forEach((tr) => {
-			tr.addEventListener("click", () => {
-				tr.querySelector("input[type='checkbox']").click();
+		//各行のチェックボックス
+		let checkboxes = tableContainer.querySelectorAll("tr:not(:nth-child(1)) td input[type='checkbox']");
+		checkboxes.forEach((checkBox) => {
+			checkBox.addEventListener("click", () => {
+				if (!checkBox.checked) {
+					allSelectCheckBox.checked = false;
+				} else {
+					for (let i of checkboxes) {
+						if (!i.checked) {
+							return;
+						}
+					}
+					allSelectCheckBox.checked = true;
+				}
+			})
+		});
+
+		//各行をクリックでチェックボックスをチェック
+		tableContainer.querySelectorAll("tr:not(:nth-child(1)) td:not(:first-child):not(last-child)").forEach((td) => {
+			td.addEventListener("click", () => {
+				td.parentNode.querySelector("input[type='checkbox']").click();
 			});
 		});
 	}
