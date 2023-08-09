@@ -1,7 +1,8 @@
 :root {
 	--formation-table-main-border: #5c3d7e;
 	--button-face: #4c2d5e;
-	--selection-highlight: #c7def5;
+	--selection-hover-highlight: #c7def5;
+	--selection-highlight: #275f97;
 }
 
 /* 全般 */
@@ -33,7 +34,7 @@ input:not([type="range"]) {
 	box-shadow: 0 0 5px transparent;
 }
 
-input:not([type="range"]):focus {
+input:not([type="range"]):not([type="checkbox"]):focus {
 	border: 1px solid #3498db !important;
 	outline: none;
 	box-shadow: 0 0 5px #3498db;
@@ -465,12 +466,12 @@ td.preview-car:has(span.selected) {
 
 td.preview-car:has(span.left-border) {
 	border-left: 2px #f00 solid !important;
-	background-color: var(--selection-highlight) !important;
+	background-color: var(--selection-hover-highlight) !important;
 }
 
 td.preview-car:has(span.right-border) {
 	border-right: 2px #f00 solid !important;
-	background-color: var(--selection-highlight) !important;
+	background-color: var(--selection-hover-highlight) !important;
 }
 
 td.preview-car:has(span.selected) {
@@ -651,7 +652,7 @@ table.raw-selectable tr:hover,
 #formation-table-container tr:hover,
 #seriesDispDialog tr:hover,
 #formationTemplatesDialog tr:hover {
-	background-color: var(--selection-highlight);
+	background-color: var(--selection-hover-highlight);
 }
 
 
@@ -678,10 +679,18 @@ table.raw-selectable tr:hover,
 	color: #fff;
 }
 
-.management-dialog-objects-list tr:not(:nth-child(1)) td:nth-child(1) {
+.management-dialog-objects-list tr:not(:nth-child(1)) td:nth-child(2) {
 	text-align: right;
 }
 
-.management-dialog-objects-list tr:not(:nth-child(1)) td:not(:nth-child(1)) {
+.management-dialog-objects-list tr:not(:nth-child(1)) td:not(:nth-child(2)) {
 	text-align: center;
+}
+
+.management-dialog-objects-list tr:has(input:checked) {
+	background-color: var(--selection-highlight);
+}
+
+.management-dialog-objects-list tr:has(input:checked) td {
+	color: #fff;
 }

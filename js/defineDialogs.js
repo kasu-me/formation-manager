@@ -770,6 +770,7 @@ window.addEventListener("load", function () {
 			let table = new Table();
 			table.setAttributes({ "class": "raw-selectable management-dialog-objects-list" });
 			table.addRow();
+			table.addCell("<input type='checkbox'>");
 			table.addCell("車両ID");
 			table.addCell("車両番号(最新)");
 			table.addCell("製造");
@@ -777,6 +778,7 @@ window.addEventListener("load", function () {
 			table.addCell("操作");
 			AllCars.carsList.forEach((car, carId) => {
 				table.addRow();
+				table.addCell("<input type='checkbox' class='mnalc-raw-select'>");
 				table.addCell(carId);
 				table.addCell(car.number);
 				table.addCell(car.manufacturedOn);
@@ -784,6 +786,7 @@ window.addEventListener("load", function () {
 				table.addCell(`<button class="lsf-icon" icon="search">詳細</button><button class="lsf-icon" icon="delete">削除</button>`);
 			})
 			document.getElementById("mnalc-table").innerHTML = table.generateTable();
+			setTableCheckboxEvents(document.getElementById("mnalc-table"));
 		}
 	});
 
@@ -800,6 +803,7 @@ window.addEventListener("load", function () {
 			let table = new Table();
 			table.setAttributes({ "class": "raw-selectable management-dialog-objects-list" });
 			table.addRow();
+			table.addCell("<input type='checkbox'>");
 			table.addCell("編成ID");
 			table.addCell("編成番号");
 			table.addCell("形式");
@@ -808,6 +812,7 @@ window.addEventListener("load", function () {
 			table.addCell("操作");
 			AllFormations.formationsList.forEach((formation, formationId) => {
 				table.addRow();
+				table.addCell("<input type='checkbox' class='mnalf-raw-select'>");
 				table.addCell(formationId);
 				table.addCell(formation.name);
 				table.addCell(AllSerieses.seriesesList[formation.seriesId].name);
@@ -816,9 +821,23 @@ window.addEventListener("load", function () {
 				table.addCell(`<button class="lsf-icon" icon="search">詳細</button><button class="lsf-icon" icon="delete">削除</button>`);
 			})
 			document.getElementById("mnalf-table").innerHTML = table.generateTable();
+			setTableCheckboxEvents(document.getElementById("mnalf-table"));
 		}
 	});
 
+	function setTableCheckboxEvents(tableContainer) {
+		let checkBox = tableContainer.querySelector("tr td input[type='checkbox']");
+		checkBox.addEventListener("click", () => {
+			tableContainer.querySelectorAll("tr:not(:nth-child(1))").forEach((tr) => {
+				tr.querySelector("input[type='checkbox']").checked = checkBox.checked;
+			});
+		});
+		tableContainer.querySelectorAll("tr:not(:nth-child(1))").forEach((tr) => {
+			tr.addEventListener("click", () => {
+				tr.querySelector("input[type='checkbox']").click();
+			});
+		});
+	}
 	//JSON直接編集:jsed
 	new Dialog("editJSONDialog", "JSON直接編集", `<p class="dialog-warn warning">このデータの書き換えを誤ると、当アプリで作成･編集した全てのデータに影響を及ぼし、最悪の場合はデータを読み込めなくなります。バックアップは個人の責任で確実に行ってください。</p><textarea id="jsed-main"></textarea>`, [{ "content": "保存", "event": `Dialog.list.editJSONDialog.functions.save()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editJSONDialog.off();`, "icon": "close" }], {
 		display: function () {
