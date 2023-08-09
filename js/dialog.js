@@ -162,5 +162,6 @@ window.addEventListener("load", function () {
 	document.body.appendChild(Dialog.area);
 	Dialog.areaOverlay.id = "dialog-area-overlay";
 	Dialog.areaOverlay.classList.add("dialog-area");
+	Dialog.areaOverlay.classList.add("dialog-area-overlay");
 	document.body.appendChild(Dialog.areaOverlay);
 });
