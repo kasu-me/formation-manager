@@ -27,7 +27,7 @@ a:hover {
 	text-decoration: none;
 }
 
-input:focus {
+input:not([type="range"]):focus {
 	border: 1px solid #3498db !important;
 	outline: none;
 	box-shadow: 0 0 5px #3498db;
