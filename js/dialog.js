@@ -30,7 +30,7 @@ class Dialog {
 
 				let movePosition = (pageX, pageY) => {
 					this.dialog.style.left = `${pageX - offsetX + dialogWidth / 2}px`;
-					this.dialog.style.top = `${pageY - offsetY + (this.isOverlay ? dialogHeight / 2 : 0)}px`;
+					this.dialog.style.top = `${pageY - offsetY + (this.isOverlay ? dialogHeight / 2 : 0) - window.scrollY}px`;
 				}
 				let mouseMove = (event) => {
 					movePosition(event.pageX, event.pageY);
