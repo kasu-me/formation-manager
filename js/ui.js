@@ -47,13 +47,13 @@ function list() {
 
 		//ソート
 		let natSorter = natsort();
-		let keys = Object.keys(formationList).sort((f1, f2) => {
+		let formationIds = Object.keys(formationList).sort((f1, f2) => {
 			return natSorter(formationList[f1].name, formationList[f2].name);
 		});
 
 
 		//編成ごとに処理
-		for (let formationId of keys) {
+		for (let formationId of formationIds) {
 			//行を追加
 			tables.at(-1).addRow();
 			//編成番号セルを追加
