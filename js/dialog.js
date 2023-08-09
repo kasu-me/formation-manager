@@ -80,26 +80,28 @@ class Dialog {
 	setButtons(buttons) {
 		let buttonContent = "";
 		for (let i in buttons) {
+			//データ整形
 			if (buttons[i]["icon"] == undefined || buttons[i]["icon"] == null) {
 				buttons[i]["icon"] = "";
 			}
-			let attributes = "";
-			let classes = "";
 			for (let j in buttons[i]) {
+				let button = document.createElement("button");
+				button.classList.add("dialog-main-button");
+				button.innerHTML = buttons[i]["content"];
+				button.setAttribute("onclick", buttons[i]["event"]);
 				if (j == "content" || j == "event") {
 					continue;
 				} else if (j == "icon") {
-					attributes += ` icon="${buttons[i]["icon"]}"`;
-					classes += ` lsf-icon`;
+					button.setAttribute("icon", buttons[i]["icon"]);
+					button.classList.add("lsf-icon");
 				} else if (j == "class") {
-					classes += ` ${buttons[i][j]}`;
+					button.classList.add(buttons[i][j]);
 				} else {
-					attributes += ` ${j}=${buttons[i][j]}`;
+					button.setAttribute(j, buttons[i][j]);
 				}
+				this.buttons.appendChild(button);
 			}
-			buttonContent += `<button onclick="${buttons[i]["event"]}" class="dialog-main-button${classes}"${attributes}>${buttons[i]["content"]}</button>`;
 		}
-		this.buttons.innerHTML = buttonContent;
 	}
 	on() {
 		if (!this.isActive) {
