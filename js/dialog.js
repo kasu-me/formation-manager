@@ -84,10 +84,10 @@ class Dialog {
 			if (buttons[i]["icon"] == undefined || buttons[i]["icon"] == null) {
 				buttons[i]["icon"] = "";
 			}
+			let button = document.createElement("button");
+			button.classList.add("dialog-main-button");
+			button.innerHTML = buttons[i]["content"];
 			for (let j in buttons[i]) {
-				let button = document.createElement("button");
-				button.classList.add("dialog-main-button");
-				button.innerHTML = buttons[i]["content"];
 				button.setAttribute("onclick", buttons[i]["event"]);
 				if (j == "content" || j == "event") {
 					continue;
