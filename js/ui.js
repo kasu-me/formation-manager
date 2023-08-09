@@ -68,8 +68,6 @@ function list() {
 			//tables.at(-1).addCell(formationList[formationId].belongsTo==null?"運用離脱":formationList[formationId].belongsTo,{"class":"belongs"});
 			//組成年月セルを追加
 			tables.at(-1).addCell(formationList[formationId].formatedOn.toStringWithLink());
-			//コントロールセルを追加
-			//tables.at(-1).addCell(`<button onclick="Dialog.list.formationDetealDialog.functions.display(${formationId})">編成詳細</button>`);
 		}
 		tables.at(-1).addBlankCellToRowIn(1);
 		html += tables.at(-1).generateTable();
