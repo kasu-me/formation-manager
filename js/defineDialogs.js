@@ -765,7 +765,7 @@ window.addEventListener("load", function () {
 	new Dialog("manageAllCarsDialog", "全車両マスタデータ管理", `<div>
 		<input><button class="lsf-icon" icon="search">検索</button>
 	</div>
-	<div id="mnalc-table"></div>`, [{ "content": "一括削除", "event": `Dialog.list.formationDataManagementDialog.off();`, "icon": "delete", "disabled": "disabled" }, { "content": "終了", "event": `Dialog.list.manageAllCarsDialog.off();`, "icon": "close" }], {
+	<div id="mnalc-table"></div>`, [{ "content": "一括削除", "event": `Dialog.list.formationDataManagementDialog.off();`, "icon": "delete", "disabled": "disabled", "id": "mnalc-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllCarsDialog.off();`, "icon": "close" }], {
 		display: function () {
 			Dialog.list.manageAllCarsDialog.functions.createTable();
 			Dialog.list.manageAllCarsDialog.on();
@@ -790,7 +790,7 @@ window.addEventListener("load", function () {
 				table.addCell(`<button class="lsf-icon" icon="search">詳細</button><button class="lsf-icon" icon="delete">削除</button>`);
 			})
 			document.getElementById("mnalc-table").innerHTML = table.generateTable();
-			setTableCheckboxEvents(document.getElementById("mnalc-table"));
+			setTableCheckboxEvents(document.getElementById("mnalc-table"), document.getElementById("mnalc-deleteall"));
 		}
 	});
 
@@ -798,7 +798,7 @@ window.addEventListener("load", function () {
 	new Dialog("manageAllFormationsDialog", "全編成マスタデータ管理", `<div>
 		<input><button class="lsf-icon" icon="search">検索</button>
 	</div>
-	<div id="mnalf-table"></div>`, [{ "content": "一括削除", "event": `Dialog.list.formationDataManagementDialog.off();`, "icon": "delete", "disabled": "disabled" }, { "content": "終了", "event": `Dialog.list.manageAllFormationsDialog.off();`, "icon": "close" }], {
+	<div id="mnalf-table"></div>`, [{ "content": "一括削除", "event": `Dialog.list.formationDataManagementDialog.off();`, "icon": "delete", "disabled": "disabled", "id": "mnalf-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllFormationsDialog.off();`, "icon": "close" }], {
 		display: function () {
 			Dialog.list.manageAllFormationsDialog.functions.createTable();
 			Dialog.list.manageAllFormationsDialog.on();
@@ -827,34 +827,46 @@ window.addEventListener("load", function () {
 				table.addCell(`<button class="lsf-icon" icon="search">詳細</button><button class="lsf-icon" icon="delete">削除</button>`);
 			})
 			document.getElementById("mnalf-table").innerHTML = table.generateTable();
-			setTableCheckboxEvents(document.getElementById("mnalf-table"));
+			setTableCheckboxEvents(document.getElementById("mnalf-table"), document.getElementById("mnalf-deleteall"));
 		}
 	});
 
 	//表+チェックボックスで行選択
-	function setTableCheckboxEvents(tableContainer) {
+	function setTableCheckboxEvents(tableContainer, button) {
 		//全件選択チェックボックス
 		let allSelectCheckBox = tableContainer.querySelector("tr td input[type='checkbox']");
+		//各行のチェックボックス
+		let checkboxes = tableContainer.querySelectorAll("tr:not(:nth-child(1)) td input[type='checkbox']");
+		//各行のステータスに応じてボタンの活性･日活性を切り替え
+		let switchElementsByCheckedStatus = () => {
+			let checkedAtLeastOnce = false;
+			let checkedAll = true;
+			for (let i of checkboxes) {
+				if (i.checked) {
+					checkedAtLeastOnce = true;
+				} else {
+					checkedAll = false;
+				}
+			}
+			button.disabled = !checkedAtLeastOnce;
+			if (checkedAll) {
+				allSelectCheckBox.checked = true;
+			}
+		}
+
 		allSelectCheckBox.addEventListener("click", () => {
 			tableContainer.querySelectorAll("tr:not(:nth-child(1))").forEach((tr) => {
 				tr.querySelector("input[type='checkbox']").checked = allSelectCheckBox.checked;
 			});
+			switchElementsByCheckedStatus();
 		});
-		//各行のチェックボックス
-		let checkboxes = tableContainer.querySelectorAll("tr:not(:nth-child(1)) td input[type='checkbox']");
 		checkboxes.forEach((checkBox) => {
 			checkBox.addEventListener("click", () => {
 				if (!checkBox.checked) {
 					allSelectCheckBox.checked = false;
-				} else {
-					for (let i of checkboxes) {
-						if (!i.checked) {
-							return;
-						}
-					}
-					allSelectCheckBox.checked = true;
 				}
-			})
+				switchElementsByCheckedStatus();
+			});
 		});
 
 		//各行をクリックでチェックボックスをチェック
