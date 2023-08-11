@@ -10,7 +10,7 @@ class Drag {
 				Drag.dragContainer.style.width = `${elem.parentNode.clientWidth + 3}px`;
 				Drag.dragContainer.style.height = `${elem.parentNode.clientHeight + 3}px`;
 
-				Drag.dragContainer.style.top = `${elem.parentNode.getBoundingClientRect().top}px`;
+				Drag.dragContainer.style.top = `${elem.parentNode.getBoundingClientRect().top + window.scrollY}px`;
 				Drag.dragContainer.style.left = `${elem.parentNode.getBoundingClientRect().left}px`;
 
 				let offsetX = e.clientX - elem.parentNode.getBoundingClientRect().left;
@@ -22,7 +22,7 @@ class Drag {
 
 				let moveMouse = (e) => {
 					Drag.dragContainer.style.left = `${e.clientX - offsetX}px`;
-					Drag.dragContainer.style.top = `${e.clientY - offsetY}px`;
+					Drag.dragContainer.style.top = `${e.clientY - offsetY + window.scrollY}px`;
 
 					targetElements.forEach((elem, i) => {
 						if (!elem.classList.contains("selected-origin")) {
