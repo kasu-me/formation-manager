@@ -796,6 +796,7 @@ window.addEventListener("load", function () {
 			})
 			document.getElementById("mnalc-table").innerHTML = table.generateTable();
 			setTableCheckboxEvents(document.getElementById("mnalc-table"), document.getElementById("mnalc-deleteall"));
+			TableSort.addSortButtonToTable(document.getElementById("mnalc-table"));
 		},
 		deleteCars: function (carIds) {
 			Dialog.list.confirmDialog.functions.display(Message.list["MC007"].toString({ "type": "車両", "count": carIds.length }), () => {
@@ -856,6 +857,7 @@ window.addEventListener("load", function () {
 			})
 			document.getElementById("mnalf-table").innerHTML = table.generateTable();
 			setTableCheckboxEvents(document.getElementById("mnalf-table"), document.getElementById("mnalf-deleteall"));
+			TableSort.addSortButtonToTable(document.getElementById("mnalf-table"));
 		},
 		deleteFormations: function (formationIds) {
 			Dialog.list.confirmDialog.functions.display(Message.list["MC007"].toString({ "type": "編成", "count": formationIds.length }), () => {
@@ -921,6 +923,7 @@ window.addEventListener("load", function () {
 			});
 		});
 	}
+
 	//JSON直接編集:jsed
 	new Dialog("editJSONDialog", "JSON直接編集", `<p class="dialog-warn warning">このデータの書き換えを誤ると、当アプリで作成･編集した全てのデータに影響を及ぼし、最悪の場合はデータを読み込めなくなります。バックアップは個人の責任で確実に行ってください。</p><textarea id="jsed-main"></textarea>`, [{ "content": "保存", "event": `Dialog.list.editJSONDialog.functions.save()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editJSONDialog.off();`, "icon": "close" }], {
 		display: function () {

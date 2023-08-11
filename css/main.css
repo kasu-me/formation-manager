@@ -434,7 +434,6 @@ table.management-dialog-objects-list tr:has(input:checked) td {
 
 
 /* 確認･警告･情報ダイアログ */
-
 #confirmDialog,
 #AlertDialog,
 #infoDialog {
