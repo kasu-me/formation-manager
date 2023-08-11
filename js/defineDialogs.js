@@ -17,7 +17,7 @@ new Message("MC003", "${formationName}内の車両${carLength}両を${now}付で
 new Message("MC004", "${carNumber}号車を${now}付で廃車します。");
 new Message("MC005", "前回自動的にセーブされたデータが残っています。読み込みますか？");
 new Message("MC006", "編成テンプレートを削除します。");
-new Message("MC007", "選択した${count}件の${type}を削除します。<br>廃車や編成解除とは違い、${type}を最初から存在しなかったものとする操作です。この操作は取り消せません。よろしいですか？");
+new Message("MC007", "選択した${count}件の${type}マスタデータを削除します。<br>廃車や編成解除とは違い、${type}を最初から存在しなかったものとする操作です。この操作は取り消せません。よろしいですか？");
 //Symbol
 new Message("MS001", `<style type="text/css">
 .wn_st1{fill:#ff0000;}
