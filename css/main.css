@@ -431,3 +431,12 @@ table.management-dialog-objects-list tr:has(input:checked) td {
 }
 
 /* 管理画面のリストここまで */
+
+
+/* 確認･警告･情報ダイアログ */
+
+#confirmDialog,
+#AlertDialog,
+#infoDialog {
+	max-width: 680px;
+}
