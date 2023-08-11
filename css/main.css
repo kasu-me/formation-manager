@@ -349,12 +349,9 @@ a.lsf.preview-delete-button {
 }
 
 /* ダイアログのテーブル内ボタン */
-.dialog-content td.buttons button {
+.dialog-content td.buttons button:not(:first-child),
+table.management-dialog-objects-list tr:not(:nth-child(1)) td:last-child button:not(:first-child) {
 	margin-left: 0.4em;
-}
-
-.dialog-content td.buttons button:first-child {
-	margin-left: 0;
 }
 
 /*ダイアログ内のボタンリスト*/
