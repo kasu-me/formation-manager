@@ -791,7 +791,7 @@ window.addEventListener("load", function () {
 				table.addCell(car.number);
 				table.addCell(car.manufacturedOn);
 				table.addCell(car.isDropped ? car.droppedOn : "-");
-				table.addCell(`<button class="lsf-icon" icon="search">詳細</button><button class="lsf-icon" icon="delete">削除</button>`);
+				table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.carDetealDialog.functions.display(${carId});">詳細</button><button class="lsf-icon" icon="delete">削除</button>`);
 			})
 			document.getElementById("mnalc-table").innerHTML = table.generateTable();
 			setTableCheckboxEvents(document.getElementById("mnalc-table"), document.getElementById("mnalc-deleteall"));
@@ -835,7 +835,7 @@ window.addEventListener("load", function () {
 				table.addCell(AllSerieses.seriesesList[formation.seriesId].name);
 				table.addCell(formation.formatedOn);
 				table.addCell(formation.terminatedOn == undefined ? "-" : formation.terminatedOn);
-				table.addCell(`<button class="lsf-icon" icon="search">詳細</button><button class="lsf-icon" icon="delete">削除</button>`);
+				table.addCell(`<button class="lsf-icon" icon="search" icon="search" onclick="Dialog.list.formationDetealDialog.functions.display(${formationId});">詳細</button><button class="lsf-icon" icon="delete">削除</button>`);
 			})
 			document.getElementById("mnalf-table").innerHTML = table.generateTable();
 			setTableCheckboxEvents(document.getElementById("mnalf-table"), document.getElementById("mnalf-deleteall"));
