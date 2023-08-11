@@ -405,7 +405,8 @@ table.management-dialog-objects-list tr:not(:nth-child(1)) {
 	cursor: pointer;
 }
 
-table.management-dialog-objects-list tr td:has(input) {
+table.management-dialog-objects-list tr td:first-child,
+table.management-dialog-objects-list tr td:last-child {
 	cursor: auto;
 }
 
