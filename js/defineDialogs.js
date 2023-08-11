@@ -851,7 +851,7 @@ window.addEventListener("load", function () {
 	//表+チェックボックスで行選択
 	function setTableCheckboxEvents(tableContainer, button) {
 		//全件選択チェックボックス
-		let allSelectCheckBox = tableContainer.querySelector("tr td input[type='checkbox']");
+		let selectAllCheckBox = tableContainer.querySelector("tr td input[type='checkbox']");
 		//各行のチェックボックス
 		let checkboxes = tableContainer.querySelectorAll("tr:not(:nth-child(1)) td input[type='checkbox']");
 		//各行のステータスに応じてボタンの活性･日活性を切り替え
@@ -867,20 +867,20 @@ window.addEventListener("load", function () {
 			}
 			button.disabled = !checkedAtLeastOnce;
 			if (checkedAll) {
-				allSelectCheckBox.checked = true;
+				selectAllCheckBox.checked = true;
 			}
 		}
 
-		allSelectCheckBox.addEventListener("click", () => {
-			tableContainer.querySelectorAll("tr:not(:nth-child(1))").forEach((tr) => {
-				tr.querySelector("input[type='checkbox']").checked = allSelectCheckBox.checked;
+		selectAllCheckBox.addEventListener("click", () => {
+			tableContainer.querySelectorAll("tr:not(:nth-child(1)) input[type='checkbox']").forEach((checkbox) => {
+				checkbox.checked = selectAllCheckBox.checked;
 			});
 			switchElementsByCheckedStatus();
 		});
 		checkboxes.forEach((checkBox) => {
 			checkBox.addEventListener("click", () => {
 				if (!checkBox.checked) {
-					allSelectCheckBox.checked = false;
+					selectAllCheckBox.checked = false;
 				}
 				switchElementsByCheckedStatus();
 			});
