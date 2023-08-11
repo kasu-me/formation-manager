@@ -770,6 +770,7 @@ window.addEventListener("load", function () {
 	</div>
 	<div id="mnalc-table"></div>`, [{ "content": "一括削除", "event": `Dialog.list.formationDataManagementDialog.off();`, "icon": "delete", "disabled": "disabled", "id": "mnalc-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllCarsDialog.off();`, "icon": "close" }], {
 		display: function () {
+			Dialog.list.manageAllCarsDialog.functions.filterTerms = {};
 			Dialog.list.manageAllCarsDialog.functions.createTable();
 			Dialog.list.manageAllCarsDialog.on();
 		},
@@ -783,7 +784,7 @@ window.addEventListener("load", function () {
 			table.addCell("製造");
 			table.addCell("廃車");
 			table.addCell("操作");
-			AllCars.carsList.forEach((car, carId) => {
+			AllCars.carsList.filter(Dialog.list.manageAllCarsDialog.functions.filterFunc).forEach((car, carId) => {
 				table.addRow();
 				table.addCell("<input type='checkbox' class='mnalc-raw-select'>");
 				table.addCell(carId);
@@ -794,6 +795,12 @@ window.addEventListener("load", function () {
 			})
 			document.getElementById("mnalc-table").innerHTML = table.generateTable();
 			setTableCheckboxEvents(document.getElementById("mnalc-table"), document.getElementById("mnalc-deleteall"));
+		},
+		filterTerms: {
+
+		},
+		filterFunc: function (cars) {
+			return true;
 		}
 	});
 
@@ -803,6 +810,7 @@ window.addEventListener("load", function () {
 	</div>
 	<div id="mnalf-table"></div>`, [{ "content": "一括削除", "event": `Dialog.list.formationDataManagementDialog.off();`, "icon": "delete", "disabled": "disabled", "id": "mnalf-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllFormationsDialog.off();`, "icon": "close" }], {
 		display: function () {
+			Dialog.list.manageAllFormationsDialog.functions.filterTerms = {};
 			Dialog.list.manageAllFormationsDialog.functions.createTable();
 			Dialog.list.manageAllFormationsDialog.on();
 		},
@@ -818,7 +826,7 @@ window.addEventListener("load", function () {
 			table.addCell("組成年月");
 			table.addCell("解除年月");
 			table.addCell("操作");
-			AllFormations.formationsList.forEach((formation, formationId) => {
+			AllFormations.formationsList.filter(Dialog.list.manageAllFormationsDialog.functions.filterFunc).forEach((formation, formationId) => {
 				table.addRow();
 				table.addCell("<input type='checkbox' class='mnalf-raw-select'>");
 				table.addCell(formationId);
@@ -831,6 +839,12 @@ window.addEventListener("load", function () {
 			})
 			document.getElementById("mnalf-table").innerHTML = table.generateTable();
 			setTableCheckboxEvents(document.getElementById("mnalf-table"), document.getElementById("mnalf-deleteall"));
+		},
+		filterTerms: {
+
+		},
+		filterFunc: function (formation) {
+			return true;
 		}
 	});
 
