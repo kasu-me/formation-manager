@@ -18,7 +18,7 @@ class Message {
 		dic = dic || {};
 		let str = this.#text;
 		for (let key in dic) {
-			str = str.replace(new RegExp(`\\\${${key}}`), dic[key]);
+			str = str.replace(new RegExp(`\\\${${key}}`, "g"), dic[key]);
 		}
 		return str;
 	}
