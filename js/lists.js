@@ -87,6 +87,10 @@ class AllCars {
 		}
 	}
 
+	//指定車両を空にする
+	static makeBrank(carId) {
+		delete AllCars.#cars[carId];
+	}
 	static reset() {
 		AllCars.#cars = [];
 	}

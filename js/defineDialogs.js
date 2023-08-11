@@ -769,7 +769,7 @@ window.addEventListener("load", function () {
 	new Dialog("manageAllCarsDialog", "全車両マスタデータ管理", `<div>
 		<input><button class="lsf-icon" icon="search">検索</button>
 	</div>
-	<div id="mnalc-table"></div>`, [{ "content": "一括削除", "event": `Dialog.list.formationDataManagementDialog.off();`, "icon": "delete", "disabled": "disabled", "id": "mnalc-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllCarsDialog.off();`, "icon": "close" }], {
+	<div id="mnalc-table"></div>`, [{ "content": "一括削除", "event": `Dialog.list.manageAllCarsDialog.functions.deleteCars(Array.from(document.querySelectorAll('.mnalc-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('car-id')}));`, "icon": "delete", "disabled": "disabled", "id": "mnalc-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllCarsDialog.off();`, "icon": "close" }], {
 		display: function () {
 			Dialog.list.manageAllCarsDialog.functions.filterTerms = {};
 			Dialog.list.manageAllCarsDialog.functions.createTable();
@@ -792,10 +792,26 @@ window.addEventListener("load", function () {
 				table.addCell(car.number);
 				table.addCell(car.manufacturedOn);
 				table.addCell(car.isDropped ? car.droppedOn : "-");
-				table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.carDetealDialog.functions.display(${carId});">詳細</button><button class="lsf-icon" icon="delete">削除</button>`);
+				table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.carDetealDialog.functions.display(${carId});">詳細</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllCarsDialog.functions.deleteCars([${carId}])">削除</button>`);
 			})
 			document.getElementById("mnalc-table").innerHTML = table.generateTable();
 			setTableCheckboxEvents(document.getElementById("mnalc-table"), document.getElementById("mnalc-deleteall"));
+		},
+		deleteCars: function (carIds) {
+			Dialog.list.confirmDialog.functions.display(Message.list["MC007"].toString({ "type": "車両", "count": carIds.length }), () => {
+				carIds.forEach((carId) => {
+					carId = Number(carId);
+					AllCars.makeBrank(carId);
+					//この車両を参照している全編成からこの車両を脱車
+					AllFormations.searchAllByCarId(carId).forEach((formationId) => {
+						let carPosition = AllFormations.formationsList[Number(formationId)].cars.indexOf(carId);
+						if (carPosition != -1) {
+							AllFormations.formationsList[Number(formationId)].cars.splice(carPosition, 1);
+						}
+					});
+				});
+				Dialog.list.manageAllCarsDialog.functions.createTable();
+			});
 		},
 		filterTerms: {
 
@@ -836,7 +852,7 @@ window.addEventListener("load", function () {
 				table.addCell(AllSerieses.seriesesList[formation.seriesId].name);
 				table.addCell(formation.formatedOn);
 				table.addCell(formation.terminatedOn == undefined ? "-" : formation.terminatedOn);
-				table.addCell(`<button class="lsf-icon" icon="search" icon="search" onclick="Dialog.list.formationDetealDialog.functions.display(${formationId});">詳細</button><button class="lsf-icon" icon="delete">削除</button>`);
+				table.addCell(`<button class="lsf-icon" icon="search" icon="search" onclick="Dialog.list.formationDetealDialog.functions.display(${formationId});">詳細</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllFormationsDialog.functions.deleteFormations([${formationId}])">削除</button>`);
 			})
 			document.getElementById("mnalf-table").innerHTML = table.generateTable();
 			setTableCheckboxEvents(document.getElementById("mnalf-table"), document.getElementById("mnalf-deleteall"));
@@ -844,7 +860,8 @@ window.addEventListener("load", function () {
 		deleteFormations: function (formationIds) {
 			Dialog.list.confirmDialog.functions.display(Message.list["MC007"].toString({ "type": "編成", "count": formationIds.length }), () => {
 				formationIds.forEach((formationId) => {
-					AllFormations.makeBrank(Number(formationId));
+					formationId = Number(formationId);
+					AllFormations.makeBrank(formationId);
 				});
 				Dialog.list.manageAllFormationsDialog.functions.createTable();
 			});
