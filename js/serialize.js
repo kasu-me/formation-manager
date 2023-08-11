@@ -11,7 +11,7 @@ class Deserializer {
 				let series = new Series(obj.name, obj.base, obj.description, obj.isHidden);
 				return series;
 			case "Car":
-				let oldNumbers = []
+				let oldNumbers = [];
 				for (let i in obj.oldNumbers) {
 					oldNumbers.push(new OldCarNumber(obj.oldNumbers[i].number, new YearMonth(obj.oldNumbers[i].renumberedOn)))
 				}
@@ -48,15 +48,23 @@ function generateJSON() {
 	//車両
 	let carList = AllCars.carsList;
 	let carJSON = "";
-	for (let carId in carList) {
+	for (let carId = 0; carId < carList.length; carId++) {
 		carJSON += carId != 0 ? "," : "";
+		if (carList[carId] == undefined) {
+			carJSON += "null";
+			continue;
+		}
 		carJSON += carList[carId].convertToJSON();
 	}
 	//編成
 	let formationList = AllFormations.formationsList;
 	let formationJSON = "";
-	for (let formationId in formationList) {
+	for (let formationId = 0; formationId < formationList.length; formationId++) {
 		formationJSON += formationId != 0 ? "," : "";
+		if (formationList[formationId] == undefined) {
+			formationJSON += "null";
+			continue;
+		}
 		formationJSON += formationList[formationId].convertToJSON();
 	}
 	//編成テンプレート
@@ -92,9 +100,17 @@ function loadListsFromJSON(json) {
 			AllSerieses.addSeries(Deserializer.fromObject(obj.serieses[seriesId]));
 		}
 		for (let carId in obj.cars) {
+			if (obj.cars[carId] == null) {
+				AllCars.carsList.length++;
+				continue;
+			}
 			AllCars.addCar(Deserializer.fromObject(obj.cars[carId]));
 		}
 		for (let formationId in obj.formations) {
+			if (obj.formations[formationId] == null) {
+				AllFormations.formationsList.length++;
+				continue;
+			}
 			AllFormations.addFormation(Deserializer.fromObject(obj.formations[formationId]));
 		}
 		for (let formationTemplateId in obj.formationTemplates) {
