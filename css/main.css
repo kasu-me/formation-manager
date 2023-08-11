@@ -403,6 +403,15 @@ table.management-dialog-objects-list tr td:last-child {
 	border-right: none;
 }
 
+table.management-dialog-objects-list input,
+table.management-dialog-objects-list tr:not(:nth-child(1)) {
+	cursor: pointer;
+}
+
+table.management-dialog-objects-list tr td:has(input) {
+	cursor: auto;
+}
+
 table.management-dialog-objects-list tr:nth-child(1) td {
 	color: #fff;
 }
