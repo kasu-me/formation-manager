@@ -289,7 +289,7 @@ window.addEventListener("load", function () {
 		isCopyMode: false,
 		//編成テンプレートを作成ダイアログを表示
 		display: function (x, isCopyMode) {
-			Dialog.list.createFormationTemplateDialog.functions.clearInputs();
+			Dialog.list.createFormationTemplateDialog.functions.resetDialog();
 			//セレクトボックスに形式名を投入
 			setSeriesesToSelectBox(document.getElementById("cref-series"));
 			//既存の編成テンプレートの場合
@@ -352,7 +352,7 @@ window.addEventListener("load", function () {
 					if (!Dialog.list.createFormationTemplateDialog.functions.isExisting || Dialog.list.createFormationTemplateDialog.functions.isCopyMode) {
 						//新規編成テンプレートの場合
 						AllFormationTemplates.addFormationTemplate(Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate);
-						Dialog.list.createFormationTemplateDialog.functions.clearInputs();
+						Dialog.list.createFormationTemplateDialog.functions.resetDialog();
 					} else {
 						//既存編成テンプレートの場合
 						let tmpTemplate = AllFormationTemplates.getFormationTemplate(Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplateId);
@@ -366,13 +366,16 @@ window.addEventListener("load", function () {
 				}
 			}
 		},
-		clearInputs: function () {
+		resetDialog: function () {
+			Dialog.list.createFormationTemplateDialog.functions.clearInputs();
 			Dialog.list.createFormationTemplateDialog.dialogTitle.innerHTML = "";
 			Dialog.list.createFormationTemplateDialog.buttons.querySelector("button").innerHTML = "確定";
-			Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate = new FormationTemplate();
 			Dialog.list.createFormationTemplateDialog.functions.isExisting = false;
 			Dialog.list.createFormationTemplateDialog.functions.isCopyMode = false;
 			Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplateId = 0;
+		},
+		clearInputs: function () {
+			Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate = new FormationTemplate();
 			document.getElementById("cref-name").value = "";
 			document.getElementById("cref-carnumber").value = "";
 			document.getElementById("cref-formationnumber").value = "";
