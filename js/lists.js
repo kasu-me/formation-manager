@@ -214,6 +214,11 @@ class AllFormations {
 		return formatedOn <= ym.serial && ym.serial < terminatedOn;
 	}
 
+	//指定編成を空にする
+	static makeBrank(formationId) {
+		delete AllFormations.#formations[formationId];
+	}
+
 	static reset() {
 		AllFormations.#formations = [];
 	}

@@ -17,6 +17,7 @@ new Message("MC003", "${formationName}内の車両${carLength}両を${now}付で
 new Message("MC004", "${carNumber}号車を${now}付で廃車します。");
 new Message("MC005", "前回自動的にセーブされたデータが残っています。読み込みますか？");
 new Message("MC006", "編成テンプレートを削除します。");
+new Message("MC007", "選択した${count}件の${type}を削除します。<br>廃車や編成解除とは違い、${type}を最初から存在しなかったものとする操作です。この操作は取り消せません。よろしいですか？");
 //Symbol
 new Message("MS001", `<style type="text/css">
 .wn_st1{fill:#ff0000;}
@@ -784,9 +785,9 @@ window.addEventListener("load", function () {
 			table.addCell("製造");
 			table.addCell("廃車");
 			table.addCell("操作");
-			AllCars.carsList.filter(Dialog.list.manageAllCarsDialog.functions.filterFunc).forEach((car, carId) => {
+			AllCars.carsList.forEach((car, carId) => {
 				table.addRow();
-				table.addCell("<input type='checkbox' class='mnalc-raw-select'>");
+				table.addCell(`<input type='checkbox' class='mnalc-raw-select' car-id='${carId}'>`);
 				table.addCell(carId);
 				table.addCell(car.number);
 				table.addCell(car.manufacturedOn);
@@ -799,7 +800,7 @@ window.addEventListener("load", function () {
 		filterTerms: {
 
 		},
-		filterFunc: function (cars) {
+		filterFunc: function (car) {
 			return true;
 		}
 	});
@@ -808,7 +809,7 @@ window.addEventListener("load", function () {
 	new Dialog("manageAllFormationsDialog", "全編成マスタデータ管理", `<div>
 		<input><button class="lsf-icon" icon="search">検索</button>
 	</div>
-	<div id="mnalf-table"></div>`, [{ "content": "一括削除", "event": `Dialog.list.formationDataManagementDialog.off();`, "icon": "delete", "disabled": "disabled", "id": "mnalf-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllFormationsDialog.off();`, "icon": "close" }], {
+	<div id="mnalf-table"></div>`, [{ "content": "一括削除", "event": `Dialog.list.manageAllFormationsDialog.functions.deleteFormations(Array.from(document.querySelectorAll('.mnalf-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('formation-id')}));`, "icon": "delete", "disabled": "disabled", "id": "mnalf-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllFormationsDialog.off();`, "icon": "close" }], {
 		display: function () {
 			Dialog.list.manageAllFormationsDialog.functions.filterTerms = {};
 			Dialog.list.manageAllFormationsDialog.functions.createTable();
@@ -826,9 +827,9 @@ window.addEventListener("load", function () {
 			table.addCell("組成年月");
 			table.addCell("解除年月");
 			table.addCell("操作");
-			AllFormations.formationsList.filter(Dialog.list.manageAllFormationsDialog.functions.filterFunc).forEach((formation, formationId) => {
+			AllFormations.formationsList.forEach((formation, formationId) => {
 				table.addRow();
-				table.addCell("<input type='checkbox' class='mnalf-raw-select'>");
+				table.addCell(`<input type='checkbox' class='mnalf-raw-select' formation-id='${formationId}'>`);
 				table.addCell(formationId);
 				table.addCell(formation.name);
 				table.addCell(formation.cars.length);
@@ -839,6 +840,14 @@ window.addEventListener("load", function () {
 			})
 			document.getElementById("mnalf-table").innerHTML = table.generateTable();
 			setTableCheckboxEvents(document.getElementById("mnalf-table"), document.getElementById("mnalf-deleteall"));
+		},
+		deleteFormations: function (formationIds) {
+			Dialog.list.confirmDialog.functions.display(Message.list["MC007"].toString({ "type": "編成", "count": formationIds.length }), () => {
+				formationIds.forEach((formationId) => {
+					AllFormations.makeBrank(Number(formationId));
+				});
+				Dialog.list.manageAllFormationsDialog.functions.createTable();
+			});
 		},
 		filterTerms: {
 
