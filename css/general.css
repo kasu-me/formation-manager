@@ -4,6 +4,7 @@
 :root {
 	--formation-table-main-border: #5c3d7e;
 	--button-face: #4c2d5e;
+	--button-face-hover: #8c6eae;
 	--selection-hover-highlight: #c7def5;
 	--selection-highlight: #275f97;
 }
@@ -51,7 +52,8 @@ select {
 }
 
 /* ボタン */
-button {
+button,
+.button {
 	cursor: pointer;
 	background-color: var(--button-face);
 	border: 1px solid var(--button-face);
@@ -59,16 +61,20 @@ button {
 	color: #fff;
 }
 
-button:hover {
-	background-color: #8c6eae;
+button:hover,
+.button:hover {
+	background-color: var(--button-face-hover);
 }
 
 button:active,
-button:focus {
+button:focus,
+.button:active,
+.button:focus {
 	background-color: #6c4e86;
 }
 
-button:disabled {
+button:disabled,
+.button:disabled {
 	pointer-events: none;
 	background-color: #ddd;
 	border-color: #ccc;
@@ -216,7 +222,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 input[type="range"]::-webkit-slider-thumb:hover {
-	background-color: #8c6eae;
+	background-color: var(--button-face-hover);
 }
 
 input[type="range"]::-webkit-slider-thumb:active {
@@ -244,7 +250,7 @@ input[type="range"]::-moz-range-thumb {
 input[type="range"]::-moz-range-progress {
 	height: 10px;
 	border-radius: 5px;
-	background-color: #8c6eae;
+	background-color: var(--button-face-hover);
 }
 
 /* Firefoxでスライダーの外見を調整するためのスタイル */

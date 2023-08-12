@@ -23,7 +23,7 @@
 }
 
 .mku-tab-container .mku-tab-label-container label:hover {
-	background-color: #8c6eae;
+	background-color: var(--button-face-hover);
 }
 
 .mku-tab-container .mku-tab-label-container label:active {

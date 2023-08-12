@@ -381,6 +381,8 @@ table.management-dialog-objects-list tr:not(:nth-child(1)) td:last-child button:
 
 table.management-dialog-objects-list {
 	border: none;
+	border-collapse: separate;
+	border-spacing: 0;
 }
 
 table.management-dialog-objects-list tr:nth-child(1) {
@@ -391,6 +393,11 @@ table.management-dialog-objects-list tr:nth-child(1) {
 	top: 0;
 	left: 0;
 }
+
+table.management-dialog-objects-list tr:nth-child(1) td {
+	border-bottom: var(--formation-table-main-border) 2px solid;
+}
+
 
 table.management-dialog-objects-list tr td:first-child {
 	padding: 0;

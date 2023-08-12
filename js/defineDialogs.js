@@ -771,9 +771,9 @@ window.addEventListener("load", function () {
 	</ul>`, [{ "content": "終了", "event": `Dialog.list.formationDataManagementDialog.off();`, "icon": "close" }]);
 
 	//全車両管理:mnalc
-	new Dialog("manageAllCarsDialog", "全車両マスタデータ管理", `<div>
+	new Dialog("manageAllCarsDialog", "全車両マスタデータ管理", `<p>
 		<input><button class="lsf-icon" icon="search">検索</button>
-	</div>
+	</p>
 	<div id="mnalc-table"></div>`, [{ "content": "一括削除", "event": `Dialog.list.manageAllCarsDialog.functions.deleteCars(Array.from(document.querySelectorAll('.mnalc-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('car-id')}));`, "icon": "delete", "disabled": "disabled", "id": "mnalc-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllCarsDialog.off();`, "icon": "close" }], {
 		display: function () {
 			Dialog.list.manageAllCarsDialog.functions.filterTerms = {};
@@ -828,9 +828,9 @@ window.addEventListener("load", function () {
 	});
 
 	//全編成管理:mnalf
-	new Dialog("manageAllFormationsDialog", "全編成マスタデータ管理", `<div>
+	new Dialog("manageAllFormationsDialog", "全編成マスタデータ管理", `<p>
 		<input><button class="lsf-icon" icon="search">検索</button>
-	</div>
+	</p>
 	<div id="mnalf-table"></div>`, [{ "content": "一括削除", "event": `Dialog.list.manageAllFormationsDialog.functions.deleteFormations(Array.from(document.querySelectorAll('.mnalf-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('formation-id')}));`, "icon": "delete", "disabled": "disabled", "id": "mnalf-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllFormationsDialog.off();`, "icon": "close" }], {
 		display: function () {
 			Dialog.list.manageAllFormationsDialog.functions.filterTerms = {};

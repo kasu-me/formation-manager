@@ -4,7 +4,7 @@
 }
 
 .tablesort-sort-button:hover {
-	background-color: #8c6eae;
+	background-color: var(--button-face-hover);
 }
 
 .tablesort-sort-button::after {
@@ -31,7 +31,8 @@
 }
 
 .tablesort-sorted-column {
-	background-color: #f00 !important;
+	background-color: var(--selection-hover-highlight) !important;
+	color: #000 !important;
 }
 
 .tablesort-sorted-column::after {
