@@ -7,6 +7,7 @@
 	--button-face-hover: #8c6eae;
 	--selection-hover-highlight: #c7def5;
 	--selection-highlight: #275f97;
+	--input-focus: #3498db;
 }
 
 /* ページ全体 */
@@ -41,9 +42,9 @@ input:not([type="range"]) {
 }
 
 input:not([type="range"]):not([type="checkbox"]):focus {
-	border: 1px solid #3498db !important;
+	border: 1px solid var(--input-focus) !important;
 	outline: none;
-	box-shadow: 0 0 5px #3498db;
+	box-shadow: 0 0 5px var(--input-focus);
 }
 
 /* セレクトボックス */
@@ -59,6 +60,9 @@ button,
 	border: 1px solid var(--button-face);
 	border-radius: 0.3em;
 	color: #fff;
+	padding: 1px 6px;
+	font-size: 10pt;
+	display: inline-block;
 }
 
 button:hover,
@@ -79,6 +83,17 @@ button:disabled,
 	background-color: #ddd;
 	border-color: #ccc;
 	color: #777;
+}
+
+/* ラベルボタン */
+label.button input[type="checkbox"] {
+	display: none;
+}
+
+label.button:has(input[type="checkbox"]:checked) {
+	border: 1px solid var(--button-face);
+	background-color: var(--selection-hover-highlight);
+	color: #000;
 }
 
 /* テーブル */

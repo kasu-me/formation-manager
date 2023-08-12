@@ -372,17 +372,22 @@ table.management-dialog-objects-list tr:not(:nth-child(1)) td:last-child button:
 	margin-right: 0.3em;
 }
 
+/* マスタ管理画面の検索欄 */
+.management-dialog-searchbox-container>span:not(:last-child) {
+	margin-right: 0.4em;
+}
 
-/* 管理画面のリスト */
+/* マスタ管理画面のリスト */
 .generated-table-container:has(table.management-dialog-objects-list) {
 	height: 50vh;
-	overflow-y: auto;
+	overflow-y: scroll;
 }
 
 table.management-dialog-objects-list {
 	border: none;
 	border-collapse: separate;
 	border-spacing: 0;
+	width: 700px;
 }
 
 table.management-dialog-objects-list tr:nth-child(1) {
@@ -401,6 +406,14 @@ table.management-dialog-objects-list tr:nth-child(1) td {
 
 table.management-dialog-objects-list tr td:first-child {
 	padding: 0;
+}
+
+table.management-dialog-objects-list tr td:first-child {
+	width: 1.5em;
+}
+
+table.management-dialog-objects-list tr td:last-child {
+	width: 10em;
 }
 
 table.management-dialog-objects-list tr td:last-child {

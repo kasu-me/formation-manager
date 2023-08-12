@@ -771,8 +771,8 @@ window.addEventListener("load", function () {
 	</ul>`, [{ "content": "終了", "event": `Dialog.list.formationDataManagementDialog.off();`, "icon": "close" }]);
 
 	//全車両管理:mnalc
-	new Dialog("manageAllCarsDialog", "全車両マスタデータ管理", `<p>
-		<input><button class="lsf-icon" icon="search">検索</button>
+	new Dialog("manageAllCarsDialog", "全車両マスタデータ管理", `<p class="management-dialog-searchbox-container">
+		<span><input><button class="lsf-icon" icon="search">検索</button></span><span><label class="button lsf-icon" icon="eye"><input type="checkbox" id="mnalc-only-useless" onchange="Dialog.list.manageAllCarsDialog.functions.createTable()">無用車両のみ表示</label></span>
 	</p>
 	<div id="mnalc-table"></div>`, [{ "content": "一括削除", "event": `Dialog.list.manageAllCarsDialog.functions.deleteCars(Array.from(document.querySelectorAll('.mnalc-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('car-id')}));`, "icon": "delete", "disabled": "disabled", "id": "mnalc-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllCarsDialog.off();`, "icon": "close" }], {
 		display: function () {
@@ -791,13 +791,15 @@ window.addEventListener("load", function () {
 			table.addCell("廃車");
 			table.addCell("操作");
 			AllCars.carsList.forEach((car, carId) => {
-				table.addRow();
-				table.addCell(`<input type='checkbox' class='mnalc-raw-select' car-id='${carId}'>`);
-				table.addCell(carId);
-				table.addCell(car.number);
-				table.addCell(car.manufacturedOn);
-				table.addCell(car.isDropped ? car.droppedOn : "-");
-				table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.carDetealDialog.functions.display(${carId});">詳細</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllCarsDialog.functions.deleteCars([${carId}])">削除</button>`);
+				if (Dialog.list.manageAllCarsDialog.functions.isFiltered(car)) {
+					table.addRow();
+					table.addCell(`<input type='checkbox' class='mnalc-raw-select' car-id='${carId}'>`);
+					table.addCell(carId);
+					table.addCell(car.number);
+					table.addCell(car.manufacturedOn);
+					table.addCell(car.isDropped ? car.droppedOn : "-");
+					table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.carDetealDialog.functions.display(${carId});">詳細</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllCarsDialog.functions.deleteCars([${carId}])">削除</button>`);
+				}
 			})
 			document.getElementById("mnalc-table").innerHTML = table.generateTable();
 			setTableCheckboxEvents(document.getElementById("mnalc-table"), document.getElementById("mnalc-deleteall"));
@@ -822,14 +824,19 @@ window.addEventListener("load", function () {
 		filterTerms: {
 
 		},
-		filterFunc: function (car) {
-			return true;
+		isFiltered: function (car) {
+			let isShowingUselessCar = document.getElementById("mnalc-only-useless").checked;
+			if (isShowingUselessCar && !(car.isDropped && car.droppedOn.serial == car.manufacturedOn.serial)) {
+				return false;
+			} else {
+				return true;
+			}
 		}
 	});
 
 	//全編成管理:mnalf
-	new Dialog("manageAllFormationsDialog", "全編成マスタデータ管理", `<p>
-		<input><button class="lsf-icon" icon="search">検索</button>
+	new Dialog("manageAllFormationsDialog", "全編成マスタデータ管理", `<p class="management-dialog-searchbox-container">
+		<span><input><button class="lsf-icon" icon="search">検索</button></span><span><label class="button lsf-icon" icon="eye"><input type="checkbox" id="mnalf-only-useless" onchange="Dialog.list.manageAllFormationsDialog.functions.createTable()">無用編成のみ表示</label></span>
 	</p>
 	<div id="mnalf-table"></div>`, [{ "content": "一括削除", "event": `Dialog.list.manageAllFormationsDialog.functions.deleteFormations(Array.from(document.querySelectorAll('.mnalf-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('formation-id')}));`, "icon": "delete", "disabled": "disabled", "id": "mnalf-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllFormationsDialog.off();`, "icon": "close" }], {
 		display: function () {
@@ -850,15 +857,17 @@ window.addEventListener("load", function () {
 			table.addCell("解除年月");
 			table.addCell("操作");
 			AllFormations.formationsList.forEach((formation, formationId) => {
-				table.addRow();
-				table.addCell(`<input type='checkbox' class='mnalf-raw-select' formation-id='${formationId}'>`);
-				table.addCell(formationId);
-				table.addCell(formation.name);
-				table.addCell(formation.cars.length);
-				table.addCell(AllSerieses.seriesesList[formation.seriesId].name);
-				table.addCell(formation.formatedOn);
-				table.addCell(formation.terminatedOn == undefined ? "-" : formation.terminatedOn);
-				table.addCell(`<button class="lsf-icon" icon="search" icon="search" onclick="Dialog.list.formationDetealDialog.functions.display(${formationId});">詳細</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllFormationsDialog.functions.deleteFormations([${formationId}])">削除</button>`);
+				if (Dialog.list.manageAllFormationsDialog.functions.isFiltered(formation)) {
+					table.addRow();
+					table.addCell(`<input type='checkbox' class='mnalf-raw-select' formation-id='${formationId}'>`);
+					table.addCell(formationId);
+					table.addCell(formation.name);
+					table.addCell(formation.cars.length);
+					table.addCell(AllSerieses.seriesesList[formation.seriesId].name);
+					table.addCell(formation.formatedOn);
+					table.addCell(formation.isTerminated ? formation.terminatedOn : "");
+					table.addCell(`<button class="lsf-icon" icon="search" icon="search" onclick="Dialog.list.formationDetealDialog.functions.display(${formationId});">詳細</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllFormationsDialog.functions.deleteFormations([${formationId}])">削除</button>`);
+				}
 			})
 			document.getElementById("mnalf-table").innerHTML = table.generateTable();
 			setTableCheckboxEvents(document.getElementById("mnalf-table"), document.getElementById("mnalf-deleteall"));
@@ -876,8 +885,13 @@ window.addEventListener("load", function () {
 		filterTerms: {
 
 		},
-		filterFunc: function (formation) {
-			return true;
+		isFiltered: function (formation) {
+			let isShowingUselessCar = document.getElementById("mnalf-only-useless").checked;
+			if (isShowingUselessCar && !(formation.isTerminated && formation.terminatedOn.serial == formation.formatedOn.serial)) {
+				return false;
+			} else {
+				return true;
+			}
 		}
 	});
 
