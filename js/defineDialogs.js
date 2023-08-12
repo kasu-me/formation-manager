@@ -472,6 +472,8 @@ window.addEventListener("load", function () {
 			let table = new Table();
 			table.setSubtitle(`<p class="car-name"><b><span id="cardt-car-number">${AllCars.carsList[x].numberInTime(now)}</span>号車</b><button class="lsf-icon" icon="pen" onclick="Dialog.list.carRenumberDialog.functions.display()">改番</button><span class="car-status lsf-icon ${AllCars.carsList[x].isActive ? "" : "dropped"}">${AllCars.carsList[x].isActive ? "現役" : `${AllCars.carsList[x].droppedOn.toString()}廃車`}</span></p>`);
 			table.setAttributes({ "class": "horizontal-stripes" });
+			//所属編成を探す
+			let formation = AllFormations.searchByCarId(x, now);
 			//所属編成歴
 			let formations = AllFormations.searchAllByCarId(x);
 			let formationsText = formations.length == 0 ? `編成に所属したことがありません` : `<ul>`;
@@ -499,10 +501,13 @@ window.addEventListener("load", function () {
 				table.addCell(AllCars.carsList[x].droppedOn.toStringWithLink());
 			}
 			table.addRow();
+			table.addCell(`所属編成`);
+			table.addCell(`${formation != -1 ? `<a href="javascript:Dialog.list.formationDetealDialog.functions.display(${formation})">${AllFormations.formationsList[formation].name}</a><small> (${AllFormations.formationsList[formation].formatedOn.toStringWithLink()}～${AllFormations.formationsList[formation].isTerminated ? AllFormations.formationsList[formation].terminatedOn.toStringWithLink() : ""})` : `編成に所属していません<small> (${now.toStringWithLink()}時点)`}</small>`);
+			table.addRow();
 			table.addCell(`所属編成歴`);
 			table.addCell(formationsText);
 			table.addRow();
-			table.addCell("車歴");
+			table.addCell("改番歴");
 			table.addCell(oldNumbersText);
 			table.addRow();
 			table.addCell("備考");
