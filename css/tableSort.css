@@ -34,10 +34,6 @@
 	background-color: #f00 !important;
 }
 
-.tablesort-sorted-column {
-	background-color: #f00;
-}
-
 .tablesort-sorted-column::after {
 	display: inline-block;
 	content: "dropdown";
