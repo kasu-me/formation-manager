@@ -807,7 +807,7 @@ window.addEventListener("load", function () {
 			document.getElementById("mnalc-table").innerHTML = table.generateTable();
 			setTableCheckboxEvents(document.getElementById("mnalc-table"), document.getElementById("mnalc-deleteall"));
 			TableSort.addSortButtonToTable(document.getElementById("mnalc-table"));
-			document.getElementById("mnalc-search-status").innerHTML = `${(Dialog.list.manageAllCarsDialog.functions.searchQuery == "" ? "全" : `車両番号に<b>"${Dialog.list.manageAllCarsDialog.functions.searchQuery}"</b>を含む`)}${document.getElementById("mnalc-only-useless").checked ? `無用` : ``}車両を表示中`;
+			document.getElementById("mnalc-search-status").innerHTML = `${(Dialog.list.manageAllCarsDialog.functions.searchQuery == "" ? "全" : `車両番号に<b>"${Dialog.list.manageAllCarsDialog.functions.searchQuery}"</b>を含む`)}${document.getElementById("mnalc-only-useless").checked ? `無用` : ``}車両を表示中 (全${table.rows.length - 1}件)`;
 		},
 		deleteCars: function (carIds) {
 			Dialog.list.confirmDialog.functions.display(Message.list["MC007"].toString({ "type": "車両", "count": carIds.length }), () => {
@@ -880,7 +880,7 @@ window.addEventListener("load", function () {
 			document.getElementById("mnalf-table").innerHTML = table.generateTable();
 			setTableCheckboxEvents(document.getElementById("mnalf-table"), document.getElementById("mnalf-deleteall"));
 			TableSort.addSortButtonToTable(document.getElementById("mnalf-table"));
-			document.getElementById("mnalf-search-status").innerHTML = `${(Dialog.list.manageAllFormationsDialog.functions.searchQuery == "" ? "全" : `編成番号に<b>"${Dialog.list.manageAllFormationsDialog.functions.searchQuery}"</b>を含む`)}${document.getElementById("mnalf-only-useless").checked ? `無用` : ``}編成を表示中`;
+			document.getElementById("mnalf-search-status").innerHTML = `${(Dialog.list.manageAllFormationsDialog.functions.searchQuery == "" ? "全" : `編成番号に<b>"${Dialog.list.manageAllFormationsDialog.functions.searchQuery}"</b>を含む`)}${document.getElementById("mnalf-only-useless").checked ? `無用` : ``}編成を表示中 (全${table.rows.length - 1}件)`;
 		},
 		deleteFormations: function (formationIds) {
 			Dialog.list.confirmDialog.functions.display(Message.list["MC007"].toString({ "type": "編成", "count": formationIds.length }), () => {
