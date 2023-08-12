@@ -801,7 +801,7 @@ window.addEventListener("load", function () {
 					table.addCell(car.number);
 					table.addCell(car.manufacturedOn);
 					table.addCell(car.isDropped ? car.droppedOn : "-");
-					table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.carDetealDialog.functions.display(${carId});">詳細</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllCarsDialog.functions.deleteCars([${carId}])">削除</button>`);
+					table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.carDetealDialog.functions.display(${carId});">詳細</button><button class="lsf-icon" icon="pen" onclick="">編集</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllCarsDialog.functions.deleteCars([${carId}])">削除</button>`);
 				}
 			})
 			document.getElementById("mnalc-table").innerHTML = table.generateTable();
@@ -874,7 +874,7 @@ window.addEventListener("load", function () {
 					table.addCell(AllSerieses.seriesesList[formation.seriesId].name);
 					table.addCell(formation.formatedOn);
 					table.addCell(formation.isTerminated ? formation.terminatedOn : "");
-					table.addCell(`<button class="lsf-icon" icon="search" icon="search" onclick="Dialog.list.formationDetealDialog.functions.display(${formationId});">詳細</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllFormationsDialog.functions.deleteFormations([${formationId}])">削除</button>`);
+					table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.formationDetealDialog.functions.display(${formationId});">詳細</button><button class="lsf-icon" icon="pen" onclick="">編集</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllFormationsDialog.functions.deleteFormations([${formationId}])">削除</button>`);
 				}
 			})
 			document.getElementById("mnalf-table").innerHTML = table.generateTable();

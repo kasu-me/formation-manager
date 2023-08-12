@@ -387,7 +387,7 @@ table.management-dialog-objects-list {
 	border: none;
 	border-collapse: separate;
 	border-spacing: 0;
-	width: 700px;
+	min-width: 740px;
 }
 
 table.management-dialog-objects-list tr:nth-child(1) {
@@ -413,7 +413,7 @@ table.management-dialog-objects-list tr td:first-child {
 }
 
 table.management-dialog-objects-list tr td:last-child {
-	width: 10em;
+	width: 14em;
 }
 
 table.management-dialog-objects-list tr td:last-child {
