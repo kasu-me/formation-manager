@@ -1,4 +1,6 @@
 class TableSort {
+	static sortedColumn = new Map();
+	static sortMode = new Map();
 	//表にソート機能を付与
 	static addSortButtonToTable(targetTable) {
 		//ヘッダの内容
@@ -6,8 +8,15 @@ class TableSort {
 		let sortButtons = tableHeaderRow.querySelectorAll("td:not(:first-child):not(:last-child)");
 		//各行の内容
 		let rows = Array.from(targetTable.querySelectorAll("tr:not(:first-child)"));
+		if (TableSort.sortMode.get(targetTable) == undefined) {
+			TableSort.sortMode.set(targetTable, []);
+		}
 		//ヘッダのi列目をソートボタンにする
 		sortButtons.forEach((td, i) => {
+			//ソートモード記録用
+			if (TableSort.sortMode.get(targetTable).length == i) {
+				TableSort.sortMode.get(targetTable).push(0);
+			}
 			//ヘッダの1列目にソートボタンクラスを付与
 			td.classList.add("tablesort-sort-button");
 			//ヘッダのi列目にイベントを付与
@@ -17,12 +26,13 @@ class TableSort {
 					if (i != j) {
 						sortButton.classList.remove("tablesort-sorted-column");
 						sortButton.classList.remove("tablesort-desc");
+						TableSort.sortMode.get(targetTable)[j] = 0;
 					}
 				});
 				//ソート方向
 				let sortMode = 1;
 				//ソートボタンのクラス付与
-				if (!td.classList.contains("tablesort-sorted-column") || td.classList.contains("tablesort-desc")) {
+				if (TableSort.sortMode.get(targetTable)[i] <= 0) {
 					//初ソートもしくは既にdescの場合descを解除
 					td.classList.remove("tablesort-desc");
 				} else {
@@ -40,7 +50,15 @@ class TableSort {
 				rows.forEach((row) => {
 					targetTable.querySelector("table").appendChild(row);
 				});
+				//ソート状態を記録
+				TableSort.sortedColumn.set(targetTable, i);
+				TableSort.sortMode.get(targetTable)[i] = sortMode;
 			});
+			//ソート状態を付与
+			if (TableSort.sortedColumn.get(targetTable) == i) {
+				TableSort.sortMode.get(targetTable)[i] *= -1;
+				td.click();
+			}
 		});
 	}
 }
