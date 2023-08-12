@@ -772,11 +772,13 @@ window.addEventListener("load", function () {
 
 	//全車両管理:mnalc
 	new Dialog("manageAllCarsDialog", "全車両マスタデータ管理", `<p class="management-dialog-searchbox-container">
-		<span><input><button class="lsf-icon" icon="search">検索</button></span><span><label class="button lsf-icon" icon="eye"><input type="checkbox" id="mnalc-only-useless" onchange="Dialog.list.manageAllCarsDialog.functions.createTable()">無用車両のみ表示</label></span>
+		<span><input placeholder="キーワード" id="mnalc-search-keyword" onkeypress="if(event.keyCode==13){document.getElementById('mnalc-search-button').click();}"><button class="lsf-icon" icon="search" onclick="Dialog.list.manageAllCarsDialog.functions.searchQuery=document.getElementById('mnalc-search-keyword').value;Dialog.list.manageAllCarsDialog.functions.createTable()" id="mnalc-search-button">検索</button></span><span><label class="button lsf-icon" icon="eye"><input type="checkbox" id="mnalc-only-useless" onchange="Dialog.list.manageAllCarsDialog.functions.createTable()">無用車両のみ表示</label></span>
 	</p>
 	<div id="mnalc-table"></div>`, [{ "content": "一括削除", "event": `Dialog.list.manageAllCarsDialog.functions.deleteCars(Array.from(document.querySelectorAll('.mnalc-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('car-id')}));`, "icon": "delete", "disabled": "disabled", "id": "mnalc-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllCarsDialog.off();`, "icon": "close" }], {
 		display: function () {
 			Dialog.list.manageAllCarsDialog.functions.filterTerms = {};
+			Dialog.list.manageAllCarsDialog.functions.searchQuery = "";
+			document.getElementById('mnalc-search-keyword').value = "";
 			Dialog.list.manageAllCarsDialog.functions.createTable();
 			Dialog.list.manageAllCarsDialog.on();
 		},
@@ -824,9 +826,10 @@ window.addEventListener("load", function () {
 		filterTerms: {
 
 		},
+		searchQuery: "",
 		isFiltered: function (car) {
 			let isShowingUselessCar = document.getElementById("mnalc-only-useless").checked;
-			if (isShowingUselessCar && !(car.isDropped && car.droppedOn.serial == car.manufacturedOn.serial)) {
+			if ((isShowingUselessCar && !(car.isDropped && car.droppedOn.serial == car.manufacturedOn.serial)) || (Dialog.list.manageAllCarsDialog.functions.searchQuery != "" && car.number.indexOf(Dialog.list.manageAllCarsDialog.functions.searchQuery) == -1)) {
 				return false;
 			} else {
 				return true;
@@ -836,11 +839,13 @@ window.addEventListener("load", function () {
 
 	//全編成管理:mnalf
 	new Dialog("manageAllFormationsDialog", "全編成マスタデータ管理", `<p class="management-dialog-searchbox-container">
-		<span><input><button class="lsf-icon" icon="search">検索</button></span><span><label class="button lsf-icon" icon="eye"><input type="checkbox" id="mnalf-only-useless" onchange="Dialog.list.manageAllFormationsDialog.functions.createTable()">無用編成のみ表示</label></span>
+		<span><input placeholder="キーワード" id="mnalf-search-keyword" onkeypress="if(event.keyCode==13){document.getElementById('mnalf-search-button').click();}"><button class="lsf-icon" icon="search" onclick="Dialog.list.manageAllFormationsDialog.functions.searchQuery=document.getElementById('mnalf-search-keyword').value;Dialog.list.manageAllFormationsDialog.functions.createTable()" id="mnalf-search-button">検索</button></span><span><label class="button lsf-icon" icon="eye"><input type="checkbox" id="mnalf-only-useless" onchange="Dialog.list.manageAllFormationsDialog.functions.createTable()">無用編成のみ表示</label></span>
 	</p>
 	<div id="mnalf-table"></div>`, [{ "content": "一括削除", "event": `Dialog.list.manageAllFormationsDialog.functions.deleteFormations(Array.from(document.querySelectorAll('.mnalf-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('formation-id')}));`, "icon": "delete", "disabled": "disabled", "id": "mnalf-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllFormationsDialog.off();`, "icon": "close" }], {
 		display: function () {
 			Dialog.list.manageAllFormationsDialog.functions.filterTerms = {};
+			Dialog.list.manageAllFormationsDialog.functions.searchQuery = "";
+			document.getElementById('mnalf-search-keyword').value = "";
 			Dialog.list.manageAllFormationsDialog.functions.createTable();
 			Dialog.list.manageAllFormationsDialog.on();
 		},
@@ -885,9 +890,10 @@ window.addEventListener("load", function () {
 		filterTerms: {
 
 		},
+		searchQuery: "",
 		isFiltered: function (formation) {
 			let isShowingUselessCar = document.getElementById("mnalf-only-useless").checked;
-			if (isShowingUselessCar && !(formation.isTerminated && formation.terminatedOn.serial == formation.formatedOn.serial)) {
+			if ((isShowingUselessCar && !(formation.isTerminated && formation.terminatedOn.serial == formation.formatedOn.serial)) || (Dialog.list.manageAllFormationsDialog.functions.searchQuery != "" && formation.name.indexOf(Dialog.list.manageAllFormationsDialog.functions.searchQuery) == -1)) {
 				return false;
 			} else {
 				return true;
