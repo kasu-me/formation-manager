@@ -45,8 +45,8 @@
 }
 
 .mku-tab-container .mku-tab-content h2 {
-	border-left: 8px solid var(--formation-table-main-border);
-	padding-left: 0.25em;
+	border-left: 7px solid var(--formation-table-main-border);
+	padding-left: 0.35em;
 	font-size: 11.5pt;
 	margin-top: 1.5em;
 }
