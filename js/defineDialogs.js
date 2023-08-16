@@ -897,7 +897,7 @@ window.addEventListener("load", function () {
 		searchQuery: "",
 		isFiltered: function (formation) {
 			let isShowingUselessCar = document.getElementById("mnalf-only-useless").checked;
-			if ((isShowingUselessCar && !(formation.isTerminated && formation.terminatedOn.serial == formation.formatedOn.serial)) || (Dialog.list.manageAllFormationsDialog.functions.searchQuery != "" && formation.name.indexOf(Dialog.list.manageAllFormationsDialog.functions.searchQuery) == -1)) {
+			if ((isShowingUselessCar && (!(formation.isTerminated && formation.terminatedOn.serial == formation.formatedOn.serial) && !(formation.cars.length == 0))) || (Dialog.list.manageAllFormationsDialog.functions.searchQuery != "" && formation.name.indexOf(Dialog.list.manageAllFormationsDialog.functions.searchQuery) == -1)) {
 				return false;
 			} else {
 				return true;
