@@ -6,9 +6,9 @@ window.addEventListener("load", () => {
 		let message = elem.getAttribute("mku-balloon-message");
 		elem.addEventListener("mouseenter", (e) => {
 			balloon.innerHTML = message;
-			balloon.style.top = `${elem.getBoundingClientRect().bottom + 10 + window.scrollY}px`;
-			balloon.style.left = `${(elem.getBoundingClientRect().left + elem.getBoundingClientRect().right) / 2 - 20}px`;
 			balloon.classList.add("on");
+			balloon.style.top = `${elem.getBoundingClientRect().top - balloon.clientHeight - 10 + window.scrollY}px`;
+			balloon.style.left = `${(elem.getBoundingClientRect().left + elem.getBoundingClientRect().right) / 2 - 20}px`;
 		});
 		elem.addEventListener("mouseleave", (e) => {
 			balloon.classList.remove("on");

@@ -16,11 +16,11 @@
 	display: block;
 	content: "";
 	position: absolute;
-	top: -10px;
+	bottom: -10px;
 	left: 10px;
 	border-left: transparent 10px solid;
 	border-right: transparent 10px solid;
-	border-bottom: rgba(0, 0, 0, 0.85) 10px solid;
+	border-top: rgba(0, 0, 0, 0.85) 10px solid;
 }
 
 #mku-balloon.on {
