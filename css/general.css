@@ -198,7 +198,7 @@ a.update-yearmonth-link::before,
 .input-area input:not([type="checkbox"]),
 .input-area select {
 	padding: 4px;
-	border: 1px solid #5c3d7e;
+	border: 1px solid var(--formation-table-main-border);
 	width: 20em;
 }
 
@@ -210,6 +210,17 @@ a.update-yearmonth-link::before,
 /* フィールドセットの下の要素 */
 .element-bottom-of-input-area {
 	margin-top: 1.5em;
+}
+
+/* 入れの子のフィールドセット */
+
+.input-area .input-area {
+	border-color: #969696;
+}
+
+.input-area .input-area input:not([type="checkbox"]),
+.input-area .input-area select {
+	width: 15em;
 }
 
 /* フィールドセットここまで */
