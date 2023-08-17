@@ -801,7 +801,7 @@ window.addEventListener("load", function () {
 					table.addCell(car.number);
 					table.addCell(car.manufacturedOn);
 					table.addCell(car.isDropped ? car.droppedOn : "-");
-					table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.carDetealDialog.functions.display(${carId});">詳細</button><button class="lsf-icon" icon="pen" onclick="">編集</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllCarsDialog.functions.deleteCars([${carId}])">削除</button>`);
+					table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.carDetealDialog.functions.display(${carId});">詳細</button><button class="lsf-icon" icon="pen" onclick="Dialog.list.editCarMasterDialog.functions.display(${carId})">編集</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllCarsDialog.functions.deleteCars([${carId}])">削除</button>`);
 				}
 			})
 			document.getElementById("mnalc-table").innerHTML = table.generateTable();
@@ -952,6 +952,93 @@ window.addEventListener("load", function () {
 			});
 		});
 	}
+
+	//JSON直接編集:edmsc
+	new Dialog("editCarMasterDialog", "車両マスタデータ編集", `
+	<table class="input-area">
+		<tr><td>車両番号</td><td><input id="edmsc-car-number"></td></tr>
+		<tr><td>製造</td><td><span class="time-inputs"><input id="edmsc-manufactured-y" class="yearmonth-y" type="number">年<input id="edmsc-manufactured-m" class="yearmonth-m" type="number">月</span></td></tr>
+		<tr><td>廃車</td><td><span class="time-inputs"><input id="edmsc-dropped-y" class="yearmonth-y" type="number">年<input id="edmsc-dropped-m" class="yearmonth-m" type="number">月</span><label style="display:inline-block;vertical-align: bottom;margin-left:0.5em;" for="edmsc-car-isdropped" class="mku-checkbox-container"><input id="edmsc-car-isdropped" type="checkbox"></label></td></tr>
+		<tr><td>旧車番</td><td>
+			<table class="input-area">
+				<tr><td>対象</td><td><select id="edmsc-oldcar-indexes" onchange="Dialog.list.editCarMasterDialog.functions.updateOldNumbersSelectBox(Number(this.value))"></select></td></tr>
+				<tr><td>番号</td><td><input id="edmsc-oldcar-number" oninput="Dialog.list.editCarMasterDialog.functions.tentativeOldNumbers[Number(document.getElementById('edmsc-oldcar-indexes').value)].number=this.value"></td></tr>
+				<tr><td>改番年月</td><td><span class="time-inputs"><input id="edmsc-oldnumber-renumbered-y" class="yearmonth-y" type="number" oninput="Dialog.list.editCarMasterDialog.functions.tentativeOldNumbers[Number(document.getElementById('edmsc-oldcar-indexes').value)].year=Number(this.value);">年<input id="edmsc-oldnumber-renumbered-m" class="yearmonth-m" type="number" oninput="Dialog.list.editCarMasterDialog.functions.tentativeOldNumbers[Number(document.getElementById('edmsc-oldcar-indexes').value)].month=Number(this.value);">月</span></td></tr>
+		</td></tr>
+	</table>
+	`, [{ "content": "詳細ウインドウ", "event": `Dialog.list.carDetealDialog.functions.display(Dialog.list.editCarMasterDialog.functions.carId)`, "icon": "search" }, { "content": "保存", "event": `Dialog.list.editCarMasterDialog.functions.save()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editCarMasterDialog.off();`, "icon": "close" }], {
+		carId: 0,
+		display: function (x) {
+			Dialog.list.editCarMasterDialog.functions.clearInputs();
+			Dialog.list.editCarMasterDialog.functions.carId = x;
+			let car = AllCars.carsList[x];
+			document.getElementById("edmsc-car-number").value = car.number;
+			document.getElementById("edmsc-manufactured-y").value = car.manufacturedOn.year;
+			document.getElementById("edmsc-manufactured-m").value = car.manufacturedOn.month;
+			document.getElementById("edmsc-car-isdropped").checked = car.isDropped;
+			Dialog.list.editCarMasterDialog.functions.updateIsDroppedToggle();
+			if (car.isDropped) {
+				document.getElementById("edmsc-dropped-y").value = car.droppedOn.year;
+				document.getElementById("edmsc-dropped-m").value = car.droppedOn.month;
+			} else {
+				document.getElementById("edmsc-dropped-y").value = "";
+				document.getElementById("edmsc-dropped-m").value = "";
+			}
+			let oldNumbersSelectBox = document.getElementById("edmsc-oldcar-indexes");
+			Dialog.list.editCarMasterDialog.functions.oldNumbers = car.oldNumbers;
+			for (let i in car.oldNumbers) {
+				let option = document.createElement("option");
+				option.value = i;
+				option.innerHTML = car.oldNumbers[i].number;
+				oldNumbersSelectBox.appendChild(option);
+				Dialog.list.editCarMasterDialog.functions.tentativeOldNumbers.push({ "number": car.oldNumbers[i].number, "year": car.oldNumbers[i].renumberedOn.year, "month": car.oldNumbers[i].renumberedOn.month });
+			}
+			if (car.oldNumbers.length > 0) {
+				Dialog.list.editCarMasterDialog.functions.updateOldNumbersSelectBox(Number(oldNumbersSelectBox.value));
+				oldNumbersSelectBox.disabled = false;
+				document.getElementById("edmsc-oldcar-number").disabled = false;
+				document.getElementById("edmsc-oldnumber-renumbered-y").disabled = false;
+				document.getElementById("edmsc-oldnumber-renumbered-m").disabled = false;
+			} else {
+				oldNumbersSelectBox.disabled = true;
+				document.getElementById("edmsc-oldcar-number").disabled = true;
+				document.getElementById("edmsc-oldnumber-renumbered-y").disabled = true;
+				document.getElementById("edmsc-oldnumber-renumbered-m").disabled = true;
+			}
+			Dialog.list.editCarMasterDialog.on();
+		},
+		clearInputs: function () {
+			document.getElementById("edmsc-oldcar-indexes").innerHTML = "";
+			Dialog.list.editCarMasterDialog.functions.tentativeOldNumbers = [];
+		},
+		updateIsDroppedToggle: function () {
+			let checkbox = document.getElementById("edmsc-car-isdropped");
+			let year = document.getElementById("edmsc-dropped-y");
+			let month = document.getElementById("edmsc-dropped-m");
+			if (checkbox.checked) {
+				year.disabled = false;
+				month.disabled = false;
+			} else {
+				year.disabled = true;
+				month.disabled = true;
+			}
+		},
+		tentativeOldNumbers: [],
+		updateOldNumbersSelectBox: function (x) {
+			let carOldNumber = Dialog.list.editCarMasterDialog.functions.tentativeOldNumbers[x];
+			document.getElementById("edmsc-oldcar-number").value = carOldNumber.number;
+			document.getElementById("edmsc-oldnumber-renumbered-y").value = carOldNumber.year;
+			document.getElementById("edmsc-oldnumber-renumbered-m").value = carOldNumber.month;
+		},
+		save: function () {
+			let car = AllCars.carsList[Dialog.list.editCarMasterDialog.functions.carId];
+			car.updateMasterData(document.getElementById("edmsc-car-number").value, new YearMonth(document.getElementById("edmsc-manufactured-y").value, document.getElementById("edmsc-manufactured-m").value), document.getElementById("edmsc-car-isdropped").checked ? new YearMonth(document.getElementById("edmsc-dropped-y").value, document.getElementById("edmsc-dropped-m").value) : null, Dialog.list.editCarMasterDialog.functions.tentativeOldNumbers);
+			Dialog.list.editCarMasterDialog.off();
+			Dialog.list.carDetealDialog.functions.display(Dialog.list.editCarMasterDialog.functions.carId);
+		}
+	});
+	document.getElementById("edmsc-car-isdropped").addEventListener("change", Dialog.list.editCarMasterDialog.functions.updateIsDroppedToggle);
+	Dialog.list.editCarMasterDialog.functions.updateIsDroppedToggle();
 
 	//JSON直接編集:jsed
 	new Dialog("editJSONDialog", "JSON直接編集", `<p class="dialog-warn warning">このデータの書き換えを誤ると、当アプリで作成･編集した全てのデータに影響を及ぼし、最悪の場合はデータを読み込めなくなります。バックアップは個人の責任で確実に行ってください。</p><textarea id="jsed-main"></textarea>`, [{ "content": "保存", "event": `Dialog.list.editJSONDialog.functions.save()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editJSONDialog.off();`, "icon": "close" }], {

@@ -187,6 +187,18 @@ class Car {
 		}
 	}
 
+	//マスタ編集
+	updateMasterData(number, manufacturedOn, droppedOn, oldNumbers) {
+		this.#number = number;
+		this.#manufacturedOn = manufacturedOn;
+		this.#oldNumbers = [];
+		this.#droppedOn = droppedOn == null ? undefined : droppedOn;
+		for (let i in oldNumbers) {
+			this.#oldNumbers.push(new OldCarNumber(oldNumbers[i].number, new YearMonth(oldNumbers[i].year, oldNumbers[i].month)));
+		}
+		this.sortOldNumbersByYearMonth();
+	}
+
 	convertToJSON() {
 		let oldNumbers = [];
 		for (let i in this.#oldNumbers) {
