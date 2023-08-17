@@ -78,11 +78,23 @@ button:focus,
 }
 
 button:disabled,
-.button:disabled {
+.button:disabled,
+input:disabled,
+select:disabled {
 	pointer-events: none;
 	background-color: #ddd;
 	border-color: #ccc;
 	color: #777;
+}
+
+input:disabled,
+select:disabled {
+	background-color: #e4e4e4;
+	border-color: #acacac !important;
+}
+
+select:disabled {
+	opacity: 1;
 }
 
 /* ラベルボタン */
@@ -215,7 +227,11 @@ a.update-yearmonth-link::before,
 /* 入れの子のフィールドセット */
 
 .input-area .input-area {
-	border-color: #969696;
+	border-width: 1px;
+}
+
+.input-area .input-area td {
+	border-color: #acacac;
 }
 
 .input-area .input-area input:not([type="checkbox"]),
