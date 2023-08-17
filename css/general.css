@@ -108,6 +108,21 @@ label.button:has(input[type="checkbox"]:checked) {
 	color: #000;
 }
 
+/* トグル(インライン) */
+label.mku-checkbox-container.inline {
+	display: inline-block;
+	vertical-align: bottom;
+	margin-left: 0.5em;
+}
+
+/* トグル(小) */
+.mku-checkbox-container.small {
+	display: inline-block;
+	font-size: 0.8em;
+	vertical-align: bottom;
+	margin-right: 0.4em;
+}
+
 /* テーブル */
 table {
 	border-collapse: collapse;

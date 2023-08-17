@@ -958,7 +958,7 @@ window.addEventListener("load", function () {
 	<table class="input-area">
 		<tr><td>車両番号</td><td><input id="edmsc-car-number"></td></tr>
 		<tr><td>製造</td><td><span class="time-inputs"><input id="edmsc-manufactured-y" class="yearmonth-y" type="number">年<input id="edmsc-manufactured-m" class="yearmonth-m" type="number">月</span></td></tr>
-		<tr><td>廃車</td><td><span class="time-inputs"><input id="edmsc-dropped-y" class="yearmonth-y" type="number">年<input id="edmsc-dropped-m" class="yearmonth-m" type="number">月</span><label style="display:inline-block;vertical-align: bottom;margin-left:0.5em;" for="edmsc-car-isdropped" class="mku-checkbox-container"><input id="edmsc-car-isdropped" type="checkbox"></label></td></tr>
+		<tr><td>廃車</td><td><span class="time-inputs"><input id="edmsc-dropped-y" class="yearmonth-y" type="number">年<input id="edmsc-dropped-m" class="yearmonth-m" type="number">月</span><label for="edmsc-car-isdropped" class="mku-checkbox-container inline"><input id="edmsc-car-isdropped" type="checkbox"></label></td></tr>
 		<tr><td>旧車番</td><td>
 			<table class="input-area">
 				<tr><td>対象</td><td><select id="edmsc-oldcar-indexes" onchange="Dialog.list.editCarMasterDialog.functions.updateOldNumbersSelectBox(Number(this.value))"></select></td></tr>
