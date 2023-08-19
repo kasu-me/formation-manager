@@ -953,7 +953,7 @@ window.addEventListener("load", function () {
 		});
 	}
 
-	//JSON直接編集:edmsc
+	//車両マスタデータ編集:edmsc
 	new Dialog("editCarMasterDialog", "車両マスタデータ編集", `
 	<table class="input-area">
 		<tr><td>車両番号</td><td><input id="edmsc-car-number"></td></tr>
