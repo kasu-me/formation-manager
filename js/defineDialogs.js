@@ -956,6 +956,7 @@ window.addEventListener("load", function () {
 	//車両マスタデータ編集:edmsc
 	new Dialog("editCarMasterDialog", "車両マスタデータ編集", `
 	<table class="input-area">
+		<tr><td>車両ID</td><td id="edmsc-car-id"></td></tr>
 		<tr><td>車両番号</td><td><input id="edmsc-car-number"></td></tr>
 		<tr><td>製造</td><td><span class="time-inputs"><input id="edmsc-manufactured-y" class="yearmonth-y" type="number">年<input id="edmsc-manufactured-m" class="yearmonth-m" type="number">月</span></td></tr>
 		<tr><td>廃車</td><td><span class="time-inputs"><input id="edmsc-dropped-y" class="yearmonth-y" type="number">年<input id="edmsc-dropped-m" class="yearmonth-m" type="number">月</span><label for="edmsc-car-isdropped" class="mku-checkbox-container inline"><input id="edmsc-car-isdropped" type="checkbox"></label></td></tr>
@@ -972,6 +973,7 @@ window.addEventListener("load", function () {
 			Dialog.list.editCarMasterDialog.functions.clearInputs();
 			Dialog.list.editCarMasterDialog.functions.carId = x;
 			let car = AllCars.carsList[x];
+			document.getElementById("edmsc-car-id").innerHTML = x;
 			document.getElementById("edmsc-car-number").value = car.number;
 			document.getElementById("edmsc-manufactured-y").value = car.manufacturedOn.year;
 			document.getElementById("edmsc-manufactured-m").value = car.manufacturedOn.month;
