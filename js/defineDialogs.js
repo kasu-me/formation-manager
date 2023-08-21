@@ -874,7 +874,7 @@ window.addEventListener("load", function () {
 					table.addCell(AllSerieses.seriesesList[formation.seriesId].name);
 					table.addCell(formation.formatedOn);
 					table.addCell(formation.isTerminated ? formation.terminatedOn : "");
-					table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.formationDetealDialog.functions.display(${formationId});">詳細</button><button class="lsf-icon" icon="pen" onclick="">編集</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllFormationsDialog.functions.deleteFormations([${formationId}])">削除</button>`);
+					table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.formationDetealDialog.functions.display(${formationId});">詳細</button><button class="lsf-icon" icon="pen" onclick="Dialog.list.editFormationMasterDialog.functions.display(${formationId})">編集</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllFormationsDialog.functions.deleteFormations([${formationId}])">削除</button>`);
 				}
 			})
 			document.getElementById("mnalf-table").innerHTML = table.generateTable();
@@ -1034,13 +1034,70 @@ window.addEventListener("load", function () {
 		},
 		save: function () {
 			let car = AllCars.carsList[Dialog.list.editCarMasterDialog.functions.carId];
-			car.updateMasterData(document.getElementById("edmsc-car-number").value, new YearMonth(document.getElementById("edmsc-manufactured-y").value, document.getElementById("edmsc-manufactured-m").value), document.getElementById("edmsc-car-isdropped").checked ? new YearMonth(document.getElementById("edmsc-dropped-y").value, document.getElementById("edmsc-dropped-m").value) : null, Dialog.list.editCarMasterDialog.functions.tentativeOldNumbers);
+			car.updateMasterData(document.getElementById("edmsc-car-number").value, new YearMonth(Number(document.getElementById("edmsc-manufactured-y").value), Number(document.getElementById("edmsc-manufactured-m").value)), document.getElementById("edmsc-car-isdropped").checked ? new YearMonth(Number(document.getElementById("edmsc-dropped-y").value), Number(document.getElementById("edmsc-dropped-m").value)) : null, Dialog.list.editCarMasterDialog.functions.tentativeOldNumbers);
 			Dialog.list.editCarMasterDialog.off();
 			Dialog.list.carDetealDialog.functions.display(Dialog.list.editCarMasterDialog.functions.carId);
 		}
 	});
 	document.getElementById("edmsc-car-isdropped").addEventListener("change", Dialog.list.editCarMasterDialog.functions.updateIsDroppedToggle);
 	Dialog.list.editCarMasterDialog.functions.updateIsDroppedToggle();
+
+	//編成マスタデータ編集:edmsf
+	new Dialog("editFormationMasterDialog", "編成マスタデータ編集", `
+	<table class="input-area">
+		<tr><td>編成ID</td><td id="edmsf-formation-id"></td></tr>
+		<tr><td>形式</td><td><select id="edmsf-series"></select></td></tr>
+		<tr><td>編成名</td><td><input id="edmsf-formation-number"></td></tr>
+		<tr><td>所属車両</td><td></td></tr>
+		<tr><td>組成</td><td><span class="time-inputs"><input id="edmsf-formated-y" class="yearmonth-y" type="number">年<input id="edmsf-formated-m" class="yearmonth-m" type="number">月</span></td></tr>
+		<tr><td>解除</td><td><span class="time-inputs"><input id="edmsf-terminated-y" class="yearmonth-y" type="number">年<input id="edmsf-terminated-m" class="yearmonth-m" type="number">月</span><label for="edmsf-formation-isterminated" class="mku-checkbox-container inline"><input id="edmsf-formation-isterminated" type="checkbox"></label></td></tr>
+	</table>
+	`, [{ "content": "詳細ウインドウ", "event": `Dialog.list.formationDetealDialog.functions.display(Dialog.list.editFormationMasterDialog.functions.formationId)`, "icon": "search" }, { "content": "保存", "event": `Dialog.list.editFormationMasterDialog.functions.save()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editFormationMasterDialog.off();`, "icon": "close" }], {
+		formationId: 0,
+		display: function (x) {
+			Dialog.list.editFormationMasterDialog.functions.clearInputs();
+			Dialog.list.editFormationMasterDialog.functions.formationId = x;
+			let formation = AllFormations.formationsList[x];
+			document.getElementById("edmsf-formation-id").innerHTML = x;
+			document.getElementById("edmsf-series").value = formation.seriesId;
+			document.getElementById("edmsf-formation-number").value = formation.name;
+			document.getElementById("edmsf-formated-y").value = formation.formatedOn.year;
+			document.getElementById("edmsf-formated-m").value = formation.formatedOn.month;
+			document.getElementById("edmsf-formation-isterminated").checked = formation.isTerminated;
+			Dialog.list.editFormationMasterDialog.functions.updateIsTerminatedToggle();
+			if (formation.isTerminated) {
+				document.getElementById("edmsf-terminated-y").value = formation.terminatedOn.year;
+				document.getElementById("edmsf-terminated-m").value = formation.terminatedOn.month;
+			} else {
+				document.getElementById("edmsf-terminated-y").value = "";
+				document.getElementById("edmsf-terminated-m").value = "";
+			}
+			Dialog.list.editFormationMasterDialog.on();
+		},
+		clearInputs: function () {
+			setSeriesesToSelectBox(document.getElementById("edmsf-series"));
+		},
+		updateIsTerminatedToggle: function () {
+			let checkbox = document.getElementById("edmsf-formation-isterminated");
+			let year = document.getElementById("edmsf-terminated-y");
+			let month = document.getElementById("edmsf-terminated-m");
+			if (checkbox.checked) {
+				year.disabled = false;
+				month.disabled = false;
+			} else {
+				year.disabled = true;
+				month.disabled = true;
+			}
+		},
+		save: function () {
+			let formation = AllFormations.formationsList[Dialog.list.editFormationMasterDialog.functions.formationId];
+			formation.updateMasterData(Number(document.getElementById("edmsf-series").value), document.getElementById("edmsf-formation-number").value, new YearMonth(Number(document.getElementById("edmsf-formated-y").value), Number(document.getElementById("edmsf-formated-m").value)), document.getElementById("edmsf-formation-isterminated").checked ? new YearMonth(Number(document.getElementById("edmsf-terminated-y").value), Number(document.getElementById("edmsf-terminated-m").value)) : null);
+			Dialog.list.editFormationMasterDialog.off();
+			Dialog.list.formationDetealDialog.functions.display(Dialog.list.editFormationMasterDialog.functions.formationId);
+		}
+	});
+	document.getElementById("edmsf-formation-isterminated").addEventListener("change", Dialog.list.editFormationMasterDialog.functions.updateIsTerminatedToggle);
+	Dialog.list.editFormationMasterDialog.functions.updateIsTerminatedToggle();
 
 	//JSON直接編集:jsed
 	new Dialog("editJSONDialog", "JSON直接編集", `<p class="dialog-warn warning">このデータの書き換えを誤ると、当アプリで作成･編集した全てのデータに影響を及ぼし、最悪の場合はデータを読み込めなくなります。バックアップは個人の責任で確実に行ってください。</p><textarea id="jsed-main"></textarea>`, [{ "content": "保存", "event": `Dialog.list.editJSONDialog.functions.save()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editJSONDialog.off();`, "icon": "close" }], {

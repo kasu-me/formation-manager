@@ -308,6 +308,14 @@ class Formation {
 		this.#remark = remark;
 	}
 
+	//マスタ編集
+	updateMasterData(seriesId, name, formatedOn, terminatedOn) {
+		this.#seriesId = seriesId;
+		this.#name = name;
+		this.#formatedOn = formatedOn;
+		this.#terminatedOn = terminatedOn == null ? undefined : terminatedOn;
+	}
+
 	convertToJSON() {
 		return JSON.stringify({
 			instanceof: "Formation",
