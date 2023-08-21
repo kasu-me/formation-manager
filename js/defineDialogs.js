@@ -597,7 +597,7 @@ window.addEventListener("load", function () {
 			let table = new Table();
 			table.setAttributes({ "class": "formation-view" });
 			let formation = AllFormations.formationsList[x];
-			table.setSubtitle(`<p class="car-name"><b><span id="fmdt-formation-number">${formation.name}</span></b> (${formation.formatedOn.toStringWithLink()}～${formation.isTerminated ? `${formation.terminatedOn.toStringWithLink()}` : ``})<button class="lsf-icon" icon="pen" onclick="Dialog.list.formationRenameDialog.functions.display()">名称変更</button></p>`);
+			table.setSubtitle(`<p class="car-name"><b><span id="fmdt-formation-number">${formation.name}</span></b> (${AllSerieses.seriesesList[formation.seriesId].name}) (${formation.formatedOn.toStringWithLink()}～${formation.isTerminated ? `${formation.terminatedOn.toStringWithLink()}` : ``})<button class="lsf-icon" icon="pen" onclick="Dialog.list.formationRenameDialog.functions.display()">名称変更</button></p>`);
 			table.addRow();
 			table.addCell(`編成ID:${x}`, { "colspan": formation.cars.length, "class": "formation-id" });
 			table.addRow();
@@ -607,7 +607,7 @@ window.addEventListener("load", function () {
 			let html = table.generateTable();
 			document.getElementById("fmdt-main").innerHTML = html;
 			document.getElementById("fmdt-remark-remark").innerHTML = formation.remark == undefined ? "" : formation.remark;
-			document.getElementById("fmdt-remark-button").innerHTML = `<button class="lsf-icon" icon="pen" onclick="Dialog.list.editRemarkDialog.functions.display('formation',${x})">編集</button>`
+			document.getElementById("fmdt-remark-button").innerHTML = `<button class="lsf-icon" icon="pen" onclick="Dialog.list.editRemarkDialog.functions.display('formation',${x})">編集</button>`;
 			Dialog.list.formationDetealDialog.on();
 		},
 		//編成を解除
