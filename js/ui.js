@@ -183,10 +183,10 @@ function setSeriesesToSelectBox(seriesSelectBox) {
 	seriesSelectBox.innerHTML = "";
 	for (let i in AllSerieses.seriesesList) {
 		if (AllSerieses.seriesesList[i].isHidden) { continue; }
-		let newDiv = document.createElement("option");
-		newDiv.setAttribute("value", i);
-		newDiv.innerHTML = AllSerieses.seriesesList[i].name;
-		seriesSelectBox.appendChild(newDiv);
+		let option = document.createElement("option");
+		option.setAttribute("value", i);
+		option.innerHTML = AllSerieses.seriesesList[i].name;
+		seriesSelectBox.appendChild(option);
 	}
 }
 
