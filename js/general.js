@@ -23,15 +23,15 @@ class YearMonth {
 		if (m == null) {
 			this.update(Math.floor(y / 12) - (y % 12 == 0 ? 1 : 0), y % 12 == 0 ? 12 : y % 12);
 		} else {
-			this.updateY(y);
-			this.updateM(m);
+			this.updateY(Number(y));
+			this.updateM(Number(m));
 		}
 	}
 	updateY(y) {
-		this.#y = y;
+		this.#y = Number(y);
 	}
 	updateM(m) {
-		this.#m = m;
+		this.#m = Number(m);
 	}
 
 	toString() {
