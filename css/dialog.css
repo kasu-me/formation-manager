@@ -19,8 +19,7 @@
 .dialog-area .dialog-content {
 	position: absolute;
 	top: 15%;
-	left: 50%;
-	transform: translate(-50%, 0);
+	left: 0;
 	visibility: visible;
 	background-color: #fff;
 	padding: 1.8em;
@@ -36,9 +35,8 @@
 }
 
 .dialog-area-overlay .dialog-content {
-	top: 35%;
+	top: 25%;
 	min-width: 480px;
-	transform: translate(-50%, -50%);
 }
 
 .dialog-area .dialog-content>* {

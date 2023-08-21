@@ -25,12 +25,10 @@ class Dialog {
 				this.dialogTitle.style.cursor = "grabbing";
 				let offsetX = event.clientX - this.dialog.getBoundingClientRect().left;
 				let offsetY = event.clientY - this.dialog.getBoundingClientRect().top;
-				let dialogWidth = this.dialog.getBoundingClientRect().width;
-				let dialogHeight = this.dialog.getBoundingClientRect().height;
 
 				let movePosition = (pageX, pageY) => {
-					this.dialog.style.left = `${pageX - offsetX + dialogWidth / 2}px`;
-					this.dialog.style.top = `${pageY - offsetY + (this.isOverlay ? dialogHeight / 2 : 0) - window.scrollY}px`;
+					this.dialog.style.left = `${pageX - offsetX}px`;
+					this.dialog.style.top = `${pageY - offsetY - window.scrollY}px`;
 				}
 				let mouseMove = (event) => {
 					movePosition(event.pageX, event.pageY);
@@ -106,7 +104,6 @@ class Dialog {
 	on() {
 		if (!this.isActive) {
 			this.dialog.style.top = "";
-			this.dialog.style.left = "";
 		}
 		if (!this.isOverlay) {
 			Dialog.offAll();
@@ -115,6 +112,7 @@ class Dialog {
 			Dialog.displayDialogAreaOverlay();
 		}
 		Dialog.open(this.dialog);
+		this.dialog.style.left = `${(window.innerWidth - this.dialog.getBoundingClientRect().width) / 2}px`;
 	}
 	off() {
 		reflesh();

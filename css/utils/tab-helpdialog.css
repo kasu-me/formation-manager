@@ -1,7 +1,7 @@
 #helpDialog.dialog-content {
 	max-width: 100%;
 	width: 768px;
-	top: 50%;
+	top: 2.5em;
 	resize: horizontal;
 	overflow: hidden;
 }
