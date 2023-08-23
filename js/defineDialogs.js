@@ -951,7 +951,7 @@ window.addEventListener("load", function () {
 		//各行をクリックでチェックボックスをチェック
 		tableContainer.querySelectorAll("tr:not(:nth-child(1)) td:not(:first-child):not(:last-child)").forEach((td) => {
 			td.addEventListener("click", (e) => {
-				if (e.shiftKey) {
+				if (e.shiftKey && lastCheckedRow != -1) {
 					window.getSelection().removeAllRanges();
 					let thisCheckBoxIndex = findElementIndex(checkboxes, td.parentNode.querySelector("input[type='checkbox']"));
 					let start = Math.min(lastCheckedRow, thisCheckBoxIndex);
