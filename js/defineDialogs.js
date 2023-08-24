@@ -1126,8 +1126,8 @@ window.addEventListener("load", function () {
 	Dialog.list.editFormationMasterDialog.functions.updateIsTerminatedToggle();
 
 
-	//編成マスタデータ編成内車両の並べ替え:msfmsh
-	new Dialog("formationMasterShuffleDialog", "編成内車両", `<div id="msfmsh-main"></div>`, [{ "content": "確定", "event": `Dialog.list.formationMasterShuffleDialog.functions.finish()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.formationMasterShuffleDialog.off();Dialog.list.editFormationMasterDialog.functions.display(Dialog.list.formationMasterShuffleDialog.functions.formationId)`, "icon": "close" }], {
+	//編成マスタデータ内車両の編集:msfmsh
+	new Dialog("formationMasterShuffleDialog", "編成マスタ内車両の編集", `<div id="msfmsh-main"></div>`, [{ "content": "確定", "event": `Dialog.list.formationMasterShuffleDialog.functions.finish()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.formationMasterShuffleDialog.off();Dialog.list.editFormationMasterDialog.functions.display(Dialog.list.formationMasterShuffleDialog.functions.formationId)`, "icon": "close" }], {
 		formationId: 0,
 		cars: [],
 		display: function (x) {
