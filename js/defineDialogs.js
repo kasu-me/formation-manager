@@ -1132,6 +1132,7 @@ window.addEventListener("load", function () {
 		cars: [],
 		display: function (x) {
 			Dialog.list.formationMasterShuffleDialog.functions.formationId = x;
+			Dialog.list.formationMasterShuffleDialog.functions.cars = Array.from(Dialog.list.editFormationMasterDialog.functions.cars);
 			Dialog.list.formationMasterShuffleDialog.functions.reflesh();
 			Dialog.list.formationMasterShuffleDialog.on();
 		},
@@ -1140,7 +1141,7 @@ window.addEventListener("load", function () {
 			table.setAttributes({ "class": "vertical-stripes not-formated-car-table" });
 			table.setSubtitle("ドラッグで車両順序を変更");
 			let maxCellCount = 10;
-			for (let id of Dialog.list.editFormationMasterDialog.functions.cars) {
+			for (let id of Dialog.list.formationMasterShuffleDialog.functions.cars) {
 				if (table.cellCountOfLastRow % maxCellCount == 0) {
 					table.addRow();
 				}
@@ -1150,8 +1151,8 @@ window.addEventListener("load", function () {
 			document.getElementById("msfmsh-main").innerHTML = table.generateTable();
 			Drag.setElements(document.querySelectorAll("#msfmsh-main td.car span"), (dragResult) => {
 				if (dragResult.to != -1) {
-					Dialog.list.editFormationMasterDialog.functions.cars.splice(dragResult.to + dragResult.direction, 0, Dialog.list.editFormationMasterDialog.functions.cars[dragResult.me]);
-					Dialog.list.editFormationMasterDialog.functions.cars.splice(dragResult.me + ((dragResult.to < dragResult.me) ? 1 : 0), 1);
+					Dialog.list.formationMasterShuffleDialog.functions.cars.splice(dragResult.to + dragResult.direction, 0, Dialog.list.formationMasterShuffleDialog.functions.cars[dragResult.me]);
+					Dialog.list.formationMasterShuffleDialog.functions.cars.splice(dragResult.me + ((dragResult.to < dragResult.me) ? 1 : 0), 1);
 					Dialog.list.formationMasterShuffleDialog.functions.reflesh();
 				}
 			});
@@ -1159,6 +1160,7 @@ window.addEventListener("load", function () {
 		finish: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.formationMasterShuffleDialog.isActive) {
+				Dialog.list.editFormationMasterDialog.functions.cars = Array.from(Dialog.list.formationMasterShuffleDialog.functions.cars);
 				Dialog.list.formationMasterShuffleDialog.off();
 				reflesh();
 				Dialog.list.editFormationMasterDialog.functions.display(Dialog.list.formationMasterShuffleDialog.functions.formationId, true);
