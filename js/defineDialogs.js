@@ -761,8 +761,8 @@ window.addEventListener("load", function () {
 		}
 	});
 
-	//編成表データ管理:mnfd
-	new Dialog("formationDataManagementDialog", "編成表データ管理", `<ul class="dialog-buttons-list">
+	//編成表マスタ管理:mnfd
+	new Dialog("formationDataManagementDialog", "編成表マスタ管理", `<ul class="dialog-buttons-list">
 		<li><button onclick="Dialog.list.manageAllCarsDialog.functions.display()" class="lsf-icon dialog-main-button" icon="list">全車両マスタデータ管理</button></li>
 		<li><button onclick="Dialog.list.manageAllFormationsDialog.functions.display()" class="lsf-icon dialog-main-button" icon="list">全編成マスタデータ管理</button></li>
 		<li><button onclick="Dialog.list.editJSONDialog.functions.display()" class="lsf-icon dialog-main-button" icon="pen">JSON直接編集</button></li>

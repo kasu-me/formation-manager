@@ -52,14 +52,6 @@
 			<button class="lsf-icon" icon="add" onclick="Dialog.list.createCarDialog.functions.display()">車両</button>
 		</div>
 		<div class="button-group">
-			<div class="button-group-title">編成表データ</div>
-			<button class="lsf-icon" icon="file" onclick="showJSONLoadDialog()">読込</button><input type="file"
-				id="jsonReader" style="display:none;" accept="application/json" onchange="readJson(event)">
-			<button class="lsf-icon" icon="download" onclick="showJSONOutputDialog()">保存</button>
-			<button class="lsf-icon" icon="setting"
-				onclick="Dialog.list.formationDataManagementDialog.functions.display()">管理</button>
-		</div>
-		<div class="button-group">
 			<div class="button-group-title">年月</div>
 			<input type="range" oninput="updateNowYearMonth(new YearMonth(Number(this.value)))" id="now-range">
 			<span id="now-time-inputs" class="time-inputs">
@@ -69,6 +61,14 @@
 			</span>
 			<button class="lsf-icon" icon="calendar"
 				onclick="Dialog.list.settingYearMonthDialog.functions.display()">設定</button>
+		</div>
+		<div class="button-group">
+			<div class="button-group-title">編成表マスタ</div>
+			<button class="lsf-icon" icon="file" onclick="showJSONLoadDialog()">読込</button><input type="file"
+				id="jsonReader" style="display:none;" accept="application/json" onchange="readJson(event)">
+			<button class="lsf-icon" icon="download" onclick="showJSONOutputDialog()">保存</button>
+			<button class="lsf-icon" icon="setting"
+				onclick="Dialog.list.formationDataManagementDialog.functions.display()">管理</button>
 		</div>
 		<div class="button-group">
 			<div class="button-group-title">その他</div>
