@@ -315,6 +315,9 @@ class Formation {
 		this.#formatedOn = formatedOn;
 		this.#terminatedOn = terminatedOn == null ? undefined : terminatedOn;
 	}
+	updateMasterCars(cars) {
+		this.#cars = cars;
+	}
 
 	convertToJSON() {
 		return JSON.stringify({

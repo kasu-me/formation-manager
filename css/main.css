@@ -443,6 +443,10 @@ table.management-dialog-objects-list tr:has(input:checked) td {
 	color: #fff;
 }
 
+#edmsf-cars-edit-button {
+	margin-left: 0.75em;
+}
+
 /* 管理画面のリストここまで */
 
 
