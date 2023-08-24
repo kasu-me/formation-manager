@@ -689,7 +689,6 @@ window.addEventListener("load", function () {
 	new Dialog("formationShuffleDialog", "編成内車両の並べ替え", `<div id="fmsh-main"></div>`, [{ "content": "確定", "event": `Dialog.list.formationShuffleDialog.functions.shuffleFormation()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.formationShuffleDialog.off();Dialog.list.formationDetealDialog.functions.display(Dialog.list.formationShuffleDialog.functions.formationId)`, "icon": "close" }], {
 		formationId: 0,
 		tentativeFormation: new Formation(),
-		//編成を改名ダイアログを表示
 		display: function (x) {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.formationDetealDialog.isActive) {
@@ -1131,7 +1130,6 @@ window.addEventListener("load", function () {
 	new Dialog("formationMasterShuffleDialog", "編成内車両", `<div id="msfmsh-main"></div>`, [{ "content": "確定", "event": `Dialog.list.formationMasterShuffleDialog.functions.finish()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.formationMasterShuffleDialog.off();Dialog.list.editFormationMasterDialog.functions.display(Dialog.list.formationMasterShuffleDialog.functions.formationId)`, "icon": "close" }], {
 		formationId: 0,
 		cars: [],
-		//編成を改名ダイアログを表示
 		display: function (x) {
 			Dialog.list.formationMasterShuffleDialog.functions.formationId = x;
 			Dialog.list.formationMasterShuffleDialog.functions.reflesh();
