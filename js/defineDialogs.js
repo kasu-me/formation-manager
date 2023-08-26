@@ -1068,7 +1068,7 @@ window.addEventListener("load", function () {
 		<tr><td>編成ID</td><td id="edmsf-formation-id"></td></tr>
 		<tr><td>形式</td><td><select id="edmsf-series"></select></td></tr>
 		<tr><td>編成名</td><td><input id="edmsf-formation-number"></td></tr>
-		<tr><td>所属車両</td><td><span id="edmsf-formation-car-count"></span>両<button onclick="Dialog.list.formationMasterShuffleDialog.functions.display(Dialog.list.editFormationMasterDialog.functions.formationId)" id="edmsf-cars-edit-button" class="lsf-icon" icon="pen">編集</button></td></tr>
+		<tr><td>所属車両</td><td><span id="edmsf-formation-car-count"></span>両<button onclick="Dialog.list.formationMasterCarsEditDialog.functions.display(Dialog.list.editFormationMasterDialog.functions.formationId)" id="edmsf-cars-edit-button" class="lsf-icon" icon="pen">編集</button></td></tr>
 		<tr><td>組成</td><td><span class="time-inputs"><input id="edmsf-formated-y" class="yearmonth-y" type="number">年<input id="edmsf-formated-m" class="yearmonth-m" type="number">月</span></td></tr>
 		<tr><td>解除</td><td><span class="time-inputs"><input id="edmsf-terminated-y" class="yearmonth-y" type="number">年<input id="edmsf-terminated-m" class="yearmonth-m" type="number">月</span><label for="edmsf-formation-isterminated" class="mku-checkbox-container inline"><input id="edmsf-formation-isterminated" type="checkbox"></label></td></tr>
 	</table>
@@ -1127,21 +1127,21 @@ window.addEventListener("load", function () {
 
 
 	//編成マスタデータ内車両の編集:msfmsh
-	new Dialog("formationMasterShuffleDialog", "編成マスタ内車両の編集", `<div id="msfmsh-main"></div>`, [{ "content": "確定", "event": `Dialog.list.formationMasterShuffleDialog.functions.finish()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.formationMasterShuffleDialog.off();Dialog.list.editFormationMasterDialog.functions.display(Dialog.list.formationMasterShuffleDialog.functions.formationId)`, "icon": "close" }], {
+	new Dialog("formationMasterCarsEditDialog", "編成マスタ内車両の編集", `<div id="msfmsh-main"></div>`, [{ "content": "確定", "event": `Dialog.list.formationMasterCarsEditDialog.functions.finish()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.formationMasterCarsEditDialog.off();Dialog.list.editFormationMasterDialog.functions.display(Dialog.list.formationMasterCarsEditDialog.functions.formationId)`, "icon": "close" }], {
 		formationId: 0,
 		cars: [],
 		display: function (x) {
-			Dialog.list.formationMasterShuffleDialog.functions.formationId = x;
-			Dialog.list.formationMasterShuffleDialog.functions.cars = Array.from(Dialog.list.editFormationMasterDialog.functions.cars);
-			Dialog.list.formationMasterShuffleDialog.functions.reflesh();
-			Dialog.list.formationMasterShuffleDialog.on();
+			Dialog.list.formationMasterCarsEditDialog.functions.formationId = x;
+			Dialog.list.formationMasterCarsEditDialog.functions.cars = Array.from(Dialog.list.editFormationMasterDialog.functions.cars);
+			Dialog.list.formationMasterCarsEditDialog.functions.reflesh();
+			Dialog.list.formationMasterCarsEditDialog.on();
 		},
 		reflesh: function () {
 			let table = new Table();
 			table.setAttributes({ "class": "vertical-stripes not-formated-car-table" });
 			table.setSubtitle("ドラッグで車両順序を変更");
 			let maxCellCount = 10;
-			for (let id of Dialog.list.formationMasterShuffleDialog.functions.cars) {
+			for (let id of Dialog.list.formationMasterCarsEditDialog.functions.cars) {
 				if (table.cellCountOfLastRow % maxCellCount == 0) {
 					table.addRow();
 				}
@@ -1151,19 +1151,19 @@ window.addEventListener("load", function () {
 			document.getElementById("msfmsh-main").innerHTML = table.generateTable();
 			Drag.setElements(document.querySelectorAll("#msfmsh-main td.car span"), (dragResult) => {
 				if (dragResult.to != -1) {
-					Dialog.list.formationMasterShuffleDialog.functions.cars.splice(dragResult.to + dragResult.direction, 0, Dialog.list.formationMasterShuffleDialog.functions.cars[dragResult.me]);
-					Dialog.list.formationMasterShuffleDialog.functions.cars.splice(dragResult.me + ((dragResult.to < dragResult.me) ? 1 : 0), 1);
-					Dialog.list.formationMasterShuffleDialog.functions.reflesh();
+					Dialog.list.formationMasterCarsEditDialog.functions.cars.splice(dragResult.to + dragResult.direction, 0, Dialog.list.formationMasterCarsEditDialog.functions.cars[dragResult.me]);
+					Dialog.list.formationMasterCarsEditDialog.functions.cars.splice(dragResult.me + ((dragResult.to < dragResult.me) ? 1 : 0), 1);
+					Dialog.list.formationMasterCarsEditDialog.functions.reflesh();
 				}
 			});
 		},
 		finish: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
-			if (Dialog.list.formationMasterShuffleDialog.isActive) {
-				Dialog.list.editFormationMasterDialog.functions.cars = Array.from(Dialog.list.formationMasterShuffleDialog.functions.cars);
-				Dialog.list.formationMasterShuffleDialog.off();
+			if (Dialog.list.formationMasterCarsEditDialog.isActive) {
+				Dialog.list.editFormationMasterDialog.functions.cars = Array.from(Dialog.list.formationMasterCarsEditDialog.functions.cars);
+				Dialog.list.formationMasterCarsEditDialog.off();
 				reflesh();
-				Dialog.list.editFormationMasterDialog.functions.display(Dialog.list.formationMasterShuffleDialog.functions.formationId, true);
+				Dialog.list.editFormationMasterDialog.functions.display(Dialog.list.formationMasterCarsEditDialog.functions.formationId, true);
 			}
 		}
 	}, true);
