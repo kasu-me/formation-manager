@@ -102,9 +102,7 @@ class Dialog {
 		}
 	}
 	on() {
-		if (!this.isActive) {
-			this.dialog.style.top = "";
-		}
+		let isActiveInFirstTime = this.isActive;
 		if (!this.isOverlay) {
 			Dialog.offAll();
 			Dialog.displayDialogArea();
@@ -112,7 +110,10 @@ class Dialog {
 			Dialog.displayDialogAreaOverlay();
 		}
 		Dialog.open(this.dialog);
-		this.dialog.style.left = `${(window.innerWidth - this.dialog.getBoundingClientRect().width) / 2}px`;
+		if (!isActiveInFirstTime) {
+			this.dialog.style.top = "";
+			this.dialog.style.left = `${(window.innerWidth - this.dialog.getBoundingClientRect().width) / 2}px`;
+		}
 	}
 	off() {
 		reflesh();
