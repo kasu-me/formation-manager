@@ -447,6 +447,11 @@ table.management-dialog-objects-list tr:has(input:checked) td {
 	margin-left: 0.75em;
 }
 
+#msfmsh-car-adding-button {
+	padding: 0.3em;
+	margin-left: 0.25em;
+}
+
 /* 管理画面のリストここまで */
 
 

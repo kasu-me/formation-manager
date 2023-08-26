@@ -1085,7 +1085,7 @@ window.addEventListener("load", function () {
 			document.getElementById("edmsf-formation-id").innerHTML = x;
 			document.getElementById("edmsf-series").value = formation.seriesId;
 			document.getElementById("edmsf-formation-number").value = formation.name;
-			document.getElementById("edmsf-formation-car-count").innerHTML = formation.cars.length;
+			document.getElementById("edmsf-formation-car-count").innerHTML = Dialog.list.editFormationMasterDialog.functions.cars.length;
 			document.getElementById("edmsf-formated-y").value = formation.formatedOn.year;
 			document.getElementById("edmsf-formated-m").value = formation.formatedOn.month;
 			document.getElementById("edmsf-formation-isterminated").checked = formation.isTerminated;
@@ -1127,7 +1127,7 @@ window.addEventListener("load", function () {
 
 
 	//編成マスタデータ内車両の編集:msfmsh
-	new Dialog("formationMasterCarsEditDialog", "編成マスタ内車両の編集", `<div id="msfmsh-main"></div>`, [{ "content": "確定", "event": `Dialog.list.formationMasterCarsEditDialog.functions.finish()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.formationMasterCarsEditDialog.off();Dialog.list.editFormationMasterDialog.functions.display(Dialog.list.formationMasterCarsEditDialog.functions.formationId)`, "icon": "close" }], {
+	new Dialog("formationMasterCarsEditDialog", "編成マスタ内車両の編集", `<div id="msfmsh-main"></div><p><select id="msfmsh-cars-selectbox"></select><button class="lsf-icon" id="msfmsh-car-adding-button" icon="add" onclick="Dialog.list.formationMasterCarsEditDialog.functions.addCar(Number(document.getElementById('msfmsh-cars-selectbox').value))">車両追加</button></p>`, [{ "content": "確定", "event": `Dialog.list.formationMasterCarsEditDialog.functions.finish()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.formationMasterCarsEditDialog.off();Dialog.list.editFormationMasterDialog.functions.display(Dialog.list.formationMasterCarsEditDialog.functions.formationId)`, "icon": "close" }], {
 		formationId: 0,
 		cars: [],
 		display: function (x) {
@@ -1137,6 +1137,7 @@ window.addEventListener("load", function () {
 			Dialog.list.formationMasterCarsEditDialog.on();
 		},
 		reflesh: function () {
+			setCarsToSelectBox(document.getElementById("msfmsh-cars-selectbox"), Dialog.list.formationMasterCarsEditDialog.functions.cars);
 			let table = new Table();
 			table.setAttributes({ "class": "vertical-stripes not-formated-car-table" });
 			table.setSubtitle("ドラッグで車両順序を変更");
@@ -1145,7 +1146,7 @@ window.addEventListener("load", function () {
 				if (table.cellCountOfLastRow % maxCellCount == 0) {
 					table.addRow();
 				}
-				table.addCell(`<span>${AllCars.carsList[id].number} (ID:${id})</span>`, { "class": "car preview-car", "id": `msfmsh-car-${id}` });
+				table.addCell(`<span>${AllCars.carsList[id].number} (ID:${id})</span><a href="javascript:void(0)" onclick="Dialog.list.formationMasterCarsEditDialog.functions.removeCar(${table.cellCountOfLastRow})" class="lsf preview-delete-button" title="削除">delete</a>`, { "class": "car preview-car", "id": `msfmsh-car-${id}` });
 			}
 			table.addBlankCellToRowRightEnd();
 			document.getElementById("msfmsh-main").innerHTML = table.generateTable();
@@ -1156,6 +1157,14 @@ window.addEventListener("load", function () {
 					Dialog.list.formationMasterCarsEditDialog.functions.reflesh();
 				}
 			});
+		},
+		addCar: function (carId) {
+			Dialog.list.formationMasterCarsEditDialog.functions.cars.push(carId);
+			Dialog.list.formationMasterCarsEditDialog.functions.reflesh();
+		},
+		removeCar: function (carCount) {
+			Dialog.list.formationMasterCarsEditDialog.functions.cars.splice(carCount, 1)
+			Dialog.list.formationMasterCarsEditDialog.functions.reflesh();
 		},
 		finish: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止

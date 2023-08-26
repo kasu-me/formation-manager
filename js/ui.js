@@ -189,6 +189,19 @@ function setSeriesesToSelectBox(seriesSelectBox) {
 		seriesSelectBox.appendChild(option);
 	}
 }
+//セレクトボックスに車両名を投入
+function setCarsToSelectBox(carSelectBox, exceptedCarIds) {
+	carSelectBox.innerHTML = "";
+	for (let i in AllCars.carsList) {
+		let option = document.createElement("option");
+		option.setAttribute("value", i);
+		option.innerHTML = `${AllCars.carsList[i].number} (ID:${i})`;
+		if (exceptedCarIds.includes(Number(i))) {
+			option.setAttribute("disabled", "disabled");
+		}
+		carSelectBox.appendChild(option);
+	}
+}
 
 //車両を廃車
 function dropCar(carId_) {

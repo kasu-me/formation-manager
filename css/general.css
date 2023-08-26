@@ -50,6 +50,7 @@ input:not([type="range"]):not([type="checkbox"]):focus {
 /* セレクトボックス */
 select {
 	cursor: pointer;
+	padding: 4px;
 }
 
 /* ボタン */
@@ -95,6 +96,10 @@ select:disabled {
 
 select:disabled {
 	opacity: 1;
+}
+
+option:disabled {
+	color: #e4e4e4;
 }
 
 /* ラベルボタン */
