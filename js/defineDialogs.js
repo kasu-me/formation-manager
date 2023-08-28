@@ -933,7 +933,7 @@ window.addEventListener("load", function () {
 				if (!checkBox.checked) {
 					selectAllCheckBox.checked = false;
 				}
-				lastCheckedRow = findElementIndex(checkboxes, checkBox);
+				lastCheckedRow = findElementIndex(tableContainer.querySelectorAll("tr:not(:nth-child(1)) td input[type='checkbox']"), checkBox);
 				switchElementsByCheckedStatus();
 			});
 		});
@@ -943,6 +943,7 @@ window.addEventListener("load", function () {
 			td.addEventListener("click", (e) => {
 				if (e.shiftKey && lastCheckedRow != -1) {
 					window.getSelection().removeAllRanges();
+					let checkboxes = tableContainer.querySelectorAll("tr:not(:nth-child(1)) td input[type='checkbox']");
 					let thisCheckBoxIndex = findElementIndex(checkboxes, td.parentNode.querySelector("input[type='checkbox']"));
 					let start = Math.min(lastCheckedRow, thisCheckBoxIndex);
 					let end = Math.max(lastCheckedRow, thisCheckBoxIndex);
