@@ -244,7 +244,7 @@ window.addEventListener("load", function () {
 			table.addCell(`編成番号:${Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.name}`, { "colspan": Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.length });
 			for (let i in Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars) {
 				if (i % 10 == 0) { table.addRow() }
-				table.addCell(`<span>${AllCars.carsList[Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[i]].number}</span><a href="javascript:void(0)" onclick="Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.splice(${i},1);document.getElementById('forfc-car-${Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[i]}').classList.toggle('selected');Dialog.list.createFormationFromFloatingCarsDialog.functions.reflesh()" class="lsf preview-delete-button" title="削除">delete</a>`, { "class": "preview-car" });
+				table.addCell(`<span>${AllCars.carsList[Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[i]].number}</span><p><a href="javascript:void(0)" onclick="Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.splice(${i},1);document.getElementById('forfc-car-${Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[i]}').classList.toggle('selected');Dialog.list.createFormationFromFloatingCarsDialog.functions.reflesh()" class="lsf preview-delete-button" title="削除">delete</a></p>`, { "class": "preview-car" });
 			}
 			table.addBlankCellToRowIn(0, true);
 			document.getElementById("forfc-new-formated-cars-table").innerHTML = table.generateTable();
@@ -331,7 +331,7 @@ window.addEventListener("load", function () {
 				table.addCell(`編成番号:${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.formationName(1)}`, { "colspan": Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.length });
 				for (let i in Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers) {
 					if (i % 10 == 0) { table.addRow() }
-					table.addCell(`<span>${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers[i](1)}</span><a href="javascript:void(0)" onclick="Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.deleteCarNumber(${i});Dialog.list.createFormationTemplateDialog.functions.reflesh()" class="lsf preview-delete-button" title="削除">delete</a>`, { "class": "preview-car" });
+					table.addCell(`<span>${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers[i](1)}</span><p><a href="javascript:void(0)" onclick="Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.deleteCarNumber(${i});Dialog.list.createFormationTemplateDialog.functions.reflesh()" class="lsf preview-delete-button" title="削除">delete</a></p>`, { "class": "preview-car" });
 				}
 				table.addBlankCellToRowIn(0, true);
 			}
@@ -1138,7 +1138,7 @@ window.addEventListener("load", function () {
 				if (table.cellCountOfLastRow % maxCellCount == 0) {
 					table.addRow();
 				}
-				table.addCell(`<span>${AllCars.carsList[id].number} (ID:${id})</span><a href="javascript:void(0)" onclick="Dialog.list.formationMasterCarsEditDialog.functions.removeCar(${table.cellCountOfLastRow})" class="lsf preview-delete-button" title="削除">delete</a>`, { "class": "car preview-car", "id": `msfmsh-car-${id}` });
+				table.addCell(`<span>${AllCars.carsList[id].number} (ID:${id})</span><p><a href="javascript:void(0)" onclick="Dialog.list.formationMasterCarsEditDialog.functions.removeCar(${table.cellCountOfLastRow})" class="lsf preview-delete-button" title="削除">delete</a></p>`, { "class": "car preview-car", "id": `msfmsh-car-${id}` });
 			}
 			table.addBlankCellToRowRightEnd();
 			document.getElementById("msfmsh-main").innerHTML = table.generateTable();

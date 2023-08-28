@@ -337,8 +337,9 @@ p.car-name span.car-status.dropped::before {
 }
 
 /* プレビュー欄削除ボタン */
-a.lsf.preview-delete-button {
-	margin-left: 0.3em;
+p:has(a.lsf.preview-delete-button) {
+	margin: 0;
+	text-align: center;
 }
 
 /* ダイアログのテーブル内ボタン */
