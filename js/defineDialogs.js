@@ -471,7 +471,8 @@ window.addEventListener("load", function () {
 		//車両の詳細ダイアログを表示
 		display: function (x) {
 			let table = new Table();
-			table.setSubtitle(`<p class="car-name"><b><span id="cardt-car-number">${AllCars.carsList[x].numberInTime(now)}</span>号車</b><button class="lsf-icon" icon="pen" onclick="Dialog.list.carRenumberDialog.functions.display()">改番</button><span class="car-status lsf-icon ${AllCars.carsList[x].isActive ? "" : "dropped"}">${AllCars.carsList[x].isActive ? "現役" : `${AllCars.carsList[x].droppedOn.toString()}廃車`}</span>${AllCars.carsList[x].isConserved ? `<span class="car-status conserved">保存車</span></p>` : ""}`);
+			let car = AllCars.carsList[x];
+			table.setSubtitle(`<p class="car-name"><b><span id="cardt-car-number">${car.numberInTime(now)}</span>号車</b><button class="lsf-icon" icon="pen" onclick="Dialog.list.carRenumberDialog.functions.display()">改番</button><span class="car-status lsf-icon ${car.isActive ? "" : "dropped"}">${car.isActive ? "現役" : `${car.droppedOn.toString()}廃車`}</span>${car.isConserved ? `<span class="car-status conserved">保存車</span></p>` : ""}`);
 			table.setAttributes({ "class": "horizontal-stripes" });
 			//所属編成を探す
 			let formation = AllFormations.searchByCarId(x, now);
@@ -483,23 +484,23 @@ window.addEventListener("load", function () {
 			}
 			formationsText = `<ul>${formationsText}</ul>`;
 			//車歴
-			let oldNumbers = AllCars.carsList[x].oldNumbers;
+			let oldNumbers = car.oldNumbers;
 			let oldNumbersText = ``;
 			for (let i in oldNumbers) {
-				oldNumbersText += `<li>${oldNumbers[i].number} <small>(${i != 0 ? oldNumbers[i - 1].renumberedOn.toStringWithLink() : AllCars.carsList[x].manufacturedOn.toStringWithLink()}～${oldNumbers[i].renumberedOn.toStringWithLink()})</small></li>`;
+				oldNumbersText += `<li>${oldNumbers[i].number} <small>(${i != 0 ? oldNumbers[i - 1].renumberedOn.toStringWithLink() : car.manufacturedOn.toStringWithLink()}～${oldNumbers[i].renumberedOn.toStringWithLink()})</small></li>`;
 			}
-			oldNumbersText = `<ul>${oldNumbersText}<li>${AllCars.carsList[x].number} <small>(${oldNumbers.length > 0 ? `${oldNumbers.at(-1).renumberedOn.toStringWithLink()}` : `${AllCars.carsList[x].manufacturedOn.toStringWithLink()}`}～${AllCars.carsList[x].isDropped ? AllCars.carsList[x].droppedOn.toStringWithLink() : ""})</small></li></ul>`;
+			oldNumbersText = `<ul>${oldNumbersText}<li>${car.number} <small>(${oldNumbers.length > 0 ? `${oldNumbers.at(-1).renumberedOn.toStringWithLink()}` : `${car.manufacturedOn.toStringWithLink()}`}～${car.isDropped ? car.droppedOn.toStringWithLink() : ""})</small></li></ul>`;
 
 			table.addRow();
 			table.addCell("車両ID");
 			table.addCell(x, { "id": "cardt-car-id" });
 			table.addRow();
 			table.addCell("製造年月");
-			table.addCell(AllCars.carsList[x].manufacturedOn.toStringWithLink());
-			if (AllCars.carsList[x].isDropped) {
+			table.addCell(car.manufacturedOn.toStringWithLink());
+			if (car.isDropped) {
 				table.addRow();
 				table.addCell("廃車年月");
-				table.addCell(AllCars.carsList[x].droppedOn.toStringWithLink());
+				table.addCell(car.droppedOn.toStringWithLink());
 			}
 			table.addRow();
 			table.addCell(`所属編成`);
@@ -512,9 +513,9 @@ window.addEventListener("load", function () {
 			table.addCell(oldNumbersText);
 			table.addRow();
 			table.addCell("備考");
-			table.addCell(`${AllCars.carsList[x].remark == undefined || AllCars.carsList[x].remark == "" ? "" : `<span>${AllCars.carsList[x].remark}</span>`}<button class="lsf-icon" icon="pen" onclick="Dialog.list.editRemarkDialog.functions.display('car',${x})">編集</button>`, { "class": "remark" });
+			table.addCell(`${car.remark == undefined || car.remark == "" ? "" : `<span>${car.remark}</span>`}<button class="lsf-icon" icon="pen" onclick="Dialog.list.editRemarkDialog.functions.display('car',${x})">編集</button>`, { "class": "remark" });
 			document.getElementById("cardt-main").innerHTML = table.generateTable();
-			document.getElementById("cardt-drop-button").disabled = !AllCars.carsList[x].isActive;
+			document.getElementById("cardt-drop-button").disabled = !car.isActive;
 			Dialog.list.carDetealDialog.on();
 		},
 
