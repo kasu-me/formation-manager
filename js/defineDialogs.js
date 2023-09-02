@@ -18,6 +18,7 @@ new Message("MC004", "${carNumber}号車を${now}付で廃車します。");
 new Message("MC005", "前回自動的にセーブされたデータが残っています。読み込みますか？");
 new Message("MC006", "編成テンプレートを削除します。");
 new Message("MC007", "選択した${count}件の${type}マスタデータを削除します。<br>廃車や編成解除とは違い、${type}を最初から存在しなかったものとする操作です。この操作は取り消せません。よろしいですか？");
+new Message("MC008", "サンプルデータを読み込みますか？");
 //Symbol
 new Message("MS001", `<style type="text/css">
 .wn_st1{fill:#ff0000;}
@@ -1204,7 +1205,7 @@ window.addEventListener("load", function () {
 	}, true);
 
 	//確認:cnfm
-	new Dialog("confirmDialog", "確認", `<img src="./js/confirm.svg" class="dialog-icon"><div id="cnfm-main"></div>`, [{ "content": "OK", "event": `Dialog.list.confirmDialog.functions.callback();Dialog.list.confirmDialog.off()`, "icon": "check" }, { "content": "NO", "event": `Dialog.list.confirmDialog.functions.interruption();Dialog.list.confirmDialog.off()`, "icon": "close" }], {
+	new Dialog("confirmDialog", "確認", `<img src="./js/confirm.svg" class="dialog-icon"><div id="cnfm-main"></div>`, [{ "content": "OK", "event": `Dialog.list.confirmDialog.functions.callback();Dialog.list.confirmDialog.off()`, "icon": "check" }, { "content": "NO", "event": `Dialog.list.confirmDialog.off();Dialog.list.confirmDialog.functions.interruption();`, "icon": "close" }], {
 		display: function (message, callback, interruption) {
 			document.getElementById("cnfm-main").innerHTML = message;
 			Dialog.list.confirmDialog.functions.callback = callback;
