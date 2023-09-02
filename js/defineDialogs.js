@@ -467,7 +467,7 @@ window.addEventListener("load", function () {
 	});
 
 	//車両の詳細:cardt
-	new Dialog("carDetealDialog", "車両の詳細", `<div id="cardt-main"></div>`, [{ "content": "廃車", "event": `dropCar()`, "icon": "delete" }, { "content": "閉じる", "event": `Dialog.list.carDetealDialog.off();`, "icon": "close" }], {
+	new Dialog("carDetealDialog", "車両の詳細", `<div id="cardt-main"></div>`, [{ "content": "廃車", "event": `dropCar()`, "icon": "delete", "id": "cardt-drop-button" }, { "content": "閉じる", "event": `Dialog.list.carDetealDialog.off();`, "icon": "close" }], {
 		//車両の詳細ダイアログを表示
 		display: function (x) {
 			let table = new Table();
@@ -514,6 +514,7 @@ window.addEventListener("load", function () {
 			table.addCell("備考");
 			table.addCell(`${AllCars.carsList[x].remark == undefined || AllCars.carsList[x].remark == "" ? "" : `<span>${AllCars.carsList[x].remark}</span>`}<button class="lsf-icon" icon="pen" onclick="Dialog.list.editRemarkDialog.functions.display('car',${x})">編集</button>`, { "class": "remark" });
 			document.getElementById("cardt-main").innerHTML = table.generateTable();
+			document.getElementById("cardt-drop-button").disabled = !AllCars.carsList[x].isActive;
 			Dialog.list.carDetealDialog.on();
 		},
 
@@ -590,7 +591,7 @@ window.addEventListener("load", function () {
 	}, true);
 
 	//編成の詳細:fmdt
-	new Dialog("formationDetealDialog", "編成の詳細", `<div id="fmdt-main"></div><div id="fmdt-remark">備考：<span id="fmdt-remark-remark"></span><span id="fmdt-remark-button"></span></div>`, [{ "content": "車両並替", "event": `Dialog.list.formationShuffleDialog.functions.display(Dialog.list.formationDetealDialog.functions.formationId)`, "icon": "shuffle" }, { "content": "編成解除", "event": `Dialog.list.formationDetealDialog.functions.releaseFormation()`, "icon": "clear" }, { "content": "まとめて廃車", "event": `Dialog.list.formationDetealDialog.functions.releaseFormationAndDropAllCars()`, "icon": "delete" }, { "content": "閉じる", "event": `Dialog.list.formationDetealDialog.off();`, "icon": "close" }], {
+	new Dialog("formationDetealDialog", "編成の詳細", `<div id="fmdt-main"></div><div id="fmdt-remark">備考：<span id="fmdt-remark-remark"></span><span id="fmdt-remark-button"></span></div>`, [{ "content": "車両並替", "event": `Dialog.list.formationShuffleDialog.functions.display(Dialog.list.formationDetealDialog.functions.formationId)`, "icon": "shuffle" }, { "content": "編成解除", "event": `Dialog.list.formationDetealDialog.functions.releaseFormation()`, "icon": "clear", "id": "fmdt-release-button" }, { "content": "まとめて廃車", "event": `Dialog.list.formationDetealDialog.functions.releaseFormationAndDropAllCars()`, "icon": "delete" }, { "content": "閉じる", "event": `Dialog.list.formationDetealDialog.off();`, "icon": "close" }], {
 		formationId: 0,
 		//編成の詳細ダイアログを表示
 		display: function (x) {
@@ -609,6 +610,7 @@ window.addEventListener("load", function () {
 			document.getElementById("fmdt-main").innerHTML = html;
 			document.getElementById("fmdt-remark-remark").innerHTML = formation.remark == undefined ? "" : formation.remark;
 			document.getElementById("fmdt-remark-button").innerHTML = `<button class="lsf-icon" icon="pen" onclick="Dialog.list.editRemarkDialog.functions.display('formation',${x})">編集</button>`;
+			document.getElementById("fmdt-release-button").disabled = formation.isTerminated;
 			Dialog.list.formationDetealDialog.on();
 		},
 		//編成を解除
