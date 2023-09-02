@@ -330,6 +330,14 @@ p.car-name span.car-status.dropped::before {
 	content: "ban";
 }
 
+p.car-name span.car-status.conserved {
+	margin-right: 0.3em;
+	background-color: #0081c9;
+}
+
+p.car-name span.car-status.conserved::before {
+	content: none;
+}
 
 /* 年月入力欄 */
 #now-time-inputs {

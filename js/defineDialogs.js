@@ -471,7 +471,7 @@ window.addEventListener("load", function () {
 		//車両の詳細ダイアログを表示
 		display: function (x) {
 			let table = new Table();
-			table.setSubtitle(`<p class="car-name"><b><span id="cardt-car-number">${AllCars.carsList[x].numberInTime(now)}</span>号車</b><button class="lsf-icon" icon="pen" onclick="Dialog.list.carRenumberDialog.functions.display()">改番</button><span class="car-status lsf-icon ${AllCars.carsList[x].isActive ? "" : "dropped"}">${AllCars.carsList[x].isActive ? "現役" : `${AllCars.carsList[x].droppedOn.toString()}廃車`}</span></p>`);
+			table.setSubtitle(`<p class="car-name"><b><span id="cardt-car-number">${AllCars.carsList[x].numberInTime(now)}</span>号車</b><button class="lsf-icon" icon="pen" onclick="Dialog.list.carRenumberDialog.functions.display()">改番</button><span class="car-status lsf-icon ${AllCars.carsList[x].isActive ? "" : "dropped"}">${AllCars.carsList[x].isActive ? "現役" : `${AllCars.carsList[x].droppedOn.toString()}廃車`}</span>${AllCars.carsList[x].isConserved ? `<span class="car-status conserved">保存車</span></p>` : ""}`);
 			table.setAttributes({ "class": "horizontal-stripes" });
 			//所属編成を探す
 			let formation = AllFormations.searchByCarId(x, now);
