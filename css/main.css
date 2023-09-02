@@ -460,6 +460,10 @@ table.management-dialog-objects-list tr:has(input:checked) td {
 	margin-left: 0.25em;
 }
 
+#editCarMasterDialog .mku-checkbox-container:first-child {
+	margin-left: 0;
+}
+
 /* 管理画面のリストここまで */
 
 

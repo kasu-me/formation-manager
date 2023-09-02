@@ -136,7 +136,7 @@ class Car {
 		return this.#droppedOn;
 	}
 	get isActive() {
-		return !Boolean(this.#droppedOn) && !this.#isConserved;
+		return !Boolean(this.#droppedOn);
 	}
 	get isDropped() {
 		return Boolean(this.#droppedOn) && !this.#isConserved;
@@ -190,11 +190,16 @@ class Car {
 	}
 
 	//マスタ編集
-	updateMasterData(number, manufacturedOn, droppedOn, oldNumbers) {
+	updateMasterData(number, manufacturedOn, droppedOn, oldNumbers, isConserved) {
 		this.#number = number;
 		this.#manufacturedOn = manufacturedOn;
 		this.#oldNumbers = [];
 		this.#droppedOn = droppedOn == null ? undefined : droppedOn;
+		if (this.#droppedOn == undefined) {
+			this.#isConserved = false;
+		} else {
+			this.#isConserved = isConserved;
+		}
 		for (let i in oldNumbers) {
 			this.#oldNumbers.push(new OldCarNumber(oldNumbers[i].number, new YearMonth(oldNumbers[i].year, oldNumbers[i].month)));
 		}

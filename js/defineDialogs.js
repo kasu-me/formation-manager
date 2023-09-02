@@ -806,6 +806,7 @@ window.addEventListener("load", function () {
 			table.addCell("車両番号(最新)");
 			table.addCell("製造");
 			table.addCell("廃車");
+			table.addCell("保存");
 			table.addCell("操作");
 			AllCars.carsList.forEach((car, carId) => {
 				if (Dialog.list.manageAllCarsDialog.functions.isFiltered(car)) {
@@ -814,7 +815,8 @@ window.addEventListener("load", function () {
 					table.addCell(carId);
 					table.addCell(car.number);
 					table.addCell(car.manufacturedOn);
-					table.addCell(car.isDropped ? car.droppedOn : "-");
+					table.addCell(!car.isActive ? car.droppedOn : "-");
+					table.addCell(car.isConserved ? "保存" : "-");
 					table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.carDetealDialog.functions.display(${carId});">詳細</button><button class="lsf-icon" icon="pen" onclick="Dialog.list.editCarMasterDialog.functions.display(${carId})">編集</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllCarsDialog.functions.deleteCars([${carId}])">削除</button>`);
 				}
 			})
@@ -990,6 +992,7 @@ window.addEventListener("load", function () {
 		<tr><td>車両番号</td><td><input id="edmsc-car-number"></td></tr>
 		<tr><td>製造</td><td><span class="time-inputs"><input id="edmsc-manufactured-y" class="yearmonth-y" type="number">年<input id="edmsc-manufactured-m" class="yearmonth-m" type="number">月</span></td></tr>
 		<tr><td>廃車</td><td><span class="time-inputs"><input id="edmsc-dropped-y" class="yearmonth-y" type="number">年<input id="edmsc-dropped-m" class="yearmonth-m" type="number">月</span><label for="edmsc-car-isdropped" class="mku-checkbox-container inline"><input id="edmsc-car-isdropped" type="checkbox"></label></td></tr>
+		<tr><td>保存</td><td><label for="edmsc-car-isconserved" class="mku-checkbox-container inline"><input id="edmsc-car-isconserved" type="checkbox" disabled></label></td></tr>
 		<tr><td>旧車番</td><td>
 			<table class="input-area">
 				<tr><td>対象</td><td><select id="edmsc-oldcar-indexes" onchange="Dialog.list.editCarMasterDialog.functions.updateOldNumbersSelectBox(Number(this.value))"></select></td></tr>
@@ -1007,9 +1010,10 @@ window.addEventListener("load", function () {
 			document.getElementById("edmsc-car-number").value = car.number;
 			document.getElementById("edmsc-manufactured-y").value = car.manufacturedOn.year;
 			document.getElementById("edmsc-manufactured-m").value = car.manufacturedOn.month;
-			document.getElementById("edmsc-car-isdropped").checked = car.isDropped;
+			document.getElementById("edmsc-car-isdropped").checked = !car.isActive;
+			document.getElementById("edmsc-car-isconserved").checked = car.isConserved;
 			Dialog.list.editCarMasterDialog.functions.updateIsDroppedToggle();
-			if (car.isDropped) {
+			if (!car.isActive) {
 				document.getElementById("edmsc-dropped-y").value = car.droppedOn.year;
 				document.getElementById("edmsc-dropped-m").value = car.droppedOn.month;
 			} else {
@@ -1047,12 +1051,15 @@ window.addEventListener("load", function () {
 			let checkbox = document.getElementById("edmsc-car-isdropped");
 			let year = document.getElementById("edmsc-dropped-y");
 			let month = document.getElementById("edmsc-dropped-m");
+			let conservedCheckBox = document.getElementById("edmsc-car-isconserved");
 			if (checkbox.checked) {
 				year.disabled = false;
 				month.disabled = false;
+				conservedCheckBox.disabled = false;
 			} else {
 				year.disabled = true;
 				month.disabled = true;
+				conservedCheckBox.disabled = true;
 			}
 		},
 		tentativeOldNumbers: [],
@@ -1064,7 +1071,7 @@ window.addEventListener("load", function () {
 		},
 		save: function () {
 			let car = AllCars.carsList[Dialog.list.editCarMasterDialog.functions.carId];
-			car.updateMasterData(document.getElementById("edmsc-car-number").value, new YearMonth(Number(document.getElementById("edmsc-manufactured-y").value), Number(document.getElementById("edmsc-manufactured-m").value)), document.getElementById("edmsc-car-isdropped").checked ? new YearMonth(Number(document.getElementById("edmsc-dropped-y").value), Number(document.getElementById("edmsc-dropped-m").value)) : null, Dialog.list.editCarMasterDialog.functions.tentativeOldNumbers);
+			car.updateMasterData(document.getElementById("edmsc-car-number").value, new YearMonth(Number(document.getElementById("edmsc-manufactured-y").value), Number(document.getElementById("edmsc-manufactured-m").value)), document.getElementById("edmsc-car-isdropped").checked ? new YearMonth(Number(document.getElementById("edmsc-dropped-y").value), Number(document.getElementById("edmsc-dropped-m").value)) : null, Dialog.list.editCarMasterDialog.functions.tentativeOldNumbers, document.getElementById("edmsc-car-isconserved").checked);
 			Dialog.list.editCarMasterDialog.off();
 			Dialog.list.carDetealDialog.functions.display(Dialog.list.editCarMasterDialog.functions.carId);
 		}

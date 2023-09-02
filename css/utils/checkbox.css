@@ -41,3 +41,15 @@
 .mku-checkbox-container:has(input[type="checkbox"]:checked):after {
 	transform: translateX(calc(var(--mku-checkbox-width) - var(--mku-checkbox-button-padding) * 2 - var(--mku-checkbox-button-width)));
 }
+
+.mku-checkbox-container:has(input[type="checkbox"]:disabled) {
+	pointer-events: none;
+}
+
+.mku-checkbox-container:has(input[type="checkbox"]:disabled:checked) {
+	background: #92c69f;
+}
+
+.mku-checkbox-container:has(input[type="checkbox"]:disabled):after {
+	opacity: 0.5;
+}
