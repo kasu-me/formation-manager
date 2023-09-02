@@ -197,7 +197,7 @@ td.formation-name,
 }
 
 /* 廃車 */
-td.dropped {
+table:not(#conserved-car-table) td.dropped {
 	text-decoration: line-through;
 	background-color: #bbb;
 }
