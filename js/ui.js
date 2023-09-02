@@ -75,20 +75,35 @@ function list() {
 
 	//編成に組み込まれていない車両を処理
 	tables.push(new Table("編成に所属していない車両"));
-	tables.at(-1).setAttributes({ "class": "not-formated-car-table vertical-stripes" });
+	let notFormatedCarsTable = tables.at(-1);
+	tables.push(new Table("保存されている車両"));
+	let conservedCarsTable = tables.at(-1);
+	notFormatedCarsTable.setAttributes({ "class": "not-formated-car-table vertical-stripes" });
 	for (let carId in AllCars.carsList) {
 		//編成に組み込まれている車両および未製造の車両および廃車は除外する
 		if (proccessedCarIds.includes(Number(carId)) || AllCars.carsList[carId].manufacturedOn.serial > now.serial) {
 			continue;
 		} else {
-			if (tables.at(-1).cellCountOfLastRow % 10 == 0) {
-				tables.at(-1).addRow();
+			if (AllCars.carsList[carId].isConservedInTime(now)) {
+				//保存されている車両
+				if (conservedCarsTable.cellCountOfLastRow % 10 == 0) {
+					conservedCarsTable.addRow();
+				}
+				addCarCell(conservedCarsTable, carId, carIdListNow, carNumberListNow, false, true);
+			} else {
+				//現役で、編成に組み込まれていない車両
+				if (notFormatedCarsTable.cellCountOfLastRow % 10 == 0) {
+					notFormatedCarsTable.addRow();
+				}
+				addCarCell(notFormatedCarsTable, carId, carIdListNow, carNumberListNow, false);
 			}
-			addCarCell(tables.at(-1), carId, carIdListNow, carNumberListNow, false);
 		}
 	}
-	if (tables.at(-1).rows.length != 0) {
-		html += tables.at(-1).generateTable();
+	if (notFormatedCarsTable.rows.length != 0) {
+		html += notFormatedCarsTable.generateTable();
+	}
+	if (conservedCarsTable.rows.length != 0) {
+		html += conservedCarsTable.generateTable();
 	}
 
 	//車両番号の重複をチェック
@@ -130,8 +145,8 @@ function list() {
 
 //車両セルの追加
 //Table, 車両ID, 処理中の車両リスト, 今編成内の車両を処理しているか
-function addCarCell(table, carId, carIdListNow, carNumberListNow, isInFormation) {
-	if (AllCars.carsList[carId].isDroppedInTime(now)) {
+function addCarCell(table, carId, carIdListNow, carNumberListNow, isInFormation, isConvercedCar) {
+	if (AllCars.carsList[carId].isDroppedInTime(now) && !Boolean(isConvercedCar)) {
 		if (isInFormation) { table.addCell("") }
 	} else {
 		table.addCell(Formatter.link(carId, AllCars.carsList[carId].numberInTime(now)), { "class": "car" + ` car-id-${carId}` + (AllCars.carsList[carId].isDroppedInTime(now) ? " dropped" : "") });
