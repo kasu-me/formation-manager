@@ -237,6 +237,7 @@ function dropCar(carId_) {
 				//廃車車両を除いた車両で編成
 				reflesh();
 				Dialog.list.carDetealDialog.off();
+				Dialog.list.carDetealDialog.functions.display(carId);
 			});
 		}
 		//引数がある場合、廃車処理
