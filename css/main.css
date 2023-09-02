@@ -307,7 +307,6 @@ td.preview-car:has(span.selected) {
 /* 車両及び編成の状態 */
 p.car-name span.car-status {
 	background-color: #00c900;
-	border-radius: 5px;
 	color: #fff;
 	padding: 0 0.2em;
 	float: right;
