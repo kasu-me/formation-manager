@@ -1208,8 +1208,8 @@ window.addEventListener("load", function () {
 	new Dialog("confirmDialog", "確認", `<img src="./js/confirm.svg" class="dialog-icon"><div id="cnfm-main"></div>`, [{ "content": "OK", "event": `Dialog.list.confirmDialog.functions.callback();Dialog.list.confirmDialog.off()`, "icon": "check" }, { "content": "NO", "event": `Dialog.list.confirmDialog.off();Dialog.list.confirmDialog.functions.interruption();`, "icon": "close" }], {
 		display: function (message, callback, interruption) {
 			document.getElementById("cnfm-main").innerHTML = message;
-			Dialog.list.confirmDialog.functions.callback = callback;
-			Dialog.list.confirmDialog.functions.interruption = interruption || Dialog.list.confirmDialog.functions.interruption;
+			Dialog.list.confirmDialog.functions.callback = callback || function () { };
+			Dialog.list.confirmDialog.functions.interruption = interruption || function () { };
 			Dialog.list.confirmDialog.on();
 			Dialog.list.confirmDialog.buttons.querySelector("button[icon='check']").focus();
 		},
