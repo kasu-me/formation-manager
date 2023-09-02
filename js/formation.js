@@ -120,12 +120,10 @@ class Car {
 	//保存
 	conserve() {
 		this.#isConserved = true;
-		this.drop();
 	}
 	//保存中止(解体)
 	unconserve() {
 		this.#isConserved = false;
-		this.drop();
 	}
 
 	get number() {
@@ -144,7 +142,7 @@ class Car {
 		return Boolean(this.#droppedOn) && !this.#isConserved;
 	}
 	get isConserved() {
-		return !Boolean(this.#droppedOn) && this.#isConserved;
+		return Boolean(this.#droppedOn) && this.#isConserved;
 	}
 	get manufacturedOn() {
 		return this.#manufacturedOn;
@@ -171,6 +169,10 @@ class Car {
 		} else {
 			return this.#droppedOn.serial > now.serial && now.serial >= this.#manufacturedOn.serial;
 		}
+	}
+	//now時点で保存されているかどうかを取得
+	isConservedInTime(now) {
+		return this.isDroppedInTime(now) && this.isConserved;
 	}
 
 	//now時点での車両番号を取得
