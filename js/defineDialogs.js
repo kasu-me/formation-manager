@@ -497,10 +497,13 @@ window.addEventListener("load", function () {
 			table.addRow();
 			table.addCell("製造年月");
 			table.addCell(car.manufacturedOn.toStringWithLink());
-			if (car.isDropped) {
+			if (!car.isActive) {
 				table.addRow();
 				table.addCell("廃車年月");
 				table.addCell(car.droppedOn.toStringWithLink());
+				table.addRow();
+				table.addCell(`保存`);
+				table.addCell(`<label for="cardt-conserve" class="mku-checkbox-container small"><input id="cardt-conserve" type="checkbox"${car.isConserved ? " checked" : ""} onchange="Dialog.list.carDetealDialog.functions.conserve(AllCars.carsList[${x}],this.checked)"></label>`);
 			}
 			table.addRow();
 			table.addCell(`所属編成`);
@@ -515,9 +518,18 @@ window.addEventListener("load", function () {
 			table.addCell("備考");
 			table.addCell(`${car.remark == undefined || car.remark == "" ? "" : `<span>${car.remark}</span>`}<button class="lsf-icon" icon="pen" onclick="Dialog.list.editRemarkDialog.functions.display('car',${x})">編集</button>`, { "class": "remark" });
 			document.getElementById("cardt-main").innerHTML = table.generateTable();
+			//要素の表示制御
 			document.getElementById("cardt-drop-button").disabled = !car.isActive;
 			Dialog.list.carDetealDialog.on();
 		},
+		conserve: function (car, isConserved) {
+			if (isConserved) {
+				car.conserve();
+			} else {
+				car.unconserve();
+			}
+			reflesh();
+		}
 
 	});
 
@@ -611,6 +623,7 @@ window.addEventListener("load", function () {
 			document.getElementById("fmdt-main").innerHTML = html;
 			document.getElementById("fmdt-remark-remark").innerHTML = formation.remark == undefined ? "" : formation.remark;
 			document.getElementById("fmdt-remark-button").innerHTML = `<button class="lsf-icon" icon="pen" onclick="Dialog.list.editRemarkDialog.functions.display('formation',${x})">編集</button>`;
+			//要素の表示制御
 			document.getElementById("fmdt-release-button").disabled = formation.isTerminated;
 			Dialog.list.formationDetealDialog.on();
 		},
