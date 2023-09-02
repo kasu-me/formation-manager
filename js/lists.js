@@ -252,3 +252,12 @@ class AllFormationTemplates {
 	}
 }
 //各種一覧クラス定義ここまで
+
+
+//全クラスリセット
+function resetAllLists() {
+	AllSerieses.reset();
+	AllCars.reset();
+	AllFormations.reset();
+	AllFormationTemplates.reset();
+}

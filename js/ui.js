@@ -87,8 +87,9 @@ function list() {
 			addCarCell(tables.at(-1), carId, carIdListNow, carNumberListNow, false);
 		}
 	}
-	//tables.at(-1).addBlankCellToRowRightEnd();
-	html += tables.at(-1).generateTable();
+	if (tables.at(-1).rows.length != 0) {
+		html += tables.at(-1).generateTable();
+	}
 
 	//車両番号の重複をチェック
 	let duplicationNumbers = carNumberListNow.filter(function (x, i, self) {
@@ -348,10 +349,7 @@ window.addEventListener("load", function () {
 				reflesh();
 			},
 			() => {
-				AllSerieses.reset();
-				AllCars.reset();
-				AllFormations.reset();
-				AllFormationTemplates.reset();
+				resetAllLists();
 				reflesh();
 			}
 		);
@@ -359,10 +357,12 @@ window.addEventListener("load", function () {
 
 	//自動セーブ関係
 	if (localStorage.getItem("formation-autosave") != null) {
-		Dialog.list.confirmDialog.functions.display(Message.list["MC005"], loadAutoSavedData, () => {
-			localStorage.removeItem("formation-autosave");
-			confirmToLoadSaveData();
-		});
+		Dialog.list.confirmDialog.functions.display(Message.list["MC005"],
+			loadAutoSavedData,
+			() => {
+				localStorage.removeItem("formation-autosave");
+				confirmToLoadSaveData();
+			});
 	} else {
 		//画面表示
 		confirmToLoadSaveData();

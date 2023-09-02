@@ -88,10 +88,7 @@ function loadListsFromJSON(json) {
 
 	try {
 		//リセット
-		AllSerieses.reset();
-		AllCars.reset();
-		AllFormations.reset();
-		AllFormationTemplates.reset();
+		resetAllLists();
 
 		//JSON→Object
 		let obj = JSON.parse(json);
