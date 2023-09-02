@@ -184,7 +184,15 @@ td.formation-name,
 	text-align: left;
 }
 
-/*車両詳細ダイアログのTD内のUL*/
+/*車両詳細ダイアログのTD内*/
+#cardt-main table td:first-child {
+	width: 6.3em;
+}
+
+#cardt-main table {
+	width: 100%;
+}
+
 #cardt-main table tr>td ul {
 	margin: 0;
 	padding-left: 0;
@@ -331,6 +339,7 @@ p.car-name span.car-status.dropped::before {
 
 p.car-name span.car-status.conserved {
 	margin-right: 0.3em;
+	margin-left: 1.0em;
 	background-color: #0081c9;
 }
 
