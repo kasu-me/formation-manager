@@ -528,7 +528,7 @@ window.addEventListener("load", function () {
 			} else {
 				car.unconserve();
 			}
-			reflesh();
+			setTimeout(reflesh, 100);
 		}
 
 	});
