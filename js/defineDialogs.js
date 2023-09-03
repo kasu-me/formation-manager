@@ -879,7 +879,7 @@ window.addEventListener("load", function () {
 					table.addCell(car.manufacturedOn);
 					table.addCell(!car.isActive ? car.droppedOn : "-");
 					table.addCell(car.isConserved ? "保存" : "-");
-					table.addCell(car.remark == "" || car.remark == undefined ? "-" : car.remark);
+					table.addCell(car.remark == "" || car.remark == undefined ? "-" : car.remark, { "class": "mku-balloon", "mku-balloon-message": car.remark == "" || car.remark == undefined ? "-" : car.remark });
 					table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.carDetealDialog.functions.display(${carId});">詳細</button><button class="lsf-icon" icon="pen" onclick="Dialog.list.editCarMasterDialog.functions.display(${carId})">編集</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllCarsDialog.functions.deleteCars([${carId}])">削除</button>`);
 				}
 			})
@@ -950,7 +950,7 @@ window.addEventListener("load", function () {
 					table.addCell(AllSerieses.seriesesList[formation.seriesId].name);
 					table.addCell(formation.formatedOn);
 					table.addCell(formation.isTerminated ? formation.terminatedOn : "-");
-					table.addCell(formation.remark == "" || formation.remark == undefined ? "-" : formation.remark);
+					table.addCell(formation.remark == "" || formation.remark == undefined ? "-" : formation.remark, { "class": "mku-balloon", "mku-balloon-message": formation.remark == "" || formation.remark == undefined ? "-" : formation.remark });
 					table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.formationDetealDialog.functions.display(${formationId});">詳細</button><button class="lsf-icon" icon="pen" onclick="Dialog.list.editFormationMasterDialog.functions.display(${formationId})">編集</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllFormationsDialog.functions.deleteFormations([${formationId}])">削除</button>`);
 				}
 			})
