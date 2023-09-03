@@ -10,17 +10,18 @@
 	padding: 0.6em;
 	border-radius: 2px;
 	max-width: 25em;
+	min-width: 27px;
 }
 
 #mku-balloon::before {
 	display: block;
 	content: "";
 	position: absolute;
-	bottom: -10px;
-	left: 10px;
-	border-left: transparent 10px solid;
-	border-right: transparent 10px solid;
-	border-top: rgba(0, 0, 0, 0.85) 10px solid;
+	bottom: -7px;
+	left: 7px;
+	border-left: transparent 7px solid;
+	border-right: transparent 7px solid;
+	border-top: rgba(0, 0, 0, 0.85) 7px solid;
 }
 
 #mku-balloon.on {

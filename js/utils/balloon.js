@@ -7,8 +7,8 @@ window.addEventListener("load", () => {
 		elem.addEventListener("mouseenter", (e) => {
 			balloon.innerHTML = message;
 			balloon.classList.add("on");
-			balloon.style.top = `${elem.getBoundingClientRect().top - balloon.clientHeight - 10 + window.scrollY}px`;
-			balloon.style.left = `${(elem.getBoundingClientRect().left + elem.getBoundingClientRect().right) / 2 - 20}px`;
+			balloon.style.top = `${elem.getBoundingClientRect().top - balloon.clientHeight - 7 + window.scrollY}px`;
+			balloon.style.left = `${(elem.getBoundingClientRect().left + elem.getBoundingClientRect().right) / 2 - 14}px`;
 		});
 		elem.addEventListener("mouseleave", (e) => {
 			balloon.classList.remove("on");
