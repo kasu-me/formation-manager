@@ -93,7 +93,7 @@ class Car {
 			this.#oldNumbers = oldNumbers;
 			this.sortOldNumbersByYearMonth();
 		}
-		this.#remark = remark;
+		this.remark = remark;
 	}
 	//改番
 	renumber(newNumber, renumberedOn) {
@@ -151,7 +151,7 @@ class Car {
 		return Formatter.toHTML(this.#remark);
 	}
 	set remark(remark) {
-		this.#remark = remark;
+		this.#remark = remark || "";
 	}
 
 	//now時点で廃車されているかどうかを取得
@@ -273,7 +273,7 @@ class Formation {
 		this.#cars = cars;
 		this.#belongsTo = belongsTo;
 		this.#formatedOn = formatedOn;
-		this.#remark = remark;
+		this.remark = remark;
 	}
 
 	//編成名を変更 (編成名)
@@ -333,7 +333,7 @@ class Formation {
 		this.#belongsTo = belongsTo;
 	}
 	set remark(remark) {
-		this.#remark = remark;
+		this.#remark = remark || "";
 	}
 
 	//マスタ編集
