@@ -67,7 +67,7 @@ function list() {
 			//所属地セルを追加
 			//tables.at(-1).addCell(formationList[formationId].belongsTo==null?"運用離脱":formationList[formationId].belongsTo,{"class":"belongs"});
 			//組成年月セルを追加
-			tables.at(-1).addCell(formationList[formationId].formatedOn.toStringWithLink());
+			tables.at(-1).addCell(`${formationList[formationId].formatedOn.toStringWithLink()}～${formationList[formationId].isTerminated ? formationList[formationId].terminatedOn.toStringWithLink() : ""}`);
 			//備考セルを追加
 			tables.at(-1).addCell(formationList[formationId].remark == "" ? "-" : formationList[formationId].remark);
 		}
