@@ -19,6 +19,7 @@ new Message("MC005", "前回自動的にセーブされたデータが残って�
 new Message("MC006", "編成テンプレートを削除します。");
 new Message("MC007", "選択した${count}件の${type}マスタデータを削除します。<br>廃車や編成解除とは違い、${type}を最初から存在しなかったものとする操作です。この操作は取り消せません。よろしいですか？");
 new Message("MC008", "サンプルデータを読み込みますか？");
+new Message("MC009", "現在のデータをすべて破棄し、新しい編成表を作成します。この操作は取り消せません。よろしいですか？");
 //Symbol
 new Message("MS001", `<style type="text/css">
 .wn_st1{fill:#ff0000;}
@@ -783,7 +784,15 @@ window.addEventListener("load", function () {
 		<li><button onclick="Dialog.list.manageAllCarsDialog.functions.display()" class="lsf-icon dialog-main-button" icon="list">全車両マスタデータ管理</button></li>
 		<li><button onclick="Dialog.list.manageAllFormationsDialog.functions.display()" class="lsf-icon dialog-main-button" icon="list">全編成マスタデータ管理</button></li>
 		<li><button onclick="Dialog.list.editJSONDialog.functions.display()" class="lsf-icon dialog-main-button" icon="pen">JSON直接編集</button></li>
-	</ul>`, [{ "content": "終了", "event": `Dialog.list.formationDataManagementDialog.off();`, "icon": "close" }]);
+	</ul>`, [{ "content": "リセット", "event": `Dialog.list.formationDataManagementDialog.functions.clear();`, "icon": "clear" }, { "content": "終了", "event": `Dialog.list.formationDataManagementDialog.off();`, "icon": "close" }], {
+		clear: function () {
+			Dialog.list.confirmDialog.functions.display(Message.list["MC009"], () => {
+				resetAllLists();
+				reflesh();
+				Dialog.list.formationDataManagementDialog.off();
+			});
+		}
+	});
 
 	//全車両管理:mnalc
 	new Dialog("manageAllCarsDialog", "全車両マスタデータ管理", `<p class="management-dialog-searchbox-container">
