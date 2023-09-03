@@ -1075,6 +1075,7 @@ window.addEventListener("load", function () {
 		<tr><td>製造</td><td><span class="time-inputs"><input id="edmsc-manufactured-y" class="yearmonth-y" type="number">年<input id="edmsc-manufactured-m" class="yearmonth-m" type="number">月</span></td></tr>
 		<tr><td>廃車</td><td><span class="time-inputs"><input id="edmsc-dropped-y" class="yearmonth-y" type="number">年<input id="edmsc-dropped-m" class="yearmonth-m" type="number">月</span><label for="edmsc-car-isdropped" class="mku-checkbox-container inline"><input id="edmsc-car-isdropped" type="checkbox"></label></td></tr>
 		<tr><td>保存</td><td><label for="edmsc-car-isconserved" class="mku-checkbox-container inline"><input id="edmsc-car-isconserved" type="checkbox" disabled></label></td></tr>
+		<tr><td>備考</td><td><input id="edmsc-car-remark"></td></tr>
 		<tr><td>旧車番</td><td>
 			<table class="input-area">
 				<tr><td>対象</td><td><select id="edmsc-oldcar-indexes" onchange="Dialog.list.editCarMasterDialog.functions.updateOldNumbersSelectBox(Number(this.value))"></select></td></tr>
@@ -1094,6 +1095,7 @@ window.addEventListener("load", function () {
 			document.getElementById("edmsc-manufactured-m").value = car.manufacturedOn.month;
 			document.getElementById("edmsc-car-isdropped").checked = !car.isActive;
 			document.getElementById("edmsc-car-isconserved").checked = car.isConserved;
+			document.getElementById("edmsc-car-remark").value = car.remark;
 			Dialog.list.editCarMasterDialog.functions.updateIsDroppedToggle();
 			if (!car.isActive) {
 				document.getElementById("edmsc-dropped-y").value = car.droppedOn.year;
@@ -1154,6 +1156,7 @@ window.addEventListener("load", function () {
 		save: function () {
 			let car = AllCars.carsList[Dialog.list.editCarMasterDialog.functions.carId];
 			car.updateMasterData(document.getElementById("edmsc-car-number").value, new YearMonth(Number(document.getElementById("edmsc-manufactured-y").value), Number(document.getElementById("edmsc-manufactured-m").value)), document.getElementById("edmsc-car-isdropped").checked ? new YearMonth(Number(document.getElementById("edmsc-dropped-y").value), Number(document.getElementById("edmsc-dropped-m").value)) : null, Dialog.list.editCarMasterDialog.functions.tentativeOldNumbers, document.getElementById("edmsc-car-isconserved").checked);
+			car.remark = document.getElementById("edmsc-car-remark").value;
 			Dialog.list.editCarMasterDialog.off();
 			Dialog.list.carDetealDialog.functions.display(Dialog.list.editCarMasterDialog.functions.carId);
 		}
@@ -1170,6 +1173,7 @@ window.addEventListener("load", function () {
 		<tr><td>所属車両</td><td><span id="edmsf-formation-car-count"></span>両<button onclick="Dialog.list.formationMasterCarsEditDialog.functions.display(Dialog.list.editFormationMasterDialog.functions.formationId)" id="edmsf-cars-edit-button" class="lsf-icon" icon="pen">編集</button></td></tr>
 		<tr><td>組成</td><td><span class="time-inputs"><input id="edmsf-formated-y" class="yearmonth-y" type="number">年<input id="edmsf-formated-m" class="yearmonth-m" type="number">月</span></td></tr>
 		<tr><td>解除</td><td><span class="time-inputs"><input id="edmsf-terminated-y" class="yearmonth-y" type="number">年<input id="edmsf-terminated-m" class="yearmonth-m" type="number">月</span><label for="edmsf-formation-isterminated" class="mku-checkbox-container inline"><input id="edmsf-formation-isterminated" type="checkbox"></label></td></tr>
+		<tr><td>備考</td><td><input id="edmsf-formation-remark"></td></tr>
 	</table>
 	`, [{ "content": "詳細ウインドウ", "event": `Dialog.list.formationDetealDialog.functions.display(Dialog.list.editFormationMasterDialog.functions.formationId)`, "icon": "search" }, { "content": "保存", "event": `Dialog.list.editFormationMasterDialog.functions.save()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editFormationMasterDialog.off();`, "icon": "close" }], {
 		formationId: 0,
@@ -1188,6 +1192,7 @@ window.addEventListener("load", function () {
 			document.getElementById("edmsf-formated-y").value = formation.formatedOn.year;
 			document.getElementById("edmsf-formated-m").value = formation.formatedOn.month;
 			document.getElementById("edmsf-formation-isterminated").checked = formation.isTerminated;
+			document.getElementById("edmsf-formation-remark").value = formation.remark;
 			Dialog.list.editFormationMasterDialog.functions.updateIsTerminatedToggle();
 			if (formation.isTerminated) {
 				document.getElementById("edmsf-terminated-y").value = formation.terminatedOn.year;
@@ -1217,6 +1222,7 @@ window.addEventListener("load", function () {
 			let formation = AllFormations.formationsList[Dialog.list.editFormationMasterDialog.functions.formationId];
 			formation.updateMasterData(Number(document.getElementById("edmsf-series").value), document.getElementById("edmsf-formation-number").value, new YearMonth(Number(document.getElementById("edmsf-formated-y").value), Number(document.getElementById("edmsf-formated-m").value)), document.getElementById("edmsf-formation-isterminated").checked ? new YearMonth(Number(document.getElementById("edmsf-terminated-y").value), Number(document.getElementById("edmsf-terminated-m").value)) : null);
 			formation.updateMasterCars(Dialog.list.editFormationMasterDialog.functions.cars);
+			formation.remark = document.getElementById("edmsf-formation-remark").value;
 			Dialog.list.editFormationMasterDialog.off();
 			Dialog.list.formationDetealDialog.functions.display(Dialog.list.editFormationMasterDialog.functions.formationId);
 		}
