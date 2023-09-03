@@ -641,8 +641,17 @@ window.addEventListener("load", function () {
 						break;
 				}
 			}
+			switch (Dialog.list.editMultipleRemarkDialog.functions.type) {
+				case "car":
+					Dialog.list.manageAllCarsDialog.functions.display();
+					break;
+				case "formation":
+					Dialog.list.manageAllFormationsDialog.functions.display();
+					break;
+			}
 			Dialog.list.editMultipleRemarkDialog.functions.type = 0;
 			Dialog.list.editMultipleRemarkDialog.functions.id = 0;
+			document.getElementById("edmrm-remark").value = "";
 			Dialog.list.editMultipleRemarkDialog.off();
 		}
 	}, true);
@@ -859,6 +868,7 @@ window.addEventListener("load", function () {
 			table.addCell("製造");
 			table.addCell("廃車");
 			table.addCell("保存");
+			table.addCell("備考");
 			table.addCell("操作");
 			AllCars.carsList.forEach((car, carId) => {
 				if (Dialog.list.manageAllCarsDialog.functions.isFiltered(car)) {
@@ -869,6 +879,7 @@ window.addEventListener("load", function () {
 					table.addCell(car.manufacturedOn);
 					table.addCell(!car.isActive ? car.droppedOn : "-");
 					table.addCell(car.isConserved ? "保存" : "-");
+					table.addCell(car.remark == "" || car.remark == undefined ? "-" : car.remark);
 					table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.carDetealDialog.functions.display(${carId});">詳細</button><button class="lsf-icon" icon="pen" onclick="Dialog.list.editCarMasterDialog.functions.display(${carId})">編集</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllCarsDialog.functions.deleteCars([${carId}])">削除</button>`);
 				}
 			})
@@ -927,6 +938,7 @@ window.addEventListener("load", function () {
 			table.addCell("形式");
 			table.addCell("組成年月");
 			table.addCell("解除年月");
+			table.addCell("備考");
 			table.addCell("操作");
 			AllFormations.formationsList.forEach((formation, formationId) => {
 				if (Dialog.list.manageAllFormationsDialog.functions.isFiltered(formation)) {
@@ -938,6 +950,7 @@ window.addEventListener("load", function () {
 					table.addCell(AllSerieses.seriesesList[formation.seriesId].name);
 					table.addCell(formation.formatedOn);
 					table.addCell(formation.isTerminated ? formation.terminatedOn : "-");
+					table.addCell(formation.remark == "" || formation.remark == undefined ? "-" : formation.remark);
 					table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.formationDetealDialog.functions.display(${formationId});">詳細</button><button class="lsf-icon" icon="pen" onclick="Dialog.list.editFormationMasterDialog.functions.display(${formationId})">編集</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllFormationsDialog.functions.deleteFormations([${formationId}])">削除</button>`);
 				}
 			})
