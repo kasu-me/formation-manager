@@ -591,6 +591,7 @@ window.addEventListener("load", function () {
 				switch (Dialog.list.editRemarkDialog.functions.type) {
 					case "car":
 						AllCars.carsList[Dialog.list.editRemarkDialog.functions.id].remark = document.getElementById("edrm-remark").value;
+						Dialog.list.carDetealDialog.functions.display(Dialog.list.editRemarkDialog.functions.id);
 						break;
 					case "formation":
 						AllFormations.formationsList[Dialog.list.editRemarkDialog.functions.id].remark = document.getElementById("edrm-remark").value;
@@ -601,6 +602,48 @@ window.addEventListener("load", function () {
 			Dialog.list.editRemarkDialog.functions.type = 0;
 			Dialog.list.editRemarkDialog.functions.id = 0;
 			Dialog.list.editRemarkDialog.off();
+		}
+	}, true);
+
+	//備考一括編集:edmrm
+	new Dialog("editMultipleRemarkDialog", "備考の一括編集", `<p><span id="edmrm-type"></span>に対して一括で備考の設定を行います。</p><table class="input-area"><tr><td id="edmrm-title">備考</td><td><input id="edmrm-remark"></td></tr></table>`, [{ "content": "上書き", "event": `Dialog.list.editMultipleRemarkDialog.functions.setRemark('overwrite')`, "icon": "pen" }, { "content": "追加", "event": `Dialog.list.editMultipleRemarkDialog.functions.setRemark('add')`, "icon": "add" }, { "content": "キャンセル", "event": `Dialog.list.editMultipleRemarkDialog.off();`, "icon": "close" }], {
+		ids: 0,
+		type: 0,
+		//備考編集ダイアログを表示
+		display: function (type, x) {
+			Dialog.list.editMultipleRemarkDialog.functions.type = type;
+			Dialog.list.editMultipleRemarkDialog.functions.ids = x;
+			switch (Dialog.list.editMultipleRemarkDialog.functions.type) {
+				case "car":
+					document.getElementById("edmrm-type").innerHTML = `${Dialog.list.editMultipleRemarkDialog.functions.ids.length}件の車両`;
+					break;
+				case "formation":
+					document.getElementById("edmrm-type").innerHTML = `${Dialog.list.editMultipleRemarkDialog.functions.ids.length}件の編成`;
+					break;
+			}
+			Dialog.list.editMultipleRemarkDialog.on();
+			document.getElementById("edmrm-remark").focus();
+		},
+		//備考編集
+		setRemark: function (mode) {
+			//親ダイアログが表示されている状態以外での実行を禁止
+			if (Dialog.list.editMultipleRemarkDialog.isActive) {
+				switch (Dialog.list.editMultipleRemarkDialog.functions.type) {
+					case "car":
+						Dialog.list.editMultipleRemarkDialog.functions.ids.forEach((id) => {
+							AllCars.carsList[id].remark = (mode != "overwrite" ? AllCars.carsList[id].remark : "") + document.getElementById("edmrm-remark").value;
+						});
+						break;
+					case "formation":
+						Dialog.list.editMultipleRemarkDialog.functions.ids.forEach((id) => {
+							AllFormations.formationsList[id].remark = (mode != "overwrite" ? AllFormations.formationsList[id].remark : "") + document.getElementById("edmrm-remark").value;
+						});
+						break;
+				}
+			}
+			Dialog.list.editMultipleRemarkDialog.functions.type = 0;
+			Dialog.list.editMultipleRemarkDialog.functions.id = 0;
+			Dialog.list.editMultipleRemarkDialog.off();
 		}
 	}, true);
 
@@ -799,7 +842,7 @@ window.addEventListener("load", function () {
 		<span><input placeholder="車両番号" id="mnalc-search-keyword" onkeypress="if(event.keyCode==13){document.getElementById('mnalc-search-button').click();}"><button class="lsf-icon" icon="search" onclick="Dialog.list.manageAllCarsDialog.functions.searchQuery=document.getElementById('mnalc-search-keyword').value;Dialog.list.manageAllCarsDialog.functions.createTable()" id="mnalc-search-button">検索</button></span><span><label class="button lsf-icon mku-balloon" mku-balloon-message="製造と同時に廃車されているなど、削除しても問題のない車両のみを抽出して表示します。"  icon="eye"><input type="checkbox" id="mnalc-only-useless" onchange="Dialog.list.manageAllCarsDialog.functions.createTable()">無用車両のみ表示</label></span>
 	</p>
 	<p id="mnalc-search-status"></p>
-	<div id="mnalc-table"></div>`, [{ "content": "一括削除", "event": `Dialog.list.manageAllCarsDialog.functions.deleteCars(Array.from(document.querySelectorAll('.mnalc-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('car-id')}));`, "icon": "delete", "disabled": "disabled", "id": "mnalc-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllCarsDialog.off();`, "icon": "close" }], {
+	<div id="mnalc-table"></div>`, [{ "content": "備考一括編集", "event": `Dialog.list.editMultipleRemarkDialog.functions.display('car',Array.from(document.querySelectorAll('.mnalc-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('car-id')}));`, "icon": "pen", "disabled": "disabled", "id": "mnalc-remarkall" }, { "content": "一括削除", "event": `Dialog.list.manageAllCarsDialog.functions.deleteCars(Array.from(document.querySelectorAll('.mnalc-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('car-id')}));`, "icon": "delete", "disabled": "disabled", "id": "mnalc-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllCarsDialog.off();`, "icon": "close" }], {
 		display: function () {
 			Dialog.list.manageAllCarsDialog.functions.searchQuery = "";
 			document.getElementById('mnalc-search-keyword').value = "";
@@ -830,7 +873,7 @@ window.addEventListener("load", function () {
 				}
 			})
 			document.getElementById("mnalc-table").innerHTML = table.generateTable();
-			setTableCheckboxEvents(document.getElementById("mnalc-table"), document.getElementById("mnalc-deleteall"));
+			setTableCheckboxEvents(document.getElementById("mnalc-table"), [document.getElementById("mnalc-deleteall"), document.getElementById("mnalc-remarkall")]);
 			TableSort.addSortButtonToTable(document.getElementById("mnalc-table"));
 			document.getElementById("mnalc-search-status").innerHTML = `${(Dialog.list.manageAllCarsDialog.functions.searchQuery == "" ? "全" : `車両番号に<b>"${Dialog.list.manageAllCarsDialog.functions.searchQuery}"</b>を含む`)}${document.getElementById("mnalc-only-useless").checked ? `無用` : ``}車両を表示中 (全${table.rows.length - 1}件)`;
 		},
@@ -866,7 +909,7 @@ window.addEventListener("load", function () {
 		<span><input placeholder="編成番号" id="mnalf-search-keyword" onkeypress="if(event.keyCode==13){document.getElementById('mnalf-search-button').click();}"><button class="lsf-icon" icon="search" onclick="Dialog.list.manageAllFormationsDialog.functions.searchQuery=document.getElementById('mnalf-search-keyword').value;Dialog.list.manageAllFormationsDialog.functions.createTable()" id="mnalf-search-button">検索</button></span><span><label class="button lsf-icon mku-balloon" mku-balloon-message="組成と同時に解除されているなど、削除しても問題のない編成のみを抽出して表示します。" icon="eye"><input type="checkbox" id="mnalf-only-useless" onchange="Dialog.list.manageAllFormationsDialog.functions.createTable()">無用編成のみ表示</label></span>
 	</p>
 	<p id="mnalf-search-status"></p>
-	<div id="mnalf-table"></div>`, [{ "content": "一括削除", "event": `Dialog.list.manageAllFormationsDialog.functions.deleteFormations(Array.from(document.querySelectorAll('.mnalf-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('formation-id')}));`, "icon": "delete", "disabled": "disabled", "id": "mnalf-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllFormationsDialog.off();`, "icon": "close" }], {
+	<div id="mnalf-table"></div>`, [{ "content": "備考一括編集", "event": `Dialog.list.editMultipleRemarkDialog.functions.display('formation',Array.from(document.querySelectorAll('.mnalf-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('formation-id')}));`, "icon": "pen", "disabled": "disabled", "id": "mnalf-remarkall" }, { "content": "一括削除", "event": `Dialog.list.manageAllFormationsDialog.functions.deleteFormations(Array.from(document.querySelectorAll('.mnalf-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('formation-id')}));`, "icon": "delete", "disabled": "disabled", "id": "mnalf-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllFormationsDialog.off();`, "icon": "close" }], {
 		display: function () {
 			Dialog.list.manageAllFormationsDialog.functions.searchQuery = "";
 			document.getElementById('mnalf-search-keyword').value = "";
@@ -899,7 +942,7 @@ window.addEventListener("load", function () {
 				}
 			})
 			document.getElementById("mnalf-table").innerHTML = table.generateTable();
-			setTableCheckboxEvents(document.getElementById("mnalf-table"), document.getElementById("mnalf-deleteall"));
+			setTableCheckboxEvents(document.getElementById("mnalf-table"), [document.getElementById("mnalf-deleteall"), document.getElementById("mnalf-remarkall")]);
 			TableSort.addSortButtonToTable(document.getElementById("mnalf-table"));
 			document.getElementById("mnalf-search-status").innerHTML = `${(Dialog.list.manageAllFormationsDialog.functions.searchQuery == "" ? "全" : `編成番号に<b>"${Dialog.list.manageAllFormationsDialog.functions.searchQuery}"</b>を含む`)}${document.getElementById("mnalf-only-useless").checked ? `無用` : ``}編成を表示中 (全${table.rows.length - 1}件)`;
 		},
@@ -924,7 +967,7 @@ window.addEventListener("load", function () {
 	});
 
 	//表+チェックボックスで行選択
-	function setTableCheckboxEvents(tableContainer, button) {
+	function setTableCheckboxEvents(tableContainer, buttons) {
 		//全件選択チェックボックス
 		let selectAllCheckBox = tableContainer.querySelector("tr td input[type='checkbox']");
 		//各行のチェックボックス
@@ -942,7 +985,9 @@ window.addEventListener("load", function () {
 					checkedAll = false;
 				}
 			}
-			button.disabled = !checkedAtLeastOnce;
+			buttons.forEach((button) => {
+				button.disabled = !checkedAtLeastOnce;
+			});
 			if (checkedAll) {
 				selectAllCheckBox.checked = true;
 			}
