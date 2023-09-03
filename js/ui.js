@@ -71,7 +71,7 @@ function list() {
 			//備考セルを追加
 			tables.at(-1).addCell(formationList[formationId].remark == "" ? "-" : formationList[formationId].remark);
 		}
-		tables.at(-1).addBlankCellToRowIn(1);
+		tables.at(-1).addBlankCellToRowIn(2);
 		html += tables.at(-1).generateTable();
 	}
 
