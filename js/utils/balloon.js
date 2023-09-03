@@ -20,6 +20,7 @@ window.addEventListener("load", () => {
 	}
 	document.querySelectorAll(".mku-balloon").forEach(showBalloon);
 	window.addEventListener("wheel", removeBalloon);
+	window.addEventListener("scroll", removeBalloon);
 
 	const observer = new MutationObserver((mutations) => {
 		for (let mutation of mutations) {
