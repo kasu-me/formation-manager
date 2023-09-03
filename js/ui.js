@@ -92,7 +92,7 @@ function list() {
 				if (conservedCarsTable.cellCountOfLastRow % 10 == 0) {
 					conservedCarsTable.addRow();
 				}
-				addCarCell(conservedCarsTable, carId, carIdListNow, carNumberListNow, false, true);
+				addCarCell(conservedCarsTable, carId, carIdListNow, [], false, true);
 			} else if (!AllCars.carsList[carId].isDroppedInTime(now)) {
 				//現役で、編成に組み込まれていない車両
 				if (notFormatedCarsTable.cellCountOfLastRow % 10 == 0) {
