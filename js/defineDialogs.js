@@ -643,10 +643,10 @@ window.addEventListener("load", function () {
 			}
 			switch (Dialog.list.editMultipleRemarkDialog.functions.type) {
 				case "car":
-					Dialog.list.manageAllCarsDialog.functions.display();
+					Dialog.list.manageAllCarsDialog.functions.createTable();
 					break;
 				case "formation":
-					Dialog.list.manageAllFormationsDialog.functions.display();
+					Dialog.list.manageAllFormationsDialog.functions.createTable();
 					break;
 			}
 			Dialog.list.editMultipleRemarkDialog.functions.type = 0;
@@ -859,6 +859,8 @@ window.addEventListener("load", function () {
 			Dialog.list.manageAllCarsDialog.on();
 		},
 		createTable: function () {
+			let tableContainer = document.getElementById("mnalc-table").querySelector(".generated-table-container");
+			let scrollTop = tableContainer == null ? 0 : tableContainer.scrollTop;
 			let table = new Table();
 			table.setAttributes({ "class": "row-hover-hilight management-dialog-objects-list horizontal-stripes" });
 			table.addRow();
@@ -887,6 +889,7 @@ window.addEventListener("load", function () {
 			setTableCheckboxEvents(document.getElementById("mnalc-table"), [document.getElementById("mnalc-deleteall"), document.getElementById("mnalc-remarkall")]);
 			TableSort.addSortButtonToTable(document.getElementById("mnalc-table"));
 			document.getElementById("mnalc-search-status").innerHTML = `${(Dialog.list.manageAllCarsDialog.functions.searchQuery == "" ? "全" : `車両番号に<b>"${Dialog.list.manageAllCarsDialog.functions.searchQuery}"</b>を含む`)}${document.getElementById("mnalc-only-useless").checked ? `無用` : ``}車両を表示中 (全${table.rows.length - 1}件)`;
+			document.getElementById("mnalc-table").querySelector(".generated-table-container").scrollTop = scrollTop;
 		},
 		deleteCars: function (carIds) {
 			Dialog.list.confirmDialog.functions.display(Message.list["MC007"].toString({ "type": "車両", "count": carIds.length }), () => {
@@ -928,6 +931,8 @@ window.addEventListener("load", function () {
 			Dialog.list.manageAllFormationsDialog.on();
 		},
 		createTable: function () {
+			let tableContainer = document.getElementById("mnalf-table").querySelector(".generated-table-container");
+			let scrollTop = tableContainer == null ? 0 : tableContainer.scrollTop;
 			let table = new Table();
 			table.setAttributes({ "class": "row-hover-hilight management-dialog-objects-list horizontal-stripes" });
 			table.addRow();
@@ -958,6 +963,7 @@ window.addEventListener("load", function () {
 			setTableCheckboxEvents(document.getElementById("mnalf-table"), [document.getElementById("mnalf-deleteall"), document.getElementById("mnalf-remarkall")]);
 			TableSort.addSortButtonToTable(document.getElementById("mnalf-table"));
 			document.getElementById("mnalf-search-status").innerHTML = `${(Dialog.list.manageAllFormationsDialog.functions.searchQuery == "" ? "全" : `編成番号に<b>"${Dialog.list.manageAllFormationsDialog.functions.searchQuery}"</b>を含む`)}${document.getElementById("mnalf-only-useless").checked ? `無用` : ``}編成を表示中 (全${table.rows.length - 1}件)`;
+			document.getElementById("mnalf-table").querySelector(".generated-table-container").scrollTop = scrollTop;
 		},
 		deleteFormations: function (formationIds) {
 			Dialog.list.confirmDialog.functions.display(Message.list["MC007"].toString({ "type": "編成", "count": formationIds.length }), () => {
