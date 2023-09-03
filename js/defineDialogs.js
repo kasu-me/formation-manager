@@ -937,7 +937,7 @@ window.addEventListener("load", function () {
 					table.addCell(formation.cars.length);
 					table.addCell(AllSerieses.seriesesList[formation.seriesId].name);
 					table.addCell(formation.formatedOn);
-					table.addCell(formation.isTerminated ? formation.terminatedOn : "");
+					table.addCell(formation.isTerminated ? formation.terminatedOn : "-");
 					table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.formationDetealDialog.functions.display(${formationId});">詳細</button><button class="lsf-icon" icon="pen" onclick="Dialog.list.editFormationMasterDialog.functions.display(${formationId})">編集</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllFormationsDialog.functions.deleteFormations([${formationId}])">削除</button>`);
 				}
 			})
