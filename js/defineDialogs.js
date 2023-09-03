@@ -1064,6 +1064,7 @@ window.addEventListener("load", function () {
 		let findElementIndex = (from, target) => {
 			return [].slice.call(from).indexOf(target);
 		};
+		switchElementsByCheckedStatus();
 	}
 
 	//車両マスタデータ編集:edmsc
