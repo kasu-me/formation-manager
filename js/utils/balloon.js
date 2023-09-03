@@ -2,6 +2,12 @@ window.addEventListener("load", () => {
 	let balloon = document.createElement("div");
 	balloon.id = "mku-balloon";
 	document.body.appendChild(balloon);
+	let removeBalloon = () => {
+		balloon.classList.remove("on");
+		balloon.innerHTML = "";
+		balloon.style.top = 0;
+		balloon.style.left = 0;
+	}
 	let showBalloon = (elem) => {
 		let message = elem.getAttribute("mku-balloon-message");
 		elem.addEventListener("mouseenter", (e) => {
@@ -10,14 +16,10 @@ window.addEventListener("load", () => {
 			balloon.style.top = `${elem.getBoundingClientRect().top - balloon.clientHeight - 7 + window.scrollY}px`;
 			balloon.style.left = `${(elem.getBoundingClientRect().left + elem.getBoundingClientRect().right) / 2 - 14}px`;
 		});
-		elem.addEventListener("mouseleave", (e) => {
-			balloon.classList.remove("on");
-			balloon.innerHTML = "";
-			balloon.style.top = 0;
-			balloon.style.left = 0;
-		});
+		elem.addEventListener("mouseleave", removeBalloon);
 	}
 	document.querySelectorAll(".mku-balloon").forEach(showBalloon);
+	window.addEventListener("wheel", removeBalloon);
 
 	const observer = new MutationObserver((mutations) => {
 		for (let mutation of mutations) {
