@@ -459,7 +459,6 @@ table.management-dialog-objects-list tr td:nth-last-child(2) {
 	max-width: 5em;
 	white-space: nowrap;
 	overflow: hidden;
-	text-overflow: ellipsis;
 }
 
 table.management-dialog-objects-list tr:not(:nth-child(1)):has(input:checked) {
