@@ -224,8 +224,29 @@ class Car {
 }
 
 //所属クラス
-class Belongs {
+class Belong {
+	#startsOn;
+	#endsOn;
+	#name;
+}
+class BelongsTo {
+	#belongs = [];
 
+	constructor(belong) {
+		this.#belongs.push(belong);
+	}
+
+	setBelong(belong) {
+		this.#belongs.push(belong);
+	}
+
+	getBelongInTime(now) {
+		for (let belong of this.#belongs) {
+			if (belong.startsOn.serial < now.serial && ((belong.endsOn.serial || now) >= now.serial)) {
+				return belong;
+			}
+		}
+	}
 }
 
 //編成クラス
