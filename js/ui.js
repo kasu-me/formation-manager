@@ -69,7 +69,7 @@ function list() {
 			//組成年月セルを追加
 			tables.at(-1).addCell(formationList[formationId].formatedOn.toStringWithLink());
 			//備考セルを追加
-			tables.at(-1).addCell(formationList[formationId].remark);
+			tables.at(-1).addCell(formationList[formationId].remark == "" ? "-" : formationList[formationId].remark);
 		}
 		tables.at(-1).addBlankCellToRowIn(1);
 		html += tables.at(-1).generateTable();
