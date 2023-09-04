@@ -87,7 +87,8 @@ window.addEventListener("load", function () {
 						table.addCell("");
 					}
 				}
-				table.addCell(`<button class="lsf-icon" icon="forward" onclick="Dialog.list.createFormationFromTemplateDialog.functions.display(${formationTemplateId})">使用</button><button class="lsf-icon" icon="pen" onclick="Dialog.list.createFormationTemplateDialog.functions.display(${formationTemplateId})">編集</button><button class="lsf-icon" icon="copy" onclick="Dialog.list.createFormationTemplateDialog.functions.display(${formationTemplateId},true)">複製</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.confirmDialog.functions.display(Message.list['MC006'],()=>{Dialog.list.formationTemplatesDialog.functions.deleteFormationTemplate(${formationTemplateId})})">削除</button>`, { "class": "buttons" });
+				table.addCell(`<button class="lsf-icon" icon="pen" onclick="Dialog.list.createFormationTemplateDialog.functions.display(${formationTemplateId})">編集</button><button class="lsf-icon" icon="copy" onclick="Dialog.list.createFormationTemplateDialog.functions.display(${formationTemplateId},true)">複製</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.confirmDialog.functions.display(Message.list['MC006'],()=>{Dialog.list.formationTemplatesDialog.functions.deleteFormationTemplate(${formationTemplateId})})">削除</button>`, { "class": "buttons" });
+				table.addCell(`<button class="lsf-icon" icon="forward" onclick="Dialog.list.createFormationFromTemplateDialog.functions.display(${formationTemplateId})">使用</button>`, { "class": "buttons" });
 			}
 			table.rows.sort((a, b) => { return a[0].getAttibute("seriesId") < b[0].getAttibute("seriesId") ? -1 : 1 })
 			document.querySelector("#formationTemplatesDialog div.table-container").innerHTML = table.generateTable();
@@ -833,8 +834,8 @@ window.addEventListener("load", function () {
 
 	//編成表マスタ管理:mnfd
 	new Dialog("formationDataManagementDialog", "編成表マスタ管理", `<ul class="dialog-buttons-list">
-		<li><button onclick="Dialog.list.manageAllCarsDialog.functions.display()" class="lsf-icon dialog-main-button" icon="list">全車両マスタデータ管理</button></li>
 		<li><button onclick="Dialog.list.manageAllFormationsDialog.functions.display()" class="lsf-icon dialog-main-button" icon="list">全編成マスタデータ管理</button></li>
+		<li><button onclick="Dialog.list.manageAllCarsDialog.functions.display()" class="lsf-icon dialog-main-button" icon="list">全車両マスタデータ管理</button></li>
 		<li><button onclick="Dialog.list.editJSONDialog.functions.display()" class="lsf-icon dialog-main-button" icon="pen">JSON直接編集</button></li>
 	</ul>`, [{ "content": "リセット", "event": `Dialog.list.formationDataManagementDialog.functions.clear();`, "icon": "clear" }, { "content": "終了", "event": `Dialog.list.formationDataManagementDialog.off();`, "icon": "close" }], {
 		clear: function () {
@@ -938,9 +939,9 @@ window.addEventListener("load", function () {
 			table.addRow();
 			table.addCell("<input type='checkbox'>");
 			table.addCell("編成ID");
+			table.addCell("形式");
 			table.addCell("編成番号");
 			table.addCell("車両数");
-			table.addCell("形式");
 			table.addCell("組成年月");
 			table.addCell("解除年月");
 			table.addCell("備考");
@@ -950,9 +951,9 @@ window.addEventListener("load", function () {
 					table.addRow();
 					table.addCell(`<input type='checkbox' class='mnalf-raw-select' formation-id='${formationId}'>`);
 					table.addCell(formationId);
+					table.addCell(AllSerieses.seriesesList[formation.seriesId].name);
 					table.addCell(formation.name);
 					table.addCell(formation.cars.length);
-					table.addCell(AllSerieses.seriesesList[formation.seriesId].name);
 					table.addCell(formation.formatedOn);
 					table.addCell(formation.isTerminated ? formation.terminatedOn : "-");
 					table.addCell(...formatRemark(formation.remark));

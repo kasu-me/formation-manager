@@ -85,7 +85,7 @@ div#forfc-not-formated-cars-table td.car.selected a:link {
 div#formation-table-container table.formation-table tr td,
 table.formation-view tr:nth-child(2) td,
 div#cardt-main table td:nth-child(1),
-div#formationTemplatesDialog table tr td:not(.formation-name):not(.formation-template-name):not(:nth-last-child(2)),
+div#formationTemplatesDialog table tr td:not(.formation-name):not(.formation-template-name):not(:nth-last-child(3)),
 table.management-dialog-objects-list tr td {
 	padding: 0.15em 0.5em;
 	border-right: 1px solid #ccc;
@@ -107,7 +107,7 @@ div.generated-table-container:has(table.formation-table.hidden) {
 /* 右側に濃い色の線をつけるやつ */
 div#formation-table-container table.formation-table tr td:first-child,
 td.formation-name,
-div#formationTemplatesDialog table tr td:nth-last-child(2),
+div#formationTemplatesDialog table tr td:nth-last-child(3),
 td.formation-template-name {
 	border-right: 1px solid var(--formation-table-main-border);
 }
@@ -125,7 +125,7 @@ div#formation-table-container table.formation-table tr td:nth-last-child(3) {
 
 div#formation-table-container table.formation-table tr td:nth-last-child(1),
 div#formation-table-container table.formation-table tr td:nth-last-child(2),
-#formationTemplatesDialog tr td:last-child {
+#formationTemplatesDialog tr td.buttons {
 	border-left: 1px solid var(--formation-table-main-border);
 }
 
