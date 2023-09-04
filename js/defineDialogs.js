@@ -889,10 +889,10 @@ window.addEventListener("load", function () {
 			TableSort.addSortButtonToTable(document.getElementById("mnalc-table"));
 			document.getElementById("mnalc-search-status").innerHTML = `${(Dialog.list.manageAllCarsDialog.functions.searchQuery == "" ? "全" : `車両番号に<b>"${Dialog.list.manageAllCarsDialog.functions.searchQuery}"</b>を含む`)}${document.getElementById("mnalc-only-useless").checked ? `無用` : ``}車両を表示中 (全${table.rows.length - 1}件)`;
 			let tableContainer = document.getElementById("mnalc-table").querySelector(".generated-table-container");
-			tableContainer.scrollTop = Dialog.list.manageAllCarsDialog.functions.scrollTop;
 			tableContainer.addEventListener("scroll", () => {
 				Dialog.list.manageAllCarsDialog.functions.scrollTop = tableContainer.scrollTop;
 			});
+			setTimeout(() => { tableContainer.scrollTop = Dialog.list.manageAllCarsDialog.functions.scrollTop; }, 0);
 		},
 		deleteCars: function (carIds) {
 			Dialog.list.confirmDialog.functions.display(Message.list["MC007"].toString({ "type": "車両", "count": carIds.length }), () => {
@@ -965,10 +965,10 @@ window.addEventListener("load", function () {
 			TableSort.addSortButtonToTable(document.getElementById("mnalf-table"));
 			document.getElementById("mnalf-search-status").innerHTML = `${(Dialog.list.manageAllFormationsDialog.functions.searchQuery == "" ? "全" : `編成番号に<b>"${Dialog.list.manageAllFormationsDialog.functions.searchQuery}"</b>を含む`)}${document.getElementById("mnalf-only-useless").checked ? `無用` : ``}編成を表示中 (全${table.rows.length - 1}件)`;
 			let tableContainer = document.getElementById("mnalf-table").querySelector(".generated-table-container");
-			tableContainer.scrollTop = Dialog.list.manageAllFormationsDialog.functions.scrollTop;
 			tableContainer.addEventListener("scroll", () => {
 				Dialog.list.manageAllFormationsDialog.functions.scrollTop = tableContainer.scrollTop;
 			});
+			setTimeout(() => { tableContainer.scrollTop = Dialog.list.manageAllFormationsDialog.functions.scrollTop; }, 0);
 		},
 		deleteFormations: function (formationIds) {
 			Dialog.list.confirmDialog.functions.display(Message.list["MC007"].toString({ "type": "編成", "count": formationIds.length }), () => {
@@ -1096,7 +1096,7 @@ window.addEventListener("load", function () {
 		</td></tr>
 	</table>
 	<p class="element-bottom-of-input-area"><label for="edmsc-open-deteal-after-end" class="mku-checkbox-container small"><input id="edmsc-open-deteal-after-end" type="checkbox"></label><label for="edmsc-open-deteal-after-end">操作終了後車両詳細ウインドウを開く</label></p>
-	`, [{ "content": "詳細ウインドウ", "event": `Dialog.list.carDetealDialog.functions.display(Dialog.list.editCarMasterDialog.functions.carId)`, "icon": "search" }, { "content": "保存", "event": `Dialog.list.editCarMasterDialog.functions.save()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editCarMasterDialog.off();`, "icon": "close" }], {
+	`, [{ "content": "詳細ウインドウ", "event": `Dialog.list.carDetealDialog.functions.display(Dialog.list.editCarMasterDialog.functions.carId)`, "icon": "search" }, { "content": "保存", "event": `Dialog.list.editCarMasterDialog.functions.save()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editCarMasterDialog.functions.finish();`, "icon": "close" }], {
 		carId: 0,
 		display: function (x) {
 			Dialog.list.editCarMasterDialog.functions.clearInputs();
@@ -1170,7 +1170,9 @@ window.addEventListener("load", function () {
 			let car = AllCars.carsList[Dialog.list.editCarMasterDialog.functions.carId];
 			car.updateMasterData(document.getElementById("edmsc-car-number").value, new YearMonth(Number(document.getElementById("edmsc-manufactured-y").value), Number(document.getElementById("edmsc-manufactured-m").value)), document.getElementById("edmsc-car-isdropped").checked ? new YearMonth(Number(document.getElementById("edmsc-dropped-y").value), Number(document.getElementById("edmsc-dropped-m").value)) : null, Dialog.list.editCarMasterDialog.functions.tentativeOldNumbers, document.getElementById("edmsc-car-isconserved").checked);
 			car.remark = document.getElementById("edmsc-car-remark").value;
-			Dialog.list.editCarMasterDialog.off();
+			ialog.list.editCarMasterDialog.functions.finish();
+		},
+		finish: function () {
 			if (document.getElementById("edmsc-open-deteal-after-end").checked) {
 				Dialog.list.carDetealDialog.functions.display(Dialog.list.editCarMasterDialog.functions.carId);
 			} else {
@@ -1193,7 +1195,7 @@ window.addEventListener("load", function () {
 		<tr><td>備考</td><td><input id="edmsf-formation-remark"></td></tr>
 	</table>
 	<p class="element-bottom-of-input-area"><label for="edmsf-open-deteal-after-end" class="mku-checkbox-container small"><input id="edmsf-open-deteal-after-end" type="checkbox"></label><label for="edmsf-open-deteal-after-end">操作終了後編成詳細ウインドウを開く</label></p>
-	`, [{ "content": "詳細ウインドウ", "event": `Dialog.list.formationDetealDialog.functions.display(Dialog.list.editFormationMasterDialog.functions.formationId)`, "icon": "search" }, { "content": "保存", "event": `Dialog.list.editFormationMasterDialog.functions.save()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editFormationMasterDialog.off();`, "icon": "close" }], {
+	`, [{ "content": "詳細ウインドウ", "event": `Dialog.list.formationDetealDialog.functions.display(Dialog.list.editFormationMasterDialog.functions.formationId)`, "icon": "search" }, { "content": "保存", "event": `Dialog.list.editFormationMasterDialog.functions.save()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editFormationMasterDialog.functions.finish();`, "icon": "close" }], {
 		formationId: 0,
 		cars: [],
 		display: function (x, isHoldCar) {
@@ -1241,7 +1243,9 @@ window.addEventListener("load", function () {
 			formation.updateMasterData(Number(document.getElementById("edmsf-series").value), document.getElementById("edmsf-formation-number").value, new YearMonth(Number(document.getElementById("edmsf-formated-y").value), Number(document.getElementById("edmsf-formated-m").value)), document.getElementById("edmsf-formation-isterminated").checked ? new YearMonth(Number(document.getElementById("edmsf-terminated-y").value), Number(document.getElementById("edmsf-terminated-m").value)) : null);
 			formation.updateMasterCars(Dialog.list.editFormationMasterDialog.functions.cars);
 			formation.remark = document.getElementById("edmsf-formation-remark").value;
-			Dialog.list.editFormationMasterDialog.off();
+			Dialog.list.editFormationMasterDialog.functions.finish();
+		},
+		finish: function () {
 			if (document.getElementById("edmsf-open-deteal-after-end").checked) {
 				Dialog.list.formationDetealDialog.functions.display(Dialog.list.editFormationMasterDialog.functions.formationId);
 			} else {
