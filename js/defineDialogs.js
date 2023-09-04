@@ -855,8 +855,7 @@ window.addEventListener("load", function () {
 	<div id="mnalc-table"></div>`, [{ "content": "備考一括編集", "event": `Dialog.list.editMultipleRemarkDialog.functions.display('car',Array.from(document.querySelectorAll('.mnalc-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('car-id')}));`, "icon": "pen", "disabled": "disabled", "id": "mnalc-remarkall" }, { "content": "一括削除", "event": `Dialog.list.manageAllCarsDialog.functions.deleteCars(Array.from(document.querySelectorAll('.mnalc-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('car-id')}));`, "icon": "delete", "disabled": "disabled", "id": "mnalc-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllCarsDialog.off();`, "icon": "close" }], {
 		scrollTop: 0,
 		display: function () {
-			Dialog.list.manageAllCarsDialog.functions.searchQuery = "";
-			document.getElementById('mnalc-search-keyword').value = "";
+			document.getElementById('mnalc-search-keyword').value = Dialog.list.manageAllCarsDialog.functions.searchQuery;
 			Dialog.list.manageAllCarsDialog.functions.createTable();
 			Dialog.list.manageAllCarsDialog.on();
 		},
@@ -930,8 +929,7 @@ window.addEventListener("load", function () {
 	<div id="mnalf-table"></div>`, [{ "content": "備考一括編集", "event": `Dialog.list.editMultipleRemarkDialog.functions.display('formation',Array.from(document.querySelectorAll('.mnalf-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('formation-id')}));`, "icon": "pen", "disabled": "disabled", "id": "mnalf-remarkall" }, { "content": "一括削除", "event": `Dialog.list.manageAllFormationsDialog.functions.deleteFormations(Array.from(document.querySelectorAll('.mnalf-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('formation-id')}));`, "icon": "delete", "disabled": "disabled", "id": "mnalf-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllFormationsDialog.off();`, "icon": "close" }], {
 		scrollTop: 0,
 		display: function () {
-			Dialog.list.manageAllFormationsDialog.functions.searchQuery = "";
-			document.getElementById('mnalf-search-keyword').value = "";
+			document.getElementById('mnalf-search-keyword').value = Dialog.list.manageAllFormationsDialog.functions.searchQuery;
 			Dialog.list.manageAllFormationsDialog.functions.createTable();
 			Dialog.list.manageAllFormationsDialog.on();
 		},
