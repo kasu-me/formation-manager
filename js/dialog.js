@@ -44,6 +44,7 @@ class Dialog {
 			});
 		}
 		this.mainMessage = document.createElement("div");
+		this.mainMessage.classList.add("dialog-main-message");
 		this.buttons = document.createElement("p");
 		this.buttons.classList.add("dialog-foot-buttons-container");
 		this.setContents(message, buttons);

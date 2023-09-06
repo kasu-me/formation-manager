@@ -22,7 +22,7 @@
 	left: 0;
 	visibility: visible;
 	background-color: #fff;
-	padding: 1.8em;
+	padding: 0;
 	min-width: 512px;
 	max-width: calc(100% - 6.0em);
 	max-height: 100%;
@@ -43,13 +43,27 @@
 	text-align: left;
 }
 
+.dialog-area .dialog-content>div.dialog-main-message,
+.dialog-area .dialog-content>p.dialog-foot-buttons-container {
+	padding: 0 1.8em;
+}
+
+.dialog-area .dialog-content>p.dialog-foot-buttons-container {
+	padding-bottom: 1.8em;
+}
+
 .dialog-area .dialog-content>p.dialog-title {
 	margin-top: 0;
-	margin-bottom: 1.5em;
+	margin-bottom: 1.75em;
 	font-weight: bold;
 	font-size: 1.1em;
 	user-select: none;
 	cursor: grab;
+	border-bottom: 2px solid #000;
+	padding: 1.8em;
+	padding-top: 0.85em;
+	padding-bottom: 0.75em;
+	line-height: 1em;
 }
 
 .dialog-area .dialog-content>p.dialog-title.grabbed {
