@@ -118,6 +118,7 @@ function loadListsFromJSON(json) {
 		maxYearMonth = new YearMonth(obj.maxYearMonth.y, obj.maxYearMonth.m);
 
 		setInputMaxAndMin();
+		Dialog.offAll();
 		reflesh();
 		loadJSONLoopCount = 0;
 		return true;
