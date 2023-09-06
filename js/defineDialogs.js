@@ -404,6 +404,7 @@ window.addEventListener("load", function () {
 				Dialog.list.createSeriesDialog.functions.tentativeSeries = null;
 			}
 			Dialog.list.createSeriesDialog.on();
+			document.getElementById("crsr-series-name").focus();
 		},
 		createFormationTemplate: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
