@@ -913,7 +913,7 @@ window.addEventListener("load", function () {
 		searchQuery: "",
 		isFiltered: function (car) {
 			let isShowingUselessCar = document.getElementById("mnalc-only-useless").checked;
-			if ((isShowingUselessCar && !(car.isDropped && car.droppedOn.serial == car.manufacturedOn.serial)) || (Dialog.list.manageAllCarsDialog.functions.searchQuery != "" && car.number.indexOf(Dialog.list.manageAllCarsDialog.functions.searchQuery) == -1)) {
+			if ((isShowingUselessCar && !(car.isDropped && car.droppedOn.serial == car.manufacturedOn.serial)) || (Dialog.list.manageAllCarsDialog.functions.searchQuery != "" && car.number.search(new RegExp(Dialog.list.manageAllCarsDialog.functions.searchQuery)) == -1)) {
 				return false;
 			} else {
 				return true;
@@ -982,7 +982,7 @@ window.addEventListener("load", function () {
 		searchQuery: "",
 		isFiltered: function (formation) {
 			let isShowingUselessCar = document.getElementById("mnalf-only-useless").checked;
-			if ((isShowingUselessCar && (!(formation.isTerminated && formation.terminatedOn.serial == formation.formatedOn.serial) && !(formation.cars.length == 0))) || (Dialog.list.manageAllFormationsDialog.functions.searchQuery != "" && formation.name.indexOf(Dialog.list.manageAllFormationsDialog.functions.searchQuery) == -1)) {
+			if ((isShowingUselessCar && (!(formation.isTerminated && formation.terminatedOn.serial == formation.formatedOn.serial) && !(formation.cars.length == 0))) || (Dialog.list.manageAllFormationsDialog.functions.searchQuery != "" && formation.name.search(new RegExp(Dialog.list.manageAllFormationsDialog.functions.searchQuery)) == -1)) {
 				return false;
 			} else {
 				return true;
