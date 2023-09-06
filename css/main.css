@@ -262,13 +262,18 @@ p.car-name button {
 }
 
 /* 各種ダイアログ */
-#seriesDispDialog td.formation-name.hidden {
-	color: #ccc;
+#seriesDispDialog .table-container,
+#formationTemplatesDialog .table-container {
+	border: 2px solid var(--formation-table-main-border);
 }
 
-label {
-	user-select: none;
-	cursor: pointer;
+#seriesDispDialog .table-container table,
+#formationTemplatesDialog .table-container table {
+	border: none;
+}
+
+#seriesDispDialog td.formation-name.hidden {
+	color: #ccc;
 }
 
 #seriesDispDialog label.mku-checkbox-container {
