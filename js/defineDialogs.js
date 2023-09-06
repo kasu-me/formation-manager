@@ -758,20 +758,26 @@ window.addEventListener("load", function () {
 	}, true);
 
 	//編成内車両の入れ替え:fmsh
-	new Dialog("formationShuffleDialog", "編成内車両の入れ替え", `<div id="fmsh-main"></div>`, [{ "content": "確定", "event": `Dialog.list.formationShuffleDialog.functions.shuffleFormation()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.formationShuffleDialog.off();Dialog.list.formationDetealDialog.functions.display(Dialog.list.formationShuffleDialog.functions.formationId)`, "icon": "close" }], {
+	new Dialog("formationShuffleDialog", "編成内車両の入れ替え", `<div id="fmsh-main"></div><hr style="margin: 2em auto;"><div id="fmsh-not-formated-cars-table"></div>`, [{ "content": "確定", "event": `Dialog.list.formationShuffleDialog.functions.shuffleFormation()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.formationShuffleDialog.off();Dialog.list.formationDetealDialog.functions.display(Dialog.list.formationShuffleDialog.functions.formationId)`, "icon": "close" }], {
 		formationId: 0,
 		tentativeFormation: new Formation(),
+		tentativeNotFormatedCarIds: [],
 		display: function (x) {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.formationDetealDialog.isActive) {
 				Dialog.list.formationShuffleDialog.functions.formationId = x;
 				let tmpFormation = AllFormations.formationsList[x];
 				Dialog.list.formationShuffleDialog.functions.tentativeFormation = new Formation(tmpFormation.seriesId, tmpFormation.name, [...tmpFormation.cars], tmpFormation.belongsTo, now, tmpFormation.remark);
+				Dialog.list.formationShuffleDialog.functions.tentativeNotFormatedCarIds = listUpNotFormatedCarIds();
 				Dialog.list.formationShuffleDialog.functions.reflesh();
 				Dialog.list.formationShuffleDialog.on();
 			}
 		},
 		reflesh: function () {
+			Dialog.list.formationShuffleDialog.functions.createTentativeFormationTable();
+			Dialog.list.formationShuffleDialog.functions.createNotFormatedCarsTable();
+		},
+		createTentativeFormationTable: function () {
 			let table = new Table();
 			table.setAttributes({ "class": "vertical-stripes not-formated-car-table" });
 			table.setSubtitle("ドラッグで車両順序を変更");
@@ -791,6 +797,21 @@ window.addEventListener("load", function () {
 					Dialog.list.formationShuffleDialog.functions.reflesh();
 				}
 			});
+		},
+		createNotFormatedCarsTable: function () {
+			let table = new Table();
+			table.setAttributes({ "class": "vertical-stripes not-formated-car-table" });
+			table.setSubtitle("編成に所属していない車両一覧");
+			let maxCellCount = 10;
+			let carIds = Dialog.list.formationShuffleDialog.functions.tentativeNotFormatedCarIds;
+			for (let id of carIds) {
+				if (table.cellCountOfLastRow % maxCellCount == 0) {
+					table.addRow();
+				}
+				table.addCell(`<a href="javascript:void(0)" onclick="if(Dialog.list.formationShuffleDialog.functions.tentativeFormation.cars.indexOf(${id})==-1){Dialog.list.formationShuffleDialog.functions.tentativeFormation.cars.push(${id});Dialog.list.formationShuffleDialog.functions.tentativeNotFormatedCarIds.splice(Dialog.list.formationShuffleDialog.functions.tentativeNotFormatedCarIds.indexOf(${id}),1)}Dialog.list.formationShuffleDialog.functions.reflesh()">${AllCars.carsList[id].number}</a>`, { "class": "car", "id": `fmsh-car-${id}` });
+			}
+			table.addBlankCellToRowRightEnd();
+			document.getElementById("fmsh-not-formated-cars-table").innerHTML = table.generateTable();
 		},
 		shuffleFormation: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
@@ -815,6 +836,7 @@ window.addEventListener("load", function () {
 				let cars = Dialog.list.formationShuffleDialog.functions.tentativeFormation.cars;
 				if (cars.includes(carId)) {
 					cars.splice(cars.indexOf(carId), 1);
+					Dialog.list.formationShuffleDialog.functions.tentativeNotFormatedCarIds.push(carId);
 					Dialog.list.formationShuffleDialog.functions.reflesh();
 				}
 			}
