@@ -779,7 +779,7 @@ window.addEventListener("load", function () {
 				if (table.cellCountOfLastRow % maxCellCount == 0) {
 					table.addRow();
 				}
-				table.addCell(`<span>${AllCars.carsList[id].number}</span>`, { "class": "car preview-car", "id": `fmsh-car-${id}` });
+				table.addCell(`<span>${AllCars.carsList[id].number}</span><p><a href="javascript:void(0)" onclick="Dialog.list.formationShuffleDialog.functions.removeCar(${id})" class="lsf preview-delete-button" title="削除">delete</a></p>`, { "class": "car preview-car", "id": `fmsh-car-${id}` });
 			}
 			table.addBlankCellToRowRightEnd();
 			document.getElementById("fmsh-main").innerHTML = table.generateTable();
@@ -806,6 +806,16 @@ window.addEventListener("load", function () {
 				Dialog.list.formationShuffleDialog.off();
 				reflesh();
 				Dialog.list.formationDetealDialog.functions.display(newFormationId);
+			}
+		},
+		removeCar: function (carId) {
+			//親ダイアログが表示されている状態以外での実行を禁止
+			if (Dialog.list.formationShuffleDialog.isActive) {
+				let cars = Dialog.list.formationShuffleDialog.functions.tentativeFormation.cars;
+				if (cars.includes(carId)) {
+					cars.splice(cars.indexOf(carId), 1);
+					Dialog.list.formationShuffleDialog.functions.reflesh();
+				}
 			}
 		}
 	}, true);
