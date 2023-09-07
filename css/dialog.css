@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+body:has(.dialog-area.on) {
+	overflow-y: hidden;
+}
+
 .dialog-area {
 	position: fixed;
 	top: 0;
