@@ -904,7 +904,35 @@ window.addEventListener("load", function () {
 
 	//全般設定:gnst
 	new Dialog("generalSettingDialog", "全般設定", `<div class="mku-tab-container" id="setting-tab">
-		<div class="mku-tab-content" tab-title="全体色">
+		<div class="mku-tab-content" tab-title="年月上下限">
+			<table class="input-area">
+				<tr>
+					<td>年月下限</td>
+					<td><span class="time-inputs"><input id="gnst-min-y" class="yearmonth-y" type="number">年<input id="gnst-min-m" class="yearmonth-m" type="number">月</span></td>
+				</tr>
+				<tr>
+					<td>年月上限</td>
+					<td><span class="time-inputs"><input id="gnst-max-y" class="yearmonth-y" type="number">年<input id="gnst-max-m" class="yearmonth-m" type="number">月</span></td>
+				</tr>
+			</table>
+		</div>
+		<div class="mku-tab-content" tab-title="自動セーブ">
+			<table class="input-area">
+				<tr>
+					<td>実施する</td>
+					<td><label for="gnst-autosave-enabled" class="mku-checkbox-container"><input id="gnst-autosave-enabled" type="checkbox"></label></td>
+				</tr>
+				<tr>
+				</tr>
+				<tr>
+					<td>実施間隔</td>
+					<td><input><p>※アプリが重い場合などこの数値を上げてください</p></td>
+				</tr>
+				<tr>
+				</tr>
+			</table>
+		</div>
+		<div class="mku-tab-content" tab-title="色テーマ">
 			<div class="color-container">
 				<div id="gnst-color0" class="color-preview"></div>
 				<div id="gnst-color1" class="color-preview"></div>
@@ -916,7 +944,7 @@ window.addEventListener("load", function () {
 			</div>
 			<input type="color" id="gnst-colorpicker" oninput="Dialog.list.generalSettingDialog.functions.changeColor()" value="#5c3d7e"><button onclick="document.getElementById('gnst-colorpicker').value='#5c3d7e';Dialog.list.generalSettingDialog.functions.changeColor()">リセット</button>
 		</div>
-	</div>`, [{ "content": "閉じる", "event": `Dialog.list.generalSettingDialog.off(); `, "icon": "close" }], {
+	</div>`, [{ "content": "適用", "event": `Dialog.list.generalSettingDialog.off(); `, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.generalSettingDialog.off(); `, "icon": "close" }], {
 		cssProperties: {
 			"--formation-table-main-border": "#5c3d7e",
 			"--sub-light-color": "#dcccee",
@@ -939,14 +967,14 @@ window.addEventListener("load", function () {
 			for (let cssPropertyName in cssProperties) {
 				const convertedColor = Color.convertColorHSL(color, new Color(cssProperties["--formation-table-main-border"]), new Color(cssProperties[cssPropertyName]));
 				colorPreviews[i].style.backgroundColor = convertedColor;
-				root.style.setProperty(cssPropertyName, convertedColor);
+				//root.style.setProperty(cssPropertyName, convertedColor);
 				i++;
 			}
 		}
 	}, true);
 
 	//年月上下限を設定:stym
-	new Dialog("settingYearMonthDialog", "年月上下限の設定", `< table class="input-area" > <tr><td>年月下限</td><td><span class="time-inputs"><input id="stym-min-y" class="yearmonth-y" type="number">年<input id="stym-min-m" class="yearmonth-m" type="number">月</span></td></tr><tr><td>年月上限</td><td><span class="time-inputs"><input id="stym-max-y" class="yearmonth-y" type="number">年<input id="stym-max-m" class="yearmonth-m" type="number">月</span></td></tr></table>`, [{ "content": "設定", "event": `Dialog.list.settingYearMonthDialog.functions.updateYearMonthLimitation()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.settingYearMonthDialog.off();`, "icon": "close" }], {
+	new Dialog("settingYearMonthDialog", "年月上下限の設定", `<table class="input-area"><tr><td>年月下限</td><td><span class="time-inputs"><input id="stym-min-y" class="yearmonth-y" type="number">年<input id="stym-min-m" class="yearmonth-m" type="number">月</span></td></tr><tr><td>年月上限</td><td><span class="time-inputs"><input id="stym-max-y" class="yearmonth-y" type="number">年<input id="stym-max-m" class="yearmonth-m" type="number">月</span></td></tr></table>`, [{ "content": "設定", "event": `Dialog.list.settingYearMonthDialog.functions.updateYearMonthLimitation()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.settingYearMonthDialog.off();`, "icon": "close" }], {
 		display: function () {
 			document.getElementById("stym-max-y").value = maxYearMonth.year;
 			document.getElementById("stym-max-m").value = maxYearMonth.month;
