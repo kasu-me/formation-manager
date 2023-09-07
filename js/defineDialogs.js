@@ -10,6 +10,7 @@ new Message("MA008", "データを読み込めませんでした。データが�
 new Message("MA009", "処理エラーです。");
 new Message("MA010", "車両番号の重複があります。");
 new Message("MA011", "同じ車両が複数の編成に組成されています。");
+new Message("MA012", "車両番号の一般式が不正です。入力方法が分からない場合はヘルプを確認してください。");
 //Confirm Message
 new Message("MC001", "この操作を実行すると現在のデータはクリアされます。本当に読み込んでよろしいですか？");
 new Message("MC002", "${formationName}を${now}付で編成解除します。");
@@ -377,20 +378,26 @@ window.addEventListener("load", function () {
 		},
 		addCarNumber: function () {
 			if (Dialog.list.createFormationTemplateDialog.functions.editingCarIndex >= 0) {
-				//編集モードの場合
-				Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.addCarNumberTo(document.getElementById("cref-carnumber").value, Dialog.list.createFormationTemplateDialog.functions.editingCarIndex);
-				Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.deleteCarNumber(Dialog.list.createFormationTemplateDialog.functions.editingCarIndex + 1);
-				//編集モード解除
-				document.getElementById("cref-carnumber").value = "";
-				Dialog.list.createFormationTemplateDialog.functions.exitEditMode();
-				Dialog.list.createFormationTemplateDialog.functions.reflesh();
+				try {
+					//編集モードの場合
+					Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.addCarNumberTo(document.getElementById("cref-carnumber").value, Dialog.list.createFormationTemplateDialog.functions.editingCarIndex);
+					Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.deleteCarNumber(Dialog.list.createFormationTemplateDialog.functions.editingCarIndex + 1);
+					//編集モード解除
+					document.getElementById("cref-carnumber").value = "";
+					Dialog.list.createFormationTemplateDialog.functions.exitEditMode();
+					Dialog.list.createFormationTemplateDialog.functions.reflesh();
+				} catch (e) {
+					Dialog.list.alertDialog.functions.display(Message.list["MA012"]);
+				}
 			} else {
 				//編集モードでない場合
 				try {
 					Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.addCarNumber(document.getElementById("cref-carnumber").value);
 					Dialog.list.createFormationTemplateDialog.functions.reflesh();
 					document.getElementById("cref-carnumber").value = "";
-				} catch (e) { }
+				} catch (e) {
+					Dialog.list.alertDialog.functions.display(Message.list["MA012"]);
+				}
 			}
 			document.getElementById("cref-carnumber").focus();
 		},
