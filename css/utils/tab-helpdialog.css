@@ -6,6 +6,10 @@
 	overflow: hidden;
 }
 
+#helpDialog>div.dialog-main-message {
+	max-height: unset;
+}
+
 #helpDialog>p.dialog-title {
 	margin-bottom: 0;
 }

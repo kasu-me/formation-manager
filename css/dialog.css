@@ -74,6 +74,11 @@ body:has(.dialog-area.on) {
 	cursor: grabbing;
 }
 
+.dialog-area .dialog-content>div.dialog-main-message {
+	max-height: calc(100vh - 25em);
+	overflow-y: auto;
+}
+
 .dialog-area .dialog-content>p.dialog-foot-buttons-container {
 	margin-top: 1.5em;
 	margin-bottom: 0;
