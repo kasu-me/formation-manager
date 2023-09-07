@@ -303,6 +303,16 @@ function loadAutoSavedData() {
 	loadListsFromJSON(getAutoSavedData());
 }
 
+//設定
+function setPanelDisplayMode(isGridMode) {
+	settings.isDisplayGridMode = isGridMode;
+	if (isGridMode) {
+		document.getElementById("formation-table-container").classList.add("grid-mode");
+	} else {
+		document.getElementById("formation-table-container").classList.remove("grid-mode");
+	}
+}
+
 //現在年月の操作
 function updateNowYearMonth(ym) {
 	now = ym;

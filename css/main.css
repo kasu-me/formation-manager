@@ -24,9 +24,39 @@ div#header div.button-group div.button-group-title {
 	margin-bottom: 0.1em;
 }
 
+/* ソート等 */
+p#sort-controllers-container {
+	margin: 0;
+	padding: 0 0.8em;
+}
+
+p#sort-controllers-container span#panel-display-mode-controller span {
+	display: inline;
+	vertical-align: top;
+}
+
+p#sort-controllers-container span#panel-display-mode-controller span a {
+	font-size: 150%;
+	user-select: none;
+}
+
+p#sort-controllers-container span#panel-display-mode-controller span a:first-child {
+	border-right: 1px solid #bbb;
+	padding-right: 0.4em;
+	margin-right: 0.4em;
+}
+
+p#sort-controllers-container:has(+div#formation-table-container.grid-mode) span#panel-display-mode-controller span a:last-child,
+p#sort-controllers-container:not(:has(+div#formation-table-container.grid-mode)) span#panel-display-mode-controller span a:first-child {
+	pointer-events: none;
+	color: #000;
+	font-weight: bold;
+}
+
 /* メイン編成表 */
 div#formation-table-container {
 	margin: 0.8em;
+	padding-bottom: 2em;
 }
 
 div#formation-table-container div.generated-table-container {
@@ -37,6 +67,7 @@ div#formation-table-container p.table-title {
 	background-color: var(--formation-table-main-border);
 	padding: 0.25em;
 	color: #fff;
+	margin-top: 0;
 }
 
 div#formation-table-container p.table-subtitle {
@@ -47,6 +78,17 @@ div#formation-table-container p.table-subtitle {
 
 div#formation-table-container div.generated-table-headers {
 	margin-bottom: 0.5em;
+}
+
+/* グリッド表示モード */
+div#formation-table-container.grid-mode {
+	column-count: 2;
+	column-gap: 1.6em;
+}
+
+div#formation-table-container.grid-mode div.generated-table-container {
+	page-break-inside: avoid;
+	break-inside: avoid;
 }
 
 /* 交互に色を付けるやつ */
@@ -229,9 +271,15 @@ div[id$="-opening"] {
 }
 
 /* 車両詳細および編成詳細ダイアログ内の車両番号･編成番号 */
+.dialog-main-message:has(#fmdt-main),
+.dialog-main-message:has(#cardt-main) {
+	margin-top: -0.8em;
+}
+
 p:has(#cardt-car-number),
 p:has(#fmdt-formation-number) {
-	margin-top: -0.8em;
+	vertical-align: bottom;
+	display: inline;
 }
 
 #cardt-car-number,
