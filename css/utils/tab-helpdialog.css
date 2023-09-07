@@ -1,4 +1,5 @@
-#helpDialog.dialog-content {
+#helpDialog.dialog-content,
+#generalSettingDialog.dialog-content {
 	max-width: 100%;
 	width: 768px;
 	top: 2.5em;
@@ -6,11 +7,13 @@
 	overflow: hidden;
 }
 
-#helpDialog>div.dialog-main-message {
+#helpDialog>div.dialog-main-message,
+#generalSettingDialog.dialog-content>div.dialog-main-message {
 	max-height: unset;
 }
 
-#helpDialog>p.dialog-title {
+#helpDialog>p.dialog-title,
+#generalSettingDialog>p.dialog-title {
 	margin-bottom: 0;
 }
 
@@ -31,7 +34,7 @@
 }
 
 .mku-tab-container .mku-tab-label-container label:active {
-	background-color: #6c4e86;
+	background-color: var(--button-face-active);
 }
 
 .mku-tab-container .mku-tab-label-container label.on {

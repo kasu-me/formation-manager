@@ -3,8 +3,12 @@
 /* 色 */
 :root {
 	--formation-table-main-border: #5c3d7e;
+	--sub-light-color: #dcccee;
 	--button-face: #4c2d5e;
 	--button-face-hover: #8c6eae;
+	--button-face-active: #6c4e86;
+	--table-alternate-color-1: #fdfbff;
+	--table-alternate-color-2: #f7f0ff;
 	--selection-hover-highlight: #c7def5;
 	--selection-highlight: #275f97;
 	--input-focus: #3498db;
@@ -76,7 +80,7 @@ button:active,
 button:focus,
 .button:active,
 .button:focus {
-	background-color: #6c4e86;
+	background-color: var(--button-face-active);
 }
 
 button:disabled,
@@ -292,7 +296,7 @@ input[type="range"]::-webkit-slider-thumb {
 	width: 20px;
 	height: 20px;
 	border-radius: 50%;
-	background-color: #4c2d5e;
+	background-color: var(--button-face);
 	cursor: pointer;
 	transform: translateY(-5px);
 }
@@ -302,7 +306,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
 }
 
 input[type="range"]::-webkit-slider-thumb:active {
-	background-color: #6c4e86;
+	background-color: var(--button-face-active);
 }
 
 /* スライダーのトラックの進行状況 */
@@ -310,7 +314,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 	width: 100%;
 	height: 10px;
 	border-radius: 5px;
-	background-color: #dcccee;
+	background-color: var(--sub-light-color);
 }
 
 /* スライダーの値のハイライト */
@@ -318,7 +322,7 @@ input[type="range"]::-moz-range-thumb {
 	width: 20px;
 	height: 20px;
 	border-radius: 50%;
-	background-color: #4c2d5e;
+	background-color: var(--button-face);
 	cursor: pointer;
 }
 

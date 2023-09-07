@@ -71,7 +71,7 @@ div#formation-table-container p.table-title {
 }
 
 div#formation-table-container p.table-subtitle {
-	background-color: #dcccee;
+	background-color: var(--sub-light-color);
 	padding: 0.25em;
 	color: #000;
 }
@@ -96,14 +96,14 @@ table.horizontal-stripes tr:nth-child(2n+1),
 table.vertical-stripes tr td:nth-child(2n+1),
 table.vertical-stripes.not-formated-car-table tr:nth-child(2n) td:nth-child(2n),
 table.formation-view tr:nth-child(2) td:nth-child(2n+1) {
-	background-color: #f7f0ff;
+	background-color: var(--table-alternate-color-2);
 }
 
 table.horizontal-stripes tr:nth-child(2n),
 table.vertical-stripes tr td:nth-child(2n),
 table.vertical-stripes.not-formated-car-table tr:nth-child(2n) td:nth-child(2n+1),
 table.formation-view tr:nth-child(2) td:nth-child(2n) {
-	background-color: #fdfbff;
+	background-color: var(--table-alternate-color-1);
 }
 
 div#formation-table-container table.formation-table tr td {
@@ -555,6 +555,18 @@ table.management-dialog-objects-list tr:has(input:checked) td {
 
 /* 管理画面のリストここまで */
 
+/* 設定画面 */
+
+#generalSettingDialog .color-container {
+	display: flex;
+}
+
+#generalSettingDialog .color-preview {
+	width: 50px;
+	height: 50px;
+}
+
+/* 設定画面ここまで */
 
 /* 確認･警告･情報ダイアログ */
 #confirmDialog,

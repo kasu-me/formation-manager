@@ -902,8 +902,51 @@ window.addEventListener("load", function () {
 
 	//以下、設定系
 
+	//全般設定:gnst
+	new Dialog("generalSettingDialog", "全般設定", `<div class="mku-tab-container" id="setting-tab">
+		<div class="mku-tab-content" tab-title="全体色">
+			<div class="color-container">
+				<div id="gnst-color0" class="color-preview"></div>
+				<div id="gnst-color1" class="color-preview"></div>
+				<div id="gnst-color2" class="color-preview"></div>
+				<div id="gnst-color3" class="color-preview"></div>
+				<div id="gnst-color4" class="color-preview"></div>
+				<div id="gnst-color5" class="color-preview"></div>
+				<div id="gnst-color6" class="color-preview"></div>
+			</div>
+			<input type="color" id="gnst-colorpicker" oninput="Dialog.list.generalSettingDialog.functions.changeColor()" value="#5c3d7e"><button onclick="document.getElementById('gnst-colorpicker').value='#5c3d7e';Dialog.list.generalSettingDialog.functions.changeColor()">リセット</button>
+		</div>
+	</div>`, [{ "content": "閉じる", "event": `Dialog.list.generalSettingDialog.off(); `, "icon": "close" }], {
+		cssProperties: {
+			"--formation-table-main-border": "#5c3d7e",
+			"--sub-light-color": "#dcccee",
+			"--button-face": "#4c2d5e",
+			"--button-face-hover": "#8c6eae",
+			"--button-face-active": "#6c4e86",
+			"--table-alternate-color-1": "#fdfbff",
+			"--table-alternate-color-2": "#f7f0ff",
+		},
+		display: function () {
+			Dialog.list.generalSettingDialog.functions.changeColor();
+			Dialog.list.generalSettingDialog.on();
+		},
+		changeColor: function () {
+			let cssProperties = Dialog.list.generalSettingDialog.functions.cssProperties;
+			const color = new Color(document.getElementById("gnst-colorpicker").value);
+			const colorPreviews = document.querySelectorAll(".color-preview");
+			const root = document.querySelector(":root");
+			let i = 0;
+			for (let cssPropertyName in cssProperties) {
+				const convertedColor = Color.convertColorHSL(color, new Color(cssProperties["--formation-table-main-border"]), new Color(cssProperties[cssPropertyName]));
+				colorPreviews[i].style.backgroundColor = convertedColor;
+				root.style.setProperty(cssPropertyName, convertedColor);
+				i++;
+			}
+		}
+	}, true);
+
 	//年月上下限を設定:stym
-	new Dialog("settingYearMonthDialog", "年月上下限の設定", `<table class="input-area"><tr><td>年月下限</td><td><span class="time-inputs"><input id="stym-min-y" class="yearmonth-y" type="number">年<input id="stym-min-m" class="yearmonth-m" type="number">月</span></td></tr><tr><td>年月上限</td><td><span class="time-inputs"><input id="stym-max-y" class="yearmonth-y" type="number">年<input id="stym-max-m" class="yearmonth-m" type="number">月</span></td></tr></table>`, [{ "content": "設定", "event": `Dialog.list.settingYearMonthDialog.functions.updateYearMonthLimitation()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.settingYearMonthDialog.off();`, "icon": "close" }], {
+	new Dialog("settingYearMonthDialog", "年月上下限の設定", `< table class="input-area" > <tr><td>年月下限</td><td><span class="time-inputs"><input id="stym-min-y" class="yearmonth-y" type="number">年<input id="stym-min-m" class="yearmonth-m" type="number">月</span></td></tr><tr><td>年月上限</td><td><span class="time-inputs"><input id="stym-max-y" class="yearmonth-y" type="number">年<input id="stym-max-m" class="yearmonth-m" type="number">月</span></td></tr></table>`, [{ "content": "設定", "event": `Dialog.list.settingYearMonthDialog.functions.updateYearMonthLimitation()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.settingYearMonthDialog.off();`, "icon": "close" }], {
 		display: function () {
 			document.getElementById("stym-max-y").value = maxYearMonth.year;
 			document.getElementById("stym-max-m").value = maxYearMonth.month;
@@ -924,10 +967,10 @@ window.addEventListener("load", function () {
 
 	//編成表マスタ管理:mnfd
 	new Dialog("formationDataManagementDialog", "編成表マスタ管理", `<ul class="dialog-buttons-list">
-		<li><button onclick="Dialog.list.manageAllFormationsDialog.functions.display()" class="lsf-icon dialog-main-button" icon="list">全編成マスタデータ管理</button></li>
-		<li><button onclick="Dialog.list.manageAllCarsDialog.functions.display()" class="lsf-icon dialog-main-button" icon="list">全車両マスタデータ管理</button></li>
-		<li><button onclick="Dialog.list.editJSONDialog.functions.display()" class="lsf-icon dialog-main-button" icon="pen">JSON直接編集</button></li>
-	</ul>`, [{ "content": "リセット", "event": `Dialog.list.formationDataManagementDialog.functions.clear();`, "icon": "clear" }, { "content": "終了", "event": `Dialog.list.formationDataManagementDialog.off();`, "icon": "close" }], {
+			<li><button onclick="Dialog.list.manageAllFormationsDialog.functions.display()" class="lsf-icon dialog-main-button" icon="list">全編成マスタデータ管理</button></li>
+			<li><button onclick="Dialog.list.manageAllCarsDialog.functions.display()" class="lsf-icon dialog-main-button" icon="list">全車両マスタデータ管理</button></li>
+			<li><button onclick="Dialog.list.editJSONDialog.functions.display()" class="lsf-icon dialog-main-button" icon="pen">JSON直接編集</button></li>
+		</ul>`, [{ "content": "リセット", "event": `Dialog.list.formationDataManagementDialog.functions.clear();`, "icon": "clear" }, { "content": "終了", "event": `Dialog.list.formationDataManagementDialog.off();`, "icon": "close" }], {
 		clear: function () {
 			Dialog.list.confirmDialog.functions.display(Message.list["MC009"], () => {
 				resetAllLists();
@@ -939,10 +982,10 @@ window.addEventListener("load", function () {
 
 	//全車両管理:mnalc
 	new Dialog("manageAllCarsDialog", "全車両マスタデータ管理", `<p class="management-dialog-searchbox-container">
-		<span><input placeholder="車両番号" id="mnalc-search-keyword" onkeypress="if(event.keyCode==13){document.getElementById('mnalc-search-button').click();}"><button class="lsf-icon" icon="search" onclick="Dialog.list.manageAllCarsDialog.functions.searchQuery=document.getElementById('mnalc-search-keyword').value;Dialog.list.manageAllCarsDialog.functions.createTable()" id="mnalc-search-button">検索</button></span><span><label class="button lsf-icon mku-balloon" mku-balloon-message="製造と同時に廃車されているなど、削除しても問題のない車両のみを抽出して表示します。"  icon="eye"><input type="checkbox" id="mnalc-only-useless" onchange="Dialog.list.manageAllCarsDialog.functions.createTable()">無用車両のみ表示</label></span>
-	</p>
-	<p id="mnalc-search-status"></p>
-	<div id="mnalc-table"></div>`, [{ "content": "備考一括編集", "event": `Dialog.list.editMultipleRemarkDialog.functions.display('car',Array.from(document.querySelectorAll('.mnalc-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('car-id')}));`, "icon": "pen", "disabled": "disabled", "id": "mnalc-remarkall" }, { "content": "一括削除", "event": `Dialog.list.manageAllCarsDialog.functions.deleteCars(Array.from(document.querySelectorAll('.mnalc-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('car-id')}));`, "icon": "delete", "disabled": "disabled", "id": "mnalc-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllCarsDialog.off();`, "icon": "close" }], {
+			<span><input placeholder="車両番号" id="mnalc-search-keyword" onkeypress="if(event.keyCode==13){document.getElementById('mnalc-search-button').click();}"><button class="lsf-icon" icon="search" onclick="Dialog.list.manageAllCarsDialog.functions.searchQuery=document.getElementById('mnalc-search-keyword').value;Dialog.list.manageAllCarsDialog.functions.createTable()" id="mnalc-search-button">検索</button></span><span><label class="button lsf-icon mku-balloon" mku-balloon-message="製造と同時に廃車されているなど、削除しても問題のない車両のみを抽出して表示します。" icon="eye"><input type="checkbox" id="mnalc-only-useless" onchange="Dialog.list.manageAllCarsDialog.functions.createTable()">無用車両のみ表示</label></span>
+		</p>
+		<p id="mnalc-search-status"></p>
+		<div id="mnalc-table"></div>`, [{ "content": "備考一括編集", "event": `Dialog.list.editMultipleRemarkDialog.functions.display('car',Array.from(document.querySelectorAll('.mnalc-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('car-id')}));`, "icon": "pen", "disabled": "disabled", "id": "mnalc-remarkall" }, { "content": "一括削除", "event": `Dialog.list.manageAllCarsDialog.functions.deleteCars(Array.from(document.querySelectorAll('.mnalc-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('car-id')}));`, "icon": "delete", "disabled": "disabled", "id": "mnalc-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllCarsDialog.off();`, "icon": "close" }], {
 		scrollTop: 0,
 		display: function () {
 			document.getElementById('mnalc-search-keyword').value = Dialog.list.manageAllCarsDialog.functions.searchQuery;
@@ -1013,10 +1056,10 @@ window.addEventListener("load", function () {
 
 	//全編成管理:mnalf
 	new Dialog("manageAllFormationsDialog", "全編成マスタデータ管理", `<p class="management-dialog-searchbox-container">
-		<span><input placeholder="編成番号" id="mnalf-search-keyword" onkeypress="if(event.keyCode==13){document.getElementById('mnalf-search-button').click();}"><button class="lsf-icon" icon="search" onclick="Dialog.list.manageAllFormationsDialog.functions.searchQuery=document.getElementById('mnalf-search-keyword').value;Dialog.list.manageAllFormationsDialog.functions.createTable()" id="mnalf-search-button">検索</button></span><span><label class="button lsf-icon mku-balloon" mku-balloon-message="組成と同時に解除されているなど、削除しても問題のない編成のみを抽出して表示します。" icon="eye"><input type="checkbox" id="mnalf-only-useless" onchange="Dialog.list.manageAllFormationsDialog.functions.createTable()">無用編成のみ表示</label></span>
-	</p>
-	<p id="mnalf-search-status"></p>
-	<div id="mnalf-table"></div>`, [{ "content": "備考一括編集", "event": `Dialog.list.editMultipleRemarkDialog.functions.display('formation',Array.from(document.querySelectorAll('.mnalf-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('formation-id')}));`, "icon": "pen", "disabled": "disabled", "id": "mnalf-remarkall" }, { "content": "一括削除", "event": `Dialog.list.manageAllFormationsDialog.functions.deleteFormations(Array.from(document.querySelectorAll('.mnalf-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('formation-id')}));`, "icon": "delete", "disabled": "disabled", "id": "mnalf-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllFormationsDialog.off();`, "icon": "close" }], {
+					<span><input placeholder="編成番号" id="mnalf-search-keyword" onkeypress="if(event.keyCode==13){document.getElementById('mnalf-search-button').click();}"><button class="lsf-icon" icon="search" onclick="Dialog.list.manageAllFormationsDialog.functions.searchQuery=document.getElementById('mnalf-search-keyword').value;Dialog.list.manageAllFormationsDialog.functions.createTable()" id="mnalf-search-button">検索</button></span><span><label class="button lsf-icon mku-balloon" mku-balloon-message="組成と同時に解除されているなど、削除しても問題のない編成のみを抽出して表示します。" icon="eye"><input type="checkbox" id="mnalf-only-useless" onchange="Dialog.list.manageAllFormationsDialog.functions.createTable()">無用編成のみ表示</label></span>
+				</p>
+				<p id="mnalf-search-status"></p>
+				<div id="mnalf-table"></div>`, [{ "content": "備考一括編集", "event": `Dialog.list.editMultipleRemarkDialog.functions.display('formation',Array.from(document.querySelectorAll('.mnalf-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('formation-id')}));`, "icon": "pen", "disabled": "disabled", "id": "mnalf-remarkall" }, { "content": "一括削除", "event": `Dialog.list.manageAllFormationsDialog.functions.deleteFormations(Array.from(document.querySelectorAll('.mnalf-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('formation-id')}));`, "icon": "delete", "disabled": "disabled", "id": "mnalf-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllFormationsDialog.off();`, "icon": "close" }], {
 		scrollTop: 0,
 		display: function () {
 			document.getElementById('mnalf-search-keyword').value = Dialog.list.manageAllFormationsDialog.functions.searchQuery;
@@ -1170,23 +1213,23 @@ window.addEventListener("load", function () {
 
 	//車両マスタデータ編集:edmsc
 	new Dialog("editCarMasterDialog", "車両マスタデータ編集", `
-	<table class="input-area">
-		<tr><td>車両ID</td><td id="edmsc-car-id"></td></tr>
-		<tr><td>車両番号</td><td><input id="edmsc-car-number"></td></tr>
-		<tr><td>製造</td><td><span class="time-inputs"><input id="edmsc-manufactured-y" class="yearmonth-y" type="number">年<input id="edmsc-manufactured-m" class="yearmonth-m" type="number">月</span></td></tr>
-		<tr><td>廃車</td><td><span class="time-inputs"><input id="edmsc-dropped-y" class="yearmonth-y" type="number">年<input id="edmsc-dropped-m" class="yearmonth-m" type="number">月</span><label for="edmsc-car-isdropped" class="mku-checkbox-container inline"><input id="edmsc-car-isdropped" type="checkbox"></label></td></tr>
-		<tr><td>保存</td><td><label for="edmsc-car-isconserved" class="mku-checkbox-container inline"><input id="edmsc-car-isconserved" type="checkbox" disabled></label></td></tr>
-		<tr><td>備考</td><td><textarea id="edmsc-car-remark"></textarea></td></tr>
-		<tr><td>旧車番</td><td>
-			<table class="input-area">
-				<tr><td>対象</td><td><select id="edmsc-oldcar-indexes" onchange="Dialog.list.editCarMasterDialog.functions.updateOldNumbersSelectBox(Number(this.value))"></select></td></tr>
-				<tr><td>番号</td><td><input id="edmsc-oldcar-number" oninput="Dialog.list.editCarMasterDialog.functions.tentativeOldNumbers[Number(document.getElementById('edmsc-oldcar-indexes').value)].number=this.value"></td></tr>
-				<tr><td>改番年月</td><td><span class="time-inputs"><input id="edmsc-oldnumber-renumbered-y" class="yearmonth-y" type="number" oninput="Dialog.list.editCarMasterDialog.functions.tentativeOldNumbers[Number(document.getElementById('edmsc-oldcar-indexes').value)].year=Number(this.value);">年<input id="edmsc-oldnumber-renumbered-m" class="yearmonth-m" type="number" oninput="Dialog.list.editCarMasterDialog.functions.tentativeOldNumbers[Number(document.getElementById('edmsc-oldcar-indexes').value)].month=Number(this.value);">月</span></td></tr>
-			</table>
-		</td></tr>
-	</table>
-	<p class="element-bottom-of-input-area"><label for="edmsc-open-deteal-after-end" class="mku-checkbox-container small"><input id="edmsc-open-deteal-after-end" type="checkbox"></label><label for="edmsc-open-deteal-after-end">操作終了後車両詳細ウインドウを開く</label></p>
-	`, [{ "content": "詳細ウインドウ", "event": `Dialog.list.carDetealDialog.functions.display(Dialog.list.editCarMasterDialog.functions.carId)`, "icon": "search" }, { "content": "保存", "event": `Dialog.list.editCarMasterDialog.functions.save()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editCarMasterDialog.functions.finish();`, "icon": "close" }], {
+						<table class="input-area">
+							<tr><td>車両ID</td><td id="edmsc-car-id"></td></tr>
+							<tr><td>車両番号</td><td><input id="edmsc-car-number"></td></tr>
+							<tr><td>製造</td><td><span class="time-inputs"><input id="edmsc-manufactured-y" class="yearmonth-y" type="number">年<input id="edmsc-manufactured-m" class="yearmonth-m" type="number">月</span></td></tr>
+								<tr><td>廃車</td><td><span class="time-inputs"><input id="edmsc-dropped-y" class="yearmonth-y" type="number">年<input id="edmsc-dropped-m" class="yearmonth-m" type="number">月</span><label for="edmsc-car-isdropped" class="mku-checkbox-container inline"><input id="edmsc-car-isdropped" type="checkbox"></label></td></tr>
+									<tr><td>保存</td><td><label for="edmsc-car-isconserved" class="mku-checkbox-container inline"><input id="edmsc-car-isconserved" type="checkbox" disabled></label></td></tr>
+									<tr><td>備考</td><td><textarea id="edmsc-car-remark"></textarea></td></tr>
+									<tr><td>旧車番</td><td>
+										<table class="input-area">
+											<tr><td>対象</td><td><select id="edmsc-oldcar-indexes" onchange="Dialog.list.editCarMasterDialog.functions.updateOldNumbersSelectBox(Number(this.value))"></select></td></tr>
+											<tr><td>番号</td><td><input id="edmsc-oldcar-number" oninput="Dialog.list.editCarMasterDialog.functions.tentativeOldNumbers[Number(document.getElementById('edmsc-oldcar-indexes').value)].number=this.value"></td></tr>
+											<tr><td>改番年月</td><td><span class="time-inputs"><input id="edmsc-oldnumber-renumbered-y" class="yearmonth-y" type="number" oninput="Dialog.list.editCarMasterDialog.functions.tentativeOldNumbers[Number(document.getElementById('edmsc-oldcar-indexes').value)].year=Number(this.value);">年<input id="edmsc-oldnumber-renumbered-m" class="yearmonth-m" type="number" oninput="Dialog.list.editCarMasterDialog.functions.tentativeOldNumbers[Number(document.getElementById('edmsc-oldcar-indexes').value)].month=Number(this.value);">月</span></td></tr>
+											</table>
+											</td></tr>
+									</table>
+										<p class="element-bottom-of-input-area"><label for="edmsc-open-deteal-after-end" class="mku-checkbox-container small"><input id="edmsc-open-deteal-after-end" type="checkbox"></label><label for="edmsc-open-deteal-after-end">操作終了後車両詳細ウインドウを開く</label></p>
+										`, [{ "content": "詳細ウインドウ", "event": `Dialog.list.carDetealDialog.functions.display(Dialog.list.editCarMasterDialog.functions.carId)`, "icon": "search" }, { "content": "保存", "event": `Dialog.list.editCarMasterDialog.functions.save()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editCarMasterDialog.functions.finish();`, "icon": "close" }], {
 		carId: 0,
 		display: function (x) {
 			Dialog.list.editCarMasterDialog.functions.clearInputs();
@@ -1275,17 +1318,17 @@ window.addEventListener("load", function () {
 
 	//編成マスタデータ編集:edmsf
 	new Dialog("editFormationMasterDialog", "編成マスタデータ編集", `
-	<table class="input-area">
-		<tr><td>編成ID</td><td id="edmsf-formation-id"></td></tr>
-		<tr><td>形式</td><td><select id="edmsf-series"></select></td></tr>
-		<tr><td>編成名</td><td><input id="edmsf-formation-number"></td></tr>
-		<tr><td>所属車両</td><td><span id="edmsf-formation-car-count"></span>両<button onclick="Dialog.list.formationMasterCarsEditDialog.functions.display(Dialog.list.editFormationMasterDialog.functions.formationId)" id="edmsf-cars-edit-button" class="lsf-icon" icon="pen">編集</button></td></tr>
-		<tr><td>組成</td><td><span class="time-inputs"><input id="edmsf-formated-y" class="yearmonth-y" type="number">年<input id="edmsf-formated-m" class="yearmonth-m" type="number">月</span></td></tr>
-		<tr><td>解除</td><td><span class="time-inputs"><input id="edmsf-terminated-y" class="yearmonth-y" type="number">年<input id="edmsf-terminated-m" class="yearmonth-m" type="number">月</span><label for="edmsf-formation-isterminated" class="mku-checkbox-container inline"><input id="edmsf-formation-isterminated" type="checkbox"></label></td></tr>
-		<tr><td>備考</td><td><textarea id="edmsf-formation-remark"></textarea></td></tr>
-	</table>
-	<p class="element-bottom-of-input-area"><label for="edmsf-open-deteal-after-end" class="mku-checkbox-container small"><input id="edmsf-open-deteal-after-end" type="checkbox"></label><label for="edmsf-open-deteal-after-end">操作終了後編成詳細ウインドウを開く</label></p>
-	`, [{ "content": "詳細ウインドウ", "event": `Dialog.list.formationDetealDialog.functions.display(Dialog.list.editFormationMasterDialog.functions.formationId)`, "icon": "search" }, { "content": "保存", "event": `Dialog.list.editFormationMasterDialog.functions.save()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editFormationMasterDialog.functions.finish();`, "icon": "close" }], {
+										<table class="input-area">
+											<tr><td>編成ID</td><td id="edmsf-formation-id"></td></tr>
+											<tr><td>形式</td><td><select id="edmsf-series"></select></td></tr>
+											<tr><td>編成名</td><td><input id="edmsf-formation-number"></td></tr>
+											<tr><td>所属車両</td><td><span id="edmsf-formation-car-count"></span>両<button onclick="Dialog.list.formationMasterCarsEditDialog.functions.display(Dialog.list.editFormationMasterDialog.functions.formationId)" id="edmsf-cars-edit-button" class="lsf-icon" icon="pen">編集</button></td></tr>
+											<tr><td>組成</td><td><span class="time-inputs"><input id="edmsf-formated-y" class="yearmonth-y" type="number">年<input id="edmsf-formated-m" class="yearmonth-m" type="number">月</span></td></tr>
+												<tr><td>解除</td><td><span class="time-inputs"><input id="edmsf-terminated-y" class="yearmonth-y" type="number">年<input id="edmsf-terminated-m" class="yearmonth-m" type="number">月</span><label for="edmsf-formation-isterminated" class="mku-checkbox-container inline"><input id="edmsf-formation-isterminated" type="checkbox"></label></td></tr>
+													<tr><td>備考</td><td><textarea id="edmsf-formation-remark"></textarea></td></tr>
+												</table>
+													<p class="element-bottom-of-input-area"><label for="edmsf-open-deteal-after-end" class="mku-checkbox-container small"><input id="edmsf-open-deteal-after-end" type="checkbox"></label><label for="edmsf-open-deteal-after-end">操作終了後編成詳細ウインドウを開く</label></p>
+													`, [{ "content": "詳細ウインドウ", "event": `Dialog.list.formationDetealDialog.functions.display(Dialog.list.editFormationMasterDialog.functions.formationId)`, "icon": "search" }, { "content": "保存", "event": `Dialog.list.editFormationMasterDialog.functions.save()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editFormationMasterDialog.functions.finish();`, "icon": "close" }], {
 		formationId: 0,
 		cars: [],
 		display: function (x, isHoldCar) {
