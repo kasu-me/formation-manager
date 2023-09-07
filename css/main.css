@@ -262,6 +262,24 @@ p.car-name button {
 }
 
 /* 各種ダイアログ */
+#createFormationTemplateDialog .preview-edit-button {
+	margin-right: 0.5em;
+}
+
+#createFormationTemplateDialog .preview-car {
+	text-align: center;
+}
+
+#createFormationTemplateDialog td.editing {
+	background-color: #ff7878;
+	pointer-events: none;
+}
+
+#createFormationTemplateDialog td.editing p a {
+	pointer-events: none;
+	color: #999;
+}
+
 #seriesDispDialog .table-container,
 #formationTemplatesDialog .table-container {
 	border: 2px solid var(--formation-table-main-border);

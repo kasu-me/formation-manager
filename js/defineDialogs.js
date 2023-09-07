@@ -286,11 +286,16 @@ window.addEventListener("load", function () {
 	});
 
 	//編成テンプレートを作成･編集:cref
-	new Dialog("createFormationTemplateDialog", "編成テンプレートの作成･編集･複製", `<table class="input-area"><tr><td>形式</td><td><select id="cref-series" onchange="Dialog.list.createFormationTemplateDialog.functions.reflesh()"></select></td></tr><tr><td>テンプレートの説明</td><td><input id="cref-name" oninput="Dialog.list.createFormationTemplateDialog.functions.reflesh();"></td></tr><tr><td>編成番号の一般式</td><td><input id="cref-formationnumber" oninput="try{Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.formationName=this.value;Dialog.list.createFormationTemplateDialog.functions.reflesh()}catch(e){}"></td></tr><tr><td>車両番号の一般式</td><td><input id="cref-carnumber" onkeyup="if(event.keyCode==13){document.getElementById('cref-add-number-button').click()}"><button id="cref-add-number-button" onclick="try{Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.addCarNumber(document.getElementById('cref-carnumber').value);Dialog.list.createFormationTemplateDialog.functions.reflesh();document.getElementById('cref-carnumber').value='';}catch(e){}document.getElementById('cref-carnumber').focus()" class="lsf-icon" icon="add">追加</button></td></tr></table><div id="cref-new-formated-template-table" class="element-bottom-of-input-area"></div>`, [{ "content": "確定", "event": `Dialog.list.createFormationTemplateDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "クリア", "event": `Dialog.list.createFormationTemplateDialog.functions.clearInputs();Dialog.list.createFormationTemplateDialog.functions.reflesh();`, "icon": "clear" }, { "content": "キャンセル", "event": `Dialog.list.createFormationTemplateDialog.off();`, "icon": "close" }], {
+	new Dialog("createFormationTemplateDialog", "編成テンプレートの作成･編集･複製", `<table class="input-area"><tr><td>形式</td><td><select id="cref-series" onchange="Dialog.list.createFormationTemplateDialog.functions.reflesh()"></select></td></tr><tr><td>テンプレートの説明</td><td><input id="cref-name" oninput="Dialog.list.createFormationTemplateDialog.functions.reflesh();"></td></tr><tr><td>編成番号の一般式</td><td><input id="cref-formationnumber" oninput="try{Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.formationName=this.value;Dialog.list.createFormationTemplateDialog.functions.reflesh()}catch(e){}"></td></tr><tr><td>車両番号の一般式</td><td><input id="cref-carnumber" onkeyup="if(event.keyCode==13){document.getElementById('cref-add-number-button').click()}"><button id="cref-add-number-button" onclick="Dialog.list.createFormationTemplateDialog.functions.addCarNumber()" class="lsf-icon" icon="add">追加</button></td></tr></table><div id="cref-new-formated-template-table" class="element-bottom-of-input-area"></div>`, [{ "content": "確定", "event": `Dialog.list.createFormationTemplateDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "クリア", "event": `Dialog.list.createFormationTemplateDialog.functions.clearInputs();Dialog.list.createFormationTemplateDialog.functions.reflesh();`, "icon": "clear" }, { "content": "キャンセル", "event": `Dialog.list.createFormationTemplateDialog.off();`, "icon": "close" }], {
 		tentativeFormationTemplate: new FormationTemplate(),
 		tentativeFormationTemplateId: 0,
 		isExisting: false,
 		isCopyMode: false,
+		editingCarIndex: -1,
+		observer: new MutationObserver((mutations) => {
+			document.getElementById("cref-carnumber").value = "";
+			Dialog.list.createFormationTemplateDialog.functions.exitEditMode();
+		}),
 		//編成テンプレートを作成ダイアログを表示
 		display: function (x, isCopyMode) {
 			Dialog.list.createFormationTemplateDialog.functions.resetDialog();
@@ -334,7 +339,7 @@ window.addEventListener("load", function () {
 				table.addCell(`編成番号:${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.formationName(1)}`, { "colspan": Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.length });
 				for (let i in Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers) {
 					if (i % 10 == 0) { table.addRow() }
-					table.addCell(`<span>${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers[i](1)}</span><p><a href="javascript:void(0)" onclick="Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.deleteCarNumber(${i});Dialog.list.createFormationTemplateDialog.functions.reflesh()" class="lsf preview-delete-button" title="削除">delete</a></p>`, { "class": "preview-car" });
+					table.addCell(`<span>${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers[i](1)}</span><p><a href="javascript:void(0)" onclick="Dialog.list.createFormationTemplateDialog.functions.enterEditMode(${i})" class="lsf preview-edit-button" title="編集">pen</a><a href="javascript:void(0)" onclick="Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.deleteCarNumber(${i});Dialog.list.createFormationTemplateDialog.functions.reflesh()" class="lsf preview-delete-button" title="削除">delete</a></p>`, { "class": "preview-car" });
 				}
 				table.addBlankCellToRowIn(0, true);
 			}
@@ -370,6 +375,50 @@ window.addEventListener("load", function () {
 				}
 			}
 		},
+		addCarNumber: function () {
+			if (Dialog.list.createFormationTemplateDialog.functions.editingCarIndex >= 0) {
+				//編集モードの場合
+				Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.addCarNumberTo(document.getElementById("cref-carnumber").value, Dialog.list.createFormationTemplateDialog.functions.editingCarIndex);
+				Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.deleteCarNumber(Dialog.list.createFormationTemplateDialog.functions.editingCarIndex + 1);
+				//編集モード解除
+				document.getElementById("cref-carnumber").value = "";
+				Dialog.list.createFormationTemplateDialog.functions.exitEditMode();
+				Dialog.list.createFormationTemplateDialog.functions.reflesh();
+			} else {
+				//編集モードでない場合
+				try {
+					Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.addCarNumber(document.getElementById("cref-carnumber").value);
+					Dialog.list.createFormationTemplateDialog.functions.reflesh();
+					document.getElementById("cref-carnumber").value = "";
+				} catch (e) { }
+			}
+			document.getElementById("cref-carnumber").focus();
+		},
+		//既存車番編集モードに入る
+		enterEditMode: function (carIndex) {
+			let tds = document.querySelectorAll("#cref-new-formated-template-table td.preview-car");
+			tds.forEach((td, i) => {
+				if (i == carIndex) {
+					td.classList.add('editing');
+				} else {
+					td.classList.remove('editing');
+				}
+			});
+			Dialog.list.createFormationTemplateDialog.functions.editingCarIndex = carIndex;
+			document.getElementById("cref-carnumber").value = Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.rawCarNumbers[Dialog.list.createFormationTemplateDialog.functions.editingCarIndex];
+			document.getElementById("cref-add-number-button").innerHTML = "更新";
+			document.getElementById("cref-add-number-button").setAttribute("icon", "pen");
+
+			//テーブルの状態を監視し、変化があれば編集モードを解除する
+			Dialog.list.createFormationTemplateDialog.functions.observer.observe(document.querySelector("#cref-new-formated-template-table"), { childList: true, subtree: true });
+		},
+		//既存車番編集モード解除
+		exitEditMode: function () {
+			Dialog.list.createFormationTemplateDialog.functions.observer.disconnect();
+			document.getElementById("cref-add-number-button").innerHTML = "追加";
+			document.getElementById("cref-add-number-button").setAttribute("icon", "add");
+			Dialog.list.createFormationTemplateDialog.functions.editingCarIndex = -1;
+		},
 		resetDialog: function () {
 			Dialog.list.createFormationTemplateDialog.functions.clearInputs();
 			Dialog.list.createFormationTemplateDialog.dialogTitle.innerHTML = "";
@@ -377,6 +426,7 @@ window.addEventListener("load", function () {
 			Dialog.list.createFormationTemplateDialog.functions.isExisting = false;
 			Dialog.list.createFormationTemplateDialog.functions.isCopyMode = false;
 			Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplateId = 0;
+			Dialog.list.createFormationTemplateDialog.functions.editingCarIndex = -1;
 		},
 		clearInputs: function () {
 			Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate = new FormationTemplate();
