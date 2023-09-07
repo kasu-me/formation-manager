@@ -1,3 +1,12 @@
+//各種設定
+const settings = {
+	isAutoSaveEnable: true,
+	autoSaveInterval: 1,
+	themeColors: {},
+	seriesOrder: [],
+	isDisplayGridMode: false
+};
+
 //JSONを保存ウインドウ表示
 function showJSONOutputDialog() {
 	saveFile("formation.json", generateJSON())
