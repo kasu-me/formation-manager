@@ -41,7 +41,8 @@ input:not([type="range"]) {
 	box-shadow: 0 0 5px transparent;
 }
 
-input:not([type="range"]):not([type="checkbox"]):focus {
+input:not([type="range"]):not([type="checkbox"]):focus,
+textarea:focus {
 	border: 1px solid var(--input-focus) !important;
 	outline: none;
 	box-shadow: 0 0 5px var(--input-focus);
@@ -81,7 +82,8 @@ button:focus,
 button:disabled,
 .button:disabled,
 input:disabled,
-select:disabled {
+select:disabled,
+textarea:disabled {
 	pointer-events: none;
 	background-color: #ddd;
 	border-color: #ccc;
@@ -89,7 +91,8 @@ select:disabled {
 }
 
 input:disabled,
-select:disabled {
+select:disabled,
+textarea:disabled {
 	background-color: #e4e4e4;
 	border-color: #acacac !important;
 }
@@ -233,10 +236,16 @@ a.update-yearmonth-link::before,
 }
 
 .input-area input:not([type="checkbox"]),
-.input-area select {
+.input-area select,
+.input-area textarea {
 	padding: 4px;
 	border: 1px solid var(--formation-table-main-border);
 	width: 20em;
+}
+
+.input-area textarea {
+	height: 10em;
+	display: block;
 }
 
 

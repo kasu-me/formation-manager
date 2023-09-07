@@ -118,7 +118,7 @@ window.addEventListener("load", function () {
 	</tr>
 	<tr>
 		<td><span>備考</span></td>
-		<td><input id="fromt-car-remark"></td>
+		<td><textarea id="fromt-car-remark"></textarea></td>
 	</tr>
 	</table>
 	<p class="element-bottom-of-input-area"><label for="fora-continue" class="mku-checkbox-container small"><input id="fora-continue" type="checkbox"></label><label for="fora-continue">連続で作成</label></p>
@@ -203,7 +203,7 @@ window.addEventListener("load", function () {
 			<span>備考</span>
 		</td>
 		<td>
-			<input id="forfc-car-remark">
+			<textarea id="forfc-car-remark"></textarea>
 		</td>
 	</tr>
 	</table>
@@ -444,7 +444,7 @@ window.addEventListener("load", function () {
 	});
 
 	//形式を作成･編集:crsr
-	new Dialog("createSeriesDialog", "形式の作成･編集", `<table class="input-area"><tr><td>形式名</td><td><input id="crsr-series-name"></td></tr><tr><td>説明</td><td><input id="crsr-series-description"></td></tr><tr><td>編成を表示する</td><td><label for="crsr-series-ishidden" class="mku-checkbox-container"><input id="crsr-series-ishidden" type="checkbox" checked></label></td></tr></table>`, [{ "content": "確定", "event": `Dialog.list.createSeriesDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createSeriesDialog.off();`, "icon": "close" }], {
+	new Dialog("createSeriesDialog", "形式の作成･編集", `<table class="input-area"><tr><td>形式名</td><td><input id="crsr-series-name"></td></tr><tr><td>説明</td><td><textarea id="crsr-series-description"></textarea></td></tr><tr><td>編成を表示する</td><td><label for="crsr-series-ishidden" class="mku-checkbox-container"><input id="crsr-series-ishidden" type="checkbox" checked></label></td></tr></table>`, [{ "content": "確定", "event": `Dialog.list.createSeriesDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createSeriesDialog.off();`, "icon": "close" }], {
 		tentativeSeries: null,
 		display: function (x) {
 			Dialog.list.createSeriesDialog.functions.clearInputs();
@@ -497,7 +497,7 @@ window.addEventListener("load", function () {
 	});
 
 	//車両の作成:crcar
-	new Dialog("createCarDialog", "車両作成", `<table class="input-area"><tr><td>車両番号</td><td><input id="crcar-carNumber"></td></tr><tr><td>備考</td><td><input id="crcar-carRemark"></td></tr></table><p class="element-bottom-of-input-area"><label for="crcar-continue" class="mku-checkbox-container small"><input id="crcar-continue" type="checkbox"></label><label for="crcar-continue">連続で作成</label></p>`, [{ "content": "作成", "event": `Dialog.list.createCarDialog.functions.createCar()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createCarDialog.off();`, "icon": "close" }], {
+	new Dialog("createCarDialog", "車両作成", `<table class="input-area"><tr><td>車両番号</td><td><input id="crcar-carNumber"></td></tr><tr><td>備考</td><td><textarea id="crcar-carRemark"></textarea></td></tr></table><p class="element-bottom-of-input-area"><label for="crcar-continue" class="mku-checkbox-container small"><input id="crcar-continue" type="checkbox"></label><label for="crcar-continue">連続で作成</label></p>`, [{ "content": "作成", "event": `Dialog.list.createCarDialog.functions.createCar()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.createCarDialog.off();`, "icon": "close" }], {
 		carId: 0,
 		//車両の作成ダイアログを表示
 		display: function () {
@@ -623,7 +623,7 @@ window.addEventListener("load", function () {
 	}, true);
 
 	//備考編集:edrm
-	new Dialog("editRemarkDialog", "備考の編集", `<table class="input-area"><tr><td id="edrm-title"></td><td><input id="edrm-remark"></td></tr></table>`, [{ "content": "決定", "event": `Dialog.list.editRemarkDialog.functions.setRemark()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editRemarkDialog.off();`, "icon": "close" }], {
+	new Dialog("editRemarkDialog", "備考の編集", `<table class="input-area"><tr><td id="edrm-title"></td><td><textarea id="edrm-remark"></textarea></td></tr></table>`, [{ "content": "決定", "event": `Dialog.list.editRemarkDialog.functions.setRemark()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editRemarkDialog.off();`, "icon": "close" }], {
 		id: 0,
 		type: 0,
 		//備考編集ダイアログを表示
@@ -665,7 +665,7 @@ window.addEventListener("load", function () {
 	}, true);
 
 	//備考一括編集:edmrm
-	new Dialog("editMultipleRemarkDialog", "備考の一括編集", `<p><span id="edmrm-type"></span>に対して一括で備考の設定を行います。</p><table class="input-area"><tr><td id="edmrm-title">備考</td><td><input id="edmrm-remark"></td></tr></table>`, [{ "content": "上書き", "event": `Dialog.list.editMultipleRemarkDialog.functions.setRemark('overwrite')`, "icon": "pen" }, { "content": "追加", "event": `Dialog.list.editMultipleRemarkDialog.functions.setRemark('add')`, "icon": "add" }, { "content": "キャンセル", "event": `Dialog.list.editMultipleRemarkDialog.off();`, "icon": "close" }], {
+	new Dialog("editMultipleRemarkDialog", "備考の一括編集", `<p><span id="edmrm-type"></span>に対して一括で備考の設定を行います。</p><table class="input-area"><tr><td id="edmrm-title">備考</td><td><textarea id="edmrm-remark"></textarea></td></tr></table>`, [{ "content": "上書き", "event": `Dialog.list.editMultipleRemarkDialog.functions.setRemark('overwrite')`, "icon": "pen" }, { "content": "追加", "event": `Dialog.list.editMultipleRemarkDialog.functions.setRemark('add')`, "icon": "add" }, { "content": "キャンセル", "event": `Dialog.list.editMultipleRemarkDialog.off();`, "icon": "close" }], {
 		ids: 0,
 		type: 0,
 		//備考編集ダイアログを表示
@@ -1176,7 +1176,7 @@ window.addEventListener("load", function () {
 		<tr><td>製造</td><td><span class="time-inputs"><input id="edmsc-manufactured-y" class="yearmonth-y" type="number">年<input id="edmsc-manufactured-m" class="yearmonth-m" type="number">月</span></td></tr>
 		<tr><td>廃車</td><td><span class="time-inputs"><input id="edmsc-dropped-y" class="yearmonth-y" type="number">年<input id="edmsc-dropped-m" class="yearmonth-m" type="number">月</span><label for="edmsc-car-isdropped" class="mku-checkbox-container inline"><input id="edmsc-car-isdropped" type="checkbox"></label></td></tr>
 		<tr><td>保存</td><td><label for="edmsc-car-isconserved" class="mku-checkbox-container inline"><input id="edmsc-car-isconserved" type="checkbox" disabled></label></td></tr>
-		<tr><td>備考</td><td><input id="edmsc-car-remark"></td></tr>
+		<tr><td>備考</td><td><textarea id="edmsc-car-remark"></textarea></td></tr>
 		<tr><td>旧車番</td><td>
 			<table class="input-area">
 				<tr><td>対象</td><td><select id="edmsc-oldcar-indexes" onchange="Dialog.list.editCarMasterDialog.functions.updateOldNumbersSelectBox(Number(this.value))"></select></td></tr>
@@ -1282,7 +1282,7 @@ window.addEventListener("load", function () {
 		<tr><td>所属車両</td><td><span id="edmsf-formation-car-count"></span>両<button onclick="Dialog.list.formationMasterCarsEditDialog.functions.display(Dialog.list.editFormationMasterDialog.functions.formationId)" id="edmsf-cars-edit-button" class="lsf-icon" icon="pen">編集</button></td></tr>
 		<tr><td>組成</td><td><span class="time-inputs"><input id="edmsf-formated-y" class="yearmonth-y" type="number">年<input id="edmsf-formated-m" class="yearmonth-m" type="number">月</span></td></tr>
 		<tr><td>解除</td><td><span class="time-inputs"><input id="edmsf-terminated-y" class="yearmonth-y" type="number">年<input id="edmsf-terminated-m" class="yearmonth-m" type="number">月</span><label for="edmsf-formation-isterminated" class="mku-checkbox-container inline"><input id="edmsf-formation-isterminated" type="checkbox"></label></td></tr>
-		<tr><td>備考</td><td><input id="edmsf-formation-remark"></td></tr>
+		<tr><td>備考</td><td><textarea id="edmsf-formation-remark"></textarea></td></tr>
 	</table>
 	<p class="element-bottom-of-input-area"><label for="edmsf-open-deteal-after-end" class="mku-checkbox-container small"><input id="edmsf-open-deteal-after-end" type="checkbox"></label><label for="edmsf-open-deteal-after-end">操作終了後編成詳細ウインドウを開く</label></p>
 	`, [{ "content": "詳細ウインドウ", "event": `Dialog.list.formationDetealDialog.functions.display(Dialog.list.editFormationMasterDialog.functions.formationId)`, "icon": "search" }, { "content": "保存", "event": `Dialog.list.editFormationMasterDialog.functions.save()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.editFormationMasterDialog.functions.finish();`, "icon": "close" }], {
