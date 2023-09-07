@@ -74,7 +74,7 @@ function generateJSON() {
 		formationTemplateJSON += formationTemplateId != 0 ? "," : "";
 		formationTemplateJSON += formationTemplateList[formationTemplateId].convertToJSON();
 	}
-	return `{"minYearMonth":{"y":${minYearMonth.year},"m":${minYearMonth.month}},"maxYearMonth":{"y":${maxYearMonth.year},"m":${maxYearMonth.month}},"serieses":[${seriesJSON}],"cars":[${carJSON}],"formations":[${formationJSON}],"formationTemplates":[${formationTemplateJSON}]}`;
+	return `{"settings":${JSON.stringify(settings)},"minYearMonth":{"y":${minYearMonth.year},"m":${minYearMonth.month}},"maxYearMonth":{"y":${maxYearMonth.year},"m":${maxYearMonth.month}},"serieses":[${seriesJSON}],"cars":[${carJSON}],"formations":[${formationJSON}],"formationTemplates":[${formationTemplateJSON}]}`;
 }
 
 //無限ループ対策
@@ -93,6 +93,15 @@ function loadListsFromJSON(json) {
 		//JSON→Object
 		let obj = JSON.parse(json);
 
+		//設定の読み込み
+		if (obj.settings != null) {
+			for (let settingOption in settings) {
+				settings[settingOption] = obj.settings[settingOption];
+			}
+			loadSetting();
+		}
+
+		//編成表の読み込み
 		for (let seriesId in obj.serieses) {
 			AllSerieses.addSeries(Deserializer.fromObject(obj.serieses[seriesId]));
 		}
@@ -114,6 +123,7 @@ function loadListsFromJSON(json) {
 			AllFormationTemplates.addFormationTemplate(Deserializer.fromObject(obj.formationTemplates[formationTemplateId]));
 		}
 
+		//年月の読み込み
 		minYearMonth = new YearMonth(obj.minYearMonth.y, obj.minYearMonth.m);
 		maxYearMonth = new YearMonth(obj.maxYearMonth.y, obj.maxYearMonth.m);
 

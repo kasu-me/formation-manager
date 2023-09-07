@@ -311,6 +311,10 @@ function setPanelDisplayMode(isGridMode) {
 	} else {
 		document.getElementById("formation-table-container").classList.remove("grid-mode");
 	}
+	autoSave();
+}
+function loadSetting() {
+	setPanelDisplayMode(settings.isDisplayGridMode);
 }
 
 //現在年月の操作
