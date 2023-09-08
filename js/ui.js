@@ -331,6 +331,13 @@ function updateNowYearMonthByInputBoxes() {
 function setInputMaxAndMin() {
 	document.getElementById("now-range").setAttribute("min", minYearMonth.serial);
 	document.getElementById("now-range").setAttribute("max", maxYearMonth.serial);
+
+	if (minYearMonth.serial > now.serial) {
+		updateNowYearMonthByObject(minYearMonth);
+	} else if (maxYearMonth.serial < now.serial) {
+		updateNowYearMonthByObject(maxYearMonth);
+	}
+
 	document.getElementById("now-y").setAttribute("min", minYearMonth.year);
 	document.getElementById("now-y").setAttribute("max", maxYearMonth.year);
 }
