@@ -919,7 +919,7 @@ window.addEventListener("load", function () {
 		<div class="mku-tab-content" tab-title="自動セーブ">
 			<table class="input-area">
 				<tr>
-					<td>実施する</td>
+					<td>自動セーブ実施</td>
 					<td><label for="gnst-autosave-enabled" class="mku-checkbox-container"><input id="gnst-autosave-enabled" type="checkbox"></label></td>
 				</tr>
 				<tr>
