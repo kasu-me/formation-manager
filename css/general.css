@@ -12,6 +12,7 @@
 	--selection-hover-highlight: #c7def5;
 	--selection-highlight: #275f97;
 	--input-focus: #3498db;
+	--scrollbar-width: 15px;
 }
 
 /* ページ全体 */
@@ -24,6 +25,27 @@
 body {
 	margin: 0;
 	font-size: 11pt;
+	overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+	width: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-track {
+	background-color: buttonface;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: var(--button-face);
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: var(--button-face-hover);
+}
+
+::-webkit-scrollbar-thumb:active {
+	background-color: var(--button-face-active);
 }
 
 /* リンク */

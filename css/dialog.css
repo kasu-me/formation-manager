@@ -4,6 +4,10 @@ body:has(.dialog-area.on) {
 	overflow-y: hidden;
 }
 
+body:has(.dialog-area.on)>*:not(div#header) {
+	padding-right: var(--scrollbar-width);
+}
+
 .dialog-area {
 	position: fixed;
 	top: 0;
