@@ -12,7 +12,7 @@
 	--selection-hover-highlight: #c7def5;
 	--selection-highlight: #275f97;
 	--input-focus: #3498db;
-	--scrollbar-width: 15px;
+	--scrollbar-width: 16px;
 }
 
 /* ページ全体 */
@@ -38,6 +38,10 @@ body {
 
 ::-webkit-scrollbar-thumb {
 	background-color: var(--button-face);
+	border-radius: calc((var(--scrollbar-width) - 2px) / 2);
+	border-right: 3px solid transparent;
+	border-left: 3px solid transparent;
+	background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
