@@ -182,7 +182,7 @@ function listUpNotFormatedCarIds() {
 }
 
 //表示を最新の状態にリフレッシュ
-function reflesh() {
+function refresh() {
 	//自動セーブ
 	autoSave();
 
@@ -246,7 +246,7 @@ function dropCar(carId_) {
 				//廃車
 				dropCar(carId);
 				//廃車車両を除いた車両で編成
-				reflesh();
+				refresh();
 				Dialog.list.carDetealDialog.off();
 				Dialog.list.carDetealDialog.functions.display(carId);
 			});
@@ -336,7 +336,7 @@ function loadSetting() {
 //現在年月の操作
 function updateNowYearMonth(ym) {
 	now = ym;
-	reflesh();
+	refresh();
 }
 function updateNowYearMonthByObject(ym) {
 	now = new YearMonth(ym.year, ym.month);

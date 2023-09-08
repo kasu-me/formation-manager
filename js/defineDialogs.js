@@ -51,7 +51,7 @@ window.addEventListener("load", function () {
 				table.addRow();
 				table.addCell(`${seriesList[seriesId].name}`, { "class": `formation-name${seriesList[seriesId].isHidden ? " hidden" : ""}` });
 				table.addCell(`${seriesList[seriesId].description}`, { "class": "formation-template-name" });
-				table.addCell(`<label for="sed-series-ishidden-${seriesId}" class="mku-checkbox-container mku-balloon" mku-balloon-message="編成表上での「${seriesList[seriesId].name}」の表示･非表示を切り替えます。"><input id="sed-series-ishidden-${seriesId}" type="checkbox" ${!seriesList[seriesId].isHidden ? "checked" : ""} onchange="AllSerieses.seriesesList[${seriesId}].isHidden=!this.checked;this.parentNode.parentNode.parentNode.querySelector('td').classList.toggle('hidden');reflesh()"></label><button class="lsf-icon" icon="pen" onclick="Dialog.list.createSeriesDialog.functions.display(${seriesId})">編集</button>`, { "class": "buttons" });
+				table.addCell(`<label for="sed-series-ishidden-${seriesId}" class="mku-checkbox-container mku-balloon" mku-balloon-message="編成表上での「${seriesList[seriesId].name}」の表示･非表示を切り替えます。"><input id="sed-series-ishidden-${seriesId}" type="checkbox" ${!seriesList[seriesId].isHidden ? "checked" : ""} onchange="AllSerieses.seriesesList[${seriesId}].isHidden=!this.checked;this.parentNode.parentNode.parentNode.querySelector('td').classList.toggle('hidden');refresh()"></label><button class="lsf-icon" icon="pen" onclick="Dialog.list.createSeriesDialog.functions.display(${seriesId})">編集</button>`, { "class": "buttons" });
 			}
 			document.querySelector("#seriesDispDialog div.table-container").innerHTML = table.generateTable();
 			Dialog.list.seriesDispDialog.on();
@@ -110,7 +110,7 @@ window.addEventListener("load", function () {
 	new Dialog("createFormationFromTemplateDialog", "編成テンプレートから編成作成", `<table class="input-area">
 	<tr>
 		<td>番号</td>
-		<td><input id="fromt-car-number" type="number" value="1" onchange="Dialog.list.createFormationFromTemplateDialog.functions.reflesh(Dialog.list.formationAddingDialog.functions.formationTemplateId,Number(this.value))" onkeyup="Dialog.list.createFormationFromTemplateDialog.functions.reflesh(Dialog.list.formationAddingDialog.functions.formationTemplateId,Number(this.value))"></td>
+		<td><input id="fromt-car-number" type="number" value="1" onchange="Dialog.list.createFormationFromTemplateDialog.functions.refresh(Dialog.list.formationAddingDialog.functions.formationTemplateId,Number(this.value))" onkeyup="Dialog.list.createFormationFromTemplateDialog.functions.refresh(Dialog.list.formationAddingDialog.functions.formationTemplateId,Number(this.value))"></td>
 	</tr>
 	<tr>
 		<td><span>所属</span></td>
@@ -134,13 +134,13 @@ window.addEventListener("load", function () {
 			if (Dialog.list.formationTemplatesDialog.isActive) {
 				Dialog.list.formationAddingDialog.functions.formationTemplateId = x;
 				document.getElementById("fromt-car-remark").value = "";
-				Dialog.list.createFormationFromTemplateDialog.functions.reflesh(x, Number(document.getElementById("fromt-car-number").value));
+				Dialog.list.createFormationFromTemplateDialog.functions.refresh(x, Number(document.getElementById("fromt-car-number").value));
 				Dialog.list.createFormationFromTemplateDialog.on();
 				document.getElementById("fromt-car-number").focus();
 			}
 		},
 		//編成テンプレートから編成を作成ダイアログのプレビューをリフレッシュ
-		reflesh: function (x, y) {
+		refresh: function (x, y) {
 			let formationTemplate = AllFormationTemplates.getFormationTemplate(x);
 			let table = new Table();
 			table.setSubtitle("作成される編成のプレビュー");
@@ -163,7 +163,7 @@ window.addEventListener("load", function () {
 					Dialog.list.createFormationFromTemplateDialog.off();
 					Dialog.list.formationDetealDialog.functions.display(formationInfo.formationId);
 				} else {
-					reflesh();
+					refresh();
 					document.getElementById("fromt-car-number").focus();
 				}
 			}
@@ -179,7 +179,7 @@ window.addEventListener("load", function () {
 			<span>形式</span>
 		</td>
 		<td>
-			<select id="forfc-series" oninput="Dialog.list.createFormationFromFloatingCarsDialog.functions.reflesh()"></select>
+			<select id="forfc-series" oninput="Dialog.list.createFormationFromFloatingCarsDialog.functions.refresh()"></select>
 		</td>
 	</tr>
 	<tr>
@@ -187,7 +187,7 @@ window.addEventListener("load", function () {
 			<span>編成番号</span>
 		</td>
 		<td>
-			<input id="forfc-formation-name" oninput="Dialog.list.createFormationFromFloatingCarsDialog.functions.reflesh()">
+			<input id="forfc-formation-name" oninput="Dialog.list.createFormationFromFloatingCarsDialog.functions.refresh()">
 		</td>
 	</tr>
 	<tr>
@@ -229,15 +229,15 @@ window.addEventListener("load", function () {
 				if (table.cellCountOfLastRow % maxCellCount == 0) {
 					table.addRow();
 				}
-				table.addCell(`<a href="javascript:void(0)" onclick="if(Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.indexOf(${id})==-1){Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.push(${id})}else{Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.splice(Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.indexOf(${id}),1)}this.parentNode.classList.toggle('selected');Dialog.list.createFormationFromFloatingCarsDialog.functions.reflesh()">${AllCars.carsList[id].number}</a>`, { "class": "car", "id": `forfc-car-${id}` });
+				table.addCell(`<a href="javascript:void(0)" onclick="if(Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.indexOf(${id})==-1){Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.push(${id})}else{Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.splice(Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.indexOf(${id}),1)}this.parentNode.classList.toggle('selected');Dialog.list.createFormationFromFloatingCarsDialog.functions.refresh()">${AllCars.carsList[id].number}</a>`, { "class": "car", "id": `forfc-car-${id}` });
 			}
 			table.addBlankCellToRowRightEnd();
 			document.getElementById("forfc-not-formated-cars-table").innerHTML = table.generateTable();
-			Dialog.list.createFormationFromFloatingCarsDialog.functions.reflesh();
+			Dialog.list.createFormationFromFloatingCarsDialog.functions.refresh();
 			Dialog.list.createFormationFromFloatingCarsDialog.on();
 		},
 		//作成予定の編成プレビューをリフレッシュ
-		reflesh: function () {
+		refresh: function () {
 			Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.setSeries(document.getElementById("forfc-series").value);
 			Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.setName(document.getElementById("forfc-formation-name").value);
 
@@ -248,7 +248,7 @@ window.addEventListener("load", function () {
 			table.addCell(`編成番号:${Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.name}`, { "colspan": Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.length });
 			for (let i in Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars) {
 				if (i % 10 == 0) { table.addRow() }
-				table.addCell(`<span>${AllCars.carsList[Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[i]].number}</span><p><a href="javascript:void(0)" onclick="Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.splice(${i},1);document.getElementById('forfc-car-${Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[i]}').classList.toggle('selected');Dialog.list.createFormationFromFloatingCarsDialog.functions.reflesh()" class="lsf preview-delete-button" title="削除">delete</a></p>`, { "class": "preview-car" });
+				table.addCell(`<span>${AllCars.carsList[Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[i]].number}</span><p><a href="javascript:void(0)" onclick="Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.splice(${i},1);document.getElementById('forfc-car-${Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[i]}').classList.toggle('selected');Dialog.list.createFormationFromFloatingCarsDialog.functions.refresh()" class="lsf preview-delete-button" title="削除">delete</a></p>`, { "class": "preview-car" });
 			}
 			table.addBlankCellToRowIn(0, true);
 			document.getElementById("forfc-new-formated-cars-table").innerHTML = table.generateTable();
@@ -256,7 +256,7 @@ window.addEventListener("load", function () {
 				if (dragResult.to != -1) {
 					Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.splice(dragResult.to + dragResult.direction, 0, Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[dragResult.me]);
 					Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.splice(dragResult.me + ((dragResult.to < dragResult.me) ? 1 : 0), 1);
-					Dialog.list.createFormationFromFloatingCarsDialog.functions.reflesh();
+					Dialog.list.createFormationFromFloatingCarsDialog.functions.refresh();
 				}
 			});
 		},
@@ -279,7 +279,7 @@ window.addEventListener("load", function () {
 						Dialog.list.formationDetealDialog.functions.display(formationId);
 					} else {
 						Dialog.list.createFormationFromFloatingCarsDialog.functions.display();
-						reflesh();
+						refresh();
 					}
 				}
 			}
@@ -287,7 +287,7 @@ window.addEventListener("load", function () {
 	});
 
 	//編成テンプレートを作成･編集:cref
-	new Dialog("createFormationTemplateDialog", "編成テンプレートの作成･編集･複製", `<table class="input-area"><tr><td>形式</td><td><select id="cref-series" onchange="Dialog.list.createFormationTemplateDialog.functions.reflesh()"></select></td></tr><tr><td>テンプレートの説明</td><td><input id="cref-name" oninput="Dialog.list.createFormationTemplateDialog.functions.reflesh();"></td></tr><tr><td>編成番号の一般式</td><td><input id="cref-formationnumber" oninput="try{Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.formationName=this.value;Dialog.list.createFormationTemplateDialog.functions.reflesh()}catch(e){}"></td></tr><tr><td>車両番号の一般式</td><td><input id="cref-carnumber" onkeyup="if(event.keyCode==13){document.getElementById('cref-add-number-button').click()}"><button id="cref-add-number-button" onclick="Dialog.list.createFormationTemplateDialog.functions.addCarNumber()" class="lsf-icon" icon="add">追加</button></td></tr></table><div id="cref-new-formated-template-table" class="element-bottom-of-input-area"></div>`, [{ "content": "確定", "event": `Dialog.list.createFormationTemplateDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "クリア", "event": `Dialog.list.createFormationTemplateDialog.functions.clearInputs();Dialog.list.createFormationTemplateDialog.functions.reflesh();`, "icon": "clear" }, { "content": "キャンセル", "event": `Dialog.list.createFormationTemplateDialog.off();`, "icon": "close" }], {
+	new Dialog("createFormationTemplateDialog", "編成テンプレートの作成･編集･複製", `<table class="input-area"><tr><td>形式</td><td><select id="cref-series" onchange="Dialog.list.createFormationTemplateDialog.functions.refresh()"></select></td></tr><tr><td>テンプレートの説明</td><td><input id="cref-name" oninput="Dialog.list.createFormationTemplateDialog.functions.refresh();"></td></tr><tr><td>編成番号の一般式</td><td><input id="cref-formationnumber" oninput="try{Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.formationName=this.value;Dialog.list.createFormationTemplateDialog.functions.refresh()}catch(e){}"></td></tr><tr><td>車両番号の一般式</td><td><input id="cref-carnumber" onkeyup="if(event.keyCode==13){document.getElementById('cref-add-number-button').click()}"><button id="cref-add-number-button" onclick="Dialog.list.createFormationTemplateDialog.functions.addCarNumber()" class="lsf-icon" icon="add">追加</button></td></tr></table><div id="cref-new-formated-template-table" class="element-bottom-of-input-area"></div>`, [{ "content": "確定", "event": `Dialog.list.createFormationTemplateDialog.functions.createFormationTemplate()`, "icon": "check" }, { "content": "クリア", "event": `Dialog.list.createFormationTemplateDialog.functions.clearInputs();Dialog.list.createFormationTemplateDialog.functions.refresh();`, "icon": "clear" }, { "content": "キャンセル", "event": `Dialog.list.createFormationTemplateDialog.off();`, "icon": "close" }], {
 		tentativeFormationTemplate: new FormationTemplate(),
 		tentativeFormationTemplateId: 0,
 		isExisting: false,
@@ -324,11 +324,11 @@ window.addEventListener("load", function () {
 				Dialog.list.createFormationTemplateDialog.dialogTitle.innerHTML = "編成テンプレートの作成";
 				Dialog.list.createFormationTemplateDialog.buttons.querySelector("button").innerHTML = "作成";
 			}
-			Dialog.list.createFormationTemplateDialog.functions.reflesh();
+			Dialog.list.createFormationTemplateDialog.functions.refresh();
 			Dialog.list.createFormationTemplateDialog.on();
 		},
 		//作成予定の編成テンプレートプレビューをリフレッシュ
-		reflesh: function () {
+		refresh: function () {
 			Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.seriesId = Number(document.getElementById("cref-series").value);
 			Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.name = document.getElementById("cref-name").value;
 
@@ -340,7 +340,7 @@ window.addEventListener("load", function () {
 				table.addCell(`編成番号:${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.formationName(1)}`, { "colspan": Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.length });
 				for (let i in Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers) {
 					if (i % 10 == 0) { table.addRow() }
-					table.addCell(`<span>${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers[i](1)}</span><p><a href="javascript:void(0)" onclick="Dialog.list.createFormationTemplateDialog.functions.enterEditMode(${i})" class="lsf preview-edit-button" title="編集">pen</a><a href="javascript:void(0)" onclick="Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.deleteCarNumber(${i});Dialog.list.createFormationTemplateDialog.functions.reflesh()" class="lsf preview-delete-button" title="削除">delete</a></p>`, { "class": "preview-car" });
+					table.addCell(`<span>${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers[i](1)}</span><p><a href="javascript:void(0)" onclick="Dialog.list.createFormationTemplateDialog.functions.enterEditMode(${i})" class="lsf preview-edit-button" title="編集">pen</a><a href="javascript:void(0)" onclick="Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.deleteCarNumber(${i});Dialog.list.createFormationTemplateDialog.functions.refresh()" class="lsf preview-delete-button" title="削除">delete</a></p>`, { "class": "preview-car" });
 				}
 				table.addBlankCellToRowIn(0, true);
 			}
@@ -349,7 +349,7 @@ window.addEventListener("load", function () {
 				if (dragResult.to != -1) {
 					Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.addCarNumberTo(Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.rawCarNumbers[dragResult.me], dragResult.to + dragResult.direction);
 					Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.deleteCarNumber(dragResult.me + ((dragResult.to < dragResult.me) ? 1 : 0));
-					Dialog.list.createFormationTemplateDialog.functions.reflesh();
+					Dialog.list.createFormationTemplateDialog.functions.refresh();
 				}
 			});
 		},
@@ -385,7 +385,7 @@ window.addEventListener("load", function () {
 					//編集モード解除
 					document.getElementById("cref-carnumber").value = "";
 					Dialog.list.createFormationTemplateDialog.functions.exitEditMode();
-					Dialog.list.createFormationTemplateDialog.functions.reflesh();
+					Dialog.list.createFormationTemplateDialog.functions.refresh();
 				} catch (e) {
 					Dialog.list.alertDialog.functions.display(Message.list["MA012"]);
 				}
@@ -393,7 +393,7 @@ window.addEventListener("load", function () {
 				//編集モードでない場合
 				try {
 					Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.addCarNumber(document.getElementById("cref-carnumber").value);
-					Dialog.list.createFormationTemplateDialog.functions.reflesh();
+					Dialog.list.createFormationTemplateDialog.functions.refresh();
 					document.getElementById("cref-carnumber").value = "";
 				} catch (e) {
 					Dialog.list.alertDialog.functions.display(Message.list["MA012"]);
@@ -519,7 +519,7 @@ window.addEventListener("load", function () {
 						Dialog.list.carDetealDialog.functions.display(carId);
 					} else {
 						Dialog.list.createCarDialog.functions.display();
-						reflesh();
+						refresh();
 					}
 				}
 			}
@@ -588,7 +588,7 @@ window.addEventListener("load", function () {
 			} else {
 				car.unconserve();
 			}
-			setTimeout(reflesh, 100);
+			setTimeout(refresh, 100);
 		}
 
 	});
@@ -616,7 +616,7 @@ window.addEventListener("load", function () {
 			if (Dialog.list.carRenumberDialog.isActive) {
 				AllCars.renumberCar(Dialog.list.carDetealDialog.functions.carId, document.getElementById("carrn-car-number").value);
 				Dialog.list.carRenumberDialog.off();
-				reflesh();
+				refresh();
 				Dialog.list.carDetealDialog.functions.display(Dialog.list.carDetealDialog.functions.carId);
 			}
 		}
@@ -750,7 +750,7 @@ window.addEventListener("load", function () {
 				}
 				Dialog.list.confirmDialog.functions.display(Message.list["MC002"].toString({ "formationName": AllFormations.formationsList[formationId].name, "now": now.toString() }), function () {
 					AllFormations.releaseFormation(formationId);
-					reflesh();
+					refresh();
 					Dialog.list.formationDetealDialog.off();
 				});
 			}
@@ -774,7 +774,7 @@ window.addEventListener("load", function () {
 					}
 					//編成解除
 					AllFormations.releaseFormation(formationId);
-					reflesh();
+					refresh();
 					Dialog.list.formationDetealDialog.off();
 				});
 			}
@@ -808,7 +808,7 @@ window.addEventListener("load", function () {
 					AllFormations.releaseFormation(newFormationId, terminatedOn);
 				}
 				Dialog.list.formationRenameDialog.off();
-				reflesh();
+				refresh();
 				Dialog.list.formationDetealDialog.functions.display(newFormationId);
 			}
 		}
@@ -826,11 +826,11 @@ window.addEventListener("load", function () {
 				let tmpFormation = AllFormations.formationsList[x];
 				Dialog.list.formationShuffleDialog.functions.tentativeFormation = new Formation(tmpFormation.seriesId, tmpFormation.name, [...tmpFormation.cars], tmpFormation.belongsTo, now, tmpFormation.remark);
 				Dialog.list.formationShuffleDialog.functions.tentativeNotFormatedCarIds = listUpNotFormatedCarIds();
-				Dialog.list.formationShuffleDialog.functions.reflesh();
+				Dialog.list.formationShuffleDialog.functions.refresh();
 				Dialog.list.formationShuffleDialog.on();
 			}
 		},
-		reflesh: function () {
+		refresh: function () {
 			Dialog.list.formationShuffleDialog.functions.createTentativeFormationTable();
 			Dialog.list.formationShuffleDialog.functions.createNotFormatedCarsTable();
 		},
@@ -851,7 +851,7 @@ window.addEventListener("load", function () {
 				if (dragResult.to != -1) {
 					Dialog.list.formationShuffleDialog.functions.tentativeFormation.cars.splice(dragResult.to + dragResult.direction, 0, Dialog.list.formationShuffleDialog.functions.tentativeFormation.cars[dragResult.me]);
 					Dialog.list.formationShuffleDialog.functions.tentativeFormation.cars.splice(dragResult.me + ((dragResult.to < dragResult.me) ? 1 : 0), 1);
-					Dialog.list.formationShuffleDialog.functions.reflesh();
+					Dialog.list.formationShuffleDialog.functions.refresh();
 				}
 			});
 		},
@@ -865,7 +865,7 @@ window.addEventListener("load", function () {
 				if (table.cellCountOfLastRow % maxCellCount == 0) {
 					table.addRow();
 				}
-				table.addCell(`<a href="javascript:void(0)" onclick="if(Dialog.list.formationShuffleDialog.functions.tentativeFormation.cars.indexOf(${id})==-1){Dialog.list.formationShuffleDialog.functions.tentativeFormation.cars.push(${id});Dialog.list.formationShuffleDialog.functions.tentativeNotFormatedCarIds.splice(Dialog.list.formationShuffleDialog.functions.tentativeNotFormatedCarIds.indexOf(${id}),1)}Dialog.list.formationShuffleDialog.functions.reflesh()">${AllCars.carsList[id].number}</a>`, { "class": "car", "id": `fmsh-car-${id}` });
+				table.addCell(`<a href="javascript:void(0)" onclick="if(Dialog.list.formationShuffleDialog.functions.tentativeFormation.cars.indexOf(${id})==-1){Dialog.list.formationShuffleDialog.functions.tentativeFormation.cars.push(${id});Dialog.list.formationShuffleDialog.functions.tentativeNotFormatedCarIds.splice(Dialog.list.formationShuffleDialog.functions.tentativeNotFormatedCarIds.indexOf(${id}),1)}Dialog.list.formationShuffleDialog.functions.refresh()">${AllCars.carsList[id].number}</a>`, { "class": "car", "id": `fmsh-car-${id}` });
 			}
 			table.addBlankCellToRowRightEnd();
 			document.getElementById("fmsh-not-formated-cars-table").innerHTML = table.generateTable();
@@ -883,7 +883,7 @@ window.addEventListener("load", function () {
 					AllFormations.releaseFormation(newFormationId, terminatedOn);
 				}
 				Dialog.list.formationShuffleDialog.off();
-				reflesh();
+				refresh();
 				Dialog.list.formationDetealDialog.functions.display(newFormationId);
 			}
 		},
@@ -894,7 +894,7 @@ window.addEventListener("load", function () {
 				if (cars.includes(carId)) {
 					cars.splice(cars.indexOf(carId), 1);
 					Dialog.list.formationShuffleDialog.functions.tentativeNotFormatedCarIds.push(carId);
-					Dialog.list.formationShuffleDialog.functions.reflesh();
+					Dialog.list.formationShuffleDialog.functions.refresh();
 				}
 			}
 		}
@@ -1034,7 +1034,7 @@ window.addEventListener("load", function () {
 		clear: function () {
 			Dialog.list.confirmDialog.functions.display(Message.list["MC009"], () => {
 				resetAllLists();
-				reflesh();
+				refresh();
 				Dialog.list.formationDataManagementDialog.off();
 			});
 		}
@@ -1457,10 +1457,10 @@ window.addEventListener("load", function () {
 		display: function (x) {
 			Dialog.list.formationMasterCarsEditDialog.functions.formationId = x;
 			Dialog.list.formationMasterCarsEditDialog.functions.cars = Array.from(Dialog.list.editFormationMasterDialog.functions.cars);
-			Dialog.list.formationMasterCarsEditDialog.functions.reflesh();
+			Dialog.list.formationMasterCarsEditDialog.functions.refresh();
 			Dialog.list.formationMasterCarsEditDialog.on();
 		},
-		reflesh: function () {
+		refresh: function () {
 			setCarsToSelectBox(document.getElementById("msfmsh-cars-selectbox"), Dialog.list.formationMasterCarsEditDialog.functions.cars);
 			let table = new Table();
 			table.setAttributes({ "class": "vertical-stripes not-formated-car-table" });
@@ -1478,24 +1478,24 @@ window.addEventListener("load", function () {
 				if (dragResult.to != -1) {
 					Dialog.list.formationMasterCarsEditDialog.functions.cars.splice(dragResult.to + dragResult.direction, 0, Dialog.list.formationMasterCarsEditDialog.functions.cars[dragResult.me]);
 					Dialog.list.formationMasterCarsEditDialog.functions.cars.splice(dragResult.me + ((dragResult.to < dragResult.me) ? 1 : 0), 1);
-					Dialog.list.formationMasterCarsEditDialog.functions.reflesh();
+					Dialog.list.formationMasterCarsEditDialog.functions.refresh();
 				}
 			});
 		},
 		addCar: function (carId) {
 			Dialog.list.formationMasterCarsEditDialog.functions.cars.push(carId);
-			Dialog.list.formationMasterCarsEditDialog.functions.reflesh();
+			Dialog.list.formationMasterCarsEditDialog.functions.refresh();
 		},
 		removeCar: function (carCount) {
 			Dialog.list.formationMasterCarsEditDialog.functions.cars.splice(carCount, 1)
-			Dialog.list.formationMasterCarsEditDialog.functions.reflesh();
+			Dialog.list.formationMasterCarsEditDialog.functions.refresh();
 		},
 		finish: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.formationMasterCarsEditDialog.isActive) {
 				Dialog.list.editFormationMasterDialog.functions.cars = Array.from(Dialog.list.formationMasterCarsEditDialog.functions.cars);
 				Dialog.list.formationMasterCarsEditDialog.off();
-				reflesh();
+				refresh();
 				Dialog.list.editFormationMasterDialog.functions.display(Dialog.list.formationMasterCarsEditDialog.functions.formationId, true);
 			}
 		}

@@ -129,7 +129,7 @@ function loadListsFromJSON(json) {
 
 		setInputMaxAndMin();
 		Dialog.offAll();
-		reflesh();
+		refresh();
 		loadJSONLoopCount = 0;
 		return true;
 	} catch (error) {

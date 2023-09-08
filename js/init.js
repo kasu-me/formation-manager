@@ -53,11 +53,11 @@ window.addEventListener("load", function () {
 				AllCars.addCar(new Car(1091, new YearMonth(1960, 1)));
 				AllCars.addCar(new Car(1092, new YearMonth(1960, 1)));
 				AllCars.addCar(new Car(1093, new YearMonth(1961, 6)));
-				reflesh();
+				refresh();
 			},
 			() => {
 				resetAllLists();
-				reflesh();
+				refresh();
 			}
 		);
 	}

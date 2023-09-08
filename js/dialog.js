@@ -117,7 +117,7 @@ class Dialog {
 		}
 	}
 	off() {
-		reflesh();
+		refresh();
 		if (!this.isOverlay) {
 			Dialog.closeDialogArea();
 		} else {
