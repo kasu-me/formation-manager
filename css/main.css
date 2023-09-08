@@ -424,6 +424,7 @@ p.car-name span.car-status.conserved::before {
 /* 年月入力欄 */
 #now-time-inputs {
 	margin: auto 0.6em;
+	margin-right: 0;
 }
 
 /* プレビュー欄削除ボタン */

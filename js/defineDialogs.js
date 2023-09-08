@@ -944,7 +944,7 @@ window.addEventListener("load", function () {
 			</div>
 			<input type="color" id="gnst-colorpicker" oninput="Dialog.list.generalSettingDialog.functions.changeColor()" value="#5c3d7e"><button onclick="document.getElementById('gnst-colorpicker').value='#5c3d7e';Dialog.list.generalSettingDialog.functions.changeColor()">リセット</button>
 		</div>
-	</div>`, [{ "content": "適用", "event": `Dialog.list.generalSettingDialog.off(); `, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.generalSettingDialog.off(); `, "icon": "close" }], {
+	</div>`, [{ "content": "適用", "event": `Dialog.list.generalSettingDialog.functions.apply();Dialog.list.generalSettingDialog.off();`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.generalSettingDialog.off(); `, "icon": "close" }], {
 		cssProperties: {
 			"--formation-table-main-border": "#5c3d7e",
 			"--sub-light-color": "#dcccee",
@@ -955,9 +955,24 @@ window.addEventListener("load", function () {
 			"--table-alternate-color-2": "#f7f0ff",
 		},
 		display: function () {
+			//初期値投入
+			document.getElementById("gnst-max-y").value = maxYearMonth.year;
+			document.getElementById("gnst-max-m").value = maxYearMonth.month;
+			document.getElementById("gnst-min-y").value = minYearMonth.year;
+			document.getElementById("gnst-min-m").value = minYearMonth.month;
+
 			Dialog.list.generalSettingDialog.functions.changeColor();
+
 			Dialog.list.generalSettingDialog.on();
 		},
+		//年月上下限設定
+		updateYearMonthLimitation: function () {
+			//親ダイアログが表示されている状態以外での実行を禁止
+			minYearMonth.update(Number(document.getElementById("gnst-min-y").value), Number(document.getElementById("gnst-min-m").value));
+			maxYearMonth.update(Number(document.getElementById("gnst-max-y").value), Number(document.getElementById("gnst-max-m").value));
+			setInputMaxAndMin();
+		},
+		//色
 		changeColor: function () {
 			let cssProperties = Dialog.list.generalSettingDialog.functions.cssProperties;
 			const color = new Color(document.getElementById("gnst-colorpicker").value);
@@ -970,7 +985,11 @@ window.addEventListener("load", function () {
 				//root.style.setProperty(cssPropertyName, convertedColor);
 				i++;
 			}
-		}
+		},
+		//適用
+		apply: function () {
+			Dialog.list.generalSettingDialog.functions.updateYearMonthLimitation();
+		},
 	}, true);
 
 	//年月上下限を設定:stym
