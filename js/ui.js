@@ -1,6 +1,6 @@
 //各種設定
 const settings = {
-	isAutoSaveEnable: true,
+	isAutoSaveEnabled: true,
 	autoSaveInterval: 1,
 	themeColors: {},
 	seriesOrder: [],
@@ -293,8 +293,15 @@ function dropCar(carId_) {
 //ダイアログ関連ここまで
 
 //自動セーブ
-function autoSave() {
-	localStorage.setItem('formation-autosave', generateJSON());
+let autoSaveCount = 0;
+function autoSave(isForce) {
+	if (Boolean(isForce) || (settings.isAutoSaveEnabled && autoSaveCount % settings.autoSaveInterval == 0)) {
+		localStorage.setItem('formation-autosave', generateJSON());
+	}
+	//自動試行(強制実施モード以外)回数を記録
+	if (!Boolean(isForce)) {
+		autoSaveCount++;
+	}
 }
 function getAutoSavedData() {
 	return localStorage.getItem("formation-autosave");

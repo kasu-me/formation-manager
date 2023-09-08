@@ -926,7 +926,7 @@ window.addEventListener("load", function () {
 				</tr>
 				<tr>
 					<td>実施間隔</td>
-					<td><input><p>※アプリが重い場合などこの数値を上げてください</p></td>
+					<td><input type="number" id="gnst-autosave-interval" min="1"><p style="margin-bottom:0;">※アプリが重い場合などこの数値を上げてください</p></td>
 				</tr>
 				<tr>
 				</tr>
@@ -961,16 +961,27 @@ window.addEventListener("load", function () {
 			document.getElementById("gnst-min-y").value = minYearMonth.year;
 			document.getElementById("gnst-min-m").value = minYearMonth.month;
 
+			document.getElementById("gnst-autosave-enabled").checked = settings.isAutoSaveEnabled;
+			document.getElementById("gnst-autosave-interval").value = settings.autoSaveInterval;
+
 			Dialog.list.generalSettingDialog.functions.changeColor();
 
 			Dialog.list.generalSettingDialog.on();
 		},
-		//年月上下限設定
+		//年月上下限設定適用
 		updateYearMonthLimitation: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			minYearMonth.update(Number(document.getElementById("gnst-min-y").value), Number(document.getElementById("gnst-min-m").value));
 			maxYearMonth.update(Number(document.getElementById("gnst-max-y").value), Number(document.getElementById("gnst-max-m").value));
 			setInputMaxAndMin();
+		},
+		//自動セーブ設定適用
+		updateAutosave: function () {
+			settings.isAutoSaveEnabled = document.getElementById("gnst-autosave-enabled").checked;
+			let interval = Number(document.getElementById("gnst-autosave-interval").value);
+			if (interval > 0) {
+				settings.autoSaveInterval = interval;
+			}
 		},
 		//色
 		changeColor: function () {
@@ -989,6 +1000,8 @@ window.addEventListener("load", function () {
 		//適用
 		apply: function () {
 			Dialog.list.generalSettingDialog.functions.updateYearMonthLimitation();
+			Dialog.list.generalSettingDialog.functions.updateAutosave();
+			autoSave(true);
 		},
 	}, true);
 
