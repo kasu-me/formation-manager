@@ -4,6 +4,9 @@ maxYearMonth = new YearMonth(2020, 12);
 updateNowYearMonthByObject(minYearMonth);
 
 window.addEventListener("load", function () {
+	//自動セーブステータス欄
+	autoSaveStatusArea = document.getElementById("autosave-status");
+
 	//入力欄のイベント
 	document.querySelectorAll("span.time-inputs").forEach((inputArea) => {
 		let monthInput = inputArea.querySelector(".yearmonth-m");

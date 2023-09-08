@@ -294,14 +294,23 @@ function dropCar(carId_) {
 
 //自動セーブ
 let autoSaveCount = 0;
+let autoSaveStatusArea;
 function autoSave(isForce) {
 	if (Boolean(isForce) || (settings.isAutoSaveEnabled && autoSaveCount % settings.autoSaveInterval == 0)) {
-		localStorage.setItem('formation-autosave', generateJSON());
+		setAutoSaveData();
+		autoSaveStatusArea.innerHTML = "済";
+		autoSaveStatusArea.classList.add("done");
+	} else {
+		autoSaveStatusArea.innerHTML = "未";
+		autoSaveStatusArea.classList.remove("done");
 	}
 	//自動試行(強制実施モード以外)回数を記録
 	if (!Boolean(isForce)) {
 		autoSaveCount++;
 	}
+}
+function setAutoSaveData() {
+	localStorage.setItem('formation-autosave', generateJSON());
 }
 function getAutoSavedData() {
 	return localStorage.getItem("formation-autosave");
@@ -318,7 +327,7 @@ function setPanelDisplayMode(isGridMode) {
 	} else {
 		document.getElementById("formation-table-container").classList.remove("grid-mode");
 	}
-	autoSave();
+	autoSave(true);
 }
 function loadSetting() {
 	setPanelDisplayMode(settings.isDisplayGridMode);
