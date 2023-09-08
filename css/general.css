@@ -72,7 +72,8 @@ input:not([type="range"]) {
 }
 
 input:not([type="range"]):not([type="checkbox"]):focus,
-textarea:focus {
+textarea:focus,
+select:focus {
 	border: 1px solid var(--input-focus) !important;
 	outline: none;
 	box-shadow: 0 0 5px var(--input-focus);
