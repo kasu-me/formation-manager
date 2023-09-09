@@ -1005,26 +1005,6 @@ window.addEventListener("load", function () {
 		},
 	}, true);
 
-	//年月上下限を設定:stym
-	new Dialog("settingYearMonthDialog", "年月上下限の設定", `<table class="input-area"><tr><td>年月下限</td><td><span class="time-inputs"><input id="stym-min-y" class="yearmonth-y" type="number">年<input id="stym-min-m" class="yearmonth-m" type="number">月</span></td></tr><tr><td>年月上限</td><td><span class="time-inputs"><input id="stym-max-y" class="yearmonth-y" type="number">年<input id="stym-max-m" class="yearmonth-m" type="number">月</span></td></tr></table>`, [{ "content": "設定", "event": `Dialog.list.settingYearMonthDialog.functions.updateYearMonthLimitation()`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.settingYearMonthDialog.off();`, "icon": "close" }], {
-		display: function () {
-			document.getElementById("stym-max-y").value = maxYearMonth.year;
-			document.getElementById("stym-max-m").value = maxYearMonth.month;
-			document.getElementById("stym-min-y").value = minYearMonth.year;
-			document.getElementById("stym-min-m").value = minYearMonth.month;
-			Dialog.list.settingYearMonthDialog.on();
-		},
-		updateYearMonthLimitation: function () {
-			//親ダイアログが表示されている状態以外での実行を禁止
-			if (Dialog.list.settingYearMonthDialog.isActive) {
-				minYearMonth.update(Number(document.getElementById("stym-min-y").value), Number(document.getElementById("stym-min-m").value));
-				maxYearMonth.update(Number(document.getElementById("stym-max-y").value), Number(document.getElementById("stym-max-m").value));
-				setInputMaxAndMin();
-				Dialog.list.settingYearMonthDialog.off();
-			}
-		}
-	});
-
 	//編成表マスタ管理:mnfd
 	new Dialog("formationDataManagementDialog", "編成表マスタ管理", `<ul class="dialog-buttons-list">
 			<li><button onclick="Dialog.list.manageAllFormationsDialog.functions.display()" class="lsf-icon dialog-main-button" icon="list">全編成マスタデータ管理</button></li>
