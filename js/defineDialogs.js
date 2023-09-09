@@ -1020,6 +1020,8 @@ window.addEventListener("load", function () {
 		}
 	});
 
+	let loader = `<div id="loaderparent"><div class="loader">loading...</div></div>`;
+
 	//全車両管理:mnalc
 	new Dialog("manageAllCarsDialog", "全車両マスタデータ管理", `<p class="management-dialog-searchbox-container">
 			<span><input placeholder="車両番号" id="mnalc-search-keyword" onkeypress="if(event.keyCode==13){document.getElementById('mnalc-search-button').click();}"><button class="lsf-icon" icon="search" onclick="Dialog.list.manageAllCarsDialog.functions.searchQuery=document.getElementById('mnalc-search-keyword').value;Dialog.list.manageAllCarsDialog.functions.createTable()" id="mnalc-search-button">検索</button></span><span><label class="button lsf-icon mku-balloon" mku-balloon-message="製造と同時に廃車されているなど、削除しても問題のない車両のみを抽出して表示します。" icon="eye"><input type="checkbox" id="mnalc-only-useless" onchange="Dialog.list.manageAllCarsDialog.functions.createTable()">無用車両のみ表示</label></span>
@@ -1029,43 +1031,47 @@ window.addEventListener("load", function () {
 		scrollTop: 0,
 		display: function () {
 			document.getElementById('mnalc-search-keyword').value = Dialog.list.manageAllCarsDialog.functions.searchQuery;
-			Dialog.list.manageAllCarsDialog.functions.createTable();
+			document.getElementById("mnalc-table").innerHTML = loader;
 			Dialog.list.manageAllCarsDialog.on();
+			Dialog.list.manageAllCarsDialog.functions.createTable();
 		},
 		createTable: function () {
-			let table = new Table();
-			table.setAttributes({ "class": "row-hover-hilight management-dialog-objects-list horizontal-stripes" });
-			table.addRow();
-			table.addCell("<input type='checkbox'>");
-			table.addCell("車両ID");
-			table.addCell("車両番号(最新)");
-			table.addCell("製造");
-			table.addCell("廃車");
-			table.addCell("保存");
-			table.addCell("備考");
-			table.addCell("操作");
-			AllCars.carsList.forEach((car, carId) => {
-				if (Dialog.list.manageAllCarsDialog.functions.isFiltered(car)) {
-					table.addRow();
-					table.addCell(`<input type='checkbox' class='mnalc-raw-select' car-id='${carId}'>`);
-					table.addCell(carId);
-					table.addCell(car.number);
-					table.addCell(car.manufacturedOn);
-					table.addCell(!car.isActive ? car.droppedOn : "-");
-					table.addCell(car.isConserved ? "保存" : "-");
-					table.addCell(...formatRemark(car.remark));
-					table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.carDetealDialog.functions.display(${carId});">詳細</button><button class="lsf-icon" icon="pen" onclick="Dialog.list.editCarMasterDialog.functions.display(${carId})">編集</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllCarsDialog.functions.deleteCars([${carId}])">削除</button>`);
-				}
-			})
-			document.getElementById("mnalc-table").innerHTML = table.generateTable();
-			setTableCheckboxEvents(document.getElementById("mnalc-table"), [document.getElementById("mnalc-deleteall"), document.getElementById("mnalc-remarkall")]);
-			TableSort.addSortButtonToTable(document.getElementById("mnalc-table"));
-			document.getElementById("mnalc-search-status").innerHTML = `${(Dialog.list.manageAllCarsDialog.functions.searchQuery == "" ? "全" : `車両番号に<b>"${Dialog.list.manageAllCarsDialog.functions.searchQuery}"</b>を含む`)}${document.getElementById("mnalc-only-useless").checked ? `無用` : ``}車両を表示中 (全${table.rows.length - 1}件)`;
-			let tableContainer = document.getElementById("mnalc-table").querySelector(".generated-table-container");
-			tableContainer.addEventListener("scroll", () => {
-				Dialog.list.manageAllCarsDialog.functions.scrollTop = tableContainer.scrollTop;
-			});
-			setTimeout(() => { tableContainer.scrollTop = Dialog.list.manageAllCarsDialog.functions.scrollTop; }, 0);
+			document.getElementById("mnalc-table").innerHTML = loader;
+			setTimeout(() => {
+				let table = new Table();
+				table.setAttributes({ "class": "row-hover-hilight management-dialog-objects-list horizontal-stripes" });
+				table.addRow();
+				table.addCell("<input type='checkbox'>");
+				table.addCell("車両ID");
+				table.addCell("車両番号(最新)");
+				table.addCell("製造");
+				table.addCell("廃車");
+				table.addCell("保存");
+				table.addCell("備考");
+				table.addCell("操作");
+				AllCars.carsList.forEach((car, carId) => {
+					if (Dialog.list.manageAllCarsDialog.functions.isFiltered(car)) {
+						table.addRow();
+						table.addCell(`<input type='checkbox' class='mnalc-raw-select' car-id='${carId}'>`);
+						table.addCell(carId);
+						table.addCell(car.number);
+						table.addCell(car.manufacturedOn);
+						table.addCell(!car.isActive ? car.droppedOn : "-");
+						table.addCell(car.isConserved ? "保存" : "-");
+						table.addCell(...formatRemark(car.remark));
+						table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.carDetealDialog.functions.display(${carId});">詳細</button><button class="lsf-icon" icon="pen" onclick="Dialog.list.editCarMasterDialog.functions.display(${carId})">編集</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllCarsDialog.functions.deleteCars([${carId}])">削除</button>`);
+					}
+				});
+				document.getElementById("mnalc-table").innerHTML = table.generateTable();
+				setTableCheckboxEvents(document.getElementById("mnalc-table"), [document.getElementById("mnalc-deleteall"), document.getElementById("mnalc-remarkall")]);
+				TableSort.addSortButtonToTable(document.getElementById("mnalc-table"));
+				document.getElementById("mnalc-search-status").innerHTML = `${(Dialog.list.manageAllCarsDialog.functions.searchQuery == "" ? "全" : `車両番号に<b>"${Dialog.list.manageAllCarsDialog.functions.searchQuery}"</b>を含む`)}${document.getElementById("mnalc-only-useless").checked ? `無用` : ``}車両を表示中 (全${table.rows.length - 1}件)`;
+				let tableContainer = document.getElementById("mnalc-table").querySelector(".generated-table-container");
+				tableContainer.addEventListener("scroll", () => {
+					Dialog.list.manageAllCarsDialog.functions.scrollTop = tableContainer.scrollTop;
+				});
+				setTimeout(() => { tableContainer.scrollTop = Dialog.list.manageAllCarsDialog.functions.scrollTop; }, 0);
+			}, 0);
 		},
 		deleteCars: function (carIds) {
 			Dialog.list.confirmDialog.functions.display(Message.list["MC007"].toString({ "type": "車両", "count": carIds.length }), () => {
@@ -1103,45 +1109,49 @@ window.addEventListener("load", function () {
 		scrollTop: 0,
 		display: function () {
 			document.getElementById('mnalf-search-keyword').value = Dialog.list.manageAllFormationsDialog.functions.searchQuery;
-			Dialog.list.manageAllFormationsDialog.functions.createTable();
+			document.getElementById("mnalf-table").innerHTML = loader;
 			Dialog.list.manageAllFormationsDialog.on();
+			Dialog.list.manageAllFormationsDialog.functions.createTable();
 		},
 		createTable: function () {
-			let table = new Table();
-			table.setAttributes({ "class": "row-hover-hilight management-dialog-objects-list horizontal-stripes" });
-			table.addRow();
-			table.addCell("<input type='checkbox'>");
-			table.addCell("編成ID");
-			table.addCell("形式");
-			table.addCell("編成番号");
-			table.addCell("車両数");
-			table.addCell("組成年月");
-			table.addCell("解除年月");
-			table.addCell("備考");
-			table.addCell("操作");
-			AllFormations.formationsList.forEach((formation, formationId) => {
-				if (Dialog.list.manageAllFormationsDialog.functions.isFiltered(formation)) {
-					table.addRow();
-					table.addCell(`<input type='checkbox' class='mnalf-raw-select' formation-id='${formationId}'>`);
-					table.addCell(formationId);
-					table.addCell(AllSerieses.seriesesList[formation.seriesId].name);
-					table.addCell(formation.name);
-					table.addCell(formation.cars.length);
-					table.addCell(formation.formatedOn);
-					table.addCell(formation.isTerminated ? formation.terminatedOn : "-");
-					table.addCell(...formatRemark(formation.remark));
-					table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.formationDetealDialog.functions.display(${formationId});">詳細</button><button class="lsf-icon" icon="pen" onclick="Dialog.list.editFormationMasterDialog.functions.display(${formationId})">編集</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllFormationsDialog.functions.deleteFormations([${formationId}])">削除</button>`);
-				}
-			})
-			document.getElementById("mnalf-table").innerHTML = table.generateTable();
-			setTableCheckboxEvents(document.getElementById("mnalf-table"), [document.getElementById("mnalf-deleteall"), document.getElementById("mnalf-remarkall")]);
-			TableSort.addSortButtonToTable(document.getElementById("mnalf-table"));
-			document.getElementById("mnalf-search-status").innerHTML = `${(Dialog.list.manageAllFormationsDialog.functions.searchQuery == "" ? "全" : `編成番号に<b>"${Dialog.list.manageAllFormationsDialog.functions.searchQuery}"</b>を含む`)}${document.getElementById("mnalf-only-useless").checked ? `無用` : ``}編成を表示中 (全${table.rows.length - 1}件)`;
-			let tableContainer = document.getElementById("mnalf-table").querySelector(".generated-table-container");
-			tableContainer.addEventListener("scroll", () => {
-				Dialog.list.manageAllFormationsDialog.functions.scrollTop = tableContainer.scrollTop;
-			});
-			setTimeout(() => { tableContainer.scrollTop = Dialog.list.manageAllFormationsDialog.functions.scrollTop; }, 0);
+			document.getElementById("mnalf-table").innerHTML = loader;
+			setTimeout(() => {
+				let table = new Table();
+				table.setAttributes({ "class": "row-hover-hilight management-dialog-objects-list horizontal-stripes" });
+				table.addRow();
+				table.addCell("<input type='checkbox'>");
+				table.addCell("編成ID");
+				table.addCell("形式");
+				table.addCell("編成番号");
+				table.addCell("車両数");
+				table.addCell("組成年月");
+				table.addCell("解除年月");
+				table.addCell("備考");
+				table.addCell("操作");
+				AllFormations.formationsList.forEach((formation, formationId) => {
+					if (Dialog.list.manageAllFormationsDialog.functions.isFiltered(formation)) {
+						table.addRow();
+						table.addCell(`<input type='checkbox' class='mnalf-raw-select' formation-id='${formationId}'>`);
+						table.addCell(formationId);
+						table.addCell(AllSerieses.seriesesList[formation.seriesId].name);
+						table.addCell(formation.name);
+						table.addCell(formation.cars.length);
+						table.addCell(formation.formatedOn);
+						table.addCell(formation.isTerminated ? formation.terminatedOn : "-");
+						table.addCell(...formatRemark(formation.remark));
+						table.addCell(`<button class="lsf-icon" icon="search" onclick="Dialog.list.formationDetealDialog.functions.display(${formationId});">詳細</button><button class="lsf-icon" icon="pen" onclick="Dialog.list.editFormationMasterDialog.functions.display(${formationId})">編集</button><button class="lsf-icon" icon="delete" onclick="Dialog.list.manageAllFormationsDialog.functions.deleteFormations([${formationId}])">削除</button>`);
+					}
+				})
+				document.getElementById("mnalf-table").innerHTML = table.generateTable();
+				setTableCheckboxEvents(document.getElementById("mnalf-table"), [document.getElementById("mnalf-deleteall"), document.getElementById("mnalf-remarkall")]);
+				TableSort.addSortButtonToTable(document.getElementById("mnalf-table"));
+				document.getElementById("mnalf-search-status").innerHTML = `${(Dialog.list.manageAllFormationsDialog.functions.searchQuery == "" ? "全" : `編成番号に<b>"${Dialog.list.manageAllFormationsDialog.functions.searchQuery}"</b>を含む`)}${document.getElementById("mnalf-only-useless").checked ? `無用` : ``}編成を表示中 (全${table.rows.length - 1}件)`;
+				let tableContainer = document.getElementById("mnalf-table").querySelector(".generated-table-container");
+				tableContainer.addEventListener("scroll", () => {
+					Dialog.list.manageAllFormationsDialog.functions.scrollTop = tableContainer.scrollTop;
+				});
+				setTimeout(() => { tableContainer.scrollTop = Dialog.list.manageAllFormationsDialog.functions.scrollTop; }, 0);
+			}, 0);
 		},
 		deleteFormations: function (formationIds) {
 			Dialog.list.confirmDialog.functions.display(Message.list["MC007"].toString({ "type": "編成", "count": formationIds.length }), () => {
