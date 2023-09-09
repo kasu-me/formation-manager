@@ -117,13 +117,13 @@ class Dialog {
 		}
 	}
 	off() {
-		refresh();
 		if (!this.isOverlay) {
 			Dialog.closeDialogArea();
 		} else {
 			Dialog.closeDialogAreaOverlay();
 		}
 		Dialog.close(this.dialog);
+		refresh();
 	}
 	get isActive() {
 		return this.dialog.classList.contains("on");
