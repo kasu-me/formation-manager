@@ -123,7 +123,7 @@ class Dialog {
 			Dialog.closeDialogAreaOverlay();
 		}
 		Dialog.close(this.dialog);
-		refresh();
+		setTimeout(refresh, 150);
 	}
 	get isActive() {
 		return this.dialog.classList.contains("on");
