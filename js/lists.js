@@ -8,12 +8,12 @@ class AllSerieses {
 		return AllSerieses.#serieses;
 	}
 	static addSeries(series) {
-		AllSerieses.#serieses.push(series);
+		AllSerieses.#serieses.push(setObservedInstance(series, refresh));
 		return AllSerieses.#serieses.length - 1;
 	}
 
 	static reset() {
-		AllSerieses.#serieses = [];
+		AllSerieses.#serieses = setObservedArray([], refresh);
 	}
 }
 
@@ -80,7 +80,7 @@ class AllCars {
 	}
 	static addCar(car) {
 		if (car instanceof Car) {
-			AllCars.#cars.push(car);
+			AllCars.#cars.push(setObservedInstance(car, refresh));
 			return AllCars.#cars.length - 1;
 		} else {
 			console.error("Carクラスのオブジェクトを追加してください");
@@ -92,7 +92,7 @@ class AllCars {
 		delete AllCars.#cars[carId];
 	}
 	static reset() {
-		AllCars.#cars = [];
+		AllCars.#cars = setObservedArray([], refresh);
 	}
 }
 
@@ -103,7 +103,7 @@ class AllFormations {
 	//編成追加
 	static addFormation(formation) {
 		if (formation instanceof Formation) {
-			AllFormations.#formations.push(formation);
+			AllFormations.#formations.push(setObservedInstance(formation, refresh));
 			return AllFormations.#formations.length - 1;
 		} else {
 			console.error("Formationクラスのオブジェクトを追加してください");
@@ -224,7 +224,7 @@ class AllFormations {
 	}
 
 	static reset() {
-		AllFormations.#formations = [];
+		AllFormations.#formations = setObservedArray([], refresh);
 	}
 }
 
@@ -234,7 +234,7 @@ class AllFormationTemplates {
 
 	static addFormationTemplate(formationTemplate) {
 		if (formationTemplate instanceof FormationTemplate) {
-			AllFormationTemplates.#formationTemplates.push(formationTemplate);
+			AllFormationTemplates.#formationTemplates.push(setObservedInstance(formationTemplate, refresh));
 			return AllFormationTemplates.#formationTemplates.length - 1;
 		} else {
 			console.error("FormationTemplateクラスのオブジェクトを追加してください");
@@ -248,7 +248,7 @@ class AllFormationTemplates {
 	}
 
 	static reset() {
-		AllFormationTemplates.#formationTemplates = [];
+		AllFormationTemplates.#formationTemplates = setObservedArray([], refresh);
 	}
 }
 //各種一覧クラス定義ここまで

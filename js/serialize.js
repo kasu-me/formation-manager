@@ -81,6 +81,7 @@ function generateJSON() {
 let loadJSONLoopCount = 0;
 //各種一覧JSONから読み込み
 function loadListsFromJSON(json) {
+	isRefreshable = false;
 	loadJSONLoopCount++;
 
 	//現在データのバックアップ
@@ -129,6 +130,7 @@ function loadListsFromJSON(json) {
 
 		setInputMaxAndMin();
 		Dialog.offAll();
+		isRefreshable = true;
 		refresh();
 		loadJSONLoopCount = 0;
 		return true;

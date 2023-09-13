@@ -4,6 +4,9 @@ maxYearMonth = new YearMonth(2020, 12);
 updateNowYearMonthByObject(minYearMonth);
 
 window.addEventListener("load", function () {
+	//初期化
+	resetAllLists();
+
 	//自動セーブステータス欄
 	autoSaveStatusArea = document.getElementById("autosave-status");
 
@@ -27,6 +30,8 @@ window.addEventListener("load", function () {
 		Dialog.list.confirmDialog.functions.display(Message.list["MC008"],
 			() => {
 				//サンプルデータ投入
+				isRefreshable = false;
+
 				AllSerieses.addSeries(new Series("1000系", "西武601系", "あああ"));
 				AllSerieses.addSeries(new Series("1400系", "西武411系", "いいい"));
 				AllSerieses.addSeries(new Series("E233系", "西武411系", "ううう"));
@@ -53,6 +58,8 @@ window.addEventListener("load", function () {
 				AllCars.addCar(new Car(1091, new YearMonth(1960, 1)));
 				AllCars.addCar(new Car(1092, new YearMonth(1960, 1)));
 				AllCars.addCar(new Car(1093, new YearMonth(1961, 6)));
+
+				isRefreshable = true;
 				refresh();
 			},
 			() => {

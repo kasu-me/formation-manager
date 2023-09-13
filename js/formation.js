@@ -60,6 +60,7 @@ class OldCarNumber {
 	constructor(number, renumberedOn) {
 		this.#number = number;
 		this.#renumberedOn = renumberedOn;
+		observedObjects.push(this);
 	}
 	get number() {
 		return Formatter.toHTML(this.#number);
@@ -90,8 +91,10 @@ class Car {
 		this.#number = number.toString();
 		this.#manufacturedOn = manufacturedOn;
 		if (oldNumbers != null) {
-			this.#oldNumbers = oldNumbers;
+			this.#oldNumbers = setObservedArray(oldNumbers, refresh);
 			this.sortOldNumbersByYearMonth();
+		} else {
+			this.#oldNumbers = setObservedArray([], refresh);
 		}
 		this.remark = remark;
 	}

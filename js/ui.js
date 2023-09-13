@@ -181,8 +181,12 @@ function listUpNotFormatedCarIds() {
 	});
 }
 
+let isRefreshable = true;
+
 //表示を最新の状態にリフレッシュ
 function refresh() {
+	if (!isRefreshable) { return }
+
 	//自動セーブ
 	autoSave();
 
@@ -246,7 +250,6 @@ function dropCar(carId_) {
 				//廃車
 				dropCar(carId);
 				//廃車車両を除いた車両で編成
-				refresh();
 				Dialog.list.carDetealDialog.off();
 				Dialog.list.carDetealDialog.functions.display(carId);
 			});

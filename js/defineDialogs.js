@@ -51,7 +51,7 @@ window.addEventListener("load", function () {
 				table.addRow();
 				table.addCell(`${seriesList[seriesId].name}`, { "class": `formation-name${seriesList[seriesId].isHidden ? " hidden" : ""}` });
 				table.addCell(`${seriesList[seriesId].description}`, { "class": "formation-template-name" });
-				table.addCell(`<label for="sed-series-ishidden-${seriesId}" class="mku-checkbox-container mku-balloon" mku-balloon-message="編成表上での「${seriesList[seriesId].name}」の表示･非表示を切り替えます。"><input id="sed-series-ishidden-${seriesId}" type="checkbox" ${!seriesList[seriesId].isHidden ? "checked" : ""} onchange="AllSerieses.seriesesList[${seriesId}].isHidden=!this.checked;this.parentNode.parentNode.parentNode.querySelector('td').classList.toggle('hidden');refresh()"></label><button class="lsf-icon" icon="pen" onclick="Dialog.list.createSeriesDialog.functions.display(${seriesId})">編集</button>`, { "class": "buttons" });
+				table.addCell(`<label for="sed-series-ishidden-${seriesId}" class="mku-checkbox-container mku-balloon" mku-balloon-message="編成表上での「${seriesList[seriesId].name}」の表示･非表示を切り替えます。"><input id="sed-series-ishidden-${seriesId}" type="checkbox" ${!seriesList[seriesId].isHidden ? "checked" : ""} onchange="AllSerieses.seriesesList[${seriesId}].isHidden=!this.checked;this.parentNode.parentNode.parentNode.querySelector('td').classList.toggle('hidden');"></label><button class="lsf-icon" icon="pen" onclick="Dialog.list.createSeriesDialog.functions.display(${seriesId})">編集</button>`, { "class": "buttons" });
 			}
 			document.querySelector("#seriesDispDialog div.table-container").innerHTML = table.generateTable();
 			Dialog.list.seriesDispDialog.on();
@@ -163,7 +163,6 @@ window.addEventListener("load", function () {
 					Dialog.list.createFormationFromTemplateDialog.off();
 					Dialog.list.formationDetealDialog.functions.display(formationInfo.formationId);
 				} else {
-					refresh();
 					document.getElementById("fromt-car-number").focus();
 				}
 			}
@@ -279,7 +278,6 @@ window.addEventListener("load", function () {
 						Dialog.list.formationDetealDialog.functions.display(formationId);
 					} else {
 						Dialog.list.createFormationFromFloatingCarsDialog.functions.display();
-						refresh();
 					}
 				}
 			}
@@ -519,7 +517,6 @@ window.addEventListener("load", function () {
 						Dialog.list.carDetealDialog.functions.display(carId);
 					} else {
 						Dialog.list.createCarDialog.functions.display();
-						refresh();
 					}
 				}
 			}
@@ -616,7 +613,6 @@ window.addEventListener("load", function () {
 			if (Dialog.list.carRenumberDialog.isActive) {
 				AllCars.renumberCar(Dialog.list.carDetealDialog.functions.carId, document.getElementById("carrn-car-number").value);
 				Dialog.list.carRenumberDialog.off();
-				refresh();
 				Dialog.list.carDetealDialog.functions.display(Dialog.list.carDetealDialog.functions.carId);
 			}
 		}
@@ -750,7 +746,6 @@ window.addEventListener("load", function () {
 				}
 				Dialog.list.confirmDialog.functions.display(Message.list["MC002"].toString({ "formationName": AllFormations.formationsList[formationId].name, "now": now.toString() }), function () {
 					AllFormations.releaseFormation(formationId);
-					refresh();
 					Dialog.list.formationDetealDialog.off();
 				});
 			}
@@ -774,7 +769,6 @@ window.addEventListener("load", function () {
 					}
 					//編成解除
 					AllFormations.releaseFormation(formationId);
-					refresh();
 					Dialog.list.formationDetealDialog.off();
 				});
 			}
@@ -808,7 +802,6 @@ window.addEventListener("load", function () {
 					AllFormations.releaseFormation(newFormationId, terminatedOn);
 				}
 				Dialog.list.formationRenameDialog.off();
-				refresh();
 				Dialog.list.formationDetealDialog.functions.display(newFormationId);
 			}
 		}
@@ -883,7 +876,6 @@ window.addEventListener("load", function () {
 					AllFormations.releaseFormation(newFormationId, terminatedOn);
 				}
 				Dialog.list.formationShuffleDialog.off();
-				refresh();
 				Dialog.list.formationDetealDialog.functions.display(newFormationId);
 			}
 		},
@@ -1014,8 +1006,8 @@ window.addEventListener("load", function () {
 		clear: function () {
 			Dialog.list.confirmDialog.functions.display(Message.list["MC009"], () => {
 				resetAllLists();
-				refresh();
 				Dialog.list.formationDataManagementDialog.off();
+				refresh();
 			});
 		}
 	});
@@ -1353,7 +1345,7 @@ window.addEventListener("load", function () {
 			let car = AllCars.carsList[Dialog.list.editCarMasterDialog.functions.carId];
 			car.updateMasterData(document.getElementById("edmsc-car-number").value, new YearMonth(Number(document.getElementById("edmsc-manufactured-y").value), Number(document.getElementById("edmsc-manufactured-m").value)), document.getElementById("edmsc-car-isdropped").checked ? new YearMonth(Number(document.getElementById("edmsc-dropped-y").value), Number(document.getElementById("edmsc-dropped-m").value)) : null, Dialog.list.editCarMasterDialog.functions.tentativeOldNumbers, document.getElementById("edmsc-car-isconserved").checked);
 			car.remark = document.getElementById("edmsc-car-remark").value;
-			ialog.list.editCarMasterDialog.functions.finish();
+			Dialog.list.editCarMasterDialog.functions.finish();
 		},
 		finish: function () {
 			if (document.getElementById("edmsc-open-deteal-after-end").checked) {
@@ -1361,6 +1353,7 @@ window.addEventListener("load", function () {
 			} else {
 				Dialog.list.manageAllCarsDialog.functions.display();
 			}
+			refresh();
 		}
 	});
 	document.getElementById("edmsc-car-isdropped").addEventListener("change", Dialog.list.editCarMasterDialog.functions.updateIsDroppedToggle);
@@ -1434,6 +1427,7 @@ window.addEventListener("load", function () {
 			} else {
 				Dialog.list.manageAllFormationsDialog.functions.display();
 			}
+			refresh();
 		}
 	});
 	document.getElementById("edmsf-formation-isterminated").addEventListener("change", Dialog.list.editFormationMasterDialog.functions.updateIsTerminatedToggle);
@@ -1485,7 +1479,6 @@ window.addEventListener("load", function () {
 			if (Dialog.list.formationMasterCarsEditDialog.isActive) {
 				Dialog.list.editFormationMasterDialog.functions.cars = Array.from(Dialog.list.formationMasterCarsEditDialog.functions.cars);
 				Dialog.list.formationMasterCarsEditDialog.off();
-				refresh();
 				Dialog.list.editFormationMasterDialog.functions.display(Dialog.list.formationMasterCarsEditDialog.functions.formationId, true);
 			}
 		}
