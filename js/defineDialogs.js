@@ -1018,11 +1018,12 @@ window.addEventListener("load", function () {
 	new Dialog("manageAllCarsDialog", "全車両マスタデータ管理", `<p class="management-dialog-searchbox-container">
 			<span><input placeholder="車両番号" id="mnalc-search-keyword" onkeypress="if(event.keyCode==13){document.getElementById('mnalc-search-button').click();}"><button class="lsf-icon" icon="search" onclick="Dialog.list.manageAllCarsDialog.functions.searchQuery=document.getElementById('mnalc-search-keyword').value;Dialog.list.manageAllCarsDialog.functions.createTable()" id="mnalc-search-button">検索</button></span><span><label class="button lsf-icon mku-balloon" mku-balloon-message="製造と同時に廃車されているなど、削除しても問題のない車両のみを抽出して表示します。" icon="eye"><input type="checkbox" id="mnalc-only-useless" onchange="Dialog.list.manageAllCarsDialog.functions.createTable()">無用車両のみ表示</label></span>
 		</p>
-		<p id="mnalc-search-status"></p>
+		<p id="mnalc-search-status">読込中...</p>
 		<div id="mnalc-table"></div>`, [{ "content": "備考一括編集", "event": `Dialog.list.editMultipleRemarkDialog.functions.display('car',Array.from(document.querySelectorAll('.mnalc-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('car-id')}));`, "icon": "pen", "disabled": "disabled", "id": "mnalc-remarkall" }, { "content": "一括削除", "event": `Dialog.list.manageAllCarsDialog.functions.deleteCars(Array.from(document.querySelectorAll('.mnalc-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('car-id')}));`, "icon": "delete", "disabled": "disabled", "id": "mnalc-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllCarsDialog.off();`, "icon": "close" }], {
 		scrollTop: 0,
 		display: function () {
 			document.getElementById('mnalc-search-keyword').value = Dialog.list.manageAllCarsDialog.functions.searchQuery;
+			document.getElementById("mnalc-search-status").innerHTML = "読込中...";
 			document.getElementById("mnalc-table").innerHTML = loader;
 			Dialog.list.manageAllCarsDialog.on();
 			Dialog.list.manageAllCarsDialog.functions.createTable();
@@ -1096,11 +1097,12 @@ window.addEventListener("load", function () {
 	new Dialog("manageAllFormationsDialog", "全編成マスタデータ管理", `<p class="management-dialog-searchbox-container">
 					<span><input placeholder="編成番号" id="mnalf-search-keyword" onkeypress="if(event.keyCode==13){document.getElementById('mnalf-search-button').click();}"><button class="lsf-icon" icon="search" onclick="Dialog.list.manageAllFormationsDialog.functions.searchQuery=document.getElementById('mnalf-search-keyword').value;Dialog.list.manageAllFormationsDialog.functions.createTable()" id="mnalf-search-button">検索</button></span><span><label class="button lsf-icon mku-balloon" mku-balloon-message="組成と同時に解除されているなど、削除しても問題のない編成のみを抽出して表示します。" icon="eye"><input type="checkbox" id="mnalf-only-useless" onchange="Dialog.list.manageAllFormationsDialog.functions.createTable()">無用編成のみ表示</label></span>
 				</p>
-				<p id="mnalf-search-status"></p>
+				<p id="mnalf-search-status">読込中...</p>
 				<div id="mnalf-table"></div>`, [{ "content": "備考一括編集", "event": `Dialog.list.editMultipleRemarkDialog.functions.display('formation',Array.from(document.querySelectorAll('.mnalf-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('formation-id')}));`, "icon": "pen", "disabled": "disabled", "id": "mnalf-remarkall" }, { "content": "一括削除", "event": `Dialog.list.manageAllFormationsDialog.functions.deleteFormations(Array.from(document.querySelectorAll('.mnalf-raw-select')).filter((checkbox)=>{return checkbox.checked}).map((checkbox)=>{return checkbox.getAttribute('formation-id')}));`, "icon": "delete", "disabled": "disabled", "id": "mnalf-deleteall" }, { "content": "終了", "event": `Dialog.list.manageAllFormationsDialog.off();`, "icon": "close" }], {
 		scrollTop: 0,
 		display: function () {
 			document.getElementById('mnalf-search-keyword').value = Dialog.list.manageAllFormationsDialog.functions.searchQuery;
+			document.getElementById("mnalf-search-status").innerHTML = "読込中...";
 			document.getElementById("mnalf-table").innerHTML = loader;
 			Dialog.list.manageAllFormationsDialog.on();
 			Dialog.list.manageAllFormationsDialog.functions.createTable();

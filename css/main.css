@@ -8,7 +8,7 @@
 
 #loaderparent {
 	height: 50vh;
-	width: 740px;
+	min-width: calc(820px + var(--scrollbar-width) + 4px);
 	font-size: 10px;
 	background-color: #fff;
 	border: 2px solid var(--formation-table-main-border);
@@ -558,7 +558,7 @@ table.management-dialog-objects-list {
 	border: none;
 	border-collapse: separate;
 	border-spacing: 0;
-	min-width: 740px;
+	min-width: 820px;
 }
 
 table.management-dialog-objects-list tr:nth-child(1) {
