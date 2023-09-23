@@ -396,6 +396,10 @@ p.car-name button {
 }
 
 /* 各種ダイアログ */
+.dialog-warn.warning {
+	margin-top: 0;
+}
+
 #createFormationTemplateDialog .preview-edit-button {
 	margin-right: 0.5em;
 }
