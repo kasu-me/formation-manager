@@ -6,7 +6,7 @@
 }
 
 .mku-checkbox-container {
-	display: block;
+	display: inline-block;
 	position: relative;
 	width: var(--mku-checkbox-width);
 	height: var(--mku-checkbox-height);
@@ -15,41 +15,44 @@
 	cursor: pointer;
 	background: #c4c4c4;
 	transition: 100ms ease-out 0s all;
-}
+	margin-right: 0.25em;
+	vertical-align: middle;
 
-.mku-checkbox-container input[type="checkbox"] {
-	display: none;
-}
+	& input[type="checkbox"] {
+		display: none;
+	}
 
-.mku-checkbox-container:after {
-	content: "";
-	position: absolute;
-	top: var(--mku-checkbox-button-padding);
-	left: var(--mku-checkbox-button-padding);
-	width: var(--mku-checkbox-button-width);
-	height: var(--mku-checkbox-button-width);
-	display: block;
-	border-radius: 100%;
-	background: #fff;
-	transition: 100ms ease-out 0s all;
-}
+	&:after {
+		content: "";
+		position: absolute;
+		top: var(--mku-checkbox-button-padding);
+		left: var(--mku-checkbox-button-padding);
+		width: var(--mku-checkbox-button-width);
+		height: var(--mku-checkbox-button-width);
+		display: block;
+		border-radius: 100%;
+		background: #fff;
+		transition: 100ms ease-out 0s all;
+	}
 
-.mku-checkbox-container:has(input[type="checkbox"]:checked) {
-	background: #00cd33;
-}
+	&:has(input[type="checkbox"]:checked) {
+		background: #00cd33;
 
-.mku-checkbox-container:has(input[type="checkbox"]:checked):after {
-	transform: translateX(calc(var(--mku-checkbox-width) - var(--mku-checkbox-button-padding) * 2 - var(--mku-checkbox-button-width)));
-}
+		&:after {
+			transform: translateX(calc(var(--mku-checkbox-width) - var(--mku-checkbox-button-padding) * 2 - var(--mku-checkbox-button-width)));
+		}
+	}
 
-.mku-checkbox-container:has(input[type="checkbox"]:disabled) {
-	pointer-events: none;
-}
 
-.mku-checkbox-container:has(input[type="checkbox"]:disabled:checked) {
-	background: #92c69f;
-}
+	&:has(input[type="checkbox"]:disabled) {
+		pointer-events: none;
 
-.mku-checkbox-container:has(input[type="checkbox"]:disabled):after {
-	opacity: 0.5;
+		&:after {
+			opacity: 0.5;
+		}
+	}
+
+	&:has(input[type="checkbox"]:disabled:checked) {
+		background: #92c69f;
+	}
 }

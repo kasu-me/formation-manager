@@ -70,112 +70,113 @@ div#header {
 	padding: 0.8em;
 	border-bottom: 1px solid #bbb;
 	display: flex;
-}
 
-div#header div.button-group {
-	margin-right: 1.0em;
-	padding-right: 1.0em;
-	border-right: 1px solid #bbb;
-}
+	& div.button-group {
+		margin-right: 1.0em;
+		padding-right: 1.0em;
+		border-right: 1px solid #bbb;
 
-div#header div.button-group div.button-group-title {
-	font-weight: bold;
-	margin-bottom: 0.1em;
-}
+		& div.button-group-title {
+			font-weight: bold;
+			margin-bottom: 0.1em;
+		}
+	}
 
-div#header #autosave-status {
-	background-color: #b3b3b3;
-	border: 1px solid #b3b3b3;
-	color: #000000;
-	padding: 1px 6px;
-	font-size: 10pt;
-}
+	#autosave-status {
+		background-color: #b3b3b3;
+		border: 1px solid #b3b3b3;
+		color: #000000;
+		padding: 1px 6px;
+		font-size: 10pt;
 
-div#header #autosave-status:hover {
-	background-color: #c4c4c4;
-}
+		&:hover {
+			background-color: #c4c4c4;
+		}
 
-div#header #autosave-status::before {
-	content: "refresh";
-}
+		&::before {
+			content: "refresh";
+		}
 
-div#header #autosave-status.done {
-	background-color: #00c900;
-	border: 1px solid #00c900;
-	color: #fff;
-	pointer-events: none;
-}
+		&.done {
+			background-color: #00c900;
+			border: 1px solid #00c900;
+			color: #fff;
+			pointer-events: none;
 
-div#header #autosave-status.done::before {
-	content: "check";
+			&::before {
+				content: "check";
+			}
+		}
+	}
 }
 
 /* ソート等 */
 p#sort-controllers-container {
 	margin: 0;
 	padding: 0 0.8em;
-}
 
-p#sort-controllers-container span#panel-display-mode-controller span {
-	display: inline;
-	vertical-align: top;
-}
+	& span#panel-display-mode-controller span {
+		display: inline;
+		vertical-align: top;
 
-p#sort-controllers-container span#panel-display-mode-controller span a {
-	font-size: 150%;
-	user-select: none;
-}
+		& a {
+			font-size: 150%;
+			user-select: none;
 
-p#sort-controllers-container span#panel-display-mode-controller span a:first-child {
-	border-right: 1px solid #bbb;
-	padding-right: 0.4em;
-	margin-right: 0.4em;
-}
+			&:first-child {
+				border-right: 1px solid #bbb;
+				padding-right: 0.4em;
+				margin-right: 0.4em;
+			}
+		}
+	}
 
-p#sort-controllers-container:has(+div#formation-table-container.grid-mode) span#panel-display-mode-controller span a:last-child,
-p#sort-controllers-container:not(:has(+div#formation-table-container.grid-mode)) span#panel-display-mode-controller span a:first-child {
-	pointer-events: none;
-	color: #000;
-	font-weight: bold;
+	&:has(+div#formation-table-container.grid-mode) span#panel-display-mode-controller span a:last-child,
+	&:not(:has(+div#formation-table-container.grid-mode)) span#panel-display-mode-controller span a:first-child {
+		pointer-events: none;
+		color: #000;
+		font-weight: bold;
+	}
 }
 
 /* メイン編成表 */
 div#formation-table-container {
 	margin: 0.8em;
 	padding-bottom: 2em;
+
+	& div.generated-table-container {
+		margin-bottom: 2.0em;
+	}
+
+	& p.table-title {
+		background-color: var(--formation-table-main-border);
+		padding: 0.25em;
+		color: #fff;
+		margin-top: 0;
+	}
+
+	& p.table-subtitle {
+		background-color: var(--sub-light-color);
+		padding: 0.25em;
+		color: #000;
+	}
+
+	& div.generated-table-headers {
+		margin-bottom: 0.5em;
+	}
+
+	/* グリッド表示モード */
+	&.grid-mode {
+		column-count: 2;
+		column-gap: 1.6em;
+
+		& div.generated-table-container {
+			page-break-inside: avoid;
+			break-inside: avoid;
+		}
+	}
 }
 
-div#formation-table-container div.generated-table-container {
-	margin-bottom: 2.0em;
-}
-
-div#formation-table-container p.table-title {
-	background-color: var(--formation-table-main-border);
-	padding: 0.25em;
-	color: #fff;
-	margin-top: 0;
-}
-
-div#formation-table-container p.table-subtitle {
-	background-color: var(--sub-light-color);
-	padding: 0.25em;
-	color: #000;
-}
-
-div#formation-table-container div.generated-table-headers {
-	margin-bottom: 0.5em;
-}
-
-/* グリッド表示モード */
-div#formation-table-container.grid-mode {
-	column-count: 2;
-	column-gap: 1.6em;
-}
-
-div#formation-table-container.grid-mode div.generated-table-container {
-	page-break-inside: avoid;
-	break-inside: avoid;
-}
 
 /* 交互に色を付けるやつ */
 table.horizontal-stripes tr:nth-child(2n+1),
@@ -203,10 +204,10 @@ td.car {
 div#forfc-not-formated-cars-table td.car.selected {
 	background-color: #9a65d3;
 	color: #fff;
-}
 
-div#forfc-not-formated-cars-table td.car.selected a:link {
-	color: #fff;
+	& a:link {
+		color: #fff;
+	}
 }
 
 /* テーブルのセルにグレーの線をつける */
@@ -274,14 +275,14 @@ table.formation-view tr:nth-child(1) td {
 
 div#formation-table-container table.not-formated-car-table {
 	border: none;
-}
 
-div#formation-table-container table.not-formated-car-table tr {
-	border-bottom: none;
-}
+	& tr {
+		border-bottom: none;
 
-div#formation-table-container table.not-formated-car-table tr td {
-	border: 2px solid var(--formation-table-main-border);
+		& td {
+			border: 2px solid var(--formation-table-main-border);
+		}
+	}
 }
 
 div#forfc-new-formated-cars-table {
@@ -322,17 +323,17 @@ td.formation-name,
 
 #cardt-main table {
 	width: 100%;
-}
 
-#cardt-main table tr>td ul {
-	margin: 0;
-	padding-left: 0;
-	list-style: none;
-}
+	& tr>td ul {
+		margin: 0;
+		padding-left: 0;
+		list-style: none;
 
-#cardt-main table tr>td ul li::before {
-	content: "・";
-	display: inline;
+		& li::before {
+			content: "・";
+			display: inline;
+		}
+	}
 }
 
 /* 廃車 */
@@ -400,22 +401,24 @@ p.car-name button {
 	margin-top: 0;
 }
 
-#createFormationTemplateDialog .preview-edit-button {
-	margin-right: 0.5em;
-}
+#createFormationTemplateDialog {
+	.preview-edit-button {
+		margin-right: 0.5em;
+	}
 
-#createFormationTemplateDialog .preview-car {
-	text-align: center;
-}
+	.preview-car {
+		text-align: center;
+	}
 
-#createFormationTemplateDialog td.editing {
-	background-color: #ff7878;
-	pointer-events: none;
-}
+	& td.editing {
+		background-color: #ff7878;
+		pointer-events: none;
 
-#createFormationTemplateDialog td.editing p a {
-	pointer-events: none;
-	color: #999;
+		& p a {
+			pointer-events: none;
+			color: #999;
+		}
+	}
 }
 
 #seriesDispDialog .table-container,
@@ -428,23 +431,27 @@ p.car-name button {
 	border: none;
 }
 
-#seriesDispDialog td.formation-name.hidden {
-	color: #ccc;
+#seriesDispDialog {
+	& td.formation-name.hidden {
+		color: #ccc;
+	}
+
+	& label.mku-checkbox-container {
+		display: inline-block;
+		font-size: 0.8em;
+		vertical-align: middle;
+		margin-left: 0.15em;
+	}
 }
 
-#seriesDispDialog label.mku-checkbox-container {
-	display: inline-block;
-	font-size: 0.8em;
-	vertical-align: middle;
-	margin-left: 0.15em;
-}
+#formationDetealDialog {
+	#fmdt-remark {
+		margin-top: 1.4em;
+	}
 
-#formationDetealDialog #fmdt-remark {
-	margin-top: 1.4em;
-}
-
-#formationDetealDialog #fmdt-remark-remark {
-	margin-right: 0.25em;
+	#fmdt-remark-remark {
+		margin-right: 0.25em;
+	}
 }
 
 #editJSONDialog #jsed-main {
@@ -452,28 +459,30 @@ p.car-name button {
 	height: 20em;
 }
 
-td.preview-car span {
-	user-select: none;
-	cursor: grab;
-	display: inline-block;
-}
+td.preview-car {
+	& span {
+		user-select: none;
+		cursor: grab;
+		display: inline-block;
+	}
 
-td.preview-car:has(span.selected) {
-	background-color: #ccc !important;
-}
+	&:has(span.selected) {
+		background-color: #ccc !important;
+	}
 
-td.preview-car:has(span.left-border) {
-	border-left: 2px #f00 solid !important;
-	background-color: var(--selection-hover-highlight) !important;
-}
+	&:has(span.left-border) {
+		border-left: 2px #f00 solid !important;
+		background-color: var(--selection-hover-highlight) !important;
+	}
 
-td.preview-car:has(span.right-border) {
-	border-right: 2px #f00 solid !important;
-	background-color: var(--selection-hover-highlight) !important;
-}
+	&:has(span.right-border) {
+		border-right: 2px #f00 solid !important;
+		background-color: var(--selection-hover-highlight) !important;
+	}
 
-td.preview-car:has(span.selected) {
-	background-color: #ccc !important;
+	&:has(span.selected) {
+		background-color: #ccc !important;
+	}
 }
 
 /* 車両及び編成の状態 */
@@ -483,32 +492,32 @@ p.car-name span.car-status {
 	padding: 0 0.2em;
 	float: right;
 	margin-top: 0.5em;
-}
 
-p.car-name span.car-status::before {
-	content: "check";
-}
+	&::before {
+		content: "check";
+	}
 
-p.car-name span.car-status.dropped {
-	background-color: #f00;
-}
+	&.dropped {
+		background-color: #f00;
 
-p.car-name span.car-status.dropped a.update-yearmonth-link {
-	color: #fff;
-}
+		& a.update-yearmonth-link {
+			color: #fff;
+		}
 
-p.car-name span.car-status.dropped::before {
-	content: "ban";
-}
+		&::before {
+			content: "ban";
+		}
+	}
 
-p.car-name span.car-status.conserved {
-	margin-right: 0.3em;
-	margin-left: 1.0em;
-	background-color: #0081c9;
-}
+	&.conserved {
+		margin-right: 0.3em;
+		margin-left: 1.0em;
+		background-color: #0081c9;
 
-p.car-name span.car-status.conserved::before {
-	content: none;
+		&::before {
+			content: none;
+		}
+	}
 }
 
 /* 年月入力欄 */
@@ -530,21 +539,23 @@ table.management-dialog-objects-list tr:not(:nth-child(1)) td:last-child button:
 }
 
 /*ダイアログ内のボタンリスト*/
-.dialog-content ul.dialog-buttons-list {
-	list-style: none;
-	padding-left: 0;
-}
+.dialog-content {
+	& ul.dialog-buttons-list {
+		list-style: none;
+		padding-left: 0;
 
-.dialog-content ul.dialog-buttons-list li {
-	margin: 1em 0;
-}
+		& li {
+			margin: 1em 0;
 
-.dialog-content ul.dialog-buttons-list li button {
-	width: 100%;
-}
+			& button {
+				width: 100%;
 
-.dialog-content ul.dialog-buttons-list li button.lsf-icon::before {
-	margin-right: 0.3em;
+				&.lsf-icon::before {
+					margin-right: 0.3em;
+				}
+			}
+		}
+	}
 }
 
 /* マスタ管理画面の検索欄 */
@@ -563,72 +574,70 @@ table.management-dialog-objects-list {
 	border-collapse: separate;
 	border-spacing: 0;
 	min-width: 820px;
-}
 
-table.management-dialog-objects-list tr:nth-child(1) {
-	text-align: center;
-	font-weight: bold;
-	background-color: var(--formation-table-main-border) !important;
-	position: sticky;
-	top: 0;
-	left: 0;
-}
+	& tr {
+		&:nth-child(1) {
+			text-align: center;
+			font-weight: bold;
+			background-color: var(--formation-table-main-border) !important;
+			position: sticky;
+			top: 0;
+			left: 0;
 
-table.management-dialog-objects-list tr:nth-child(1) td {
-	border-bottom: var(--formation-table-main-border) 2px solid;
-}
+			& td {
+				border-bottom: var(--formation-table-main-border) 2px solid;
+				color: #fff;
+			}
+		}
 
+		& td {
+			&:first-child {
+				padding: 0;
+				width: 1.5em;
+			}
 
-table.management-dialog-objects-list tr td:first-child {
-	padding: 0;
-}
+			&:last-child {
+				width: 13.1em;
+				border-right: none;
+			}
 
-table.management-dialog-objects-list tr td:first-child {
-	width: 1.5em;
-}
+			&:first-child,
+			&:last-child {
+				cursor: auto;
+			}
 
-table.management-dialog-objects-list tr td:last-child {
-	width: 13.1em;
-}
+			&:nth-last-child(2) {
+				max-width: 5em;
+				white-space: nowrap;
+				overflow: hidden;
+			}
+		}
 
-table.management-dialog-objects-list tr td:last-child {
-	border-right: none;
-}
+		&:not(:nth-child(1)) {
+			& td {
+				&:nth-child(2) {
+					text-align: right;
+				}
 
-table.management-dialog-objects-list input,
-table.management-dialog-objects-list tr:not(:nth-child(1)) {
-	cursor: pointer;
-}
+				&:not(:nth-child(2)) {
+					text-align: center;
+				}
+			}
 
-table.management-dialog-objects-list tr td:first-child,
-table.management-dialog-objects-list tr td:last-child {
-	cursor: auto;
-}
+			&:has(input:checked) {
+				background-color: var(--selection-highlight) !important;
+			}
+		}
 
-table.management-dialog-objects-list tr:nth-child(1) td {
-	color: #fff;
-}
+		&:has(input:checked) td {
+			color: #fff;
+		}
+	}
 
-table.management-dialog-objects-list tr:not(:nth-child(1)) td:nth-child(2) {
-	text-align: right;
-}
-
-table.management-dialog-objects-list tr:not(:nth-child(1)) td:not(:nth-child(2)) {
-	text-align: center;
-}
-
-table.management-dialog-objects-list tr td:nth-last-child(2) {
-	max-width: 5em;
-	white-space: nowrap;
-	overflow: hidden;
-}
-
-table.management-dialog-objects-list tr:not(:nth-child(1)):has(input:checked) {
-	background-color: var(--selection-highlight) !important;
-}
-
-table.management-dialog-objects-list tr:has(input:checked) td {
-	color: #fff;
+	& input,
+	& tr:not(:nth-child(1)) {
+		cursor: pointer;
+	}
 }
 
 #edmsf-cars-edit-button {
@@ -648,13 +657,15 @@ table.management-dialog-objects-list tr:has(input:checked) td {
 
 /* 設定画面 */
 
-#generalSettingDialog .color-container {
-	display: flex;
-}
+#generalSettingDialog {
+	.color-container {
+		display: flex;
+	}
 
-#generalSettingDialog .color-preview {
-	width: 50px;
-	height: 50px;
+	.color-preview {
+		width: 50px;
+		height: 50px;
+	}
 }
 
 /* 設定画面ここまで */
