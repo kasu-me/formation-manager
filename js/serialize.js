@@ -74,7 +74,7 @@ function generateJSON() {
 		formationTemplateJSON += formationTemplateId != 0 ? "," : "";
 		formationTemplateJSON += formationTemplateList[formationTemplateId].convertToJSON();
 	}
-	return `{"settings":${JSON.stringify(settings)},"minYearMonth":{"y":${minYearMonth.year},"m":${minYearMonth.month}},"maxYearMonth":{"y":${maxYearMonth.year},"m":${maxYearMonth.month}},"serieses":[${seriesJSON}],"cars":[${carJSON}],"formations":[${formationJSON}],"formationTemplates":[${formationTemplateJSON}]}`;
+	return `{"now":${now.serial},"settings":${JSON.stringify(settings)},"minYearMonth":{"y":${minYearMonth.year},"m":${minYearMonth.month}},"maxYearMonth":{"y":${maxYearMonth.year},"m":${maxYearMonth.month}},"serieses":[${seriesJSON}],"cars":[${carJSON}],"formations":[${formationJSON}],"formationTemplates":[${formationTemplateJSON}]}`;
 }
 
 //無限ループ対策
@@ -127,6 +127,9 @@ function loadListsFromJSON(json) {
 		//年月の読み込み
 		minYearMonth = new YearMonth(obj.minYearMonth.y, obj.minYearMonth.m);
 		maxYearMonth = new YearMonth(obj.maxYearMonth.y, obj.maxYearMonth.m);
+		if (obj.now != null) {
+			now = new YearMonth(obj.now);
+		}
 
 		setInputMaxAndMin();
 		Dialog.offAll();
