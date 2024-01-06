@@ -451,7 +451,8 @@ window.addEventListener("load", function () {
 				Dialog.list.createSeriesDialog.dialogTitle.innerHTML = "形式の編集";
 				Dialog.list.createSeriesDialog.functions.tentativeSeries = AllSerieses.seriesesList[x];
 				document.getElementById("crsr-series-name").value = Dialog.list.createSeriesDialog.functions.tentativeSeries.name;
-				document.getElementById("crsr-series-description").value = Dialog.list.createSeriesDialog.functions.tentativeSeries.description;
+				let description = Dialog.list.createSeriesDialog.functions.tentativeSeries.description;
+				document.getElementById("crsr-series-description").value = description == "　" ? "" : description;
 				document.getElementById("crsr-series-ishidden").checked = !Dialog.list.createSeriesDialog.functions.tentativeSeries.isHidden;
 			} else {
 				//新規形式
