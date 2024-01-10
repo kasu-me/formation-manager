@@ -128,6 +128,7 @@ class AllFormations {
 			terminatedOn = now;
 		}
 		AllFormations.#formations[formationId].release(terminatedOn);
+		refresh();
 	}
 
 	static get formationsList() {
