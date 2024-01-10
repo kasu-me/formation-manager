@@ -70,10 +70,48 @@ class OldCarNumber {
 	}
 }
 
+//補助記号クラス
+class CarTypeSymbol {
+	#symbolName = "";
+	#since;
+	#until;
+	constructor(symbolName, since, until) {
+		this.#symbolName = symbolName;
+		this.#since = since;
+		this.#until = until == undefined ? -1 : until;
+	}
+	get symbolName() {
+		return this.#symbolName;
+	}
+
+	set symbolName(symbolName) {
+		this.#symbolName = symbolName;
+	}
+
+	get since() {
+		return this.#since;
+	}
+
+	set since(since) {
+		this.#since = since;
+	}
+
+	get until() {
+		return this.#until;
+	}
+
+	set until(until) {
+		this.#until = until;
+	}
+}
+
 //車両クラス
 class Car {
 	//車両番号
 	#number;
+	//補助記号
+	//要素はCarTypeSymbolクラス
+	#carTypeSymbols = [];
 	//以前の車両番号
 	//要素はOldCarNumberクラス
 	#oldNumbers = [];
@@ -88,7 +126,12 @@ class Car {
 
 	//コンストラクタ(車両番号,製造年月,以前の車両ID,備考)
 	constructor(number, manufacturedOn, oldNumbers, remark) {
-		this.#number = number.toString();
+		if (Array.isArray(number)) {
+			this.#number = number[0].toString();
+			this.#carTypeSymbols = number[1];
+		} else {
+			this.#number = number.toString();
+		}
 		this.#manufacturedOn = manufacturedOn;
 		if (oldNumbers != null) {
 			this.#oldNumbers = setObservedArray(oldNumbers, refresh);
@@ -134,6 +177,9 @@ class Car {
 	}
 	get oldNumbers() {
 		return this.#oldNumbers;
+	}
+	get carTypeSymbols() {
+		return this.#carTypeSymbols;
 	}
 	get droppedOn() {
 		return this.#droppedOn;
