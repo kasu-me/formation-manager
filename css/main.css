@@ -131,8 +131,26 @@ p#sort-controllers-container {
 		}
 	}
 
+	& span#panel-sort-mode-controller span {
+		margin-left: 2.0em;
+		display: inline;
+		vertical-align: middle;
+
+		& a {
+			user-select: none;
+
+			&:first-child {
+				border-right: 1px solid #bbb;
+				padding-right: 0.4em;
+				margin-right: 0.4em;
+			}
+		}
+	}
+
 	&:has(+div#formation-table-container.grid-mode) span#panel-display-mode-controller span a:last-child,
-	&:not(:has(+div#formation-table-container.grid-mode)) span#panel-display-mode-controller span a:first-child {
+	&:not(:has(+div#formation-table-container.grid-mode)) span#panel-display-mode-controller span a:first-child,
+	&:has(+div#formation-table-container.car-count-mode) span#panel-sort-mode-controller span a:last-child,
+	&:not(:has(+div#formation-table-container.car-count-mode)) span#panel-sort-mode-controller span a:first-child {
 		pointer-events: none;
 		color: #000;
 		font-weight: bold;

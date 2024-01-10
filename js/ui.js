@@ -4,7 +4,8 @@ const settings = {
 	autoSaveInterval: 1,
 	themeColors: {},
 	seriesOrder: [],
-	isDisplayGridMode: false
+	isDisplayGridMode: false,
+	sortMode: ""
 };
 
 //JSONを保存ウインドウ表示
@@ -56,9 +57,19 @@ function list() {
 
 		//ソート
 		let natSorter = natsort();
-		let formationIds = Object.keys(formationList).sort((f1, f2) => {
-			return natSorter(formationList[f1].name, formationList[f2].name);
-		});
+		let sortFunc;
+		if (settings.sortMode == "car-count") {
+			sortFunc = (f1, f2) => {
+				let f1l = formationList[f1].cars.length
+				let f2l = formationList[f2].cars.length
+				return f1l > f2l ? 1 : f1l < f2l ? -1 : natSorter(formationList[f1].name, formationList[f2].name);
+			}
+		} else {
+			sortFunc = (f1, f2) => {
+				return natSorter(formationList[f1].name, formationList[f2].name);
+			}
+		}
+		let formationIds = Object.keys(formationList).sort(sortFunc);
 
 
 		//編成ごとに処理
@@ -332,8 +343,19 @@ function setPanelDisplayMode(isGridMode) {
 	}
 	autoSave(true);
 }
+function setSortMode(mode) {
+	settings.sortMode = mode;
+	if (mode == "car-count") {
+		document.getElementById("formation-table-container").classList.add("car-count-mode");
+	} else {
+		document.getElementById("formation-table-container").classList.remove("car-count-mode");
+	}
+	autoSave(true);
+	refresh();
+}
 function loadSetting() {
 	setPanelDisplayMode(settings.isDisplayGridMode);
+	setSortMode(settings.sortMode);
 }
 
 //現在年月の操作
