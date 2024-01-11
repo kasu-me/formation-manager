@@ -122,6 +122,10 @@ p#sort-controllers-container {
 	padding: 0;
 	position: sticky;
 
+	& span {
+		font-size: 0.85em;
+	}
+
 	& span#panel-display-mode-controller span {
 		display: inline;
 		vertical-align: middle;
