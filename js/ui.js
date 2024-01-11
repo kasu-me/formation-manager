@@ -60,14 +60,26 @@ function list() {
 		let sortFunc;
 		if (settings.sortMode == "car-count") {
 			sortFunc = (f1, f2) => {
-				let f1l = formationList[f1].cars.length
-				let f2l = formationList[f2].cars.length
+				let f1l = formationList[f1].cars.length;
+				let f2l = formationList[f2].cars.length;
 				return f1l > f2l ? 1 : f1l < f2l ? -1 : natSorter(formationList[f1].name, formationList[f2].name);
-			}
+			};
+		} else if (settings.sortMode == "formated-on") {
+			sortFunc = (f1, f2) => {
+				let f1l = formationList[f1].formatedOn.serial;
+				let f2l = formationList[f2].formatedOn.serial;
+				return f1l > f2l ? 1 : f1l < f2l ? -1 : natSorter(formationList[f1].name, formationList[f2].name);
+			};
+		} else if (settings.sortMode == "manufactured-on") {
+			sortFunc = (f1, f2) => {
+				let c1 = Math.min(...formationList[f1].cars.map(carId => AllCars.carsList[carId].manufacturedOn.serial));
+				let c2 = Math.min(...formationList[f2].cars.map(carId => AllCars.carsList[carId].manufacturedOn.serial));
+				return c1 > c2 ? 1 : c1 < c2 ? -1 : natSorter(formationList[f1].name, formationList[f2].name);
+			};
 		} else {
 			sortFunc = (f1, f2) => {
 				return natSorter(formationList[f1].name, formationList[f2].name);
-			}
+			};
 		}
 		let formationIds = Object.keys(formationList).sort(sortFunc);
 
@@ -338,17 +350,24 @@ function setPanelDisplayMode(isGridMode) {
 	settings.isDisplayGridMode = isGridMode;
 	if (isGridMode) {
 		document.getElementById("formation-table-container").classList.add("grid-mode");
+		document.getElementById("panel-display-mode-controller").classList.add("grid-mode");
 	} else {
 		document.getElementById("formation-table-container").classList.remove("grid-mode");
+		document.getElementById("panel-display-mode-controller").classList.remove("grid-mode");
 	}
 	autoSave(true);
 }
 function setSortMode(mode) {
 	settings.sortMode = mode;
+	document.getElementById("panel-sort-mode-controller").classList = "";
 	if (mode == "car-count") {
-		document.getElementById("formation-table-container").classList.add("car-count-mode");
+		document.getElementById("panel-sort-mode-controller").classList.add("car-count-mode");
+	} else if (mode == "car-number") {
+		document.getElementById("panel-sort-mode-controller").classList.add("car-number-mode");
+	} else if (mode == "manufactured-on") {
+		document.getElementById("panel-sort-mode-controller").classList.add("manufactured-on-mode");
 	} else {
-		document.getElementById("formation-table-container").classList.remove("car-count-mode");
+		document.getElementById("panel-sort-mode-controller").classList.add("formated-on-mode");
 	}
 	autoSave(true);
 	refresh();

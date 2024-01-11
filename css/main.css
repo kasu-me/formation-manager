@@ -69,42 +69,47 @@ div#header {
 	margin-bottom: 1.5em;
 	padding: 0.8em;
 	border-bottom: 1px solid #bbb;
-	display: flex;
 
-	& div.button-group {
-		margin-right: 1.0em;
-		padding-right: 1.0em;
-		border-right: 1px solid #bbb;
+	div.flex {
+		display: flex;
+		border-bottom: 1px solid #bbb;
+		padding-bottom: 0.8em;
 
-		& div.button-group-title {
-			font-weight: bold;
-			margin-bottom: 0.1em;
-		}
-	}
+		& div.button-group {
+			margin-right: 1.0em;
+			padding-right: 1.0em;
+			border-right: 1px solid #bbb;
 
-	#autosave-status {
-		background-color: #b3b3b3;
-		border: 1px solid #b3b3b3;
-		color: #000000;
-		padding: 1px 6px;
-		font-size: 10pt;
-
-		&:hover {
-			background-color: #c4c4c4;
+			& div.button-group-title {
+				font-weight: bold;
+				margin-bottom: 0.1em;
+			}
 		}
 
-		&::before {
-			content: "refresh";
-		}
+		#autosave-status {
+			background-color: #b3b3b3;
+			border: 1px solid #b3b3b3;
+			color: #000000;
+			padding: 1px 6px;
+			font-size: 10pt;
 
-		&.done {
-			background-color: #00c900;
-			border: 1px solid #00c900;
-			color: #fff;
-			pointer-events: none;
+			&:hover {
+				background-color: #c4c4c4;
+			}
 
 			&::before {
-				content: "check";
+				content: "refresh";
+			}
+
+			&.done {
+				background-color: #00c900;
+				border: 1px solid #00c900;
+				color: #fff;
+				pointer-events: none;
+
+				&::before {
+					content: "check";
+				}
 			}
 		}
 	}
@@ -113,18 +118,22 @@ div#header {
 /* ソート等 */
 p#sort-controllers-container {
 	margin: 0;
-	padding: 0 0.8em;
+	margin-top: 0.7em;
+	padding: 0;
+	position: sticky;
 
 	& span#panel-display-mode-controller span {
 		display: inline;
-		vertical-align: top;
+		vertical-align: middle;
+		padding-right: 1em;
+		border-right: 1px solid #bbb;
 
 		& a {
 			font-size: 150%;
 			user-select: none;
 
 			&:first-child {
-				border-right: 1px solid #bbb;
+				border-right: 1px solid #ddd;
 				padding-right: 0.4em;
 				margin-right: 0.4em;
 			}
@@ -132,25 +141,27 @@ p#sort-controllers-container {
 	}
 
 	& span#panel-sort-mode-controller span {
-		margin-left: 2.0em;
+		margin-left: 1em;
 		display: inline;
 		vertical-align: middle;
 
 		& a {
 			user-select: none;
 
-			&:first-child {
-				border-right: 1px solid #bbb;
+			&:not(:last-child) {
+				border-right: 1px solid #ddd;
 				padding-right: 0.4em;
 				margin-right: 0.4em;
 			}
 		}
 	}
 
-	&:has(+div#formation-table-container.grid-mode) span#panel-display-mode-controller span a:last-child,
-	&:not(:has(+div#formation-table-container.grid-mode)) span#panel-display-mode-controller span a:first-child,
-	&:has(+div#formation-table-container.car-count-mode) span#panel-sort-mode-controller span a:last-child,
-	&:not(:has(+div#formation-table-container.car-count-mode)) span#panel-sort-mode-controller span a:first-child {
+	& span#panel-display-mode-controller:not(.grid-mode) span a:first-child,
+	& span#panel-display-mode-controller.grid-mode span a:last-child,
+	& span#panel-sort-mode-controller.car-number-mode span a:nth-child(1),
+	& span#panel-sort-mode-controller.car-count-mode span a:nth-child(2),
+	& span#panel-sort-mode-controller.formated-on-mode span a:nth-child(3),
+	& span#panel-sort-mode-controller.manufactured-on-mode span a:nth-child(4) {
 		pointer-events: none;
 		color: #000;
 		font-weight: bold;

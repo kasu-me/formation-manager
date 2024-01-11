@@ -44,61 +44,68 @@
 
 <body>
 	<div id="header">
-		<div class="button-group">
-			<div class="button-group-title">一覧</div>
-			<button class="lsf-icon" icon="list" onclick="Dialog.list.seriesDispDialog.functions.display()">形式</button>
-			<button class="lsf-icon" icon="list"
-				onclick="Dialog.list.formationTemplatesDialog.functions.display()">編成テンプレート</button>
+		<div class="flex">
+			<div class="button-group">
+				<div class="button-group-title">一覧</div>
+				<button class="lsf-icon" icon="list"
+					onclick="Dialog.list.seriesDispDialog.functions.display()">形式</button>
+				<button class="lsf-icon" icon="list"
+					onclick="Dialog.list.formationTemplatesDialog.functions.display()">編成テンプレート</button>
+			</div>
+			<div class="button-group">
+				<div class="button-group-title">作成</div>
+				<button class="lsf-icon" icon="add"
+					onclick="Dialog.list.createSeriesDialog.functions.display()">形式</button>
+				<button class="lsf-icon" icon="add"
+					onclick="Dialog.list.formationAddingDialog.functions.display()">編成</button>
+				<button class="lsf-icon" icon="add"
+					onclick="Dialog.list.createCarDialog.functions.display()">車両</button>
+			</div>
+			<div class="button-group">
+				<div class="button-group-title">年月</div>
+				<input type="range" oninput="updateNowYearMonth(new YearMonth(Number(this.value)))" id="now-range">
+				<span id="now-time-inputs" class="time-inputs">
+					<input type="number" id="now-y" class="yearmonth-y" onchange="updateNowYearMonthByInputBoxes()"
+						oninput="updateNowYearMonthByInputBoxes()">年<input type="number" id="now-m" class="yearmonth-m"
+						onchange="updateNowYearMonthByInputBoxes()" oninput="updateNowYearMonthByInputBoxes()">月
+				</span>
+			</div>
+			<div class="button-group">
+				<div class="button-group-title">編成表マスタ</div>
+				<button class="lsf-icon" icon="file" onclick="showJSONLoadDialog()">読込</button><input type="file"
+					id="jsonReader" style="display:none;" accept="application/json" onchange="readJson(event)">
+				<button class="lsf-icon" icon="download" onclick="showJSONOutputDialog()">保存</button>
+				<button class="lsf-icon" icon="setup"
+					onclick="Dialog.list.formationDataManagementDialog.functions.display()">管理</button>
+			</div>
+			<div class="button-group">
+				<div class="button-group-title">自動セーブ</div>
+				<a id="autosave-status" class="lsf-icon" href="javascript:autoSave(true)">未</a>
+			</div>
+			<div class="button-group">
+				<div class="button-group-title">その他</div>
+				<button class="lsf-icon" icon="setting"
+					onclick="Dialog.list.generalSettingDialog.functions.display()">全般設定</button>
+				<button class="lsf-icon" icon="help" onclick="Dialog.list.helpDialog.functions.display()">ヘルプ</button>
+			</div>
 		</div>
-		<div class="button-group">
-			<div class="button-group-title">作成</div>
-			<button class="lsf-icon" icon="add" onclick="Dialog.list.createSeriesDialog.functions.display()">形式</button>
-			<button class="lsf-icon" icon="add"
-				onclick="Dialog.list.formationAddingDialog.functions.display()">編成</button>
-			<button class="lsf-icon" icon="add" onclick="Dialog.list.createCarDialog.functions.display()">車両</button>
-		</div>
-		<div class="button-group">
-			<div class="button-group-title">年月</div>
-			<input type="range" oninput="updateNowYearMonth(new YearMonth(Number(this.value)))" id="now-range">
-			<span id="now-time-inputs" class="time-inputs">
-				<input type="number" id="now-y" class="yearmonth-y" onchange="updateNowYearMonthByInputBoxes()"
-					oninput="updateNowYearMonthByInputBoxes()">年<input type="number" id="now-m" class="yearmonth-m"
-					onchange="updateNowYearMonthByInputBoxes()" oninput="updateNowYearMonthByInputBoxes()">月
+		<p id="sort-controllers-container">
+			<span id="panel-display-mode-controller">
+				<span>
+					<a href="javascript:setPanelDisplayMode(false)" class="lsf" title="リストモード">list</a><a
+						href="javascript:setPanelDisplayMode(true)" class="lsf" title="グリッドモード">tile</a>
+				</span>
 			</span>
-		</div>
-		<div class="button-group">
-			<div class="button-group-title">編成表マスタ</div>
-			<button class="lsf-icon" icon="file" onclick="showJSONLoadDialog()">読込</button><input type="file"
-				id="jsonReader" style="display:none;" accept="application/json" onchange="readJson(event)">
-			<button class="lsf-icon" icon="download" onclick="showJSONOutputDialog()">保存</button>
-			<button class="lsf-icon" icon="setup"
-				onclick="Dialog.list.formationDataManagementDialog.functions.display()">管理</button>
-		</div>
-		<div class="button-group">
-			<div class="button-group-title">自動セーブ</div>
-			<a id="autosave-status" class="lsf-icon" href="javascript:autoSave(true)">未</a>
-		</div>
-		<div class="button-group">
-			<div class="button-group-title">その他</div>
-			<button class="lsf-icon" icon="setting"
-				onclick="Dialog.list.generalSettingDialog.functions.display()">全般設定</button>
-			<button class="lsf-icon" icon="help" onclick="Dialog.list.helpDialog.functions.display()">ヘルプ</button>
-		</div>
+			<span id="panel-sort-mode-controller">
+				<span>
+					<a href="javascript:setSortMode('car-number')">編成番号順</a><a
+						href="javascript:setSortMode('car-count')">両数順</a><a
+						href="javascript:setSortMode('formated-on')">組成年月順</a><a
+						href="javascript:setSortMode('manufactured-on')">車齢順</a>
+				</span>
+			</span>
+		</p>
 	</div>
-	<p id="sort-controllers-container">
-		<span id="panel-display-mode-controller">
-			<span>
-				<a href="javascript:setPanelDisplayMode(false)" class="lsf" title="リストモード">list</a><a
-					href="javascript:setPanelDisplayMode(true)" class="lsf" title="グリッドモード">tile</a>
-			</span>
-		</span>
-		<span id="panel-sort-mode-controller">
-			<span>
-				<a href="javascript:setSortMode('car-number')">編成番号順</a><a
-					href="javascript:setSortMode('car-count')">両数順</a>
-			</span>
-		</span>
-	</p>
 	<div id="formation-table-container">
 
 	</div>
