@@ -226,6 +226,7 @@ table.formation-view tr:nth-child(2) td:nth-child(2n) {
 
 div#formation-table-container table.formation-table tr td {
 	padding: 0.15em 0.3em;
+	user-select: none;
 
 	& span {
 		display: block;
