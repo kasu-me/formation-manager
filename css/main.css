@@ -137,7 +137,6 @@ p#sort-controllers-container {
 			user-select: none;
 
 			&:first-child {
-				border-right: 1px solid #ddd;
 				padding-right: 0.4em;
 				margin-right: 0.4em;
 			}
@@ -153,7 +152,6 @@ p#sort-controllers-container {
 			user-select: none;
 
 			&:not(:last-child) {
-				border-right: 1px solid #ddd;
 				padding-right: 0.4em;
 				margin-right: 0.4em;
 			}
