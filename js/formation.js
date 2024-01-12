@@ -60,7 +60,6 @@ class OldCarNumber {
 	constructor(number, renumberedOn) {
 		this.#number = number;
 		this.#renumberedOn = renumberedOn;
-		observedObjects.push(this);
 	}
 	get number() {
 		return Formatter.toHTML(this.#number);

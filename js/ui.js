@@ -184,9 +184,10 @@ function addCarCell(table, carId, carIdListNow, carNumberListNow, isInFormation,
 	if (AllCars.carsList[carId].isDroppedInTime(now) && !Boolean(isConvercedCar)) {
 		if (isInFormation) { table.addCell("") }
 	} else {
-		table.addCell(Formatter.link(carId, AllCars.carsList[carId].numberInTime(now)), { "class": "car" + ` car-id-${carId}` + (AllCars.carsList[carId].isDroppedInTime(now) ? " dropped" : "") });
+		let carNumber = AllCars.carsList[carId].numberInTime(now);
+		table.addCell(Formatter.link(carId, carNumber), { "class": "car" + ` car-id-${carId}` + (AllCars.carsList[carId].isDroppedInTime(now) ? " dropped" : "") });
 		carIdListNow.push(carId);
-		carNumberListNow.push(AllCars.carsList[carId].numberInTime(now))
+		carNumberListNow.push(carNumber)
 	}
 }
 
