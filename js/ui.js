@@ -185,7 +185,7 @@ function addCarCell(table, carId, carIdListNow, carNumberListNow, isInFormation,
 		if (isInFormation) { table.addCell("") }
 	} else {
 		let carNumber = AllCars.carsList[carId].numberInTime(now);
-		let pattern = new RegExp("^([^\\d]+)");
+		let pattern = new RegExp("^([A-Za-z]+)");
 		let carTypeSymbolMatchResult = carNumber.match(pattern);
 		let carTypeSymbol = "";
 		let pureCarNumber = carNumber;
