@@ -52,66 +52,60 @@ class Series {
 	}
 }
 
-//旧車番クラス
-class OldCarNumber {
-	#number;
-	//YearMonth この番号がいつまで使われていたか
-	#renumberedOn;
-	constructor(number, renumberedOn) {
+//番号と補助記号のペア
+class NumberPair {
+	#number
+	#symbol
+	constructor(num) {
+		let number = "0";
+		let symbol = "";
+		if (Array.isArray(num) && num.length == 2) {
+			number = num[0];
+			symbol = num[1];
+		} else if (Array.isArray(num) && num.length == 1) {
+			number = num[0];
+		} else {
+			number = num;
+		}
 		this.#number = number;
-		this.#renumberedOn = renumberedOn;
-		observedObjects.push(this);
+		this.#symbol = symbol;
 	}
 	get number() {
-		return Formatter.toHTML(this.#number);
+		return this.#number;
+	}
+	get symbol() {
+		return this.#symbol;
+	}
+}
+
+//旧車番クラス
+class OldCarNumber {
+	//NumberPair
+	#numberPair;
+	//YearMonth この番号がいつまで使われていたか
+	#renumberedOn;
+	constructor(numberPair, renumberedOn) {
+		this.#numberPair = numberPair;
+		this.#renumberedOn = renumberedOn;
+	}
+	get number() {
+		return Formatter.toHTML(this.#numberPair.number);
 	}
 	get renumberedOn() {
 		return this.#renumberedOn;
 	}
-}
-
-//補助記号クラス
-class CarTypeSymbol {
-	#symbolName = "";
-	#since;
-	#until;
-	constructor(symbolName, since, until) {
-		this.#symbolName = symbolName;
-		this.#since = since;
-		this.#until = until == undefined ? -1 : until;
+	get carTypeSymbol() {
+		return Formatter.toHTML(this.#numberPair.symbol);
 	}
-	get symbolName() {
-		return this.#symbolName;
-	}
-
-	set symbolName(symbolName) {
-		this.#symbolName = symbolName;
-	}
-
-	get since() {
-		return this.#since;
-	}
-
-	set since(since) {
-		this.#since = since;
-	}
-
-	get until() {
-		return this.#until;
-	}
-
-	set until(until) {
-		this.#until = until;
+	get numberPair() {
+		return this.#numberPair;
 	}
 }
 
 //車両クラス
 class Car {
-	//車両番号
-	#number;
-	//補助記号
-	//要素はCarTypeSymbolクラス
-	#carTypeSymbols = [];
+	//NumberPair
+	#numberPair;
 	//以前の車両番号
 	//要素はOldCarNumberクラス
 	#oldNumbers = [];
@@ -126,12 +120,7 @@ class Car {
 
 	//コンストラクタ(車両番号,製造年月,以前の車両ID,備考)
 	constructor(number, manufacturedOn, oldNumbers, remark) {
-		if (Array.isArray(number)) {
-			this.#number = number[0].toString();
-			this.#carTypeSymbols = number[1];
-		} else {
-			this.#number = number.toString();
-		}
+		this.#numberPair = new NumberPair(number);
 		this.#manufacturedOn = manufacturedOn;
 		if (oldNumbers != null) {
 			this.#oldNumbers = setObservedArray(oldNumbers, refresh);
@@ -143,8 +132,8 @@ class Car {
 	}
 	//改番
 	renumber(newNumber, renumberedOn) {
-		this.#oldNumbers.push(new OldCarNumber(this.#number, renumberedOn));
-		this.#number = newNumber.toString();
+		this.#oldNumbers.push(new OldCarNumber(this.#numberPair, renumberedOn));
+		this.#numberPair = new NumberPair(newNumber.toString());
 		this.sortOldNumbersByYearMonth();
 	}
 	//以前の車両番号を改番年月順にソート
@@ -173,13 +162,13 @@ class Car {
 	}
 
 	get number() {
-		return Formatter.toHTML(this.#number);
+		return Formatter.toHTML(this.#numberPair.number);
+	}
+	get symbol() {
+		return Formatter.toHTML(this.#numberPair.symbol);
 	}
 	get oldNumbers() {
 		return this.#oldNumbers;
-	}
-	get carTypeSymbols() {
-		return this.#carTypeSymbols;
 	}
 	get droppedOn() {
 		return this.#droppedOn;
@@ -226,21 +215,24 @@ class Car {
 
 	//now時点での車両番号を取得
 	numberInTime(now) {
+		return this.numberPairInTime(now).number;
+	}
+	numberPairInTime(now) {
 		if (this.#oldNumbers.length == 0) {
-			return this.#number;
+			return this.#numberPair;
 		} else {
 			for (let i in this.#oldNumbers) {
 				if (this.#oldNumbers[i].renumberedOn.serial > now.serial) {
-					return this.#oldNumbers[i].number;
+					return this.#oldNumbers[i].numberPair;
 				}
 			}
-			return this.#number;
+			return this.#numberPair;
 		}
 	}
 
 	//マスタ編集
 	updateMasterData(number, manufacturedOn, droppedOn, oldNumbers, isConserved) {
-		this.#number = number;
+		this.#numberPair = new NumberPair(number);
 		this.#manufacturedOn = manufacturedOn;
 		this.#oldNumbers = [];
 		this.#droppedOn = droppedOn == null ? undefined : droppedOn;
@@ -250,7 +242,7 @@ class Car {
 			this.#isConserved = isConserved;
 		}
 		for (let i in oldNumbers) {
-			this.#oldNumbers.push(new OldCarNumber(oldNumbers[i].number, new YearMonth(oldNumbers[i].year, oldNumbers[i].month)));
+			this.#oldNumbers.push(new OldCarNumber(new NumberPair[oldNumbers[i]], new YearMonth(oldNumbers[i].year, oldNumbers[i].month)));
 		}
 		this.sortOldNumbersByYearMonth();
 	}
@@ -258,11 +250,11 @@ class Car {
 	convertToJSON() {
 		let oldNumbers = [];
 		for (let i in this.#oldNumbers) {
-			oldNumbers.push({ "number": this.#oldNumbers[i].number, "renumberedOn": this.#oldNumbers[i].renumberedOn.serial });
+			oldNumbers.push({ "number": this.#oldNumbers[i].number, "symbol": this.#oldNumbers[i].symbol, "renumberedOn": this.#oldNumbers[i].renumberedOn.serial });
 		}
 		return JSON.stringify({
 			instanceof: "Car",
-			number: this.#number,
+			number: { "number": this.#numberPair.number, "symbol": this.#numberPair.symbol },
 			oldNumbers: oldNumbers,
 			droppedOn: this.#droppedOn == undefined ? undefined : { y: this.#droppedOn.year, m: this.#droppedOn.month },
 			isConserved: this.#isConserved,
