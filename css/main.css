@@ -231,6 +231,7 @@ div#formation-table-container table.formation-table tr td {
 		display: block;
 		font-size: 75%;
 		opacity: 0.5;
+		line-height: 1em;
 	}
 }
 
