@@ -177,6 +177,10 @@ div#formation-table-container {
 
 	& div.generated-table-container {
 		margin-bottom: 2.0em;
+
+		&:not(:has(tr)) {
+			display: none;
+		}
 	}
 
 	& p.table-title {
