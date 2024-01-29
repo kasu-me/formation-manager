@@ -5,12 +5,13 @@ const settings = {
 	themeColors: {},
 	seriesOrder: [],
 	isDisplayGridMode: false,
-	sortMode: ""
+	sortMode: "",
+	fileName: ""
 };
 
 //JSONを保存ウインドウ表示
 function showJSONOutputDialog() {
-	saveFile("formation.json", generateJSON())
+	saveFile(settings.fileName ? settings.fileName : "formation.json", generateJSON())
 }
 
 //JSON読み込み
@@ -19,16 +20,17 @@ function showJSONLoadDialog() {
 }
 let tmpJSON = "";
 function readJson(evt) {
-	let file = evt.target.files;
+	let files = evt.target.files;
 	let reader = new FileReader();
-	reader.readAsText(file[0]);
+	reader.readAsText(files[0]);
 	reader.onload = function (e) {
 		tmpJSON = e.target.result;
-		Dialog.list.confirmDialog.functions.display(Message.list["MC001"], continueReadJSON, () => { document.getElementById("jsonReader").value = ""; tmpJSON = ""; });
+		Dialog.list.confirmDialog.functions.display(Message.list["MC001"], () => { continueReadJSON(files[0].name) }, () => { document.getElementById("jsonReader").value = ""; tmpJSON = ""; });
 	}
 }
-function continueReadJSON() {
+function continueReadJSON(fileName) {
 	loadListsFromJSON(tmpJSON);
+	settings.fileName = fileName;
 	tmpJSON = "";
 }
 
