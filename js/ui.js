@@ -185,17 +185,7 @@ function addCarCell(table, carId, carIdListNow, carNumberListNow, isInFormation,
 		if (isInFormation) { table.addCell("") }
 	} else {
 		let carNumber = AllCars.carsList[carId].numberInTime(now);
-		let pattern = new RegExp("^([A-Za-z]+)");
-		let carTypeSymbolMatchResult = carNumber.match(pattern);
-		let carTypeSymbol = "";
-		let pureCarNumber = carNumber;
-		if (carTypeSymbolMatchResult != undefined) {
-			let rawCarTypeSymbol = carTypeSymbolMatchResult[0];
-			let rawCarTypeSymbolIndex = carTypeSymbolMatchResult.index + rawCarTypeSymbol.length;
-			carTypeSymbol = rawCarTypeSymbol ? `<span>${rawCarTypeSymbol}</span>` : "";
-			pureCarNumber = carNumber.slice(rawCarTypeSymbolIndex);
-		}
-		table.addCell(Formatter.link(carId, `${carTypeSymbol}${pureCarNumber}`), { "class": "car" + ` car-id-${carId}` + (AllCars.carsList[carId].isDroppedInTime(now) ? " dropped" : "") });
+		table.addCell(Formatter.link(carId, carNumber), { "class": "car" + ` car-id-${carId}` + (AllCars.carsList[carId].isDroppedInTime(now) ? " dropped" : "") });
 		carIdListNow.push(carId);
 		carNumberListNow.push(carNumber)
 	}

@@ -1,7 +1,9 @@
 //フォーマッタクラス
 class Formatter {
-	static link(href, text) {
-		return `<a href="javascript:Dialog.list.carDetealDialog.functions.display(${href})">${text}</a>`
+	static link(href, carNum) {
+		let pattern = new RegExp("^([A-Za-z]+)");
+		let res = Formatter.separateSymbol(carNum, pattern);
+		return `<a href="javascript:Dialog.list.carDetealDialog.functions.display(${href})">${res.carTypeSymbol}${res.pureCarNumber}</a>`
 	}
 
 	static toHTML(text) {
@@ -16,5 +18,17 @@ class Formatter {
 			text = text.replace(new RegExp(pattern.before, "g"), pattern.after);
 		})
 		return text;
+	}
+
+	static separateSymbol(text, pattern) {
+		let result = { carTypeSymbol: "", pureCarNumber: text };
+		let carTypeSymbolMatchResult = text.match(pattern);
+		if (carTypeSymbolMatchResult != undefined) {
+			let rawCarTypeSymbol = carTypeSymbolMatchResult[0];
+			let rawCarTypeSymbolIndex = carTypeSymbolMatchResult.index + rawCarTypeSymbol.length;
+			result.carTypeSymbol = rawCarTypeSymbol ? `<span class="carnum-symbol">${rawCarTypeSymbol}</span>` : "";
+			result.pureCarNumber = text.slice(rawCarTypeSymbolIndex);
+		}
+		return result;
 	}
 }
