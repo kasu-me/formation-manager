@@ -239,6 +239,7 @@ span.carnum-symbol {
 	opacity: 0.5;
 	line-height: 1em;
 	text-align: center;
+	margin-top: 0.3em;
 }
 
 td.car {
