@@ -393,6 +393,7 @@ p.table-subtitle {
 	border: 1px solid #ff0000;
 	padding: 15px;
 	border-radius: 5px;
+	column-span: all;
 }
 
 /* 小さいボタン */
