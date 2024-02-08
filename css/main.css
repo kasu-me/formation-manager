@@ -293,14 +293,20 @@ td.formation-template-name {
 
 /* 左側に濃い色の線を付けるやつ */
 div#formation-table-container table.formation-table tr td:nth-last-child(2),
-div#formation-table-container table.formation-table tr td:nth-last-child(3) {
+div#formation-table-container table.formation-table tr td:nth-last-child(3),
+div#formation-table-container table.formation-table tr td:nth-last-child(4) {
 	border-right: none;
 }
 
 div#formation-table-container table.formation-table tr td:nth-last-child(1),
 div#formation-table-container table.formation-table tr td:nth-last-child(2),
+div#formation-table-container table.formation-table tr td:nth-last-child(3),
 #formationTemplatesDialog tr td.buttons {
 	border-left: 1px solid var(--formation-table-main-border);
+}
+
+div#formation-table-container table.formation-table tr td:nth-last-child(3) {
+	font-size: 0.75em;
 }
 
 /* 未組成車両テーブル */

@@ -52,8 +52,9 @@ function list() {
 	for (let seriesId in seriesList) {
 		//テーブルを生成
 		tables.push(new Table(`${seriesList[seriesId].name}<button class="lsf-icon" icon="pen" onclick="Dialog.list.createSeriesDialog.functions.display(${seriesId})">編集</button>`));
-		tables.at(-1).setSubtitle(seriesList[seriesId].description);
-		tables.at(-1).setAttributes({ "class": `formation-table row-hover-hilight horizontal-stripes${seriesList[seriesId].isHidden ? " hidden" : ""}` });
+		let currentTable = tables.at(-1);
+		currentTable.setSubtitle(seriesList[seriesId].description);
+		currentTable.setAttributes({ "class": `formation-table row-hover-hilight horizontal-stripes${seriesList[seriesId].isHidden ? " hidden" : ""}` });
 		//現時点で組成されている編成を取得
 		let formationList = AllFormations.getBySeriesIdAndYearMonth(seriesId, now);
 
@@ -89,24 +90,26 @@ function list() {
 		//編成ごとに処理
 		for (let formationId of formationIds) {
 			//行を追加
-			tables.at(-1).addRow();
+			currentTable.addRow();
 			//編成番号セルを追加
-			tables.at(-1).addCell(`${formationList[formationId].name}<button onclick="Dialog.list.formationDetealDialog.functions.display(${formationId})" class="lsf-icon" icon="search">編成詳細</button>`, { "class": `formation-name` });
+			currentTable.addCell(`${formationList[formationId].name}<button onclick="Dialog.list.formationDetealDialog.functions.display(${formationId})" class="lsf-icon" icon="search">編成詳細</button>`, { "class": `formation-name` });
 			//車両ごとに処理
 			let carsOnFormation = formationList[formationId].cars;
 			for (let i in carsOnFormation) {
-				addCarCell(tables.at(-1), carsOnFormation[i], carIdListNow, carNumberListNow, true);
+				addCarCell(currentTable, carsOnFormation[i], carIdListNow, carNumberListNow, true);
 				proccessedCarIds.push(carsOnFormation[i]);
 			}
 			//所属地セルを追加
-			//tables.at(-1).addCell(formationList[formationId].belongsTo==null?"運用離脱":formationList[formationId].belongsTo,{"class":"belongs"});
+			//currentTable.addCell(formationList[formationId].belongsTo==null?"運用離脱":formationList[formationId].belongsTo,{"class":"belongs"});
+			//車齢セルを追加
+			currentTable.addCell(`${(new YearMonth(Math.min(...formationList[formationId].cars.map(carId => Number(AllCars.carsList[carId].manufacturedOn.serial))))).toStringWithLink()}`);
 			//組成年月セルを追加
-			tables.at(-1).addCell(`${formationList[formationId].formatedOn.toStringWithLink()}～${formationList[formationId].isTerminated ? formationList[formationId].terminatedOn.toStringWithLink() : ""}`);
+			currentTable.addCell(`${formationList[formationId].formatedOn.toStringWithLink()}～${formationList[formationId].isTerminated ? formationList[formationId].terminatedOn.toStringWithLink() : ""}`);
 			//備考セルを追加
-			tables.at(-1).addCell(formationList[formationId].remark == "" ? "-" : formationList[formationId].remark);
+			currentTable.addCell(formationList[formationId].remark == "" ? "-" : formationList[formationId].remark);
 		}
-		tables.at(-1).addBlankCellToRowIn(2);
-		html += tables.at(-1).generateTable();
+		currentTable.addBlankCellToRowIn(3);
+		html += currentTable.generateTable();
 	}
 
 	//編成に組み込まれていない車両を処理
