@@ -1,8 +1,7 @@
 //フォーマッタクラス
 class Formatter {
 	static link(href, carNum) {
-		let pattern = new RegExp("^([A-Za-z]+)");
-		let res = Formatter.separateSymbol(carNum, pattern);
+		let res = Formatter.separateSymbol(carNum, carSymPattern);
 		return `<a href="javascript:Dialog.list.carDetealDialog.functions.display(${href})">${res.carTypeSymbol}${res.pureCarNumber}</a>`
 	}
 

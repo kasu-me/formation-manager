@@ -8,6 +8,8 @@ const settings = {
 	sortMode: "",
 	fileName: ""
 };
+const carSymPattern = new RegExp("^([A-Za-z]+)");
+const carNumPattern = new RegExp("([0-9]+)$");
 
 //JSONを保存ウインドウ表示
 function showJSONOutputDialog() {
@@ -33,7 +35,6 @@ function continueReadJSON(fileName) {
 	settings.fileName = fileName;
 	tmpJSON = "";
 }
-
 
 //現存編成の編成表を表に出力
 function list() {
@@ -147,18 +148,22 @@ function list() {
 	}
 
 	//車両番号の重複をチェック
-	let duplicationNumbers = carNumberListNow.filter(function (x, i, self) {
-		return self.indexOf(x) === i && i !== self.lastIndexOf(x);
-	});
+	let duplicationNumbers = carNumberListNow.filter((x, i, self) => {
+		const carNum = x.match(carNumPattern)[0];
+		function isEqualWithCarNum(y) {
+			return y.match(carNumPattern)[0] == carNum;
+		}
+		return self.findIndex(isEqualWithCarNum) === i && i !== self.findLastIndex(isEqualWithCarNum);
+	}).map(carnum => carnum.match(carNumPattern)[0]);
 
 	document.getElementById("formation-table-container").innerHTML = html;
 
 	//重複ハイライト
 	if (duplicationNumbers.length > 0) {
 		let tds = document.querySelectorAll("#formation-table-container td.car");
-		for (let td of tds) {
-			for (let j in duplicationNumbers) {
-				if (td.innerText.replace(/\n/g, "").match(new RegExp(`^${duplicationNumbers[j]}$`, "g")) != null) {
+		for (let j in duplicationNumbers) {
+			for (let td of tds) {
+				if (td.innerText.split("\n")[1] == duplicationNumbers[j]) {
 					td.classList.add("duplicated-carnumber");
 				}
 			}

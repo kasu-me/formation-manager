@@ -305,8 +305,10 @@ div#formation-table-container table.formation-table tr td:nth-last-child(3),
 	border-left: 1px solid var(--formation-table-main-border);
 }
 
+/* 編成内再若車両製造年月 */
 div#formation-table-container table.formation-table tr td:nth-last-child(3) {
 	font-size: 0.75em;
+	opacity: 0.65;
 }
 
 /* 未組成車両テーブル */
