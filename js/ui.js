@@ -148,13 +148,12 @@ function list() {
 	}
 
 	//車両番号の重複をチェック
-	let duplicationNumbers = carNumberListNow.filter((x, i, self) => {
-		const carNum = x.match(carNumPattern)[0];
-		function isEqualWithCarNum(y) {
-			return y.match(carNumPattern)[0] == carNum;
+	let duplicationNumbers = carNumberListNow.map(carnum => carnum.match(carNumPattern)[0]).filter((x, i, self) => {
+		function isEqual(y) {
+			return y == x;
 		}
-		return self.findIndex(isEqualWithCarNum) === i && i !== self.findLastIndex(isEqualWithCarNum);
-	}).map(carnum => carnum.match(carNumPattern)[0]);
+		return self.findIndex(isEqual) === i && i !== self.findLastIndex(isEqual);
+	});
 
 	document.getElementById("formation-table-container").innerHTML = html;
 
