@@ -148,9 +148,9 @@ function list() {
 	}
 
 	//車両番号の重複をチェック
-	let duplicationNumbers = carNumberListNow.map(carnum => carnum.match(carNumPattern)[0]).filter((x, i, self) => {
+	let duplicationNumbers = carNumberListNow.map(carnum => carnum.match(carNumPattern)[0]).filter((carnum, i, self) => {
 		function isEqual(y) {
-			return y == x;
+			return y == carnum;
 		}
 		return self.findIndex(isEqual) === i && i !== self.findLastIndex(isEqual);
 	});
