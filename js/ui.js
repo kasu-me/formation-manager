@@ -52,7 +52,7 @@ function list() {
 	//形式ごとに処理
 	for (let seriesId in seriesList) {
 		//現時点で組成されている編成を取得
-		let formationList = AllFormations.getBySeriesIdAndYearMonth(seriesId, now);
+		const formationList = AllFormations.getBySeriesIdAndYearMonth(seriesId, now);
 
 		//テーブルを生成
 		tables.push(new Table(`<span>${seriesList[seriesId].name}<span>&##keyword-formation-count##;&##keyword-car-count##;</span></span><button class="lsf-icon" icon="pen" onclick="Dialog.list.createSeriesDialog.functions.display(${seriesId})">編集</button>`));
@@ -61,7 +61,7 @@ function list() {
 		currentTable.setAttributes({ "class": `formation-table row-hover-hilight horizontal-stripes${seriesList[seriesId].isHidden ? " hidden" : ""}` });
 
 		//ソート
-		let natSorter = natsort();
+		const natSorter = natsort();
 		let sortFunc;
 		if (settings.sortMode == "car-count") {
 			sortFunc = (f1, f2) => {
@@ -99,7 +99,7 @@ function list() {
 			//編成番号セルを追加
 			currentTable.addCell(`${formationList[formationId].name}<button onclick="Dialog.list.formationDetealDialog.functions.display(${formationId})" class="lsf-icon" icon="search">編成詳細</button>`, { "class": `formation-name` });
 			//車両ごとに処理
-			let carsOnFormation = formationList[formationId].cars;
+			const carsOnFormation = formationList[formationId].cars;
 			for (let i in carsOnFormation) {
 				carCount++;
 				addCarCell(currentTable, carsOnFormation[i], carIdListNow, carNumberListNow, true);
@@ -123,10 +123,10 @@ function list() {
 
 	//編成に組み込まれていない車両を処理
 	tables.push(new Table("編成に所属していない車両"));
-	let notFormatedCarsTable = tables.at(-1);
+	const notFormatedCarsTable = tables.at(-1);
 	notFormatedCarsTable.setAttributes({ "class": "not-formated-car-table vertical-stripes" });
 	tables.push(new Table("保存されている車両"));
-	let conservedCarsTable = tables.at(-1);
+	const conservedCarsTable = tables.at(-1);
 	conservedCarsTable.setAttributes({ "class": "not-formated-car-table vertical-stripes", id: "conserved-car-table" });
 	for (let carId in AllCars.carsList) {
 		//編成に組み込まれている車両および未製造の車両および廃車は除外する
@@ -156,7 +156,7 @@ function list() {
 	}
 
 	//車両番号の重複をチェック
-	let duplicationNumbers = carNumberListNow.map(carnum => carnum.match(carNumPattern)[0]).filter((carnum, i, self) => {
+	const duplicationNumbers = carNumberListNow.map(carnum => carnum.match(carNumPattern)[0]).filter((carnum, i, self) => {
 		function isEqual(y) {
 			return y == carnum;
 		}
@@ -167,7 +167,7 @@ function list() {
 
 	//重複ハイライト
 	if (duplicationNumbers.length > 0) {
-		let tds = document.querySelectorAll("#formation-table-container td.car");
+		const tds = document.querySelectorAll("#formation-table-container td.car");
 		for (let j in duplicationNumbers) {
 			for (let td of tds) {
 				if (td.innerText.split("\n")[1] == duplicationNumbers[j]) {
@@ -177,7 +177,7 @@ function list() {
 		}
 
 		//車両番号の重複があった場合、車両そのものの重複がないかもチェック
-		let duplicationCars = carIdListNow.filter(function (x, i, self) {
+		const duplicationCars = carIdListNow.filter(function (x, i, self) {
 			return self.indexOf(x) === i && i !== self.lastIndexOf(x);
 		});
 		if (duplicationCars.length > 0) {
