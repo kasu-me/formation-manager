@@ -188,6 +188,16 @@ div#formation-table-container {
 		padding: 0.25em;
 		color: #fff;
 		margin-top: 0;
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+
+		/* 編成表内形式編集ボタン */
+		& button {
+			border: #fff 1px solid;
+			margin-left: 0.8em;
+			transform: translateY(-0.2em);
+		}
 	}
 
 	& p.table-subtitle {
@@ -425,13 +435,6 @@ p:has(#fmdt-formation-number) {
 #cardt-car-number,
 #fmdt-formation-number {
 	font-size: 2.0em;
-}
-
-/* 編成表内形式名横ボタン */
-.table-title button {
-	border: #fff 1px solid;
-	margin-left: 0.8em;
-	transform: translateY(-0.2em);
 }
 
 /* 備考編集ボタン */
