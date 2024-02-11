@@ -170,7 +170,7 @@ function list() {
 		const tds = document.querySelectorAll("#formation-table-container td.car");
 		for (let j in duplicationNumbers) {
 			for (let td of tds) {
-				if (td.innerText.split("\n")[1] == duplicationNumbers[j]) {
+				if (td.innerText.split("\n")[0] == duplicationNumbers[j] || td.innerText.split("\n")[1] == duplicationNumbers[j]) {
 					td.classList.add("duplicated-carnumber");
 				}
 			}
