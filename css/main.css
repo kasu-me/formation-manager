@@ -196,6 +196,12 @@ div#formation-table-container {
 			color: #fff;
 		}
 
+		&>span>span {
+			margin-left: 0.5em;
+			font-size: 0.8em;
+			vertical-align: middle;
+		}
+
 		/* 編成表内形式編集ボタン */
 		& button {
 			border: #fff 1px solid;
