@@ -56,7 +56,7 @@ function list() {
 
 		//テーブルを生成
 		tables.push(new Table(`<span>${seriesList[seriesId].name}<span>&##keyword-formation-count##;&##keyword-car-count##;</span></span><button class="lsf-icon" icon="pen" onclick="Dialog.list.createSeriesDialog.functions.display(${seriesId})">編集</button>`));
-		let currentTable = tables.at(-1);
+		const currentTable = tables.at(-1);
 		currentTable.setSubtitle(seriesList[seriesId].description);
 		currentTable.setAttributes({ "class": `formation-table row-hover-hilight horizontal-stripes${seriesList[seriesId].isHidden ? " hidden" : ""}` });
 
@@ -86,7 +86,7 @@ function list() {
 				return natSorter(formationList[f1].name, formationList[f2].name);
 			};
 		}
-		let formationIds = Object.keys(formationList).sort(sortFunc);
+		const formationIds = Object.keys(formationList).sort(sortFunc);
 
 
 		//編成ごとに処理
@@ -187,7 +187,7 @@ function list() {
 				})
 			});
 		}
-		let warningMessage = document.createElement("div");
+		const warningMessage = document.createElement("div");
 		warningMessage.classList.add("warning");
 		warningMessage.classList.add("message");
 		warningMessage.innerHTML = `${Message.list["MS001"]}${(duplicationCars.length > 0) ? Message.list["MA011"] : Message.list["MA010"]}`;
