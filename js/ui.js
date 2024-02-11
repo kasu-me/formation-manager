@@ -51,13 +51,14 @@ function list() {
 
 	//形式ごとに処理
 	for (let seriesId in seriesList) {
+		//現時点で組成されている編成を取得
+		let formationList = AllFormations.getBySeriesIdAndYearMonth(seriesId, now);
+
 		//テーブルを生成
-		tables.push(new Table(`${seriesList[seriesId].name}<button class="lsf-icon" icon="pen" onclick="Dialog.list.createSeriesDialog.functions.display(${seriesId})">編集</button>`));
+		tables.push(new Table(`<span>${seriesList[seriesId].name}<span>&##keyword-formation-count##;&##keyword-car-count##;</span></span><button class="lsf-icon" icon="pen" onclick="Dialog.list.createSeriesDialog.functions.display(${seriesId})">編集</button>`));
 		let currentTable = tables.at(-1);
 		currentTable.setSubtitle(seriesList[seriesId].description);
 		currentTable.setAttributes({ "class": `formation-table row-hover-hilight horizontal-stripes${seriesList[seriesId].isHidden ? " hidden" : ""}` });
-		//現時点で組成されている編成を取得
-		let formationList = AllFormations.getBySeriesIdAndYearMonth(seriesId, now);
 
 		//ソート
 		let natSorter = natsort();
@@ -89,7 +90,10 @@ function list() {
 
 
 		//編成ごとに処理
+		let formationCount = 0;
+		let carCount = 0;
 		for (let formationId of formationIds) {
+			formationCount++;
 			//行を追加
 			currentTable.addRow();
 			//編成番号セルを追加
@@ -97,6 +101,7 @@ function list() {
 			//車両ごとに処理
 			let carsOnFormation = formationList[formationId].cars;
 			for (let i in carsOnFormation) {
+				carCount++;
 				addCarCell(currentTable, carsOnFormation[i], carIdListNow, carNumberListNow, true);
 				proccessedCarIds.push(carsOnFormation[i]);
 			}
@@ -110,7 +115,10 @@ function list() {
 			currentTable.addCell(formationList[formationId].remark == "" ? "-" : formationList[formationId].remark);
 		}
 		currentTable.addBlankCellToRowIn(3);
-		html += currentTable.generateTable();
+		html += Formatter.replaceKeyWords(currentTable.generateTable(), [
+			["&##keyword-formation-count##;", `(${formationCount}編成/`],
+			["&##keyword-car-count##;", `${carCount}両)`]
+		]);
 	}
 
 	//編成に組み込まれていない車両を処理

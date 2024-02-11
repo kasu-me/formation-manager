@@ -30,4 +30,14 @@ class Formatter {
 		}
 		return result;
 	}
+
+	static replaceKeyWord(text, key, word) {
+		return text.replace(new RegExp(key, "g"), word);
+	}
+	static replaceKeyWords(text, keywordPairs) {
+		for (let keyword of keywordPairs) {
+			text = Formatter.replaceKeyWord(text, keyword[0], keyword[1])
+		}
+		return text;
+	}
 }

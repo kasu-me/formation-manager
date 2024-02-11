@@ -186,11 +186,14 @@ div#formation-table-container {
 	& p.table-title {
 		background-color: var(--formation-table-main-border);
 		padding: 0.25em;
-		color: #fff;
 		margin-top: 0;
 		display: flex;
 		justify-content: space-between;
 		align-items: baseline;
+
+		& span {
+			color: #fff;
+		}
 
 		/* 編成表内形式編集ボタン */
 		& button {
