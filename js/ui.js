@@ -122,12 +122,14 @@ function list() {
 	}
 
 	//編成に組み込まれていない車両を処理
-	tables.push(new Table("編成に所属していない車両"));
+	tables.push(new Table("<span>編成に所属していない車両<span>&##keyword-car-count##;</span></span>"));
 	const notFormatedCarsTable = tables.at(-1);
 	notFormatedCarsTable.setAttributes({ "class": "not-formated-car-table vertical-stripes" });
-	tables.push(new Table("保存されている車両"));
+	tables.push(new Table("<span>保存されている車両<span>&##keyword-car-count##;</span></span>"));
 	const conservedCarsTable = tables.at(-1);
 	conservedCarsTable.setAttributes({ "class": "not-formated-car-table vertical-stripes", id: "conserved-car-table" });
+	let conservedCarCount = 0;
+	let notFormatedCarCount = 0;
 	for (let carId in AllCars.carsList) {
 		//編成に組み込まれている車両および未製造の車両および廃車は除外する
 		if (proccessedCarIds.includes(Number(carId)) || AllCars.carsList[carId].manufacturedOn.serial > now.serial) {
@@ -135,12 +137,14 @@ function list() {
 		} else {
 			if (AllCars.carsList[carId].isConservedInTime(now)) {
 				//保存されている車両
+				conservedCarCount++;
 				if (conservedCarsTable.cellCountOfLastRow % 10 == 0) {
 					conservedCarsTable.addRow();
 				}
 				addCarCell(conservedCarsTable, carId, carIdListNow, [], false, true);
 			} else if (!AllCars.carsList[carId].isDroppedInTime(now)) {
 				//現役で、編成に組み込まれていない車両
+				notFormatedCarCount++;
 				if (notFormatedCarsTable.cellCountOfLastRow % 10 == 0) {
 					notFormatedCarsTable.addRow();
 				}
@@ -149,10 +153,14 @@ function list() {
 		}
 	}
 	if (notFormatedCarsTable.rows.length != 0) {
-		html += notFormatedCarsTable.generateTable();
+		html += Formatter.replaceKeyWords(notFormatedCarsTable.generateTable(), [
+			["&##keyword-car-count##;", `(${notFormatedCarCount}両)`]
+		]);
 	}
 	if (conservedCarsTable.rows.length != 0) {
-		html += conservedCarsTable.generateTable();
+		html += Formatter.replaceKeyWords(conservedCarsTable.generateTable(), [
+			["&##keyword-car-count##;", `(${conservedCarCount}両)`]
+		]);
 	}
 
 	//車両番号の重複をチェック
