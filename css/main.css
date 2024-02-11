@@ -190,6 +190,7 @@ div#formation-table-container {
 		display: flex;
 		justify-content: space-between;
 		align-items: baseline;
+		color: #fff;
 
 		& span {
 			color: #fff;
