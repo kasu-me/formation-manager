@@ -38,15 +38,15 @@ function continueReadJSON(fileName) {
 
 //現存編成の編成表を表に出力
 function list() {
-	//ソート
-	let seriesList = AllSerieses.seriesesList;
-	let carIdListNow = [];
-	let carNumberListNow = [];
-	let tables = [];
+
+	const seriesList = AllSerieses.seriesesList;
+	const carIdListNow = [];
+	const carNumberListNow = [];
+	const tables = [];
 	let html = "";
 
 	//編成に組み込まれている車両
-	let proccessedCarIds = [];
+	const proccessedCarIds = [];
 
 
 	//形式ごとに処理
