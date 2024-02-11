@@ -158,6 +158,12 @@ p#sort-controllers-container {
 		}
 	}
 
+	& span#panel-car-counter {
+		float: right;
+		vertical-align: middle;
+		margin-top: 0.4em;
+	}
+
 	& span#panel-display-mode-controller:not(.grid-mode) span a:first-child,
 	& span#panel-display-mode-controller.grid-mode span a:last-child,
 	& span#panel-sort-mode-controller.car-number-mode span a:nth-child(1),

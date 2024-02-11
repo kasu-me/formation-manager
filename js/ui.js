@@ -201,6 +201,8 @@ function list() {
 		warningMessage.innerHTML = `${Message.list["MS001"]}${(duplicationCars.length > 0) ? Message.list["MA011"] : Message.list["MA010"]}`;
 		document.getElementById("formation-table-container").prepend(warningMessage);
 	}
+
+	document.getElementById("panel-car-counter").innerHTML = `総車両数:${carIdListNow.length}両`
 }
 
 //車両セルの追加
