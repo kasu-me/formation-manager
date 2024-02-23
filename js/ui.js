@@ -131,7 +131,7 @@ function list() {
 	let conservedCarCount = 0;
 	let notFormatedCarCount = 0;
 	for (let carId in AllCars.carsList) {
-		//編成に組み込まれている車両および未製造の車両および廃車は除外する
+		//編成に組み込まれている車両および未製造の車両は除外する
 		if (proccessedCarIds.includes(Number(carId)) || AllCars.carsList[carId].manufacturedOn.serial > now.serial) {
 			continue;
 		} else {
