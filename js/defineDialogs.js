@@ -163,6 +163,7 @@ window.addEventListener("load", function () {
 					Dialog.list.createFormationFromTemplateDialog.off();
 					Dialog.list.formationDetealDialog.functions.display(formationInfo.formationId);
 				} else {
+					document.getElementById("fromt-car-number").value = Number(document.getElementById("fromt-car-number").value) + 1;
 					document.getElementById("fromt-car-number").focus();
 				}
 			}
