@@ -115,10 +115,12 @@ function list() {
 			currentTable.addCell(formationList[formationId].remark == "" ? "-" : formationList[formationId].remark);
 		}
 		currentTable.addBlankCellToRowIn(3);
-		html += Formatter.replaceKeyWords(currentTable.generateTable(), [
-			["&##keyword-formation-count##;", `(${formationCount}編成/`],
-			["&##keyword-car-count##;", `${carCount}両)`]
-		]);
+		if (formationCount != 0) {
+			html += Formatter.replaceKeyWords(currentTable.generateTable(), [
+				["&##keyword-formation-count##;", `(${formationCount}編成/`],
+				["&##keyword-car-count##;", `${carCount}両)`]
+			]);
+		}
 	}
 
 	//編成に組み込まれていない車両を処理
