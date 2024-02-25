@@ -64,6 +64,10 @@ a:hover {
 	text-decoration: none;
 }
 
+.display-none {
+	display: none;
+}
+
 /* input要素 */
 input:not([type="range"]) {
 	border: 1px solid #000 !important;
