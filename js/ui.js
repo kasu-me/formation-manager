@@ -173,7 +173,9 @@ function list() {
 		return self.findIndex(isEqual) === i && i !== self.findLastIndex(isEqual);
 	});
 
-	document.getElementById("formation-table-container").innerHTML = html;
+	const formationTableContainer = document.getElementById("formation-table-container");
+	formationTableContainer.innerHTML = "";
+	formationTableContainer.insertAdjacentHTML('beforeend', html);
 
 	//重複ハイライト
 	if (duplicationNumbers.length > 0) {
@@ -201,7 +203,7 @@ function list() {
 		warningMessage.classList.add("warning");
 		warningMessage.classList.add("message");
 		warningMessage.innerHTML = `${Message.list["MS001"]}${(duplicationCars.length > 0) ? Message.list["MA011"] : Message.list["MA010"]}`;
-		document.getElementById("formation-table-container").prepend(warningMessage);
+		formationTableContainer.prepend(warningMessage);
 	}
 
 	document.getElementById("panel-car-counter").innerHTML = `総車両数:${carIdListNow.length}両`
