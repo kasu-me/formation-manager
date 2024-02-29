@@ -11,8 +11,6 @@ const settings = {
 const carSymPattern = new RegExp("^([A-Za-z]+)");
 const carNumPattern = new RegExp("([0-9]+)$");
 
-let latestHTML = "";
-
 //JSONを保存ウインドウ表示
 function showJSONOutputDialog() {
 	saveFile(settings.fileName ? settings.fileName : "formation.json", generateJSON())
@@ -175,12 +173,11 @@ function list() {
 		return self.findIndex(isEqual) === i && i !== self.findLastIndex(isEqual);
 	});
 
-	latestHTML = html;
 	const formationTableContainer = document.getElementById("formation-table-container");
 
 	setTimeout(() => {
 		formationTableContainer.innerHTML = "";
-		formationTableContainer.insertAdjacentHTML('beforeend', latestHTML);
+		formationTableContainer.insertAdjacentHTML('beforeend', html);
 	}, 0);
 
 	//重複ハイライト
