@@ -178,38 +178,38 @@ function list() {
 	setTimeout(() => {
 		formationTableContainer.innerHTML = "";
 		formationTableContainer.insertAdjacentHTML('beforeend', html);
-	}, 0);
 
-	//重複ハイライト
-	if (duplicationNumbers.length > 0) {
-		const tds = document.querySelectorAll("#formation-table-container td.car");
-		for (let j in duplicationNumbers) {
-			for (let td of tds) {
-				if (td.innerText.split("\n")[0] == duplicationNumbers[j] || td.innerText.split("\n")[1] == duplicationNumbers[j]) {
-					td.classList.add("duplicated-carnumber");
+		//重複ハイライト
+		if (duplicationNumbers.length > 0) {
+			const tds = document.querySelectorAll("#formation-table-container td.car");
+			for (let j in duplicationNumbers) {
+				for (let td of tds) {
+					if (td.innerText.split("\n")[0] == duplicationNumbers[j] || td.innerText.split("\n")[1] == duplicationNumbers[j]) {
+						td.classList.add("duplicated-carnumber");
+					}
 				}
 			}
-		}
 
-		//車両番号の重複があった場合、車両そのものの重複がないかもチェック
-		const duplicationCars = carIdListNow.filter(function (x, i, self) {
-			return self.indexOf(x) === i && i !== self.lastIndexOf(x);
-		});
-		if (duplicationCars.length > 0) {
-			duplicationCars.forEach((carId) => {
-				document.querySelectorAll(`.car-id-${carId}`).forEach((td) => {
-					td.classList.add("duplicated-car")
-				})
+			//車両番号の重複があった場合、車両そのものの重複がないかもチェック
+			const duplicationCars = carIdListNow.filter(function (x, i, self) {
+				return self.indexOf(x) === i && i !== self.lastIndexOf(x);
 			});
+			if (duplicationCars.length > 0) {
+				duplicationCars.forEach((carId) => {
+					document.querySelectorAll(`.car-id-${carId}`).forEach((td) => {
+						td.classList.add("duplicated-car")
+					})
+				});
+			}
+			const warningMessage = document.createElement("div");
+			warningMessage.classList.add("warning");
+			warningMessage.classList.add("message");
+			warningMessage.innerHTML = `${Message.list["MS001"]}${(duplicationCars.length > 0) ? Message.list["MA011"] : Message.list["MA010"]}`;
+			formationTableContainer.prepend(warningMessage);
 		}
-		const warningMessage = document.createElement("div");
-		warningMessage.classList.add("warning");
-		warningMessage.classList.add("message");
-		warningMessage.innerHTML = `${Message.list["MS001"]}${(duplicationCars.length > 0) ? Message.list["MA011"] : Message.list["MA010"]}`;
-		formationTableContainer.prepend(warningMessage);
-	}
 
-	document.getElementById("panel-car-counter").innerHTML = `総車両数:${carIdListNow.length}両`
+		document.getElementById("panel-car-counter").innerHTML = `総車両数:${carIdListNow.length}両`;
+	}, 0);
 }
 
 //車両セルの追加
