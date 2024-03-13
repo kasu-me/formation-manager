@@ -726,7 +726,7 @@ window.addEventListener("load", function () {
 			let formation = AllFormations.formationsList[x];
 			table.setSubtitle(`<p class="car-name"><b><span id="fmdt-formation-number">${formation.name}</span></b> (${AllSerieses.seriesesList[formation.seriesId].name}) (${formation.formatedOn.toStringWithLink()}～${formation.isTerminated ? `${formation.terminatedOn.toStringWithLink()}` : ``})<button class="lsf-icon" icon="pen" onclick="Dialog.list.formationRenameDialog.functions.display()">名称変更</button></p>`);
 			table.addRow();
-			table.addCell(`編成ID:${x}`, { "colspan": formation.cars.length, "class": "formation-id" });
+			table.addCell(`${formation.cars.length}両編成<small>(編成ID:${x})</small>`, { "colspan": formation.cars.length, "class": "formation-id" });
 			table.addRow();
 			for (let i in formation.cars) {
 				table.addCell(Formatter.link(formation.cars[i], AllCars.carsList[formation.cars[i]].number));
