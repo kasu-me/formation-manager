@@ -1,0 +1,7 @@
+body {
+	-webkit-print-color-adjust: exact;
+}
+
+#header {
+	display: none;
+}
