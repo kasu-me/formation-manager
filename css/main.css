@@ -359,6 +359,11 @@ table.not-formated-car-table tr td {
 table.formation-view tr:nth-child(1) td {
 	background-color: var(--formation-table-main-border);
 	color: #fff;
+	text-align: left;
+
+	&.formation-id {
+		text-align: left;
+	}
 
 	& * {
 		color: #fff;
