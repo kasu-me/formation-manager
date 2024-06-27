@@ -5,3 +5,9 @@ body {
 #header {
 	display: none;
 }
+
+div#formation-table-container {
+	& div.generated-table-headers {
+		position: static;
+	}
+}
