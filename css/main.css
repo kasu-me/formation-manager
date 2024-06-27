@@ -272,7 +272,8 @@ span.carnum-symbol {
 	margin-top: 0.3em;
 }
 
-td.car {
+td.car,
+table.formation-view td {
 	text-align: center;
 }
 
