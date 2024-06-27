@@ -11,3 +11,11 @@ div#formation-table-container {
 		position: static;
 	}
 }
+
+.dialog-area {
+
+	&.on,
+	.dialog-content.on {
+		display: none;
+	}
+}
