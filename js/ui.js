@@ -9,7 +9,8 @@ const settings = {
 	fileName: ""
 };
 const carSymPattern = new RegExp("^([A-Za-z]+)");
-const carNumPattern = new RegExp("([0-9]+)$");
+//TODO:パターンを変更できるUIを作る
+const carNumPattern = new RegExp("([クモサハE0-9\-]+)$");
 
 //JSONを保存ウインドウ表示
 function showJSONOutputDialog() {
