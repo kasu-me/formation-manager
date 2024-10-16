@@ -45,13 +45,17 @@ function list() {
 	const carNumberListNow = [];
 	const tables = [];
 	let html = "";
+	const natSorter = natsort();
 
 	//編成に組み込まれている車両
 	const proccessedCarIds = [];
 
+	const seriesIds = Object.keys(seriesList).sort((f1, f2) => {
+		return natSorter(seriesList[f1].name, seriesList[f2].name);
+	});
 
 	//形式ごとに処理
-	for (let seriesId in seriesList) {
+	for (let seriesId of seriesIds) {
 		//現時点で組成されている編成を取得
 		const formationList = AllFormations.getBySeriesIdAndYearMonth(seriesId, now);
 
@@ -62,7 +66,6 @@ function list() {
 		currentTable.setAttributes({ "class": `formation-table row-hover-hilight horizontal-stripes${seriesList[seriesId].isHidden ? " hidden" : ""}` });
 
 		//ソート
-		const natSorter = natsort();
 		let sortFunc;
 		if (settings.sortMode == "car-count") {
 			sortFunc = (f1, f2) => {
