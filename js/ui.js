@@ -275,11 +275,16 @@ function refresh() {
 //セレクトボックスに形式名を投入
 function setSeriesesToSelectBox(seriesSelectBox) {
 	seriesSelectBox.innerHTML = "";
-	for (let i in AllSerieses.seriesesList) {
-		if (AllSerieses.seriesesList[i].isHidden) { continue; }
+	const natSorter = natsort();
+	const seriesList = AllSerieses.seriesesList;
+	const seriesIds = Object.keys(seriesList).sort((f1, f2) => {
+		return natSorter(seriesList[f1].name, seriesList[f2].name);
+	});
+	for (let i of seriesIds) {
+		if (seriesList[i].isHidden) { continue; }
 		let option = document.createElement("option");
 		option.setAttribute("value", i);
-		option.innerHTML = AllSerieses.seriesesList[i].name;
+		option.innerHTML = seriesList[i].name;
 		seriesSelectBox.appendChild(option);
 	}
 }

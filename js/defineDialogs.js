@@ -40,14 +40,20 @@ new Message("MS001", `<style type="text/css">
 
 //以下、ダイアログ定義
 window.addEventListener("load", function () {
+	const natSorter = natsort();
+
 	//形式一覧:sed
 	new Dialog("seriesDispDialog", "形式一覧", `<div class="table-container"></div>`, [{ "content": "形式作成", "event": `Dialog.list.createSeriesDialog.functions.display()`, "icon": "add" }, { "content": "閉じる", "event": `Dialog.list.seriesDispDialog.off();`, "icon": "close" }], {
 		//形式一覧ダイアログを表示
 		display: function () {
 			let seriesList = AllSerieses.seriesesList;
 			let table = new Table();
+			const seriesIds = Object.keys(seriesList).sort((f1, f2) => {
+				return natSorter(seriesList[f1].name, seriesList[f2].name);
+			});
+
 			table.setAttributes({ "class": "horizontal-stripes row-hover-hilight" });
-			for (let seriesId in seriesList) {
+			for (let seriesId of seriesIds) {
 				table.addRow();
 				table.addCell(`${seriesList[seriesId].name}`, { "class": `formation-name${seriesList[seriesId].isHidden ? " hidden" : ""}` });
 				table.addCell(`${seriesList[seriesId].description}`, { "class": "formation-template-name" });
