@@ -532,6 +532,12 @@ window.addEventListener("load", function () {
 			}
 		}
 	});
+	document.getElementById("crcar-carNumber").addEventListener("keypress", (e) => {
+		console.log(e.key)
+		if (e.key == "Enter") {
+			Dialog.list.createCarDialog.functions.createCar();
+		}
+	});
 
 	//車両の詳細:cardt
 	new Dialog("carDetealDialog", "車両の詳細", `<div id="cardt-main"></div>`, [{ "content": "廃車", "event": `dropCar()`, "icon": "delete", "id": "cardt-drop-button" }, { "content": "閉じる", "event": `Dialog.list.carDetealDialog.off();`, "icon": "close" }], {
