@@ -225,7 +225,7 @@ div#formation-table-container {
 	& div.generated-table-headers {
 		margin-bottom: 0.5em;
 		position: sticky;
-		top: 8em;
+		top: 7.8em;
 		left: 0;
 		z-index: 999;
 	}
