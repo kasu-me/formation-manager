@@ -533,7 +533,6 @@ window.addEventListener("load", function () {
 		}
 	});
 	document.getElementById("crcar-carNumber").addEventListener("keypress", (e) => {
-		console.log(e.key)
 		if (e.key == "Enter") {
 			Dialog.list.createCarDialog.functions.createCar();
 		}
