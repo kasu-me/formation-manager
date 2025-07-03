@@ -11,6 +11,8 @@ new Message("MA009", "処理エラーです。");
 new Message("MA010", "車両番号の重複があります。");
 new Message("MA011", "同じ車両が複数の編成に組成されています。");
 new Message("MA012", "車両番号の一般式が不正です。入力方法が分からない場合はヘルプを確認してください。");
+//Information Message
+new Message("MI001", "編成番号の重複があります。編成名：${name}");
 //Confirm Message
 new Message("MC001", "この操作を実行すると現在のデータはクリアされます。本当に読み込んでよろしいですか？");
 new Message("MC002", "${formationName}を${now}付で編成解除します。");

@@ -400,6 +400,16 @@ p.table-subtitle {
 	column-span: all;
 }
 
+.info {
+	margin-bottom: 2.0em;
+	background-color: hsl(209, 100%, 96%);
+	color: #0084ff;
+	border: 1px solid #0084ff;
+	padding: 15px;
+	border-radius: 5px;
+	column-span: all;
+}
+
 /* 小さいボタン */
 p.car-name button,
 td.formation-name button,

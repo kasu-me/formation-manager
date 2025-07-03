@@ -43,6 +43,7 @@ function list() {
 	const seriesList = AllSerieses.seriesesList;
 	const carIdListNow = [];
 	const carNumberListNow = [];
+	const formationNameListNow = [];
 	const tables = [];
 	let html = "";
 	const natSorter = natsort();
@@ -102,6 +103,7 @@ function list() {
 			currentTable.addRow();
 			//編成番号セルを追加
 			currentTable.addCell(`${formationList[formationId].name}<button onclick="Dialog.list.formationDetealDialog.functions.display(${formationId})" class="lsf-icon" icon="search">編成詳細</button>`, { "class": `formation-name` });
+			formationNameListNow.push(formationList[formationId].name);
 			//車両ごとに処理
 			const carsOnFormation = formationList[formationId].cars;
 			for (let i in carsOnFormation) {
@@ -169,6 +171,14 @@ function list() {
 		]);
 	}
 
+	//編成番号の重複をチェック
+	const duplicationFormationNames = formationNameListNow.filter((formationName, i, self) => {
+		function isEqual(y) {
+			return y == formationName;
+		}
+		return self.findIndex(isEqual) === i && i !== self.findLastIndex(isEqual);
+	});
+
 	//車両番号の重複をチェック
 	const duplicationNumbers = carNumberListNow.map(carnum => carnum.match(carNumPattern)[0]).filter((carnum, i, self) => {
 		function isEqual(y) {
@@ -210,6 +220,14 @@ function list() {
 			warningMessage.classList.add("message");
 			warningMessage.innerHTML = `${Message.list["MS001"]}${(duplicationCars.length > 0) ? Message.list["MA011"] : Message.list["MA010"]}`;
 			formationTableContainer.prepend(warningMessage);
+		}
+
+		if (duplicationFormationNames.length > 0) {
+			const infoMessage = document.createElement("div");
+			infoMessage.classList.add("info");
+			infoMessage.classList.add("message");
+			infoMessage.innerHTML = `${Message.list["MI001"].toString({ "name": duplicationFormationNames.join(",") })}`;
+			formationTableContainer.prepend(infoMessage);
 		}
 
 		document.getElementById("panel-car-counter").innerHTML = `総車両数:${carIdListNow.length}両`;
