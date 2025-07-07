@@ -465,6 +465,12 @@ div[id$="-opening"] {
 	margin-top: -0.8em;
 }
 
+.dialog-main-message {
+	&>p:first-child {
+		margin-top: 0;
+	}
+}
+
 p:has(#cardt-car-number),
 p:has(#fmdt-formation-number) {
 	vertical-align: bottom;
