@@ -813,7 +813,7 @@ window.addEventListener("load", function () {
 				let isTerminated = formation.isTerminated;
 				let terminatedOn = formation.terminatedOn;
 				AllFormations.releaseFormation(Dialog.list.formationRenameDialog.functions.formationId);
-				let newFormationId = AllFormations.addFormation(new Formation(formation.seriesId, document.getElementById("fmrn-formation-name").value, formation.cars, formation.belongsTo, now))
+				let newFormationId = AllFormations.addFormation(new Formation(formation.seriesId, document.getElementById("fmrn-formation-name").value, formation.cars, formation.belongsTo, now, formation.remark))
 				//元の編成が未来で解除されていた編成の場合、今作成した編成をその年月で編成解除
 				if (isTerminated) {
 					AllFormations.releaseFormation(newFormationId, terminatedOn);
