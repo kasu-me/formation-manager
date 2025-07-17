@@ -1075,7 +1075,7 @@ window.addEventListener("load", function () {
 				document.getElementById("mnalc-table").innerHTML = table.generateTable();
 				setTableCheckboxEvents(document.getElementById("mnalc-table"), [document.getElementById("mnalc-deleteall"), document.getElementById("mnalc-remarkall")]);
 				TableSort.addSortButtonToTable(document.getElementById("mnalc-table"));
-				document.getElementById("mnalc-search-status").innerHTML = `${(Dialog.list.manageAllCarsDialog.functions.searchQuery == "" ? "全" : `車両番号に<b>"${Dialog.list.manageAllCarsDialog.functions.searchQuery}"</b>を含む`)}${document.getElementById("mnalc-only-useless").checked ? `無用` : ``}車両を表示中 (全${table.rows.length - 1}件)`;
+				document.getElementById("mnalc-search-status").innerHTML = `${(Dialog.list.manageAllCarsDialog.functions.searchQuery == "" ? "全" : `車両番号に<b>"${Dialog.list.manageAllCarsDialog.functions.searchQuery}"</b>を含む`)}${document.getElementById("mnalc-only-useless").checked ? `無用` : ``}車両を表示中 (全${table.rows.length - 1}件)${(Dialog.list.manageAllCarsDialog.functions.searchQuery != "" ? `<button class="lsf-icon" icon="delete" style="margin-left:0.5em;" onclick="document.getElementById('mnalc-search-keyword').value='';document.getElementById('mnalc-search-button').click();">検索クエリを削除</button>` : "")}`;
 				let tableContainer = document.getElementById("mnalc-table").querySelector(".generated-table-container");
 				tableContainer.addEventListener("scroll", () => {
 					Dialog.list.manageAllCarsDialog.functions.scrollTop = tableContainer.scrollTop;
@@ -1156,7 +1156,7 @@ window.addEventListener("load", function () {
 				document.getElementById("mnalf-table").innerHTML = table.generateTable();
 				setTableCheckboxEvents(document.getElementById("mnalf-table"), [document.getElementById("mnalf-deleteall"), document.getElementById("mnalf-remarkall")]);
 				TableSort.addSortButtonToTable(document.getElementById("mnalf-table"));
-				document.getElementById("mnalf-search-status").innerHTML = `${(Dialog.list.manageAllFormationsDialog.functions.searchQuery == "" ? "全" : `編成番号に<b>"${Dialog.list.manageAllFormationsDialog.functions.searchQuery}"</b>を含む`)}${document.getElementById("mnalf-only-useless").checked ? `無用` : ``}編成を表示中 (全${table.rows.length - 1}件)`;
+				document.getElementById("mnalf-search-status").innerHTML = `${(Dialog.list.manageAllFormationsDialog.functions.searchQuery == "" ? "全" : `編成番号に<b>"${Dialog.list.manageAllFormationsDialog.functions.searchQuery}"</b>を含む`)}${document.getElementById("mnalf-only-useless").checked ? `無用` : ``}編成を表示中 (全${table.rows.length - 1}件)${(Dialog.list.manageAllFormationsDialog.functions.searchQuery != "" ? `<button class="lsf-icon" icon="delete" style="margin-left:0.5em;" onclick="document.getElementById('mnalf-search-keyword').value='';document.getElementById('mnalf-search-button').click();">検索クエリを削除</button>` : "")}`;
 				let tableContainer = document.getElementById("mnalf-table").querySelector(".generated-table-container");
 				tableContainer.addEventListener("scroll", () => {
 					Dialog.list.manageAllFormationsDialog.functions.scrollTop = tableContainer.scrollTop;
