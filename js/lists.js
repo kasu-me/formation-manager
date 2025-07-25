@@ -86,6 +86,19 @@ class AllCars {
 			console.error("Carクラスのオブジェクトを追加してください");
 		}
 	}
+	static getNewestNumberByRegExp(regExp) {
+		if (!(regExp instanceof RegExp)) {
+			regExp = new RegExp(regExp);
+		}
+		const numberList = [];
+		AllCars.#cars.forEach(car => {
+			const regExpRes = regExp.exec(car.number);
+			if (regExpRes != null) {
+				numberList.push(Number(regExpRes[1]));
+			}
+		});
+		return Math.max(...numberList);
+	}
 
 	//指定車両を空にする
 	static makeBrank(carId) {
