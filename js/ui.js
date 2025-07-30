@@ -408,30 +408,6 @@ function loadAutoSavedData() {
 	loadListsFromJSON(getAutoSavedData());
 }
 
-function onlineBackUp(url, auth, callback) {
-	//オンラインバックアップ
-	if (settings.isUploadToOnlineStorage) {
-		fetch(url, {
-			method: 'PUT',
-			headers: {
-				"Authorization": "Basic " + btoa(`${auth.name}:${auth.password}`),
-				"Accept": "application/json",
-				"Content-Type": "application/json;charset=utf-8"
-			},
-			body: generateJSON()
-		}).then(response => response.text()).then(callback);
-	}
-}
-function loadListsFromOnlineBackUp(url, auth, callback) {
-	fetch(url, {
-		headers: {
-			"Authorization": "Basic " + btoa(`${auth.name}:${auth.password}`),
-			"Accept": "application/json",
-			"Content-Type": "application/json;charset=utf-8"
-		}
-	}).then(response => response.text()).then(text => loadListsFromJSON(text));
-}
-
 //設定
 function setPanelDisplayMode(isGridMode) {
 	settings.isDisplayGridMode = isGridMode;
