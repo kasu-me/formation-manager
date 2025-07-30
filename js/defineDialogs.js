@@ -11,6 +11,7 @@ new Message("MA009", "処理エラーです。");
 new Message("MA010", "車両番号の重複があります。");
 new Message("MA011", "同じ車両が複数の編成に組成されています。");
 new Message("MA012", "車両番号の一般式が不正です。入力方法が分からない場合はヘルプを確認してください。");
+new Message("MA013", "入力された正規表現に誤りがあります。");
 //Information Message
 new Message("MI001", "編成番号の重複があります。編成名：${name}");
 //Confirm Message
@@ -932,12 +933,8 @@ window.addEventListener("load", function () {
 					<td><label for="gnst-autosave-enabled" class="mku-checkbox-container"><input id="gnst-autosave-enabled" type="checkbox"></label></td>
 				</tr>
 				<tr>
-				</tr>
-				<tr>
 					<td>実施間隔</td>
 					<td><input type="number" id="gnst-autosave-interval" min="1"><p style="margin-bottom:0;">※アプリが重い場合などこの数値を上げてください</p></td>
-				</tr>
-				<tr>
 				</tr>
 			</table>
 		</div>
@@ -953,7 +950,19 @@ window.addEventListener("load", function () {
 			</div>
 			<input type="color" id="gnst-colorpicker" oninput="Dialog.list.generalSettingDialog.functions.changeColor()" value="#5c3d7e"><button onclick="document.getElementById('gnst-colorpicker').value='#5c3d7e';Dialog.list.generalSettingDialog.functions.changeColor()">リセット</button>
 		</div>
-	</div>`, [{ "content": "適用", "event": `Dialog.list.generalSettingDialog.functions.apply();Dialog.list.generalSettingDialog.off();`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.generalSettingDialog.off(); `, "icon": "close" }], {
+		<div class="mku-tab-content" tab-title="高度な設定">
+			<table class="input-area">
+				<tr>
+					<td>記号</td>
+					<td><input placeholder="正規表現" id="gnst-car-sym-pattern"><p style="margin-bottom:0;">※この正規表現に合致する文字は編成表上で小さく表示されます</p></td>
+				</tr>
+				<tr>
+					<td>重複チェック対象</td>
+					<td><input placeholder="正規表現" id="gnst-car-num-pattern"><p style="margin-bottom:0;">※この正規表現に合致する文字を車両番号とみなし、重複チェックを実施します</p></td>
+				</tr>
+			</table>
+		</div>
+	</div>`, [{ "content": "適用", "event": `Dialog.list.generalSettingDialog.functions.apply();`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.generalSettingDialog.off(); `, "icon": "close" }], {
 		cssProperties: {
 			"--formation-table-main-border": "#5c3d7e",
 			"--sub-light-color": "#dcccee",
@@ -972,6 +981,9 @@ window.addEventListener("load", function () {
 
 			document.getElementById("gnst-autosave-enabled").checked = settings.isAutoSaveEnabled;
 			document.getElementById("gnst-autosave-interval").value = settings.autoSaveInterval;
+
+			document.getElementById("gnst-car-sym-pattern").value = settings.carSymPattern;
+			document.getElementById("gnst-car-num-pattern").value = settings.carNumPattern;
 
 			Dialog.list.generalSettingDialog.functions.changeColor();
 
@@ -1006,11 +1018,31 @@ window.addEventListener("load", function () {
 				i++;
 			}
 		},
+		//高度設定適用
+		updateAdvancedSettings: function () {
+			const carSymPattern = document.getElementById("gnst-car-sym-pattern").value;
+			const carNumPattern = document.getElementById("gnst-car-num-pattern").value;
+			try {
+				new RegExp(carSymPattern);
+				new RegExp(carNumPattern);
+			} catch (e) {
+				return false;
+			}
+			settings.carSymPattern = carSymPattern;
+			settings.carNumPattern = carNumPattern;
+			return true;
+		},
 		//適用
 		apply: function () {
-			Dialog.list.generalSettingDialog.functions.updateYearMonthLimitation();
-			Dialog.list.generalSettingDialog.functions.updateAutosave();
-			autoSave(true);
+			if (Dialog.list.generalSettingDialog.functions.updateAdvancedSettings()) {
+				Dialog.list.generalSettingDialog.functions.updateYearMonthLimitation();
+				Dialog.list.generalSettingDialog.functions.updateAutosave();
+				autoSave(true);
+				refresh();
+				Dialog.list.generalSettingDialog.off();
+			} else {
+				Dialog.list.alertDialog.functions.display(Message.list["MA013"]);
+			}
 		},
 	}, true);
 

@@ -8,10 +8,10 @@ const settings = {
 	sortMode: "",
 	fileName: "",
 	isUploadToOnlineStorage: false,
+	carSymPattern: "^([A-Za-z]+)",
+	carNumPattern: "([クモサハロE0-9\-]+)$"
 };
-const carSymPattern = new RegExp("^([A-Za-z]+)");
-//TODO:パターンを変更できるUIを作る
-const carNumPattern = new RegExp("([クモサハE0-9\-]+)$");
+const auth = { user: "", password: "" };
 
 //JSONを保存ウインドウ表示
 function showJSONOutputDialog() {
@@ -181,7 +181,7 @@ function list() {
 	});
 
 	//車両番号の重複をチェック
-	const duplicationNumbers = carNumberListNow.map(carnum => carnum.match(carNumPattern)[0]).filter((carnum, i, self) => {
+	const duplicationNumbers = carNumberListNow.map(carnum => carnum.match(new RegExp(settings.carNumPattern))[0]).filter((carnum, i, self) => {
 		function isEqual(y) {
 			return y == carnum;
 		}
