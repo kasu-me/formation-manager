@@ -267,6 +267,11 @@ class AllFormationTemplates {
 }
 //各種一覧クラス定義ここまで
 
+//(UIからの利用を想定)次の番号を取得
+function nextNumber(pattern) {
+	const regExp = new RegExp(`^${pattern}$`);
+	return pattern.split("(")[0] + (Number(AllCars.getNewestNumberByRegExp(regExp)) + 1);
+}
 
 //全クラスリセット
 function resetAllLists() {
