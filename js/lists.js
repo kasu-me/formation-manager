@@ -273,7 +273,7 @@ function nextNumber(pattern, offset) {
 		return "";
 	} else {
 		const regExp = new RegExp(`^${pattern}$`);
-		return pattern.split("(")[0] + (Number(AllCars.getNewestNumberByRegExp(regExp)) + offset ?? 1);
+		return pattern.split("(")[0] + (Number(AllCars.getNewestNumberByRegExp(regExp)) + (offset ?? 1));
 	}
 }
 
