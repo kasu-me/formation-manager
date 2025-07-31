@@ -268,12 +268,12 @@ class AllFormationTemplates {
 //各種一覧クラス定義ここまで
 
 //(UIからの利用を想定)次の番号を取得
-function nextNumber(pattern) {
+function nextNumber(pattern, offset) {
 	if (!pattern.includes("(") || !pattern.includes(")")) {
 		return "";
 	} else {
 		const regExp = new RegExp(`^${pattern}$`);
-		return pattern.split("(")[0] + (Number(AllCars.getNewestNumberByRegExp(regExp)) + 1);
+		return pattern.split("(")[0] + (Number(AllCars.getNewestNumberByRegExp(regExp)) + offset ?? 1);
 	}
 }
 
