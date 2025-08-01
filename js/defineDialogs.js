@@ -560,8 +560,16 @@ window.addEventListener("load", function () {
 			//所属編成歴
 			let formations = AllFormations.searchAllByCarId(x);
 			let formationsText = formations.length == 0 ? `編成に所属したことがありません` : `<ul>`;
+			let terminatedOnBefore = car.manufacturedOn;
 			for (let i in formations) {
+				if (terminatedOnBefore.serial != AllFormations.formationsList[formations[i]].formatedOn.serial) {
+					formationsText += `<li>無所属<small> (${terminatedOnBefore.toStringWithLink()}～${AllFormations.formationsList[formations[i]].formatedOn.toStringWithLink()})</small></li>`;
+				}
 				formationsText += `<li><a href="javascript:Dialog.list.formationDetealDialog.functions.display(${formations[i]})">${AllFormations.formationsList[formations[i]].name}</a><small> (${AllFormations.formationsList[formations[i]].formatedOn.toStringWithLink()}～${AllFormations.formationsList[formations[i]].isTerminated ? AllFormations.formationsList[formations[i]].terminatedOn.toStringWithLink() : ""})</small></li>`;
+				terminatedOnBefore = AllFormations.formationsList[formations[i]].terminatedOn;
+			}
+			if (AllFormations.formationsList[formations.at(-1)].isTerminated) {
+				formationsText += `<li>無所属<small> (${terminatedOnBefore.toStringWithLink()}～)</small></li>`;
 			}
 			formationsText = `<ul>${formationsText}</ul>`;
 			//車歴
