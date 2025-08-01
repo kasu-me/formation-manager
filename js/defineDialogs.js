@@ -521,17 +521,23 @@ window.addEventListener("load", function () {
 		createCar: function () {
 			//親ダイアログが表示されている状態以外での実行を禁止
 			if (Dialog.list.createCarDialog.isActive) {
-				if (document.getElementById("crcar-carNumber").value == "") {
+				const carNumber = document.getElementById("crcar-carNumber").value;
+				if (carNumber == "") {
 					Dialog.list.alertDialog.functions.display(Message.list["MA007"]);
+				} else if (carNumber.startsWith("nextNumber(") && carNumber.endsWith(")")) {
+					Dialog.list.createCarDialog.functions.addCarExecute((new Function(`return ${carNumber}`))());
 				} else {
-					let carId = AllCars.addCar(new Car(document.getElementById("crcar-carNumber").value, now, null, document.getElementById("crcar-carRemark").value));
-					if (!document.getElementById("crcar-continue").checked) {
-						Dialog.list.createCarDialog.off();
-						Dialog.list.carDetealDialog.functions.display(carId);
-					} else {
-						Dialog.list.createCarDialog.functions.display();
-					}
+					Dialog.list.createCarDialog.functions.addCarExecute(carNumber);
 				}
+			}
+		},
+		addCarExecute: function (carNumber) {
+			let carId = AllCars.addCar(new Car(carNumber, now, null, document.getElementById("crcar-carRemark").value));
+			if (!document.getElementById("crcar-continue").checked) {
+				Dialog.list.createCarDialog.off();
+				Dialog.list.carDetealDialog.functions.display(carId);
+			} else {
+				Dialog.list.createCarDialog.functions.display();
 			}
 		}
 	});
