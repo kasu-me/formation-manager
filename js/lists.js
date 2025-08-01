@@ -97,7 +97,9 @@ class AllCars {
 				numberList.push(Number(regExpRes[1]));
 			}
 		});
-		return Math.max(...numberList);
+		let currentMaxNum = Math.max(...numberList);
+		currentMaxNum = currentMaxNum == -Infinity ? 0 : currentMaxNum;
+		return currentMaxNum;
 	}
 
 	//指定車両を空にする
