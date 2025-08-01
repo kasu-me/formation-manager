@@ -25,7 +25,7 @@
 }
 
 #generalSettingDialog .mku-tab-container .mku-tab-content {
-	height: calc(50vh - 10em);
+	height: calc(50vh);
 }
 
 #helpDialog>p.dialog-title,
