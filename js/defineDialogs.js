@@ -234,7 +234,7 @@ window.addEventListener("load", function () {
 			let table = new Table();
 			table.setAttributes({ "class": "vertical-stripes not-formated-car-table" });
 			table.setSubtitle("編成に所属していない車両一覧");
-			let maxCellCount = 10;
+			let maxCellCount = MAX_CELL_COUNT;
 			let carIds = listUpNotFormatedCarIds();
 			for (let id of carIds) {
 				if (table.cellCountOfLastRow % maxCellCount == 0) {
@@ -258,7 +258,7 @@ window.addEventListener("load", function () {
 			table.addRow();
 			table.addCell(`編成番号:${Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.name}`, { "colspan": Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.length });
 			for (let i in Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars) {
-				if (i % 10 == 0) { table.addRow() }
+				if (i % MAX_CELL_COUNT == 0) { table.addRow() }
 				table.addCell(`<span>${AllCars.carsList[Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[i]].number}</span><p><a href="javascript:void(0)" onclick="Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars.splice(${i},1);document.getElementById('forfc-car-${Dialog.list.createFormationFromFloatingCarsDialog.functions.tentativeFormation.cars[i]}').classList.toggle('selected');Dialog.list.createFormationFromFloatingCarsDialog.functions.refresh()" class="lsf preview-delete-button" title="削除">delete</a></p>`, { "class": "preview-car" });
 			}
 			table.addBlankCellToRowIn(0, true);
@@ -349,7 +349,7 @@ window.addEventListener("load", function () {
 				table.addRow();
 				table.addCell(`編成番号:${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.formationName(1)}`, { "colspan": Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers.length });
 				for (let i in Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers) {
-					if (i % 10 == 0) { table.addRow() }
+					if (i % MAX_CELL_COUNT == 0) { table.addRow() }
 					table.addCell(`<span>${Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.carNumbers[i](1)}</span><p><a href="javascript:void(0)" onclick="Dialog.list.createFormationTemplateDialog.functions.enterEditMode(${i})" class="lsf preview-edit-button" title="編集">pen</a><a href="javascript:void(0)" onclick="Dialog.list.createFormationTemplateDialog.functions.tentativeFormationTemplate.deleteCarNumber(${i});Dialog.list.createFormationTemplateDialog.functions.refresh()" class="lsf preview-delete-button" title="削除">delete</a></p>`, { "class": "preview-car" });
 				}
 				table.addBlankCellToRowIn(0, true);
@@ -863,7 +863,7 @@ window.addEventListener("load", function () {
 			let table = new Table();
 			table.setAttributes({ "class": "vertical-stripes not-formated-car-table" });
 			table.setSubtitle("ドラッグで車両順序を変更");
-			let maxCellCount = 10;
+			let maxCellCount = MAX_CELL_COUNT;
 			for (let id of Dialog.list.formationShuffleDialog.functions.tentativeFormation.cars) {
 				if (table.cellCountOfLastRow % maxCellCount == 0) {
 					table.addRow();
@@ -884,7 +884,7 @@ window.addEventListener("load", function () {
 			let table = new Table();
 			table.setAttributes({ "class": "vertical-stripes not-formated-car-table" });
 			table.setSubtitle("編成に所属していない車両一覧");
-			let maxCellCount = 10;
+			let maxCellCount = MAX_CELL_COUNT;
 			let carIds = Dialog.list.formationShuffleDialog.functions.tentativeNotFormatedCarIds;
 			for (let id of carIds) {
 				if (table.cellCountOfLastRow % maxCellCount == 0) {
@@ -1514,7 +1514,7 @@ window.addEventListener("load", function () {
 			let table = new Table();
 			table.setAttributes({ "class": "vertical-stripes not-formated-car-table" });
 			table.setSubtitle("ドラッグで車両順序を変更");
-			let maxCellCount = 10;
+			let maxCellCount = MAX_CELL_COUNT;
 			for (let id of Dialog.list.formationMasterCarsEditDialog.functions.cars) {
 				if (table.cellCountOfLastRow % maxCellCount == 0) {
 					table.addRow();

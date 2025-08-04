@@ -1,3 +1,5 @@
+const MAX_CELL_COUNT = 12;
+
 //年月クラス
 class YearMonth {
 	#y;
@@ -21,7 +23,7 @@ class YearMonth {
 	}
 	update(y, m) {
 		if (m == null) {
-			this.update(Math.floor(y / 12) - (y % 12 == 0 ? 1 : 0), y % 12 == 0 ? 12 : y % 12);
+			this.update(Math.floor(y / 12) - (y % MAX_CELL_COUNT == 0 ? 1 : 0), y % MAX_CELL_COUNT == 0 ? 12 : y % MAX_CELL_COUNT);
 		} else {
 			this.updateY(Number(y));
 			this.updateM(Number(m));

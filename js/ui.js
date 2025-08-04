@@ -147,14 +147,14 @@ function list() {
 			if (AllCars.carsList[carId].isConservedInTime(now)) {
 				//保存されている車両
 				conservedCarCount++;
-				if (conservedCarsTable.cellCountOfLastRow % 10 == 0) {
+				if (conservedCarsTable.cellCountOfLastRow % MAX_CELL_COUNT == 0) {
 					conservedCarsTable.addRow();
 				}
 				addCarCell(conservedCarsTable, carId, carIdListNow, [], false, true);
 			} else if (!AllCars.carsList[carId].isDroppedInTime(now)) {
 				//現役で、編成に組み込まれていない車両
 				notFormatedCarCount++;
-				if (notFormatedCarsTable.cellCountOfLastRow % 10 == 0) {
+				if (notFormatedCarsTable.cellCountOfLastRow % MAX_CELL_COUNT == 0) {
 					notFormatedCarsTable.addRow();
 				}
 				addCarCell(notFormatedCarsTable, carId, carIdListNow, carNumberListNow, false);
