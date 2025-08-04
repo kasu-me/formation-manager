@@ -568,7 +568,7 @@ window.addEventListener("load", function () {
 				formationsText += `<li><a href="javascript:Dialog.list.formationDetealDialog.functions.display(${formations[i]})">${AllFormations.formationsList[formations[i]].name}</a><small> (${AllFormations.formationsList[formations[i]].formatedOn.toStringWithLink()}～${AllFormations.formationsList[formations[i]].isTerminated ? AllFormations.formationsList[formations[i]].terminatedOn.toStringWithLink() : ""})</small></li>`;
 				terminatedOnBefore = AllFormations.formationsList[formations[i]].terminatedOn;
 			}
-			if (AllFormations.formationsList[formations.at(-1)].isTerminated) {
+			if (formations.length > 0 && AllFormations.formationsList[formations.at(-1)].isTerminated) {
 				formationsText += `<li>無所属<small> (${terminatedOnBefore.toStringWithLink()}～)</small></li>`;
 			}
 			formationsText = `<ul>${formationsText}</ul>`;
