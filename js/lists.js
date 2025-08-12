@@ -98,8 +98,12 @@ class AllCars {
 			}
 		});
 		let currentMaxNum = Math.max(...numberList);
-		currentMaxNum = currentMaxNum == -Infinity ? 0 : currentMaxNum;
-		return currentMaxNum;
+		if (currentMaxNum == -Infinity) {
+			let pattern = regExp.toString();
+			return getFirstNumber(pattern.match(/\((.+)\)/)[1]) ?? 0;
+		} else {
+			return currentMaxNum;
+		}
 	}
 
 	//指定車両を空にする
@@ -275,8 +279,19 @@ function nextNumber(pattern, offset) {
 		return "";
 	} else {
 		const regExp = new RegExp(`^${pattern}$`);
-		return pattern.split("(")[0] + (Number(AllCars.getNewestNumberByRegExp(regExp)) + (offset ?? 1));
+		return pattern.split("(")[0] + (Number(AllCars.getNewestNumberByRegExp(regExp)) + (offset ?? 1)) + pattern.split(")")[1];
 	}
+}
+
+//正規表現パターン文字列にマッチする最小番号を取得
+function getFirstNumber(pattern) {
+	const regExp = new RegExp(pattern);
+	for (let i = 0; i < 999999; i++) {
+		if (i.toString().match(regExp)) {
+			return i;
+		}
+	}
+	return null;
 }
 
 //全クラスリセット

@@ -974,6 +974,10 @@ window.addEventListener("load", function () {
 					<td>重複チェック対象</td>
 					<td><input placeholder="正規表現" id="gnst-car-num-pattern"><p style="margin-bottom:0;">※この正規表現に合致する文字を車両番号とみなし、重複チェックを実施します</p></td>
 				</tr>
+				<tr>
+					<td>オンラインバックアップ</td>
+					<td><p><label for="gnst-onlinebackup-enabled" class="mku-checkbox-container"><input id="gnst-onlinebackup-enabled" type="checkbox"></label><label for="gnst-onlinebackup-enabled">実施する</label></p><input id="gnst-onlinebackup-url" placeholder="URL"><p>受け先URLの要件はこちら</p><p><input id="gnst-onlinebackup-username" placeholder="Username"></p><p><input id="gnst-onlinebackup-password" placeholder="Password" type="password"></p></td>
+				</tr>
 			</table>
 		</div>
 	</div>`, [{ "content": "適用", "event": `Dialog.list.generalSettingDialog.functions.apply();`, "icon": "check" }, { "content": "キャンセル", "event": `Dialog.list.generalSettingDialog.off(); `, "icon": "close" }], {
